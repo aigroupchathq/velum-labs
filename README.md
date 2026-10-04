@@ -1,75 +1,37 @@
-# 🔥 Tinder Web Clone
+# Universal Compatibility & Relationship-Discovery Platform
 
-An authentic, high-performance Tinder Web Clone built with **React 19**, **TypeScript**, **Tailwind CSS v4**, **Vite**, and **Lucide Icons**.
+An auditable, privacy-conscious, explainable, and reciprocal matching system designed to represent the broadest practical range of human relationship preferences, identities, constraints, lifestyles, values, attraction patterns, accessibility requirements, relationship structures, and behavioural outcomes.
 
----
-
-## ✨ Features
-
-- **🎯 Card Deck & Physics-based Swiping**:
-  - Drag cards with mouse or touch gestures with smooth proportional rotation.
-  - Interactive "LIKE", "NOPE", and "SUPER LIKE" stamps that dynamically fade in based on drag angle and distance.
-  - Story-style photo segment indicators at the top of cards (tap left 35% for previous photo, right 65% for next).
-  - Background card stack with depth styling.
-
-- **🎮 Floating Gamepad**:
-  - **Rewind (Yellow)**: Undo your last swipe anytime.
-  - **Nope (Red X)**: Pass on the current profile.
-  - **Super Like (Blue Star)**: Send a Super Like and trigger a guaranteed match!
-  - **Like (Green Heart)**: Like the profile with chance of instant match.
-  - **Boost (Purple Lightning)**: Activate 10x profile views with a glowing badge.
-
-- **🎉 "It's a Match!" Celebration**:
-  - Realistic match celebration modal with confetti burst (`canvas-confetti`).
-  - Side-by-side circular avatars with animated heart connector.
-  - Quick icebreaker starter bubbles ("Hey! Love your vibe 😊", "Coffee this weekend? ☕").
-  - Direct message input to jump right into chat.
-
-- **💬 Real-Time Chat Simulation**:
-  - Message history for each match.
-  - Typing indicator simulation ("Maya is typing...").
-  - Contextual auto-replies after 2 seconds.
-  - Send messages, GIFs, and quick emoji reactions.
-
-- **🔍 Full Profile Details Modal**:
-  - Expanded photo gallery with full bio and essentials.
-  - Basic chips (Zodiac, Education, Workout, Drinking, Pets, Height, Communication Style).
-  - Passions and interests chips.
-  - Spotify Anthem card with preview audio controls.
-  - Prompts ("A boundary of mine is...", "Together we could...").
-
-- **✨ Tinder Gold "Likes You"**:
-  - 99+ Likes tray with gold styling and blurred profile cards.
-  - One-click "Unlock Gold (Demo Free)" to reveal secret admirers and match instantly.
-
-- **🧭 Explore Tab**:
-  - Curated vibe categories: "Free Tonight?", "Looking for Love", "Coffee Date", "Gamers Unite", "Foodies", "Nature & Outdoors".
-  - Filter the card deck by specific passions and interests.
-
-- **⚙️ Profile & Discovery Settings**:
-  - Edit personal photo, name, age, bio, occupation, school, and passions.
-  - Interactive distance and age range sliders.
-  - "Show Me" gender preferences and Incognito mode toggle.
-
-- **🔊 Web Audio API Sound Effects**:
-  - Zero-latency synthesized sound effects for Likes, Nopes, Super Likes, Matches, and Messages.
-  - Quick mute/unmute toggle in the navigation bar.
-
-- **🌓 Dark / Light Mode**:
-  - Authentic Tinder Dark Mode and Light Mode with seamless switching.
+Built with **React 19**, **TypeScript**, **Tailwind CSS v4**, **Vite**, and **Lucide Icons**.
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+## 🎯 Architectural Mission & Non-Negotiable Tenets
 
-| Key | Action |
-| --- | --- |
-| `←` (Left Arrow) | Nope (Dislike) |
-| `→` (Right Arrow) | Like |
-| `↑` (Up Arrow) | Super Like |
-| `↓` (Down Arrow) | Open Profile Details |
-| `Space` | Next Photo in Profile |
-| `Backspace` | Rewind (Undo last swipe) |
+This platform is **not a swipe-based dating app**. It optimizes strictly for **Mutual Compatibility** rather than swipes, engagement, popularity, or profile visibility.
+
+1. **Deterministic Core Before ML (Rule 8 & 9):** 100% deterministic, explainable matching engine with zero probabilistic machine learning in the MVP core.
+2. **Strict Bidirectional Mutuality ($A \leftrightarrow B$):** Matching is symmetric. A candidate who satisfies Person A perfectly but for whom Person A breaches a dealbreaker is assigned an overall Mutual Compatibility Score of zero ($S_{\text{mutual}} = 0$).
+3. **Decoupled Compatibility & Epistemic Confidence:** Missing information is never penalized as incompatibility. Compatibility ($S$) and Confidence ($C$) are evaluated independently.
+4. **Progressive Disclosure UX (Spec §30):** 6 clean stages without bureaucratic survey fatigue.
+5. **No Discriminatory Rules / No Inferred Sensitive Traits:** Race, gender identity, orientation, disability, and health status are never inferred from images or secondary signals.
+
+---
+
+## 🌟 Platform Capabilities
+
+- **✨ Transparent Match Cards (Spec §31):** Every recommendation displays relationship intent, mutuality score, directional breakdown ($A \to B$ vs $B \to A$), epistemic confidence, strong alignments (+), potential frictions (-), unknowns (?), and explicit "Why recommended" justifications.
+- **🔍 Deep 12-Dimension Report Modal:** Complete inspectable breakdown of Hard Gating, Relationship Alignment, Family Plans, Lifestyle & Diet (Spec §5 vegetarian distinctions), Core Values, Multi-Modal Attraction (6 modalities), Communication Pacing, Geographic Feasibility, Temporal Rhythms, and Confidence Coverage.
+- **📋 6-Stage Progressive Profile Architect (Spec §30):**
+  - Stage 1: Identity & Pronouns (self-declared)
+  - Stage 2: Relationship Intention & Structure (monogamous, polyamorous, ENM, flexible)
+  - Stage 3: Weighted Preferences (importance 1–5)
+  - Stage 4: Non-Negotiable Dealbreakers (hard eligibility gates)
+  - Stage 5: Controlled Flexibility (0–100% partial credit relaxation)
+  - Stage 6: Deeper Psychological & Circadian Resonance
+- **⚙️ Preference Optimization Engine (Spec §32):** What-if candidate pool simulator showing pool expansion and estimated compatibility impact with explicit statutory disclaimers.
+- **⚠️ Contradiction Auditor (Spec §14):** Automatically surfaces logical preference deadlocks (e.g. open to long-distance vs 10km maximum radius; MUST with 90% flexibility) with 1-click resolution.
+- **🔬 Diagnostic Pair Inspector (Spec §7 & §26):** Live testbed to evaluate any two profiles, swap evaluation directions, and copy the canonical `evaluateMatch` JSON contract.
 
 ---
 
@@ -77,19 +39,19 @@ An authentic, high-performance Tinder Web Clone built with **React 19**, **TypeS
 
 ### Prerequisites
 - Node.js (v18+)
-- npm
+- npm (on Windows PowerShell, execute `npm.cmd`)
 
-### Installation & Running
+### Development & Verification
 
 ```bash
-# Install dependencies
-npm install
+# Start Vite development server
+npm.cmd run dev
 
-# Start development server
-npm run dev
+# Run full TypeScript typecheck
+npx.cmd tsc -b
 
-# Build for production
-npm run build
+# Execute canonical invariant test suite
+npx.cmd tsx src/utils/testMatchingEngine.ts
 ```
 
 Open [http://localhost:5173](http://localhost:5173) in your browser.

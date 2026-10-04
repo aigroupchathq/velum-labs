@@ -1,442 +1,235 @@
-import React, { useState, useEffect } from 'react'
-import {
-  INITIAL_PROFILES,
-  INITIAL_MATCHES,
-  INITIAL_MESSAGES,
-  AUTO_REPLIES,
-} from './data/mockProfiles'
-import type {
-  Profile,
-  Match,
-  Message,
-  SwipeAction,
-  UserProfile,
-  UserPreferences,
-  ActiveTab,
-} from './types'
-import { sounds } from './utils/sound'
-import { Navbar } from './components/Navbar'
-import { Sidebar } from './components/Sidebar'
-import { CardDeck } from './components/CardDeck'
-import { ProfileDetailModal } from './components/ProfileDetailModal'
-import { MatchModal } from './components/MatchModal'
-import { ChatView } from './components/ChatView'
-import { ExploreView } from './components/ExploreView'
-import { LikesYouModal } from './components/LikesYouModal'
-import { UserProfileModal } from './components/UserProfileModal'
-import { SafetyModal } from './components/SafetyModal'
+// Universal Compatibility Platform: Main Application Container
+// Governing Standards: Master Build Specification §0, §1, §7, §10, §14, §15, §30, §31, §32
 
-export const App: React.FC = () => {
-  // Profiles & Swiping state
-  const [profiles] = useState<Profile[]>(INITIAL_PROFILES)
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [swipeHistory, setSwipeHistory] = useState<
-    { action: SwipeAction; profile: Profile; index: number }[]
-  >([])
+import { useState } from 'react'
+import { Navbar, type ActiveView } from './components/Navbar'
+import { MatchCard } from './components/MatchCard'
+import { DeepReportModal } from './components/DeepReportModal'
+import { ProgressiveDisclosureModal } from './components/ProgressiveDisclosureModal'
+import { PreferenceOptimizerView } from './components/PreferenceOptimizerView'
+import { ContradictionsBanner } from './components/ContradictionsBanner'
+import { PairEvaluatorView } from './components/PairEvaluatorView'
+import { currentUser as initialUser, mockCandidates as initialCandidates } from './data/mockProfiles'
+import { evaluateMatch, detectUserContradictions } from './utils/matchingEngine'
+import type { UniversalUserProfile, MatchEvaluation } from './types'
+import { CheckCircle2, HeartHandshake } from 'lucide-react'
 
-  // Match celebration state
-  const [newMatchModalProfile, setNewMatchModalProfile] = useState<Profile | null>(null)
+export function App() {
+  const [currentUser, setCurrentUser] = useState<UniversalUserProfile>(initialUser)
+  const [candidates] = useState<UniversalUserProfile[]>(initialCandidates)
+  const [activeView, setActiveView] = useState<ActiveView>('recs')
+  const [selectedReport, setSelectedReport] = useState<{
+    candidate: UniversalUserProfile
+    evaluation: MatchEvaluation
+  } | null>(null)
+  const [filterMode, setFilterMode] = useState<'all' | 'eligible' | 'high_fit'>('all')
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
 
-  // Full profile detail modal
-  const [selectedDetailProfile, setSelectedDetailProfile] = useState<Profile | null>(null)
+  // Active Preference Contradictions (Spec §14)
+  const contradictions = detectUserContradictions(currentUser)
 
-  // Matches and Chat state
-  const [matches, setMatches] = useState<Match[]>(INITIAL_MATCHES)
-  const [messages, setMessages] = useState<Record<string, Message[]>>(INITIAL_MESSAGES)
-  const [activeMatchId, setActiveMatchId] = useState<string | null>(null)
-  const [isTyping, setIsTyping] = useState(false)
+  // Compute evaluations for current user against all candidates
+  const evaluatedCandidates = candidates.map((candidate) => ({
+    candidate,
+    evaluation: evaluateMatch(currentUser, candidate),
+  }))
 
-  // Navigation & Modals
-  const [activeTab, setActiveTab] = useState<ActiveTab>('recs')
-  const [activeCategory, setActiveCategory] = useState<string | null>(null)
-  const [showLikesYouModal, setShowLikesYouModal] = useState(false)
-  const [showProfileModal, setShowProfileModal] = useState(false)
-  const [showSafetyModal, setShowSafetyModal] = useState(false)
-  const [boostActive, setBoostActive] = useState(false)
-
-  // Sound and Theme settings
-  const [soundEnabled, setSoundEnabled] = useState(true)
-  const [darkMode, setDarkMode] = useState(true)
-
-  // User Profile
-  const [userProfile, setUserProfile] = useState<UserProfile>({
-    name: 'Alex Rivera',
-    age: 25,
-    bio: 'Photographer & coffee lover in NYC. Always on the hunt for live music, vintage bookshops, and rooftop views 🌆',
-    photos: [
-      'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=600&q=80',
-    ],
-    occupation: 'Creative Director',
-    school: 'Pratt Institute',
-    passions: ['Photography', 'Music', 'Coffee', 'Travel'],
+  // Filter candidates according to selected view mode
+  const filteredCandidates = evaluatedCandidates.filter(({ evaluation }) => {
+    if (filterMode === 'eligible') return evaluation.eligible
+    if (filterMode === 'high_fit') return evaluation.eligible && (evaluation.mutuality.score || 0) >= 80
+    return true
   })
 
-  // User Preferences
-  const [preferences, setPreferences] = useState<UserPreferences>({
-    maxDistance: 25,
-    minAge: 21,
-    maxAge: 32,
-    showMe: 'everyone',
-    soundEnabled: true,
-    darkMode: true,
-    incognito: false,
-    hardRequirements: {
-      ageRange: true,
-      distance: true,
-      nonSmoker: true,
-      relationshipIntent: false,
-    },
-    flexibilityMargins: {
-      age: 2,
-      distance: 5,
-    },
-    strongPreferences: {
-      intent: true,
-      lifestyle: true,
-    },
-  })
-
-  // Initialize Dark Mode & Sounds
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-  }, [darkMode])
-
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => !prev)
+  const showToast = (msg: string) => {
+    setToastMessage(msg)
+    setTimeout(() => setToastMessage(null), 3000)
   }
 
-  const toggleSound = () => {
-    setSoundEnabled((prev) => {
-      const next = !prev
-      sounds.setEnabled(next)
-      return next
-    })
-  }
-
-  // Handle Swipe Action
-  const handleSwipe = (action: SwipeAction, profile: Profile) => {
-    // Record history for rewind
-    setSwipeHistory((prev) => [...prev, { action, profile, index: currentIndex }])
-
-    if (action === 'like') {
-      sounds.playLike()
-      // 50% chance of an exciting instant match
-      const shouldMatch = Math.random() > 0.5 || profile.id === 'p1' || profile.id === 'p2'
-      if (shouldMatch) {
-        triggerMatch(profile)
-      }
-    } else if (action === 'superlike') {
-      sounds.playSuperLike()
-      // Super likes always trigger a match!
-      triggerMatch(profile)
-    } else if (action === 'nope') {
-      sounds.playNope()
-    }
-
-    setCurrentIndex((prev) => prev + 1)
-  }
-
-  // Trigger Match event
-  const triggerMatch = (profile: Profile) => {
-    sounds.playMatch()
-    setNewMatchModalProfile(profile)
-
-    // Add to matches list if not already present
-    const existing = matches.find((m) => m.profile.id === profile.id)
-    if (!existing) {
-      const newMatch: Match = {
-        id: `match-${Date.now()}`,
-        profile,
-        matchedAt: 'Just now',
-        unreadCount: 0,
-        lastMessage: 'You matched! Say hello 😊',
-        lastMessageTime: 'Just now',
-      }
-      setMatches((prev) => [newMatch, ...prev])
-      setMessages((prev) => ({
-        ...prev,
-        [newMatch.id]: [],
-      }))
+  const handleResolveContradiction = (code: string) => {
+    if (code === 'DISTANCE_LONG_DISTANCE_BUT_TIGHT_RADIUS') {
+      setCurrentUser({
+        ...currentUser,
+        geography: {
+          ...currentUser.geography,
+          maxDistanceKm: 50,
+        },
+      })
+      showToast('Resolved: Distance radius expanded to 50 km.')
+    } else if (code === 'MUST_WITH_HIGH_FLEXIBILITY') {
+      setCurrentUser({
+        ...currentUser,
+        preferences: {
+          ...currentUser.preferences,
+          dietPreference: {
+            ...currentUser.preferences.dietPreference,
+            flexibility: 0,
+          },
+        },
+      })
+      showToast('Resolved: Diet flexibility set to 0% for MUST requirement.')
+    } else if (code === 'SELF_STRUCTURE_CONTRADICTS_REQUIRED_STRUCTURE') {
+      setCurrentUser({
+        ...currentUser,
+        preferences: {
+          ...currentUser.preferences,
+          structurePreference: {
+            ...currentUser.preferences.structurePreference,
+            acceptableStructures: ['monogamous', 'flexible'],
+          },
+        },
+      })
+      showToast('Resolved: Added monogamous to acceptable partner structures.')
     }
   }
-
-  // Handle Rewind Action
-  const handleRewind = () => {
-    if (swipeHistory.length === 0 || currentIndex === 0) return
-    sounds.playTap()
-
-    const lastSwipe = swipeHistory[swipeHistory.length - 1]
-    setSwipeHistory((prev) => prev.slice(0, prev.length - 1))
-    setCurrentIndex(lastSwipe.index)
-  }
-
-  // Handle Boost Action
-  const handleTriggerBoost = () => {
-    sounds.playTap()
-    setBoostActive(true)
-    setTimeout(() => {
-      setBoostActive(false)
-    }, 15000)
-  }
-
-  // Handle Send Message in Chat
-  const handleSendMessage = (
-    matchId: string,
-    text: string,
-    isGif?: boolean,
-    mediaUrl?: string
-  ) => {
-    sounds.playMessage()
-
-    const newMsg: Message = {
-      id: `msg-${Date.now()}`,
-      matchId,
-      sender: 'user',
-      text,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      isGif,
-      mediaUrl,
-    }
-
-    setMessages((prev) => ({
-      ...prev,
-      [matchId]: [...(prev[matchId] || []), newMsg],
-    }))
-
-    // Update match's last message
-    setMatches((prev) =>
-      prev.map((m) =>
-        m.id === matchId
-          ? {
-              ...m,
-              lastMessage: isGif ? 'Sent a GIF' : text,
-              lastMessageTime: 'Just now',
-              unreadCount: 0,
-            }
-          : m
-      )
-    )
-
-    // Simulate Match's Auto-Reply
-    setTimeout(() => {
-      setIsTyping(true)
-      setTimeout(() => {
-        setIsTyping(false)
-        sounds.playMessage()
-        const randomReply =
-          AUTO_REPLIES[Math.floor(Math.random() * AUTO_REPLIES.length)]
-        const replyMsg: Message = {
-          id: `msg-reply-${Date.now()}`,
-          matchId,
-          sender: 'match',
-          text: randomReply,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        }
-
-        setMessages((prev) => ({
-          ...prev,
-          [matchId]: [...(prev[matchId] || []), replyMsg],
-        }))
-
-        setMatches((prev) =>
-          prev.map((m) =>
-            m.id === matchId
-              ? {
-                  ...m,
-                  lastMessage: randomReply,
-                  lastMessageTime: 'Just now',
-                }
-              : m
-          )
-        )
-      }, 2000)
-    }, 700)
-  }
-
-  // Send message directly from Match modal
-  const handleSendFromMatchModal = (profile: Profile, msgText: string) => {
-    setNewMatchModalProfile(null)
-    const match = matches.find((m) => m.profile.id === profile.id)
-    if (match) {
-      handleSendMessage(match.id, msgText)
-      setActiveMatchId(match.id)
-    }
-  }
-
-  // Instant match from Tinder Gold Likes You modal
-  const handleInstantMatch = (profile: Profile) => {
-    triggerMatch(profile)
-  }
-
-  // Unmatch handler
-  const handleUnmatch = (matchId: string) => {
-    setMatches((prev) => prev.filter((m) => m.id !== matchId))
-    if (activeMatchId === matchId) {
-      setActiveMatchId(null)
-    }
-  }
-
-  // Filter profiles by explore category
-  const filteredProfiles = activeCategory
-    ? profiles.filter((p) =>
-        p.passions?.some((tag) =>
-          tag.toLowerCase().includes(activeCategory.toLowerCase())
-        )
-      )
-    : profiles
-
-  const activeMatch = matches.find((m) => m.id === activeMatchId)
-  const totalUnread = matches.reduce((acc, m) => acc + m.unreadCount, 0)
 
   return (
-    <div className="flex flex-col md:flex-row h-screen w-screen overflow-hidden bg-gray-100 dark:bg-[#111418] text-gray-900 dark:text-white">
-      {/* Mobile Top Navbar */}
+    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+      {/* Top Navbar */}
       <Navbar
-        activeTab={activeTab}
-        setActiveTab={(tab) => {
-          setActiveTab(tab)
-          setActiveMatchId(null)
-        }}
-        soundEnabled={soundEnabled}
-        toggleSound={toggleSound}
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
-        onOpenProfile={() => setShowProfileModal(true)}
-        unreadMessagesCount={totalUnread}
-        likesCount={99}
+        activeView={activeView}
+        onSelectView={setActiveView}
+        currentUser={currentUser}
+        contradictionCount={contradictions.length}
       />
 
-      {/* Desktop Left Sidebar */}
-      <Sidebar
-        userProfile={userProfile}
-        matches={matches}
-        activeMatchId={activeMatchId}
-        onSelectMatch={(id) => {
-          setActiveMatchId(id)
-          // mark as read
-          setMatches((prev) =>
-            prev.map((m) => (m.id === id ? { ...m, unreadCount: 0 } : m))
-          )
-        }}
-        onOpenLikesYou={() => setShowLikesYouModal(true)}
-        onOpenProfile={() => setShowProfileModal(true)}
-        onOpenSafety={() => setShowSafetyModal(true)}
-        soundEnabled={soundEnabled}
-        toggleSound={toggleSound}
-        darkMode={darkMode}
-        toggleDarkMode={toggleDarkMode}
-        onUnmatch={handleUnmatch}
-      />
+      {/* Main Content Viewport */}
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+        {/* Contradiction Alert Banner (Shown in Recommendations if any exist) */}
+        {contradictions.length > 0 && activeView === 'recs' && (
+          <ContradictionsBanner
+            contradictions={contradictions}
+            onResolve={handleResolveContradiction}
+          />
+        )}
 
-      {/* Main Content Area */}
-      <main className="flex-1 flex flex-col relative overflow-hidden h-full">
-        {/* If Active Chat is Open */}
-        {activeMatch ? (
-          <ChatView
-            match={activeMatch}
-            messages={messages[activeMatch.id] || []}
-            onSendMessage={handleSendMessage}
-            onBack={() => setActiveMatchId(null)}
-            onViewProfile={(p) => setSelectedDetailProfile(p)}
-            isTyping={isTyping}
-          />
-        ) : activeTab === 'explore' ? (
-          <ExploreView
-            activeCategory={activeCategory}
-            onSelectCategory={(cat) => {
-              setActiveCategory(cat)
-              setActiveTab('recs')
-            }}
-            onClearCategory={() => setActiveCategory(null)}
-          />
-        ) : (
-          /* Main Card Deck View */
-          <div className="flex-1 flex flex-col h-full relative">
-            {/* Active Category Filter Tag if set */}
-            {activeCategory && (
-              <div className="px-4 pt-2 flex items-center justify-center">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-bold">
-                  <span>Filtered by: {activeCategory}</span>
-                  <button
-                    onClick={() => setActiveCategory(null)}
-                    className="hover:text-rose-700 dark:hover:text-rose-300 font-extrabold"
-                  >
-                    ×
-                  </button>
+        {/* 1. RECOMMENDATIONS VIEW (Spec §31) */}
+        {activeView === 'recs' && (
+          <div className="space-y-6">
+            {/* View Sub-Header & Controls */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-3xl bg-slate-900 border border-slate-800">
+              <div>
+                <div className="flex items-center space-x-2 text-indigo-400 text-xs font-bold uppercase tracking-wider">
+                  <HeartHandshake className="w-4 h-4" />
+                  <span>Bidirectional Discovery Feed (Spec §16, §31)</span>
                 </div>
+                <h1 className="text-2xl font-black text-white mt-1">
+                  Mutually Compatible Recommendations
+                </h1>
+                <p className="text-xs text-slate-400 mt-1">
+                  Candidates evaluated via 5-stage deterministic pipeline. Zero-floor harmonic mutuality guarantees reciprocal suitability.
+                </p>
               </div>
-            )}
 
-            <CardDeck
-              profiles={filteredProfiles}
-              currentIndex={currentIndex}
-              userProfile={userProfile}
-              preferences={preferences}
-              onSwipe={handleSwipe}
-              onRewind={handleRewind}
-              canRewind={swipeHistory.length > 0 && currentIndex > 0}
-              onOpenProfileDetail={(p) => setSelectedDetailProfile(p)}
-              onTriggerBoost={handleTriggerBoost}
-              boostActive={boostActive}
-              onRestartDeck={() => {
-                setCurrentIndex(0)
-                setSwipeHistory([])
-              }}
+              {/* Filter Tabs */}
+              <div className="flex items-center space-x-1.5 p-1 rounded-xl bg-slate-950 border border-slate-800">
+                <button
+                  onClick={() => setFilterMode('all')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    filterMode === 'all'
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  All ({evaluatedCandidates.length})
+                </button>
+                <button
+                  onClick={() => setFilterMode('eligible')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    filterMode === 'eligible'
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  Eligible Only ({evaluatedCandidates.filter((c) => c.evaluation.eligible).length})
+                </button>
+                <button
+                  onClick={() => setFilterMode('high_fit')}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                    filterMode === 'high_fit'
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'text-slate-400 hover:text-white'
+                  }`}
+                >
+                  High Mutuality (≥80%)
+                </button>
+              </div>
+            </div>
+
+            {/* List of Match Cards */}
+            <div className="space-y-6">
+              {filteredCandidates.map(({ candidate, evaluation }) => (
+                <MatchCard
+                  key={candidate.id}
+                  candidate={candidate}
+                  evaluation={evaluation}
+                  onInspectDeepReport={(cand, ev) => setSelectedReport({ candidate: cand, evaluation: ev })}
+                  onInitiateHandshake={(cand) =>
+                    showToast(`Handshake initiated with ${cand.identity.name}. Both parties must consent to unlock chat.`)
+                  }
+                  onPass={(cand) =>
+                    showToast(`Respectfully passed on ${cand.identity.name}. Candidate removed from active queue.`)
+                  }
+                />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* 2. PROGRESSIVE ONBOARDING & PROFILE VIEW (Spec §30) */}
+        {activeView === 'onboarding' && (
+          <ProgressiveDisclosureModal
+            currentUser={currentUser}
+            onUpdateUser={(updated) => {
+              setCurrentUser(updated)
+              showToast('Profile configuration updated successfully.')
+            }}
+          />
+        )}
+
+        {/* 3. PREFERENCE OPTIMIZER VIEW (Spec §32) */}
+        {activeView === 'optimizer' && (
+          <PreferenceOptimizerView currentUser={currentUser} />
+        )}
+
+        {/* 4. CONTRADICTION AUDITOR VIEW (Spec §14) */}
+        {activeView === 'contradictions' && (
+          <div className="max-w-4xl mx-auto space-y-6">
+            <div className="p-6 rounded-3xl bg-slate-900 border border-slate-800">
+              <h1 className="text-2xl font-black text-white">Preference Invariant &amp; Contradiction Auditor</h1>
+              <p className="text-xs text-slate-400 mt-1">
+                Monitors active constraints for logical deadlocks, self-excluding ranges, and conflicting requirement levels (Spec §14).
+              </p>
+            </div>
+            <ContradictionsBanner
+              contradictions={contradictions}
+              onResolve={handleResolveContradiction}
             />
           </div>
         )}
+
+        {/* 5. PAIR EVALUATOR VIEW (Spec §7, §26) */}
+        {activeView === 'evaluator' && (
+          <PairEvaluatorView currentUser={currentUser} candidates={candidates} />
+        )}
       </main>
 
-      {/* Profile Detail Slide-up Modal */}
-      {selectedDetailProfile && (
-        <ProfileDetailModal
-          profile={selectedDetailProfile}
-          userProfile={userProfile}
-          preferences={preferences}
-          onClose={() => setSelectedDetailProfile(null)}
-          onSwipe={(action, profile) => {
-            handleSwipe(action, profile)
-            setSelectedDetailProfile(null)
-          }}
+      {/* Deep 12-Dimension Report Modal */}
+      {selectedReport && (
+        <DeepReportModal
+          candidate={selectedReport.candidate}
+          evaluation={selectedReport.evaluation}
+          currentUser={currentUser}
+          onClose={() => setSelectedReport(null)}
         />
       )}
 
-      {/* Match Celebration Modal ("IT'S A MATCH!") */}
-      {newMatchModalProfile && (
-        <MatchModal
-          matchProfile={newMatchModalProfile}
-          userProfile={userProfile}
-          onClose={() => setNewMatchModalProfile(null)}
-          onSendMessage={handleSendFromMatchModal}
-        />
-      )}
-
-      {/* Tinder Gold "Likes You" Modal */}
-      {showLikesYouModal && (
-        <LikesYouModal
-          onClose={() => setShowLikesYouModal(false)}
-          onInstantMatch={handleInstantMatch}
-        />
-      )}
-
-      {/* User Profile & Discovery Settings Modal */}
-      {showProfileModal && (
-        <UserProfileModal
-          userProfile={userProfile}
-          onUpdateProfile={(updated) => setUserProfile(updated)}
-          preferences={preferences}
-          onUpdatePreferences={(updated) => setPreferences(updated)}
-          onClose={() => setShowProfileModal(false)}
-        />
-      )}
-
-      {/* Safety Center Modal */}
-      {showSafetyModal && (
-        <SafetyModal onClose={() => setShowSafetyModal(false)} />
+      {/* Notification Toast */}
+      {toastMessage && (
+        <div className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-slate-900 border border-indigo-500/50 shadow-2xl shadow-black text-xs font-semibold text-white flex items-center space-x-2 animate-in fade-in slide-in-from-bottom-2">
+          <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          <span>{toastMessage}</span>
+        </div>
       )}
     </div>
   )

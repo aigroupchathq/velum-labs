@@ -1,149 +1,144 @@
+// Universal Compatibility Platform: Navigation Bar
 import React from 'react'
-import { Flame, Volume2, VolumeX, Moon, Sun, Sparkles, User, Compass, MessageCircle } from 'lucide-react'
-import type { ActiveTab } from '../types'
+import {
+  Compass,
+  Sliders,
+  AlertTriangle,
+  Binary,
+  Layers,
+  Sparkles,
+  ShieldCheck,
+} from 'lucide-react'
+import type { UniversalUserProfile } from '../types'
+
+export type ActiveView = 'recs' | 'onboarding' | 'optimizer' | 'contradictions' | 'evaluator'
 
 interface NavbarProps {
-  activeTab: ActiveTab
-  setActiveTab: (tab: ActiveTab) => void
-  soundEnabled: boolean
-  toggleSound: () => void
-  darkMode: boolean
-  toggleDarkMode: () => void
-  onOpenProfile: () => void
-  unreadMessagesCount: number
-  likesCount: number
+  activeView: ActiveView
+  onSelectView: (view: ActiveView) => void
+  currentUser: UniversalUserProfile
+  contradictionCount: number
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
-  activeTab,
-  setActiveTab,
-  soundEnabled,
-  toggleSound,
-  darkMode,
-  toggleDarkMode,
-  onOpenProfile,
-  unreadMessagesCount,
-  likesCount,
+  activeView,
+  onSelectView,
+  currentUser,
+  contradictionCount,
 }) => {
   return (
-    <>
-      {/* Mobile Top Header */}
-      <header className="md:hidden flex items-center justify-between px-4 py-3 bg-white dark:bg-[#111418] border-b border-gray-200 dark:border-gray-800 z-30 shrink-0">
-        <button
-          onClick={onOpenProfile}
-          className="relative p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition"
-          title="My Profile"
-        >
-          <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-rose-500 shadow-sm">
+    <header className="border-b border-slate-800 bg-slate-900/90 backdrop-blur-md sticky top-0 z-40">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo & Platform Mission Title */}
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => onSelectView('recs')}>
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+              <Compass className="w-6 h-6 text-white" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="font-bold text-lg text-white tracking-tight">UNIVERSAL</span>
+                <span className="text-xs px-2 py-0.5 rounded-full font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                  Reciprocal Engine
+                </span>
+              </div>
+              <p className="text-[11px] text-slate-400 hidden sm:block">
+                Mutual Compatibility • Non-Gamified • Explainable
+              </p>
+            </div>
+          </div>
+
+          {/* Navigation Views */}
+          <nav className="flex items-center space-x-1 sm:space-x-2">
+            <button
+              onClick={() => onSelectView('recs')}
+              className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                activeView === 'recs'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
+            >
+              <Sparkles className="w-4 h-4" />
+              <span>Recommendations</span>
+            </button>
+
+            <button
+              onClick={() => onSelectView('onboarding')}
+              className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                activeView === 'onboarding'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
+            >
+              <Layers className="w-4 h-4" />
+              <span className="hidden md:inline">Progressive Profile</span>
+              <span className="md:hidden">Profile</span>
+            </button>
+
+            <button
+              onClick={() => onSelectView('optimizer')}
+              className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                activeView === 'optimizer'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
+            >
+              <Sliders className="w-4 h-4" />
+              <span className="hidden md:inline">Preference Optimizer</span>
+              <span className="md:hidden">Optimize</span>
+            </button>
+
+            <button
+              onClick={() => onSelectView('contradictions')}
+              className={`flex items-center space-x-1.5 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all relative ${
+                activeView === 'contradictions'
+                  ? 'bg-amber-600 text-white shadow-md shadow-amber-600/20'
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
+            >
+              <AlertTriangle className="w-4 h-4 text-amber-400" />
+              <span className="hidden lg:inline">Contradictions</span>
+              {contradictionCount > 0 && (
+                <span className="bg-amber-500 text-slate-950 font-bold text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                  {contradictionCount}
+                </span>
+              )}
+            </button>
+
+            <button
+              onClick={() => onSelectView('evaluator')}
+              className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
+                activeView === 'evaluator'
+                  ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/20'
+                  : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+              }`}
+            >
+              <Binary className="w-4 h-4" />
+              <span className="hidden lg:inline">Pair Evaluator</span>
+            </button>
+          </nav>
+
+          {/* User Profile Pill */}
+          <div className="flex items-center space-x-3">
+            <div className="hidden sm:flex flex-col text-right">
+              <div className="flex items-center justify-end space-x-1.5">
+                <span className="text-xs font-semibold text-white">{currentUser.identity.name}</span>
+                {currentUser.identity.verified && (
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                )}
+              </div>
+              <span className="text-[10px] text-slate-400">
+                {currentUser.lifestyle.diet} • {currentUser.intention.relationshipStructure}
+              </span>
+            </div>
             <img
-              src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80"
-              alt="My Avatar"
-              className="w-full h-full object-cover"
+              src={currentUser.identity.photos[0]}
+              alt={currentUser.identity.name}
+              className="w-9 h-9 rounded-full object-cover ring-2 ring-indigo-500/30"
             />
           </div>
-        </button>
-
-        <div className="flex items-center gap-1.5 cursor-pointer" onClick={() => setActiveTab('recs')}>
-          <div className="w-8 h-8 flex items-center justify-center">
-            <svg viewBox="0 0 40 40" className="w-8 h-8 drop-shadow">
-              <defs>
-                <linearGradient id="navFlameMob" x1="0%" y1="100%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#fd267a" />
-                  <stop offset="100%" stop-color="#ff6036" />
-                </linearGradient>
-              </defs>
-              <path fill="url(#navFlameMob)" d="M21.2 3.6C21.2 3.6 21 6.5 20.3 8.3C19.7 10.1 18.5 12.3 16.8 13.9C15.1 15.5 12.8 16.8 12.8 19.3C12.8 24.3 16.9 28.4 21.9 28.4C26.9 28.4 31 24.3 31 19.3C31 13.8 27.2 8.7 21.2 3.6ZM21.9 25.5C19.6 25.5 17.7 23.6 17.7 21.3C17.7 19.8 18.6 18.2 19.7 17.1C20.4 16.3 21.3 15.7 21.9 14.8C22.6 16.1 23.4 17.6 23.4 19.4C23.4 19.6 23.4 19.9 23.3 20.1C23.9 20.1 24.5 20.3 25 20.7C25.7 21.3 26.1 22.2 26.1 23.2C26.1 24.5 24.2 25.5 21.9 25.5Z"/>
-            </svg>
-          </div>
-          <span className="text-2xl font-black tracking-tight text-brand-gradient">
-            tinder
-          </span>
         </div>
-
-        <div className="flex items-center gap-1">
-          <button
-            onClick={toggleSound}
-            className="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-full transition"
-            title={soundEnabled ? 'Mute Sounds' : 'Enable Sounds'}
-          >
-            {soundEnabled ? <Volume2 className="w-5 h-5 text-rose-500" /> : <VolumeX className="w-5 h-5" />}
-          </button>
-          <button
-            onClick={toggleDarkMode}
-            className="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-full transition"
-            title="Toggle Dark/Light Mode"
-          >
-            {darkMode ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5" />}
-          </button>
-        </div>
-      </header>
-
-      {/* Mobile Bottom Navigation Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 h-16 bg-white dark:bg-[#111418] border-t border-gray-200 dark:border-gray-800 flex items-center justify-around z-30 px-2 shadow-lg">
-        <button
-          onClick={() => setActiveTab('recs')}
-          className={`flex flex-col items-center justify-center p-2 rounded-xl transition ${
-            activeTab === 'recs'
-              ? 'text-rose-500 scale-105'
-              : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
-          }`}
-        >
-          <Flame className="w-6 h-6 fill-current" />
-          <span className="text-[10px] font-semibold mt-0.5">Discover</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('explore')}
-          className={`flex flex-col items-center justify-center p-2 rounded-xl transition ${
-            activeTab === 'explore'
-              ? 'text-rose-500 scale-105'
-              : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
-          }`}
-        >
-          <Compass className="w-6 h-6" />
-          <span className="text-[10px] font-semibold mt-0.5">Explore</span>
-        </button>
-
-        <button
-          onClick={() => setActiveTab('likes')}
-          className={`relative flex flex-col items-center justify-center p-2 rounded-xl transition ${
-            activeTab === 'likes'
-              ? 'text-amber-500 scale-105'
-              : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
-          }`}
-        >
-          <Sparkles className="w-6 h-6 fill-amber-500/20" />
-          <span className="text-[10px] font-semibold mt-0.5">Likes</span>
-          {likesCount > 0 && (
-            <span className="absolute top-1 right-2 bg-gradient-to-r from-amber-400 to-yellow-500 text-black text-[9px] font-extrabold px-1.5 py-0.2 rounded-full">
-              {likesCount}
-            </span>
-          )}
-        </button>
-
-        <button
-          onClick={() => setActiveTab('likes')}
-          className={`relative flex flex-col items-center justify-center p-2 rounded-xl transition ${
-            activeTab === 'likes' && unreadMessagesCount > 0
-              ? 'text-rose-500'
-              : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200'
-          }`}
-        >
-          <MessageCircle className="w-6 h-6" />
-          <span className="text-[10px] font-semibold mt-0.5">Chat</span>
-          {unreadMessagesCount > 0 && (
-            <span className="absolute top-1 right-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white dark:ring-[#111418]"></span>
-          )}
-        </button>
-
-        <button
-          onClick={onOpenProfile}
-          className="flex flex-col items-center justify-center p-2 rounded-xl text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition"
-        >
-          <User className="w-6 h-6" />
-          <span className="text-[10px] font-semibold mt-0.5">Profile</span>
-        </button>
-      </nav>
-    </>
+      </div>
+    </header>
   )
 }
