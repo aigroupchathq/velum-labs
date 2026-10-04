@@ -87,6 +87,42 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
             <p className="text-[11px] text-slate-500 mt-1">Minimal change to mutual value fit</p>
           </div>
         </div>
+
+        {/* Visual Concentric Pool Geometry Sparkline */}
+        <div className="mt-6 p-4 rounded-2xl bg-slate-950/60 border border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="space-y-1">
+            <span className="text-xs font-bold text-white block">Search Horizon Topology</span>
+            <p className="text-[11px] text-slate-400">
+              Concentric geometric expansion from baseline ({baseCandidates}) to projected ({projectedCandidates}) pool.
+            </p>
+          </div>
+          <div className="flex items-center space-x-3">
+            <div className="relative w-24 h-24 flex items-center justify-center">
+              {/* Outer projected ring */}
+              <div
+                className="absolute rounded-full border-2 border-dashed border-indigo-500/50 bg-indigo-500/10 transition-all duration-500"
+                style={{
+                  width: `${Math.min(96, 44 + (projectedCandidates - baseCandidates) * 0.45)}px`,
+                  height: `${Math.min(96, 44 + (projectedCandidates - baseCandidates) * 0.45)}px`,
+                }}
+              />
+              {/* Inner baseline ring */}
+              <div className="w-11 h-11 rounded-full border-2 border-indigo-400 bg-indigo-600/30 flex items-center justify-center z-10 shadow-lg shadow-indigo-900/30">
+                <span className="text-[10px] font-black text-white">{baseCandidates}</span>
+              </div>
+            </div>
+            <div className="text-[11px] space-y-1 text-slate-400">
+              <div className="flex items-center space-x-1.5">
+                <span className="w-2 h-2 rounded-full bg-indigo-400 inline-block" />
+                <span>Baseline Core: {baseCandidates}</span>
+              </div>
+              <div className="flex items-center space-x-1.5">
+                <span className="w-2 h-2 rounded-full bg-indigo-500/40 border border-indigo-400 inline-block" />
+                <span>Simulated: +{projectedCandidates - baseCandidates} reachable</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Interactive Adjustment Sliders */}

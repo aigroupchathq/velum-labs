@@ -409,9 +409,14 @@ export const ProgressiveDisclosureModal: React.FC<ProgressiveDisclosureProps> = 
                   }
                   className="w-full accent-indigo-500"
                 />
-                <span className="text-[10px] text-slate-500 block mt-1">
-                  At 70% flexibility, omnivore partners receive partial credit without disqualification.
-                </span>
+                <div className="mt-3 p-3 rounded-lg bg-slate-900 border border-slate-800 text-xs text-slate-300">
+                  <span className="text-[10px] uppercase font-bold text-indigo-400 block mb-1 tracking-wider">
+                    Natural Language Policy Synthesis (Spec §5)
+                  </span>
+                  <p className="italic text-slate-300 leading-relaxed">
+                    &ldquo;I eat <span className="text-white font-semibold underline decoration-indigo-500">{userState.lifestyle.diet}</span>, I prefer <span className="text-white font-semibold underline decoration-indigo-500">{userState.preferences.dietPreference.preferredDiets.join(', ')}</span> partners, and I am willing to compromise with <span className="text-indigo-400 font-bold">{userState.preferences.dietPreference.flexibility}%</span> tolerance for dietary differences.&rdquo;
+                  </p>
+                </div>
               </div>
 
               <div>
