@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import type { Profile, SwipeAction } from '../types'
+import type { Profile, SwipeAction, UserProfile, UserPreferences } from '../types'
+import { evaluateMatchCompatibility } from '../utils/matchingEngine'
+import { CompatibilityDrawer } from './CompatibilityDrawer'
 import {
   ChevronDown,
   CheckCircle2,
@@ -20,12 +22,16 @@ import {
 
 interface ProfileDetailModalProps {
   profile: Profile | null
+  userProfile: UserProfile
+  preferences: UserPreferences
   onClose: () => void
   onSwipe: (action: SwipeAction, profile: Profile) => void
 }
 
 export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({
   profile,
+  userProfile,
+  preferences,
   onClose,
   onSwipe,
 }) => {
@@ -33,6 +39,8 @@ export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({
   const [isPlayingAnthem, setIsPlayingAnthem] = useState(false)
 
   if (!profile) return null
+
+  const compatibilityReport = evaluateMatchCompatibility(userProfile, preferences, profile)
 
   const handleAction = (action: SwipeAction) => {
     onSwipe(action, profile)
@@ -133,6 +141,9 @@ export const ProfileDetailModal: React.FC<ProfileDetailModalProps> = ({
               </div>
             )}
           </div>
+
+          {/* Match Intelligence Breakdown */}
+          <CompatibilityDrawer report={compatibilityReport} isInline={true} />
 
           {/* About Me Section */}
           {profile.bio && (

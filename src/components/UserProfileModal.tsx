@@ -323,6 +323,143 @@ export const UserProfileModal: React.FC<UserProfileModalProps> = ({
                   </div>
                 </div>
 
+                {/* Match Framework: Hard Requirements & Controlled Flexibility */}
+                <div className="p-4 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700/80 space-y-3">
+                  <div className="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-2">
+                    <span className="text-xs font-black uppercase tracking-wider text-rose-500">
+                      Hard Requirements (Auto-Exclude)
+                    </span>
+                    <span className="text-[10px] text-gray-400">Strict Dealbreakers</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-[#1a1f26] border border-gray-100 dark:border-gray-800 cursor-pointer">
+                      <span className="font-semibold text-gray-800 dark:text-gray-200">Age Range</span>
+                      <input
+                        type="checkbox"
+                        checked={prefsData.hardRequirements?.ageRange ?? true}
+                        onChange={(e) =>
+                          setPrefsData({
+                            ...prefsData,
+                            hardRequirements: {
+                              ...prefsData.hardRequirements,
+                              ageRange: e.target.checked,
+                            },
+                          })
+                        }
+                        className="w-4 h-4 accent-rose-500 rounded"
+                      />
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-[#1a1f26] border border-gray-100 dark:border-gray-800 cursor-pointer">
+                      <span className="font-semibold text-gray-800 dark:text-gray-200">Max Distance</span>
+                      <input
+                        type="checkbox"
+                        checked={prefsData.hardRequirements?.distance ?? true}
+                        onChange={(e) =>
+                          setPrefsData({
+                            ...prefsData,
+                            hardRequirements: {
+                              ...prefsData.hardRequirements,
+                              distance: e.target.checked,
+                            },
+                          })
+                        }
+                        className="w-4 h-4 accent-rose-500 rounded"
+                      />
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-[#1a1f26] border border-gray-100 dark:border-gray-800 cursor-pointer">
+                      <span className="font-semibold text-gray-800 dark:text-gray-200">Non-Smoker</span>
+                      <input
+                        type="checkbox"
+                        checked={prefsData.hardRequirements?.nonSmoker ?? true}
+                        onChange={(e) =>
+                          setPrefsData({
+                            ...prefsData,
+                            hardRequirements: {
+                              ...prefsData.hardRequirements,
+                              nonSmoker: e.target.checked,
+                            },
+                          })
+                        }
+                        className="w-4 h-4 accent-rose-500 rounded"
+                      />
+                    </label>
+
+                    <label className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-[#1a1f26] border border-gray-100 dark:border-gray-800 cursor-pointer">
+                      <span className="font-semibold text-gray-800 dark:text-gray-200">Intent Match</span>
+                      <input
+                        type="checkbox"
+                        checked={prefsData.hardRequirements?.relationshipIntent ?? false}
+                        onChange={(e) =>
+                          setPrefsData({
+                            ...prefsData,
+                            hardRequirements: {
+                              ...prefsData.hardRequirements,
+                              relationshipIntent: e.target.checked,
+                            },
+                          })
+                        }
+                        className="w-4 h-4 accent-rose-500 rounded"
+                      />
+                    </label>
+                  </div>
+
+                  {/* Controlled Flexibility Margins */}
+                  <div className="pt-2 border-t border-gray-200 dark:border-gray-700 space-y-2">
+                    <span className="text-xs font-black uppercase tracking-wider text-amber-500 block">
+                      Controlled Flexibility Margins
+                    </span>
+
+                    <div>
+                      <div className="flex justify-between text-xs font-medium mb-1">
+                        <span className="text-gray-600 dark:text-gray-300">Age Flexibility Margin</span>
+                        <span className="font-bold text-amber-500">±{prefsData.flexibilityMargins?.age ?? 2} yrs</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="5"
+                        value={prefsData.flexibilityMargins?.age ?? 2}
+                        onChange={(e) =>
+                          setPrefsData({
+                            ...prefsData,
+                            flexibilityMargins: {
+                              ...prefsData.flexibilityMargins,
+                              age: parseInt(e.target.value),
+                            },
+                          })
+                        }
+                        className="w-full accent-amber-500 cursor-pointer"
+                      />
+                    </div>
+
+                    <div>
+                      <div className="flex justify-between text-xs font-medium mb-1">
+                        <span className="text-gray-600 dark:text-gray-300">Distance Flexibility Margin</span>
+                        <span className="font-bold text-amber-500">±{prefsData.flexibilityMargins?.distance ?? 5} mi</span>
+                      </div>
+                      <input
+                        type="range"
+                        min="0"
+                        max="15"
+                        value={prefsData.flexibilityMargins?.distance ?? 5}
+                        onChange={(e) =>
+                          setPrefsData({
+                            ...prefsData,
+                            flexibilityMargins: {
+                              ...prefsData.flexibilityMargins,
+                              distance: parseInt(e.target.value),
+                            },
+                          })
+                        }
+                        className="w-full accent-amber-500 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 {/* Incognito / Privacy Toggle */}
                 <div className="flex items-center justify-between p-3 rounded-2xl bg-gray-50 dark:bg-gray-800/60 border border-gray-100 dark:border-gray-800">
                   <div>

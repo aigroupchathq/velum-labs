@@ -80,6 +80,20 @@ export const App: React.FC = () => {
     soundEnabled: true,
     darkMode: true,
     incognito: false,
+    hardRequirements: {
+      ageRange: true,
+      distance: true,
+      nonSmoker: true,
+      relationshipIntent: false,
+    },
+    flexibilityMargins: {
+      age: 2,
+      distance: 5,
+    },
+    strongPreferences: {
+      intent: true,
+      lifestyle: true,
+    },
   })
 
   // Initialize Dark Mode & Sounds
@@ -360,6 +374,8 @@ export const App: React.FC = () => {
             <CardDeck
               profiles={filteredProfiles}
               currentIndex={currentIndex}
+              userProfile={userProfile}
+              preferences={preferences}
               onSwipe={handleSwipe}
               onRewind={handleRewind}
               canRewind={swipeHistory.length > 0 && currentIndex > 0}
@@ -379,6 +395,8 @@ export const App: React.FC = () => {
       {selectedDetailProfile && (
         <ProfileDetailModal
           profile={selectedDetailProfile}
+          userProfile={userProfile}
+          preferences={preferences}
           onClose={() => setSelectedDetailProfile(null)}
           onSwipe={(action, profile) => {
             handleSwipe(action, profile)

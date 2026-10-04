@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
-import type { Profile, SwipeAction } from '../types'
+import type { Profile, SwipeAction, UserProfile, UserPreferences } from '../types'
+import { evaluateMatchCompatibility } from '../utils/matchingEngine'
+import { CompatibilityDrawer } from './CompatibilityDrawer'
 import {
   RotateCcw,
   X,
@@ -14,11 +16,14 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
+  Scale,
 } from 'lucide-react'
 
 interface CardDeckProps {
   profiles: Profile[]
   currentIndex: number
+  userProfile: UserProfile
+  preferences: UserPreferences
   onSwipe: (action: SwipeAction, profile: Profile) => void
   onRewind: () => void
   canRewind: boolean
@@ -31,6 +36,8 @@ interface CardDeckProps {
 export const CardDeck: React.FC<CardDeckProps> = ({
   profiles,
   currentIndex,
+  userProfile,
+  preferences,
   onSwipe,
   onRewind,
   canRewind,
@@ -41,6 +48,11 @@ export const CardDeck: React.FC<CardDeckProps> = ({
 }) => {
   const currentProfile = profiles[currentIndex]
   const nextProfile = profiles[currentIndex + 1]
+
+  const [showMatchIntelligence, setShowMatchIntelligence] = useState(false)
+  const compatibilityReport = currentProfile
+    ? evaluateMatchCompatibility(userProfile, preferences, currentProfile)
+    : null
 
   // Photo carousel index on the current card
   const [photoIndex, setPhotoIndex] = useState(0)
@@ -329,6 +341,31 @@ export const CardDeck: React.FC<CardDeckProps> = ({
 
               {/* Card Bottom Details Info */}
               <div className="absolute bottom-0 inset-x-0 p-5 text-white z-20 flex flex-col justify-end pointer-events-none">
+                {/* Match Intelligence Pill */}
+                {compatibilityReport && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setShowMatchIntelligence(true)
+                    }}
+                    className={`pointer-events-auto flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-extrabold backdrop-blur-md shadow-md transition active:scale-95 mb-2 w-fit cursor-pointer ${
+                      compatibilityReport.isExcluded
+                        ? 'bg-red-500/90 text-white border border-red-400/60 animate-pulse'
+                        : compatibilityReport.mutualScore >= 80
+                        ? 'bg-emerald-500/90 text-white border border-emerald-400/60'
+                        : 'bg-amber-500/90 text-white border border-amber-400/60'
+                    }`}
+                    title="Click to view Match Intelligence breakdown"
+                  >
+                    <Scale className="w-3.5 h-3.5" />
+                    <span>
+                      {compatibilityReport.isExcluded
+                        ? '⚠️ Excluded by Rule'
+                        : `${compatibilityReport.mutualScore}% Match • ${compatibilityReport.confidenceScore}% Conf`}
+                    </span>
+                  </button>
+                )}
+
                 <div className="flex items-center justify-between">
                   <div className="flex items-baseline gap-2">
                     <h2 className="text-3xl font-extrabold tracking-tight drop-shadow-md">
@@ -508,6 +545,18 @@ export const CardDeck: React.FC<CardDeckProps> = ({
         <div className="absolute top-2 left-1/2 -translate-x-1/2 bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg flex items-center gap-1.5 animate-bounce z-40">
           <Sparkles className="w-3.5 h-3.5 fill-current" />
           <span>Profile Boost Active (10x Views)</span>
+        </div>
+      )}
+
+      {/* Match Intelligence Modal */}
+      {showMatchIntelligence && compatibilityReport && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm overflow-y-auto">
+          <div className="relative w-full max-w-lg">
+            <CompatibilityDrawer
+              report={compatibilityReport}
+              onClose={() => setShowMatchIntelligence(false)}
+            />
+          </div>
         </div>
       )}
     </div>
