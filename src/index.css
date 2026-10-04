@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --brand-primary: #fe3c72;
+    --brand-gradient-start: #fd267a;
+    --brand-gradient-end: #ff6036;
+    --like-color: #20c997;
+    --nope-color: #fd5068;
+    --superlike-color: #29b6f6;
+    --boost-color: #b650ff;
+    --gold-color: #f5b800;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+}
+
+/* Custom Gradients */
+.bg-brand-gradient {
+  background: linear-gradient(135deg, #fd267a, #ff6036);
+}
+
+.text-brand-gradient {
+  background: linear-gradient(135deg, #fd267a, #ff6036);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #ffe082 0%, #ffb300 50%, #ff8f00 100%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #ffe082 0%, #ffb300 50%, #ff8f00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-platinum-gradient {
+  background: linear-gradient(135deg, #4f525c 0%, #101113 100%);
+}
+
+.bg-superlike-gradient {
+  background: linear-gradient(135deg, #2bebef 0%, #0083f8 100%);
+}
+
+.bg-boost-gradient {
+  background: linear-gradient(135deg, #ce79ff 0%, #7a00cd 100%);
+}
+
+/* Tinder Swipe Stamps */
+.stamp-like {
+  border: 4px solid #20c997;
+  color: #20c997;
+  transform: rotate(-15deg);
+  border-radius: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 0 12px rgba(32, 201, 151, 0.4);
+}
+
+.stamp-nope {
+  border: 4px solid #fd5068;
+  color: #fd5068;
+  transform: rotate(15deg);
+  border-radius: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 0 12px rgba(253, 80, 104, 0.4);
+}
+
+.stamp-superlike {
+  border: 4px solid #29b6f6;
+  color: #29b6f6;
+  transform: rotate(0deg);
+  border-radius: 8px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  box-shadow: 0 0 12px rgba(41, 182, 246, 0.4);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(150, 150, 150, 0.3);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(150, 150, 150, 0.5);
+}
+
+/* Radar Animation for Empty Deck */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.animate-radar-1 {
+  animation: radar-pulse 3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+
+.animate-radar-2 {
+  animation: radar-pulse 3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  animation-delay: 1s;
+}
+
+.animate-radar-3 {
+  animation: radar-pulse 3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+  animation-delay: 2s;
+}
