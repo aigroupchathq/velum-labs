@@ -1,7 +1,51 @@
 # Universal Compatibility & Matching Platform: Universal Matching Ontology (UMO)
-**Document Version:** 1.0.0  
-**Status:** Canonical Reference Standard  
+**Document Version:** 0.2 (DRAFT — not accepted)  
 **Governing Standard:** Section 3 of Master Build Specification  
+
+> [!IMPORTANT]
+> **Review notes (v0.2)**
+> 1. The 48 categories are mandated by the spec. The **value lists inside each category are
+>    illustrative drafts written by the agent**, not product requirements. Each list needs review
+>    (ideally with people from the communities concerned) before Phase 1 — see ARCHITECTURE_REVIEW.md D-05.
+> 2. Mermaid `mindmap` below renders on GitHub but not in every viewer.
+> 3. Categories requiring explicit **policy decisions on discrimination risk** before they may be
+>    `matchable` or `hard_constraint_capable` (spec §0.13, §40): 13 Ethnicity, 26 Physical attributes,
+>    24 Disability, 25 Neurodivergence, 21 Health, 22 Sexual health, 10 Religion, 35 Politics,
+>    02 Gender (as a preference target), 09 existing children. See ARCHITECTURE_REVIEW.md D-06.
+> 4. Category 45 Behaviour, 46 Mutuality, 47 Uncertainty and 48 Outcomes are **system-derived**
+>    categories; users do not fill them in.
+> 5. Every attribute is optional unless ARCHITECTURE_REVIEW.md resolves otherwise (spec §6:
+>    "Do not force users to complete every field").
+
+### User model (spec §6)
+
+```
+USER
+├── Identity                 (cat 01–05, 12–14, 24–26)
+├── Relationship objective   (cat 06–07)
+├── Preferences              (cat 42; one record per attribute)
+├── Requirements             (requirement_level = MUST)
+├── Dealbreakers             (cat 43; explicit flag)
+├── Flexibility              (cat 44; 0–100 per preference)
+├── Lifestyle                (cat 18, 20, 21, 33, 34)
+├── Values                   (cat 10, 11, 15, 29, 35, 36)
+├── Attraction preferences   (cat 05; six types below)
+├── Accessibility            (cat 23)
+├── Family plans             (cat 09)
+├── Communication            (cat 17)
+├── Geography                (cat 30–31)
+├── Availability             (cat 32, 38)
+├── Privacy controls         (cat 40)
+├── Safety settings          (cat 41)
+├── Verification             (cat 39)
+└── Behavioural history      (cat 45; system-recorded)
+```
+
+### Attraction types (spec §12)
+
+Physical · Emotional · Intellectual · Romantic · Sexual · Social. Attraction is never reduced to
+physical appearance, and **no characteristic is ever inferred from images**. The aesthetic /
+auditory / spiritual modes listed under Category 05 below are agent suggestions pending review.
 
 ---
 
@@ -301,34 +345,34 @@ mindmap
 - **Attributes:** `photo_verified` (boolean), `id_verified` (boolean), `social_proof_endorsements` (count).
 
 #### Category 40: PRIVACY
-- **Definition:** Granular controls over profile visibility and data redaction.
-- **Tiers:** Tier 1 (Public in discovery), Tier 2 (Mutual matches only), Tier 3 (Post-handshake only), Tier 4 (Client-side homomorphic / encrypted).
+- **Definition:** Granular controls over profile visibility and data use.
+- **Model:** default `privacy_level` per attribute (`private`, `matches_only`, `members`, `public`) plus six independent per-user permissions (store, display, searchable, matchable, private, verified) — see ATTRIBUTE_DICTIONARY §4. Encryption approach is an open decision (D-08).
 
 #### Category 41: SAFETY
-- **Definition:** Safety guardrails, blocklists, anti-stalking fuzzing, and safety check-ins.
-- **Attributes:** `geographic_fuzzing_radius_km` (default 2km), `incognito_mode_active`, `safety_contact_enabled`.
+- **Definition:** Safety guardrails, blocklists, location coarsening, and safety check-ins.
+- **Attributes (draft):** `incognito_mode_active`, `safety_contact_enabled`. Location coarsening parameters are pending SECURITY_SPEC.
 
 ---
 
 ### Domain H: Meta-Evaluation & Mechanics
 
 #### Category 42: PREFERENCES
-- **Definition:** Stated desires across any of categories 01–41 with associated user-defined weights ($w_i \in [1, 5]$).
+- **Definition:** Stated desires about a partner's attribute, each with `requirement_level`, `importance` (1–5), `flexibility` (0–100), `dealbreaker`, `privacy_setting`.
 
 #### Category 43: DEALBREAKERS
-- **Definition:** Hard Boolean disqualifiers. If candidate attribute $\notin$ allowed values, then $S_{\text{mutual}} = 0$ and candidate is disqualified.
+- **Definition:** Explicit exclusion flags. A violated dealbreaker on a known, matchable value (in either direction) makes the pair ineligible (MATCHING_SPEC §4). Unknown values do not trigger it (open decision D-07).
 
 #### Category 44: FLEXIBILITY
-- **Definition:** The specified margin of acceptable relaxation $\Delta_i$ for scalar/ordinal preferences before full penalty applies.
+- **Definition:** Willingness to compromise on a preference, 0–100. Mapping to scores is open decision D-09.
 
 #### Category 45: BEHAVIOUR
-- **Definition:** Observed relational behavior (ghosting history, respectful closure rate, average response cadence). Never uses hidden punitive algorithmic shadowbanning.
+- **Definition:** Observed in-product actions (system-recorded events). Not used as a matching input in the MVP; no hidden punitive ranking.
 
 #### Category 46: MUTUALITY
-- **Definition:** The mathematical framework guaranteeing bidirectional evaluation via Harmonic Mean.
+- **Definition:** Aggregation of A→B and B→A compatibility. Five methods are compared; harmonic mean is provisional (MATCHING_SPEC §6).
 
 #### Category 47: UNCERTAINTY
-- **Definition:** The quantification of unpopulated or unverified attributes, resulting in an explicit Epistemic Confidence Score ($C \in [0, 1]$).
+- **Definition:** What is unknown or unverified for a pair; reported separately and drives the confidence score (0–100), never the compatibility score.
 
 #### Category 48: OUTCOMES
-- **Definition:** Longitudinal outcome tracking for matched pairs, informing empirical platform validation without training black-box recommendation models.
+- **Definition:** Downstream signals (conversation, date, second date, feedback) collected for evaluation; never shown to users as a probability of relationship success.

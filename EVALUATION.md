@@ -1,104 +1,67 @@
-# Universal Compatibility & Matching Platform: Evaluation & Benchmarking Specification
-**Document Version:** 1.0.0  
-**Status:** Canonical Recommendation Quality & Comparative Evaluation Standard  
-**Governing Standard:** Section 8 & Section 41 of Master Build Specification  
+# EVALUATION.md
 
----
+> **Status:** DRAFT v0.2 — **evaluation protocol only. No experiment has been run. There are no
+> results.** Version 0.1 of this file contained a results table with invented numbers; it has
+> been removed (see CHANGELOG.md). Simulated results, when they exist, will never be presented as
+> real-world evidence (spec §29).
 
-## 1. Evaluation Methodology
+## 1. Hypothesis under test
 
-The core hypothesis of this platform is that **optimizing for mutual compatibility via harmonic aggregation and strict dealbreaker enforcement drastically improves real-world relationship discovery while eliminating the toxic concentration dynamics of swipe-based apps**.
+A universal compatibility ontology with reciprocal, constraint-aware matching produces better
+outcomes than conventional recommendation approaches. This is to be **tested**, not assumed.
+Outcomes in simulation can only show behaviour under the simulator's assumptions; real-world
+evidence requires Phases 13–14.
 
-To prove this empirically, the platform maintains a continuous comparative benchmark comparing our engine against four industry-standard baseline paradigms across a standardized synthetic cohort of 50,000 agents.
+## 2. Dataset
 
----
+| Stage | Dataset | Limitation |
+| :--- | :--- | :--- |
+| Phase 9 | Synthetic populations (TEST_PLAN §5), seeded | Preference and response behaviour are invented |
+| Phase 13 | Controlled beta, consenting users | Small, self-selected |
+| Phase 14 | Real-world experiments | Requires ethics/consent design (EXPERIMENT_PLAN.md, not yet written) |
 
-## 2. The 5 Benchmark Recommendation Models
+## 3. Assumptions to be documented before any run
 
-```mermaid
-graph TD
-    UserQuery["User Seeking Matches"]
-    UserQuery --> Model1["Model 1: Uniform Random Baseline"]
-    UserQuery --> Model2["Model 2: Engagement / Popularity Proxy (Tinder/Bumble ELO)"]
-    UserQuery --> Model3["Model 3: Unstructured Vector Cosine (LLM Embedding)"]
-    UserQuery --> Model4["Model 4: Unilateral Recommender (A -> B only)"]
-    UserQuery --> Model5["Model 5: Universal Mutual Compatibility Engine (Our Engine)"]
+- How synthetic users decide to like/pass, reply, continue, meet (the **response model**). Any
+  model built from the same compatibility rules as Model 5 biases the comparison in its favour;
+  the response model must be specified independently and its assumptions stated. **[OPEN D-21]**
+- Population composition per stratum.
+- Number of recommendation rounds, slate size, seeds.
 
-    Model1 --> Evaluator["Comparative Benchmarking Suite"]
-    Model2 --> Evaluator
-    Model3 --> Evaluator
-    Model4 --> Evaluator
-    Model5 --> Evaluator
+## 4. Models (spec §24, §28)
 
-    Evaluator --> Metrics["Empirical KPI Matrix & Gini Analysis"]
-```
+| # | Model | Definition (to be fixed before running) |
+| :--- | :--- | :--- |
+| 1 | Popularity | rank by likes received / exposure |
+| 2 | Simple similarity | attribute-overlap similarity, no preferences |
+| 3 | Conventional weighted recommendation | one-directional weighted preference score (A→B only) |
+| 4 | Reciprocal matching | A→B and B→A combined, no ontology-specific gates/uncertainty |
+| 5 | Universal Compatibility Engine | MATCHING_SPEC full pipeline |
 
-### 2.1 Model 1: Uniform Random Recommender (Null Baseline)
-- **Algorithm:** Selects uniformly at random from geographically proximate candidates within target age boundaries.
-- **Purpose:** Establishes the statistical lower bound for incidental compatibility.
+Mutuality-method comparison (arithmetic, geometric, harmonic, minimum, weighted reciprocal) is run
+as a sub-experiment of Model 5 (MATCHING_SPEC §6).
 
-### 2.2 Model 2: Engagement & Popularity Maximizer (Traditional Swipe Paradigm)
-- **Algorithm:** Ranks candidates by an internal ELO attractiveness rating derived from swipe volume. Maximizes platform time-on-screen and ad exposures.
-- **Flaw:** High popularity concentration; ignores bidirectional compatibility, causing high match asymmetry and rampant ghosting.
+## 5. Metrics (spec §28)
 
-### 2.3 Model 3: Unstructured Vector Cosine Similarity
-- **Algorithm:** Embeds unstructured profile text and tags into a dense vector space (e.g., 768-dim embeddings) and ranks candidates by cosine distance $\cos(\mathbf{v}_A, \mathbf{v}_B)$.
-- **Flaw:** Conflates identity with requirement; cannot guarantee hard dealbreaker enforcement (e.g., embedding vector may find two profiles similar despite one having a strict dealbreaker against the other's smoking status).
+mutual match rate · candidate coverage · recommendation concentration (e.g. exposure Gini,
+top-k share) · hard conflict rate (recommended pairs violating any stated MUST/dealbreaker) ·
+conversation prediction · conversation continuation · date prediction · second-date prediction ·
+user satisfaction proxy. In simulation, the "prediction" metrics measure agreement with the
+simulator's response model only.
 
-### 2.4 Model 4: Unilateral / One-Way Recommender
-- **Algorithm:** Computes $S_{A \to B}$ with full attribute fidelity, but completely ignores $S_{B \to A}$.
-- **Flaw:** High user satisfaction on initial presentation, followed by catastrophic conversion failure because Candidate B has zero interest in User A.
+## 6. Results
 
-### 2.5 Model 5: Universal Mutual Compatibility Engine (UMCE - Canonical)
-- **Algorithm:** Full 5-stage deterministic pipeline:
-  1. Multi-tier Inverted Boolean & Geodesic gate.
-  2. Directional scores $S_{A \to B}$ and $S_{B \to A}$ with missing-data normalization.
-  3. Harmonic Mean mutuality aggregation $H(S_{AB}, S_{BA})$.
-  4. Epistemic Confidence calibration $C(A, B)$.
-  5. Deterministic explainability deconstruction.
+**None.** To be filled only from executed, reproducible runs (code commit, seed, config recorded).
 
----
+## 7. Statistical method (planned)
 
-## 3. Empirical KPI & Metric Definitions
+Multiple seeds per configuration; report means with confidence intervals; paired comparisons
+across models on identical populations; correction for multiple comparisons. Significance is
+reported only where the design supports it.
 
-### 3.1 Mutual Match Conversion Rate (MMCR)
-$$\text{MMCR} = \frac{\text{Count}(\text{Handshakes Accepted by Both } A \text{ and } B)}{\text{Count}(\text{Total Recommended Matches Presented})}$$
+## 8. Failure cases, bias analysis, limitations, recommendations
 
-### 3.2 False Positive Dealbreaker Breach Rate (FPDBR)
-$$\text{FPDBR} = \frac{\text{Matches where } A \text{ breaches } d \in \mathcal{D}_B \lor B \text{ breaches } d \in \mathcal{D}_A}{\text{Total Recommendations Made}}$$
-*Target:* Exactly **0.00%** for UMCE (Guaranteed by Invariant 1).
-
-### 3.3 Deep Conversation Longevity (DCL)
-$$\text{DCL} = \Pr(\text{Conversation Exchanges} \ge 15 \mid \text{Mutual Match Formed})$$
-Measures substantive conversational engagement and mutual resonance, as opposed to immediate dead ends or one-word interactions.
-
-### 3.4 Impression Gini Coefficient (Popularity Concentration)
-$$G = \frac{\sum_{i=1}^n \sum_{j=1}^n |x_i - x_j|}{2n \sum_{i=1}^n x_i}$$
-where $x_i$ is the number of times profile $i$ is presented to potential partners.
-- **Lower is better:** High Gini ($> 0.70$) indicates extreme inequality where a tiny minority hoards attention while the vast majority is algorithmically hidden.
-- **Platform Mandate:** $G \le 0.40$.
-
-### 3.5 Minority Cohort Match Rate (MCMR)
-Ratio of successful matches per week for members of minority cohorts (e.g. trans users, disabled users, asexual users) relative to the population mean.
-
----
-
-## 4. Benchmark Performance Comparison (Synthetic Cohort $N=50,000$)
-
-| Metric | Model 1 (Random) | Model 2 (Swipe ELO) | Model 3 (Vector Cosine) | Model 4 (Unilateral) | Model 5 (UMCE - Ours) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Mutual Match Conversion (MMCR)** | 1.8% | 9.4% | 14.2% | 18.1% | **46.8%** |
-| **False Positive Dealbreaker (FPDBR)** | 42.1% | 28.5% | 12.3% | 0.0% (A only) | **0.00% (Strict Zero)** |
-| **Deep Conversation (DCL > 15)** | 3.2% | 11.2% | 18.7% | 16.5% | **58.3%** |
-| **Impression Gini ($G$)** | 0.05 | 0.84 | 0.61 | 0.52 | **0.32** |
-| **Minority Match Parity (MCMR)** | 0.22 | 0.18 | 0.48 | 0.54 | **0.91** |
-| **Ghosting Rate (< 3 msgs)** | 88.4% | 74.2% | 61.0% | 58.9% | **19.4%** |
-
----
-
-## 5. Epistemic Calibration & Scientific Non-Deception Protocol
-
-1. **Anti-Pseudoscience Rule:** The platform strictly prohibits describing compatibility scores as "probabilities of marriage success" or "guaranteed soulmates".
-2. **Confidence-Score Coupling:** An 88% compatibility score backed by a 25% confidence score must be visually presented with amber caution flags:
-   > *"High alignment in stated categories (88%), but only 4 of 16 core domains are filled. Significant discovery remains."*
-3. **Continuous Empirical Calibration:** User-reported outcomes (e.g. respectful mutual unmatching, 6-month check-ins) are periodically correlated against initial compatibility scores to continuously tune default category weights without compromising individual explainability.
+Sections to be completed from actual runs. Bias analysis will break down every metric by
+population stratum (TEST_PLAN §6). Known limitation up front: synthetic results cannot validate
+real-world relationship outcomes, and compatibility scores must not be described as probabilities
+of relationship success (spec §0.14).

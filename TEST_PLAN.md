@@ -1,94 +1,83 @@
-# Universal Compatibility & Matching Platform: Test Plan & Quality Assurance
-**Document Version:** 1.0.0  
-**Status:** Canonical QA & Invariant Verification Suite  
-**Governing Standard:** Section 7 & Section 41 of Master Build Specification  
+# TEST_PLAN.md
 
----
+> **Status:** DRAFT v0.2 — not accepted. **Current reality:** the repo has no test runner and no
+> CI. The only tests are an ad-hoc script (`src/utils/testMatchingEngine.ts`, 8 scenarios run via
+> `npx tsx`) against the prototype engine, which will be replaced in Phase 4.
 
-## 1. Testing Philosophy: Mathematical Invariants over Heuristics
+## 1. Tooling (proposed, [OPEN D-18])
 
-Because this platform governs real-world human relationship discovery and strictly rejects engagement gamification, traditional regression tests are insufficient. The testing suite is built around **strict mathematical property invariants, synthetic population generation, and algorithmic fairness audits**.
+| Need | Proposal |
+| :--- | :--- |
+| Unit / integration runner | Vitest (same toolchain as Vite) |
+| Property-based tests | fast-check |
+| Database tests | Postgres in a container, migrations applied per run |
+| API tests | runner against the API service once it exists |
+| End-to-end | Playwright |
+| Security | dependency audit, lint rules, authz test matrix, OWASP-style checks on API |
+| CI | provider not specified → open |
 
----
+## 2. Testing levels per subsystem (spec §36)
 
-## 2. Invariant Verification Suite
+Every subsystem: unit, integration, API, database, end-to-end, security, property-based.
+Matching engine additionally: mathematical invariant, synthetic population, fairness, regression
+(golden-file outputs pinned to `ruleset_version`).
 
-Every continuous integration (CI) run must validate the following 5 fundamental invariants against 100,000 randomized synthetic test pairs:
+## 3. Matching test catalogue (spec §26)
 
-### 2.1 Invariant 1: Absolute Dealbreaker Gating
-$$\forall A, B \quad \left(\exists d \in \mathcal{D}_A : B \text{ violates } d\right) \lor \left(\exists d \in \mathcal{D}_B : A \text{ violates } d\right) \implies S_{\text{mutual}}(A, B) = 0 \land \text{isExcluded} = \text{true}$$
-- **Verification Rule:** If User A has dealbreaker "Smoking = Never" and Candidate B smokes socially, Candidate B must receive an absolute zero mutual score, zero recommendation eligibility, and an explicit exclusion reason.
+| Area | Example cases |
+| :--- | :--- |
+| Hard conflicts | `wants_children` MUST definitely vs definitely not → ineligible (both directions) |
+| Soft conflicts | PREFERENCE mismatch lowers score, stays eligible |
+| Unknowns | B religion UNKNOWN → religion criterion UNKNOWN, not 0; uncertainty lists it |
+| Missing data | profile with only required fields → eligible, compatibility `null` or partial, LOW confidence |
+| Mutuality | (95, 25) never labelled strong; `asymmetric = true`; all five methods computed in harness |
+| Flexibility | importance 4, flexibility 70, no dealbreaker → never excluded (spec §13 example) |
+| Contradictions | distance NEUTRAL + max 10 km → `PREFERENCE_CONTRADICTION` (spec §14 example) |
+| Edge cases | identical users, empty preference sets, all-NEUTRAL user, everything MUST |
+| Duplicate attributes | two preference rows for one attribute rejected by constraint |
+| Invalid values | value outside `allowed_values` rejected at write; engine never sees it |
+| Privacy restrictions | `perm_matchable = false` → engine treats as UNKNOWN; explanation does not leak it |
+| Blocked users | either-direction block → never in candidates |
+| Age restrictions | under-18 never stored as active; age range MUST gates |
+| Distance | hard limit both directions; boundary values (= limit) |
+| Time zones | temporal feasibility across offsets, DST boundaries |
+| Relationship structures | monogamous vs polyamorous combinations, MUST vs PREFERENCE |
+| Same-sex matching | mutual gender/orientation eligibility for all combinations, including non-binary |
+| Multi-person structures | **[OPEN D-19]** engine is dyadic; tests define expected dyadic behaviour only |
+| Religious requirements | MUST same religion; practice-level preference with flexibility |
+| Children | has/wants combinations |
+| Accessibility | needs vs feasibility (pending D-06) |
+| Communication, lifestyle, values | dimension scores in range, correct contributors |
 
-### 2.2 Invariant 2: Epistemic Incompleteness Neutrality
-$$\forall A, B, k \quad \text{Score}(A, B \mid B.\text{attr}_k = \text{undefined}) \equiv \text{Score}(A, B \setminus \{k\})$$
-- **Verification Rule:** Removing an unpopulated attribute from the calculation must NEVER decrease the compatibility score. Unpopulated fields must only reduce the Confidence Score $C(A, B)$, never the Compatibility Score $S(A, B)$.
+## 4. Property-based invariants (spec §27, MATCHING_SPEC §11)
 
-### 2.3 Invariant 3: Mutuality Symmetry
-$$\forall A, B \quad S_{\text{mutual}}(A, B) \equiv S_{\text{mutual}}(B, A)$$
-- **Verification Rule:** Reversing the evaluation arguments must produce identical mutual scores down to 6 decimal precision.
+Run with generated profiles (minimum 10,000 cases per property in CI):
+non-matchable attribute changes never alter scores · dealbreaker false→true never adds eligibility ·
+known→UNKNOWN never removes eligibility nor yields 0 · blocked never recommended · never
+self-recommended · ineligible never recommended · mutuality symmetric · bounds respected ·
+deterministic · payment state never affects scores.
 
-### 2.4 Invariant 4: Confidence Boundedness
-$$\forall A, B \quad 0.0 \le C(A, B) \le 1.0$$
-- **Verification Rule:** Confidence score must be strictly monotonic with respect to the fraction of known weighted attributes and verification states.
+## 5. Synthetic population tests (spec §25)
 
-### 2.5 Invariant 5: Zero-Hallucination Explainability Audit
-$$\forall \text{explanation } e \in \mathcal{E}(A, B), \quad \exists \text{attribute } k \text{ such that } e \text{ derives deterministically from } (A.\text{attr}_k, B.\text{attr}_k)$$
-- **Verification Rule:** Every word and item in the "Top Synergies" and "Identified Frictions" lists must match a static template indexed by the corresponding attribute ID.
+Generator produces 10 / 100 / 1,000 / 10,000 / 100,000 / 1,000,000 users (largest sizes as far as
+computationally feasible; feasibility to be measured, not assumed). Required strata: common
+profiles, rare profiles, contradictory profiles, extreme preferences, missing information,
+highly constrained, highly flexible, imbalanced populations (e.g. gender ratios, rare
+orientations). Generator is seeded and reproducible.
 
----
+**Caveat:** synthetic distributions are invented; tests check correctness and robustness, not
+real-world behaviour.
 
-## 3. Synthetic Population Generator Architecture
+## 6. Fairness tests (spec §18)
 
-To avoid testing bias on narrow demographic samples, the test suite includes an automated generator (`tests/synthetic/populationGenerator.ts`) creating diverse archetypes:
+Measure — not assert — exposure distribution, match opportunity, mutual-match rate, false-negative
+rate, popularity concentration (e.g. Gini of exposure) and candidate coverage, broken down by
+strata. Thresholds that fail CI are **[OPEN D-20]**; none are set without a decision. Protected
+characteristics are used only to *measure* disparities, never as ranking inputs.
 
-```mermaid
-graph TD
-    Generator["Synthetic Population Engine (N = 50,000)"]
-    Generator --> ArchA["Queer & ENM Multi-Partner Archetypes"]
-    Generator --> ArchB["Neurodivergent & Sensory-Sensitive Archetypes"]
-    Generator --> ArchC["Disabled & Mobility-Assisted Archetypes"]
-    Generator --> ArchD["Multi-Faith & Strict Dietary Archetypes"]
-    Generator --> ArchE["Shift-Worker & Asymmetric Schedule Archetypes"]
-    Generator --> ArchF["Sober & Substance-Free Cohorts"]
+## 7. Existing prototype
 
-    ArchA --> SimEngine["Batch Compatibility Simulator"]
-    ArchB --> SimEngine
-    ArchC --> SimEngine
-    ArchD --> SimEngine
-    ArchE --> SimEngine
-    ArchF --> SimEngine
-
-    SimEngine --> InvariantChecks["Invariant & Latency Verifier"]
-    SimEngine --> FairnessAudit["Disparate Impact & Bias Verifier"]
-```
-
-### Profile Archetypes Matrix
-1. **Queer & Polyamorous Network:** Non-binary, agender, pansexual, polyamorous profiles with complex relationship structures (e.g. hierarchical and non-hierarchical).
-2. **Neurodivergent Synergy Pairs:** Autistic and ADHD profiles with explicit sensory, pacing, and direct communication requirements.
-3. **Mobility & Accessibility Cohorts:** Wheelchair users requiring step-free physical venues, sensory calm environments, and sign language communicators.
-4. **Cultural / Religious Alignment:** Profiles with strict observance dealbreakers (e.g. Orthodox, Kosher, Halal) vs. secular/interfaith open profiles.
-5. **Night-Owl / Shift-Worker Pairs:** Healthcare professionals and emergency workers with night-shift schedules matched against daytime schedules to test temporal compatibility.
-
----
-
-## 4. Performance, Latency & Load Testing
-
-| Test Suite | Scenario | Scale | Target Threshold |
-| :--- | :--- | :--- | :--- |
-| **Stage 1 Micro-Benchmark** | Inverted index & PostGIS filtering | $10^6$ active candidates | $p95 < 25\text{ms}$ |
-| **Stage 2 Scoring Benchmark** | Full 48-category vector evaluation | $1,000$ candidate batch | $p95 < 85\text{ms}$ |
-| **End-to-End Search Pipeline**| Ingress to serialized explainable matches | 500 concurrent RPS | $p95 < 175\text{ms}, p99 < 300\text{ms}$ |
-| **Memory Footprint Test** | Worker thread pool during batch eval | 100 worker threads | Memory leak $< 0.1\text{MB/hr}$ |
-
----
-
-## 5. Algorithmic Fairness & Disparate Impact Audits
-
-The platform integrates continuous fairness metrics into automated testing:
-
-1. **Disparate Impact Ratio (DIR):**
-   $$\text{DIR} = \frac{\Pr(\text{Candidate Selected} \mid \text{Protected Group } G_1)}{\Pr(\text{Candidate Selected} \mid \text{Majority Group } G_0)}$$
-   *Standard:* Under identical geographic density, the platform mandates $\text{DIR} \ge 0.85$ across all racial, disability, and gender identity cohorts.
-2. **Impression Gini Coefficient:**
-   $$\text{Gini}(\text{Impressions}) \le 0.40$$
-   *Standard:* Measures popularity concentration. Traditional swipe apps have Gini coefficients exceeding $0.80$ (where top 5% of users receive 80% of impressions). The Universal Platform caps the Gini coefficient to guarantee broad, equitable distribution of exposure based purely on authentic mutual compatibility.
+The 8 current scenarios document intended behaviour (hard exclusion, flexibility, unknowns,
+mutuality, conflicts, confidence). They will be ported as regression cases where they agree with
+MATCHING_SPEC and **rewritten** where they rely on prototype defects (e.g. default values injected
+for missing user data).

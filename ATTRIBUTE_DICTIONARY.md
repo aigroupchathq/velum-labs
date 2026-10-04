@@ -1,129 +1,144 @@
-# Universal Compatibility & Matching Platform: Attribute Dictionary
-**Document Version:** 1.0.0  
-**Status:** Canonical Machine-Readable & Human-Readable Attribute Registry  
-**Governing Standard:** Section 4 of Master Build Specification  
+# ATTRIBUTE_DICTIONARY.md
 
----
+> **Status:** DRAFT v0.2 — not accepted. The schema (§1–§4) follows master prompt §4–§5 and §19.
+> The seed registry (§6) is an **agent-drafted starting point**; every value list and every
+> `matchable` / `hard_constraint_capable` flag on a sensitive attribute is pending review
+> (ARCHITECTURE_REVIEW.md D-05, D-06).
 
-## 1. Registry Schema Specification
+## 1. Attribute definition schema (spec §4)
 
-Every attribute admitted into the Universal Compatibility & Matching Platform must strictly adhere to the following schema definition:
-
-| Field | Type | Description |
+| Field | Type | Notes |
 | :--- | :--- | :--- |
-| `attribute_id` | `String` (snake_case) | Unique immutable platform identifier. |
-| `category_id` | `Integer` (01–48) | Mapping to the 48 Ontological Categories in `ONTOLOGY.md`. |
-| `display_name` | `String` | User-facing localized title. |
-| `data_type` | `Enum` | `boolean`, `categorical`, `multi_select`, `scalar`, `ordinal`, `geographic`, `schedule`. |
-| `allowed_values` | `Array<String>` / `Range` | Closed set of valid discrete values or numeric boundary. |
-| `privacy_tier` | `Enum` | `public` (Tier 1), `match_only` (Tier 2), `reciprocal` (Tier 3), `encrypted` (Tier 4). |
-| `matchable` | `Boolean` | Whether this attribute can be evaluated by the deterministic matching engine. |
-| `dealbreaker_capable` | `Boolean` | Whether a user may designate this attribute as a hard exclusionary criterion. |
-| `mutuality_type` | `Enum` | `symmetric` (value congruence), `complementary` (synergistic opposites), `directional` (unilateral desire). |
-| `default_weight` | `Integer` (1–5) | Default algorithmic importance (1 = low, 3 = standard, 5 = critical). |
-| `decay_curve` | `Enum` | `step` (discrete cutoff), `linear`, `exponential`, `sigmoid`, `none`. |
+| `id` | string, snake_case, immutable | e.g. `diet` |
+| `name` | string | user-facing label (localisable) |
+| `category` | int 1–48 | ONTOLOGY.md |
+| `description` | string | |
+| `value_type` | enum | `boolean`, `single_select`, `multi_select`, `integer`, `decimal`, `range`, `ordinal`, `geo_point`, `schedule`, `language_proficiency_list`, `free_text` |
+| `allowed_values` | list / bounds / null | closed vocabulary where possible; free text is never matchable |
+| `user_visible` | bool | attribute appears in the profile UI at all |
+| `required` | bool | **default false**; only account essentials (see §5) |
+| `optional` | bool | inverse of `required`, kept explicit per spec |
+| `sensitive` | bool | special-category-like data; extra consent |
+| `highly_sensitive` | bool | health, sexual health, etc.; encrypted at rest; never searchable by default |
+| `searchable` | bool | *capability*: may appear in search UI |
+| `filterable` | bool | *capability*: may be used as a filter |
+| `matchable` | bool | *capability*: engine may read it |
+| `hard_constraint_capable` | bool | may be targeted by a `MUST` / dealbreaker |
+| `preference_capable` | bool | may be targeted by a preference |
+| `weightable` | bool | preference importance 1–5 applies |
+| `privacy_level` | enum | default visibility: `private`, `matches_only`, `members`, `public` |
+| `verification_possible` | bool | can the platform verify it (e.g. photo, age) |
+| `source` | enum | `self_declared`, `verified`, `system_derived` |
+| `confidence` | enum/number | how reliable values from this source are; self-declared ≠ verified |
+| `created_at`, `updated_at` | timestamp | |
 
----
+Capability flags say what the platform **may** do. What it **does** for a given user is decided
+by that user's per-attribute permissions (§4). Capability ≠ consent.
 
-## 2. Core Attribute Registry
+## 2. User preference schema (spec §4, §13)
 
-### Domain A: Identity, Orientation & Attraction
+| Field | Type | Meaning |
+| :--- | :--- | :--- |
+| `attribute_id` | fk | which attribute the preference targets |
+| `value` | typed | target value(s) / range |
+| `importance` | int 1–5 | weight; ignored for `MUST` and `NEUTRAL` |
+| `requirement_level` | enum | see §3 |
+| `flexibility` | int 0–100 | willingness to compromise; 0 = none, 100 = fully flexible |
+| `dealbreaker` | bool | explicit exclusion flag |
+| `privacy_setting` | enum | whether the preference itself can be shown to others (default `private`) |
 
-| Attribute ID | Cat | Display Name | Data Type | Allowed Values / Range | Privacy | Matchable | Dealbreaker | Mutuality | Weight | Decay |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `ident_pronouns` | 01 | Pronouns | `categorical` | `she_her`, `he_him`, `they_them`, `she_they`, `he_they`, `neopronouns`, `custom` | public | No | No | directional | 1 | none |
-| `gender_self_id` | 02 | Gender Identity | `categorical` | `cis_woman`, `cis_man`, `trans_woman`, `trans_man`, `non_binary`, `genderfluid`, `agender`, `two_spirit`, `intersex`, `other` | public | Yes | Yes | directional | 5 | step |
-| `orient_sexual` | 03 | Sexual Orientation | `categorical` | `heterosexual`, `homosexual`, `bisexual`, `pansexual`, `asexual`, `demisexual`, `graysexual`, `queer`, `questioning` | public | Yes | Yes | directional | 5 | step |
-| `orient_romantic` | 04 | Romantic Orientation | `categorical` | `alloromantic`, `aromantic`, `biromantic`, `panromantic`, `demiromantic`, `homoromantic`, `heteroromantic` | public | Yes | Yes | directional | 4 | step |
-| `attract_modes` | 05 | Attraction Drivers | `multi_select` | `intellectual`, `emotional`, `aesthetic`, `physical`, `auditory_voice`, `sensory_tactile`, `spiritual_energy` | match_only | Yes | No | symmetric | 3 | linear |
-| `phys_height_cm` | 26 | Height (cm) | `scalar` | `[100, 250]` | public | Yes | Yes | directional | 2 | sigmoid |
-| `phys_body_type` | 26 | Body Type | `categorical` | `lean`, `athletic`, `average`, `curvy`, `plus_size`, `muscular`, `undisclosed` | public | Yes | No | directional | 1 | step |
+## 3. Requirement levels
 
----
+| Level | Engine behaviour (detail in MATCHING_SPEC §4) |
+| :--- | :--- |
+| `MUST` | Hard constraint → eligibility gate, if the attribute is `hard_constraint_capable` |
+| `STRONG_PREFERENCE` | Scored, high weight |
+| `PREFERENCE` | Scored, normal weight |
+| `NEUTRAL` | Not scored ("I don't care") |
+| `AVOID` | Scored inversely; becomes a gate only if `dealbreaker = true` |
+| `UNKNOWN` | User has not stated a preference; not scored; counts toward uncertainty |
 
-### Domain B: Relational Intent & Structure
+**[OPEN D-02]** How `dealbreaker` relates to `requirement_level`. Spec §4 lists them as separate
+fields, so combinations like `PREFERENCE + dealbreaker=true` or `MUST + flexibility=70` are
+possible. Proposed rule: `dealbreaker=true` or `MUST` ⇒ gate; `MUST` with `flexibility > 0` ⇒
+flag `PREFERENCE_CONTRADICTION` and ask the user. Not adopted until confirmed.
 
-| Attribute ID | Cat | Display Name | Data Type | Allowed Values / Range | Privacy | Matchable | Dealbreaker | Mutuality | Weight | Decay |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `rel_intent_type` | 06 | Primary Relationship Intention | `categorical` | `long_term_marriage`, `long_term_exploratory`, `short_term_dating`, `casual_companionship`, `platonic_life_partner`, `shared_domesticity`, `intentional_discovery` | public | Yes | Yes | symmetric | 5 | step |
-| `rel_structure_type`| 07 | Relationship Structure | `categorical` | `monogamous`, `monogamish`, `enm_open`, `polyamorous_hierarchical`, `polyamorous_non_hierarchical`, `solo_poly`, `poly_flexible` | public | Yes | Yes | symmetric | 5 | step |
-| `sex_libido_pace` | 08 | Intimacy Cadence | `ordinal` | `1_non_sexual`, `2_occasional`, `3_moderate`, `4_frequent_daily`, `5_context_dependent` | reciprocal | Yes | No | symmetric | 4 | linear |
-| `sex_kink_alignment`| 08 | Kink / BDSM Orientation | `categorical` | `strictly_vanilla`, `curious_exploring`, `moderate_kink`, `lifestyle_experienced`, `24_7_power_exchange` | reciprocal | Yes | Yes | complementary| 4 | step |
-| `fam_has_children` | 09 | Existing Children | `categorical` | `no_children`, `has_minor_custodial`, `has_minor_shared`, `has_adult_children` | public | Yes | Yes | directional | 4 | step |
-| `fam_wants_children`| 09 | Future Children Desire | `ordinal` | `definite_never`, `leaning_never`, `uncertain_open`, `leaning_yes`, `definite_yes` | public | Yes | Yes | symmetric | 5 | step |
+## 4. Per-user, per-attribute permissions (spec §19)
 
----
+Six independent permissions for each sensitive attribute value:
 
-### Domain C: Culture, Values & Philosophy
+| Permission | Meaning |
+| :--- | :--- |
+| `store` | the platform may keep the value at all |
+| `display` | may be shown on the profile (to `privacy_level` audience) |
+| `searchable` | others may find the user by it |
+| `matchable` | the engine may use it |
+| `private` | visible to the user only (overrides display) |
+| `verified` | status of verification (system-set, not a user toggle) |
 
-| Attribute ID | Cat | Display Name | Data Type | Allowed Values / Range | Privacy | Matchable | Dealbreaker | Mutuality | Weight | Decay |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `cult_religion_trad`| 10 | Religious / Faith Tradition | `categorical` | `atheist`, `agnostic`, `protestant`, `catholic`, `orthodox_christian`, `jewish`, `muslim`, `hindu`, `buddhist`, `sikh`, `spiritual_not_religious`, `pagan_earth`, `interfaith` | public | Yes | Yes | symmetric | 3 | step |
-| `cult_relig_observ` | 10 | Religious Observance Intensity | `ordinal` | `1_cultural_secular`, `2_infrequent`, `3_moderate_holiday`, `4_regular_weekly`, `5_strict_daily` | public | Yes | Yes | symmetric | 3 | linear |
-| `phil_worldview` | 11 | Epistemological Worldview | `categorical` | `scientific_rationalism`, `existential_humanism`, `traditional_orthodox`, `postmodern_relativist`, `spiritual_holistic`, `stoic_pragmatic` | match_only | Yes | No | symmetric | 3 | linear |
-| `lang_spoken_codes` | 14 | Spoken Languages | `multi_select` | ISO-639-1 code list (`en`, `es`, `fr`, `de`, `zh`, `ja`, `ar`, `hi`, `pt`, `it`, `asl`, etc.) | public | Yes | Yes | complementary| 5 | step |
-| `val_core_ranking` | 15 | Primary Core Values | `multi_select` | `integrity`, `compassion`, `autonomy`, `growth`, `family`, `community`, `security`, `creativity`, `justice`, `curiosity`, `loyalty` | match_only | Yes | No | symmetric | 4 | linear |
-| `fin_spending_style`| 29 | Financial Spending Philosophy | `categorical` | `frugal_accumulator`, `balanced_conscious`, `experiential_spender`, `high_luxury_spender` | match_only | Yes | No | symmetric | 3 | linear |
-| `pol_civic_spectrum`| 35 | Political / Civic Orientation | `categorical` | `progressive_left`, `liberal_democrat`, `centrist_independent`, `libertarian`, `conservative_right`, `apolitical_detached`, `democratic_socialist`, `anarchist` | match_only | Yes | Yes | symmetric | 4 | step |
-| `esot_belief_optin` | 36 | Esoteric System Opt-in | `boolean` | `true`, `false` | match_only | Yes | No | symmetric | 1 | none |
+A user may disclose an attribute (`display = true`) without allowing discovery
+(`searchable = false`, `matchable = false`). When `matchable = false`, the engine treats the value
+as **UNKNOWN** for everyone else's evaluation and must not leak it through explanations.
 
----
+## 5. The critical distinction (spec §5)
 
-### Domain D: Cognition, Health & Accessibility
+| Statement | Record |
+| :--- | :--- |
+| "I am vegetarian." | `attribute_values(diet = vegetarian)` on self |
+| "I prefer vegetarian partners." | `preferences(diet ∈ {vegetarian}, PREFERENCE, importance n)` |
+| "I require vegetarian partners." | `preferences(diet ∈ {vegetarian}, MUST)` (+ optionally `dealbreaker`) |
+| "I don't care whether my partner is vegetarian." | `preferences(diet, NEUTRAL)` |
+| "I am willing to compromise." | `flexibility` on the preference (e.g. 70) |
+| (no statement) | no preference row → `UNKNOWN` |
 
-| Attribute ID | Cat | Display Name | Data Type | Allowed Values / Range | Privacy | Matchable | Dealbreaker | Mutuality | Weight | Decay |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `psy_ocean_openness`| 16 | Openness to Experience | `scalar` | `[0, 100]` | match_only | Yes | No | symmetric | 2 | linear |
-| `psy_ocean_consc` | 16 | Conscientiousness | `scalar` | `[0, 100]` | match_only | Yes | No | symmetric | 3 | linear |
-| `psy_ocean_extra` | 16 | Extraversion | `scalar` | `[0, 100]` | match_only | Yes | No | complementary| 2 | linear |
-| `psy_ocean_agree` | 16 | Agreeableness | `scalar` | `[0, 100]` | match_only | Yes | No | symmetric | 4 | linear |
-| `psy_ocean_neuro` | 16 | Emotional Sensitivity | `scalar` | `[0, 100]` | match_only | Yes | No | complementary| 3 | linear |
-| `comm_conflict_res` | 17 | Conflict Resolution Style | `categorical` | `direct_immediate`, `reflective_deliberate`, `cool_off_space_first`, `diplomatic_gentle` | match_only | Yes | No | complementary| 4 | step |
-| `comm_digital_pace` | 17 | Text / Digital Cadence | `categorical` | `frequent_all_day`, `regular_intervals`, `end_of_day_batch`, `minimal_in_person_only` | match_only | Yes | No | symmetric | 3 | step |
-| `hlth_sleep_chrono` | 21 | Sleep Chronotype | `categorical` | `morning_lark`, `intermediate_flexible`, `night_owl` | public | Yes | No | symmetric | 2 | step |
-| `hlth_sti_test_rec` | 22 | STI Screening Verification | `categorical` | `tested_last_3_months`, `tested_last_6_months`, `tested_last_year`, `regular_routine`, `untested` | encrypted | Yes | Yes | symmetric | 4 | step |
-| `acc_step_free` | 23 | Step-Free Mobility Required | `boolean` | `true`, `false` | public | Yes | Yes | complementary| 5 | step |
-| `acc_sensory_calm` | 23 | Low Sensory Environment Needed | `boolean` | `true`, `false` | public | Yes | No | complementary| 3 | step |
-| `nd_neurotype_tags` | 25 | Neurotype Identification | `multi_select` | `neurotypical`, `adhd`, `autistic`, `audhd`, `gifted_2e`, `sensory_processing`, `tourettes`, `dyspraxic`, `bipolar`, `other` | match_only | Yes | No | complementary| 3 | none |
+Required account fields (proposed, **[OPEN D-03]**): date of birth (for age eligibility / 18+),
+and whatever the chosen auth method needs. Nothing else is required.
 
----
+## 6. Seed registry (draft)
 
-### Domain E: Daily Life & Ecology
+Unless stated otherwise: `user_visible=true`, `required=false`, `optional=true`, `source=self_declared`,
+`searchable=false`, `filterable=false`, `privacy_level=matches_only`. **S** = sensitive,
+**HS** = highly sensitive, **M** = matchable, **H** = hard_constraint_capable, **P** = preference_capable,
+**W** = weightable, **V** = verification_possible. `?` = pending policy decision D-06.
 
-| Attribute ID | Cat | Display Name | Data Type | Allowed Values / Range | Privacy | Matchable | Dealbreaker | Mutuality | Weight | Decay |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `life_subst_tobacco`| 18 | Tobacco / Nicotine Usage | `categorical` | `never`, `socially_only`, `regular_daily`, `quitting_vaping` | public | Yes | Yes | symmetric | 4 | step |
-| `life_subst_alcohol`| 18 | Alcohol Consumption | `categorical` | `sober_non_drinker`, `occasional_rare`, `moderate_weekly`, `frequent` | public | Yes | Yes | symmetric | 3 | linear |
-| `life_subst_cannabis`| 18 | Cannabis Usage | `categorical` | `never`, `socially`, `medicinal`, `daily_regular` | public | Yes | Yes | symmetric | 3 | step |
-| `life_clean_standard`| 18 | Domestic Tidiness Standard | `ordinal` | `1_minimal_clutter_free`, `2_tidy_structured`, `3_comfortable_lived_in`, `4_relaxed_clutter_tolerant` | match_only | Yes | No | symmetric | 3 | linear |
-| `food_dietary_regime`| 20 | Primary Diet | `categorical` | `omnivore`, `vegetarian`, `vegan`, `pescatarian`, `kosher`, `halal`, `celiac_strict_gluten_free` | public | Yes | Yes | symmetric | 3 | step |
-| `pet_cohabitation` | 34 | Animal Living Arrangements | `multi_select` | `lives_with_dogs`, `lives_with_cats`, `lives_with_other`, `pet_free_home`, `wants_pets_future` | public | Yes | Yes | symmetric | 4 | step |
-| `pet_allergy_severe`| 34 | Severe Animal Allergies | `multi_select` | `allergy_cats`, `allergy_dogs`, `allergy_feathers`, `none` | public | Yes | Yes | complementary| 5 | step |
+| id | cat | value_type | allowed_values (draft) | S | HS | M | H | P | W | V |
+| :--- | :--- | :--- | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| `date_of_birth` | 01 | date | ≥ 18 years | | | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `pronouns` | 01 | multi_select + custom | she, he, they, custom | | | | | | | |
+| `gender_identity` | 02 | multi_select + custom | woman, man, non-binary, trans woman, trans man, genderfluid, agender, two-spirit, custom | S | | ✓ | ✓ | ✓ | | |
+| `genders_sought` | 02 | multi_select | same vocabulary as above | S | | ✓ | ✓ | — | | |
+| `sexual_orientation` | 03 | multi_select + custom | straight, gay, lesbian, bisexual, pansexual, asexual, demisexual, queer, questioning, custom | S | | ? | ? | ? | | |
+| `romantic_orientation` | 04 | multi_select + custom | heteroromantic, homoromantic, biromantic, panromantic, aromantic, demiromantic, custom | S | | ? | ? | ? | | |
+| `attraction_importance` | 05 | object (6 × 1–5) | physical, emotional, intellectual, romantic, sexual, social | | | ✓ | | ✓ | ✓ | |
+| `relationship_intention` | 06 | multi_select | long-term, marriage, short-term, casual, friendship, figuring it out | | | ✓ | ✓ | ✓ | ✓ | |
+| `relationship_structure` | 07 | single_select | monogamous, open, polyamorous, relationship anarchy, other, unsure | | | ✓ | ✓ | ✓ | ✓ | |
+| `has_children` | 09 | single_select | none, yes-live-with-me, yes-part-time, yes-don't-live-with-me | | | ✓ | ? | ✓ | ✓ | |
+| `wants_children` | 09 | single_select | definitely, probably, unsure, probably not, definitely not | | | ✓ | ✓ | ✓ | ✓ | |
+| `religion` | 10 | single_select + custom | (vocabulary pending review) | S | | ✓ | ? | ✓ | ✓ | |
+| `religious_practice` | 10 | ordinal 1–5 | not practising → very observant | S | | ✓ | ? | ✓ | ✓ | |
+| `ethnicity` | 13 | multi_select + custom | (vocabulary pending review) | S | | **?** | **?** | **?** | | |
+| `languages` | 14 | language_proficiency_list | ISO 639 + proficiency | | | ✓ | ✓ | ✓ | ✓ | |
+| `core_values` | 15 | multi_select (max N) | (vocabulary pending review) | | | ✓ | | ✓ | ✓ | |
+| `communication_style` | 17 | single_select | (vocabulary pending review) | | | ✓ | | ✓ | ✓ | |
+| `smoking` | 18 | single_select | never, socially, regularly, trying to quit | | | ✓ | ✓ | ✓ | ✓ | |
+| `alcohol` | 18 | single_select | never, rarely, socially, regularly | | | ✓ | ✓ | ✓ | ✓ | |
+| `diet` | 20 | single_select | omnivore, vegetarian, vegan, pescatarian, other | | | ✓ | ✓ | ✓ | ✓ | |
+| `accessibility_needs` | 23 | multi_select | (vocabulary pending review) | S | | ? | | ? | | |
+| `disability` | 24 | multi_select + custom | (vocabulary pending review) | S | HS | **?** | **?** | **?** | | |
+| `neurotype` | 25 | multi_select + custom | (vocabulary pending review) | S | HS | **?** | **?** | **?** | | |
+| `height_cm` | 26 | integer | 100–250 | | | ? | ? | ? | ? | |
+| `sexual_health_disclosure` | 22 | (pending) | (pending) | S | HS | **?** | **?** | **?** | | |
+| `location` | 30 | geo_point | stored precise, exposed coarse | S | | ✓ | ✓ | ✓ | ✓ | |
+| `max_distance_km` | 30 | integer | 1–20,000 | | | ✓ | ✓ | — | | |
+| `open_to_relocation` | 31 | single_select | no, maybe, yes | | | ✓ | | ✓ | ✓ | |
+| `open_to_long_distance` | 31 | single_select | no, maybe, yes | | | ✓ | ✓ | ✓ | ✓ | |
+| `time_zone` | 32 | IANA tz | | | | ✓ | | ✓ | ✓ | |
+| `weekly_availability` | 32 | schedule | | | | ✓ | | ✓ | ✓ | |
+| `pets` | 34 | multi_select | (vocabulary pending review) | | | ✓ | ✓ | ✓ | ✓ | |
+| `pet_allergy` | 34 | multi_select | (vocabulary pending review) | S | | ✓ | ✓ | | | |
+| `politics` | 35 | single_select | (vocabulary pending review) | S | | ? | ? | ? | ? | |
+| `belief_system_optin` | 36 | object | astrology / other user-selected; opt-in only | | | ✓ (opt-in) | | ✓ | ✓ | |
+| `photo_verified` | 39 | boolean | system-set | | | ✓ | ✓ | ✓ | | ✓ |
+| `bio` | 01 | free_text | | | | ✗ | ✗ | ✗ | ✗ | |
 
----
-
-### Domain F: Spatio-Temporal Feasibility
-
-| Attribute ID | Cat | Display Name | Data Type | Allowed Values / Range | Privacy | Matchable | Dealbreaker | Mutuality | Weight | Decay |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `geo_coordinates` | 30 | Geographic Geohash | `geographic` | Obfuscated Lat/Long (7-character Geohash, $\pm 1.5\text{km}$) | match_only | Yes | Yes | symmetric | 5 | sigmoid |
-| `geo_max_dist_km` | 30 | Maximum Discovery Distance | `scalar` | `[1, 1000]` km | match_only | Yes | Yes | directional | 5 | exponential |
-| `geo_dist_flex_km` | 44 | Distance Flexibility Radius | `scalar` | `[0, 250]` km | match_only | Yes | No | directional | 2 | linear |
-| `time_sched_shift` | 32 | Work Schedule Shift | `categorical` | `standard_daytime`, `night_shift`, `rotating_shift`, `irregular_flexible`, `travel_heavy` | match_only | Yes | No | complementary| 2 | step |
-| `time_avail_hours_wk`| 32 | Weekly Relationship Availability| `scalar` | `[1, 60]` hours/week | match_only | Yes | No | symmetric | 3 | linear |
-
----
-
-## 3. Mathematical Decay Curve Formulations
-
-Attributes with scalar or ordinal divergence utilize one of four explicit mathematical decay curves:
-
-1. **Step Function (`step`):**
-   $$f(\Delta) = \begin{cases} 1.0 & \text{if } \Delta = 0 \\ 0.0 & \text{if } \Delta > 0 \end{cases}$$
-2. **Linear Decay with Flexibility Tolerance $\tau$ (`linear`):**
-   $$f(\Delta, \tau) = \begin{cases} 1.0 & \text{if } \Delta \le \tau \\ \max\left(0.0, 1.0 - \frac{\Delta - \tau}{\text{MaxRange} - \tau}\right) & \text{if } \Delta > \tau \end{cases}$$
-3. **Exponential Decay with Scale Parameter $\lambda$ (`exponential`):**
-   $$f(\Delta, \tau) = \begin{cases} 1.0 & \text{if } \Delta \le \tau \\ e^{-\lambda (\Delta - \tau)} & \text{if } \Delta > \tau \end{cases}$$
-4. **Sigmoid Soft-Drop (`sigmoid`):**
-   $$f(x; x_0, k) = \frac{1}{1 + e^{k (x - x_0)}}$$
-   *(Applied where $x_0$ is the cutoff threshold, and $k$ determines boundary steepness).*
+Decay curves and per-type scoring functions are defined in MATCHING_SPEC §5, not here.
