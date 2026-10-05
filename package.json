@@ -12,7 +12,8 @@
     "test:engine": "tsx src/utils/testMatchingEngine.ts",
     "test:db": "tsx db/validateMigrations.ts",
     "test:api": "tsx server/src/testApi.ts",
-    "test": "tsx src/utils/testMatchingEngine.ts && tsx db/validateMigrations.ts && tsx server/src/testApi.ts"
+    "test:benchmark": "tsx tools/benchmarkModels.ts",
+    "test": "tsx src/utils/testMatchingEngine.ts && tsx db/validateMigrations.ts && tsx server/src/testApi.ts && tsx tools/benchmarkModels.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",

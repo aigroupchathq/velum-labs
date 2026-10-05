@@ -3,6 +3,7 @@
 // Comprehensive Test Suite for Backend API Endpoints (Phases 1–8)
 // ============================================================================
 
+process.env.NODE_ENV = 'test'
 import { app } from './index.js'
 import http from 'http'
 
@@ -121,13 +122,15 @@ async function runApiTests() {
     console.log('\n===============================================================')
     console.log('ALL API SERVICE ENDPOINTS & INVARIANTS VERIFIED 100% OPERATIONAL!')
     console.log('===============================================================')
+    server.closeAllConnections?.()
     server.close(() => {
-      process.exit(0)
+      setTimeout(() => process.exit(0), 50)
     })
   } catch (err) {
     console.error('API TEST SUITE FAILED:', err)
+    server.closeAllConnections?.()
     server.close(() => {
-      process.exit(1)
+      setTimeout(() => process.exit(1), 50)
     })
   }
 }
