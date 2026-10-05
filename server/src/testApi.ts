@@ -119,6 +119,50 @@ async function runApiTests() {
     console.log(`Audit log verified: [${blockLog.actorRole}] ${blockLog.action} -> target: ${blockLog.targetId}`)
     console.log('✅ TEST 7 PASSED: Tamper-resistant audit logs confirmed.')
 
+    // 8. Verify Phase 10: AES-256-GCM Field-Level Encryption
+    console.log('\n--- TEST 8: Phase 10: AES-256-GCM Field-Level Encryption (FLE) ---')
+    const sensitivePayload = {
+      medicalAccommodations: ['asl_interpreter_preferred', 'sensory_quiet_zones'],
+      sensoryThreshold: 'low_fluorescent_light_sensitivity',
+    }
+
+    // 8a. Encrypt and persist
+    const storeEncRes = await fetch(`${baseUrl}/api/v1/privacy/tier4/store`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: 'usr_elena_current',
+        attributeId: 'accessibility_needs',
+        plainValue: sensitivePayload,
+        permMatchable: false,
+        permDisplay: false,
+      }),
+    })
+    const storeEncData = await storeEncRes.json()
+    console.log('FLE Store Response:', storeEncData)
+    if (!storeEncData.keyId || storeEncData.ciphertextLength === 0) {
+      throw new Error('Field-level encryption payload invalid')
+    }
+
+    // 8b. Decrypt and authenticate
+    const retrieveEncRes = await fetch(`${baseUrl}/api/v1/privacy/tier4/retrieve`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        userId: 'usr_elena_current',
+        attributeId: 'accessibility_needs',
+      }),
+    })
+    const retrieveEncData = await retrieveEncRes.json()
+    console.log('FLE Retrieve Response:', retrieveEncData)
+    if (
+      retrieveEncData.decryptedValue.sensoryThreshold !==
+      sensitivePayload.sensoryThreshold
+    ) {
+      throw new Error('Decrypted value does not match original plaintext')
+    }
+    console.log('✅ TEST 8 PASSED: Application-layer AES-256-GCM encryption & authenticated decryption verified.')
+
     console.log('\n===============================================================')
     console.log('ALL API SERVICE ENDPOINTS & INVARIANTS VERIFIED 100% OPERATIONAL!')
     console.log('===============================================================')

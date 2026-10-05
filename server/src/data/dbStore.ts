@@ -52,8 +52,18 @@ export interface MessageEntry {
   createdAt: string
 }
 
+export interface EncryptedAttributeRecord {
+  userId: string
+  attributeId: string
+  encryptedPayload: any
+  permMatchable: boolean
+  permDisplay: boolean
+  createdAt: string
+}
+
 export class DatabaseStore {
   private users: Map<string, UniversalUserProfile> = new Map()
+  private encryptedTier4Attributes: Map<string, EncryptedAttributeRecord> = new Map()
   private auditLogs: AuditLogEntry[] = []
   private blocks: BlockEntry[] = []
   private reports: ReportEntry[] = []
@@ -87,6 +97,36 @@ export class DatabaseStore {
     this.users.set(id, updated)
     this.logAudit(id, 'user', 'UPDATE_PROFILE', 'profile', id, { stage: updated.completionStage })
     return true
+  }
+
+  // --- Tier 4 Encrypted Attributes (FLE) ---
+  public saveEncryptedAttribute(
+    userId: string,
+    attributeId: string,
+    encryptedPayload: any,
+    permMatchable: boolean,
+    permDisplay: boolean
+  ): EncryptedAttributeRecord {
+    const key = `${userId}:${attributeId}`
+    const record: EncryptedAttributeRecord = {
+      userId,
+      attributeId,
+      encryptedPayload,
+      permMatchable,
+      permDisplay,
+      createdAt: new Date().toISOString(),
+    }
+    this.encryptedTier4Attributes.set(key, record)
+    this.logAudit(userId, 'user', 'STORE_ENCRYPTED_TIER4', 'attribute_values', attributeId, {
+      keyId: encryptedPayload.keyId,
+      permMatchable,
+      permDisplay,
+    })
+    return record
+  }
+
+  public getEncryptedAttribute(userId: string, attributeId: string): EncryptedAttributeRecord | undefined {
+    return this.encryptedTier4Attributes.get(`${userId}:${attributeId}`)
   }
 
   // --- Audit Logs (WORM: Write-Once-Read-Many) ---

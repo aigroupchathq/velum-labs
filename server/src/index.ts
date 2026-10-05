@@ -10,6 +10,7 @@ import { matchingRouter } from './routes/matching.js'
 import { preferencesRouter } from './routes/preferences.js'
 import { profileRouter } from './routes/profile.js'
 import { safetyRouter } from './routes/safety.js'
+import { privacyRouter } from './routes/privacy.js'
 
 const app = express()
 const PORT = process.env.PORT || 3001
@@ -31,6 +32,7 @@ app.use('/api/v1/recommendations', matchingRouter) // Alias for /api/v1/recommen
 app.use('/api/v1/preferences', preferencesRouter)
 app.use('/api/v1/profile', profileRouter)
 app.use('/api/v1/safety', safetyRouter)
+app.use('/api/v1/privacy', privacyRouter)
 
 // Healthcheck & Diagnostic Baseline
 app.get('/api/health', (_req, res) => {
