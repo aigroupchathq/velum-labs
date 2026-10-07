@@ -37,6 +37,7 @@ export function calculateHaversineDistance(
  */
 export function detectUserContradictions(user: UniversalUserProfile): PreferenceContradiction[] {
   const contradictions: PreferenceContradiction[] = []
+  if (!user || !user.geography || !user.preferences || !user.intention) return contradictions
 
   // Check 1: Distance Neutral vs Tiny Hard Radius
   if (
@@ -138,6 +139,26 @@ function evaluateDirection(
       evaluatorRequirement: `Sought genders: ${evaluator.preferences.gendersSought.join(', ')}`,
       targetValue: target.identity.gender,
       message: `${evaluator.identity.name} does not include ${target.identity.gender} in sought genders.`,
+    })
+  }
+
+  // Cultural / Ethnicity preference (Spec §12: optional user declared filters)
+  if (
+    evaluator.preferences.ethnicitiesSought &&
+    evaluator.preferences.ethnicitiesSought.length > 0 &&
+    !evaluator.preferences.ethnicitiesSought.includes('any') &&
+    !evaluator.preferences.ethnicitiesSought.includes('all') &&
+    target.identity.ethnicity &&
+    !evaluator.preferences.ethnicitiesSought.some((eth) =>
+      target.identity.ethnicity!.toLowerCase().includes(eth.toLowerCase())
+    )
+  ) {
+    hardConflicts.push({
+      field: 'ethnicity',
+      evaluatorSide: side,
+      evaluatorRequirement: `Sought backgrounds: ${evaluator.preferences.ethnicitiesSought.join(', ')}`,
+      targetValue: target.identity.ethnicity,
+      message: `${evaluator.identity.name} seeks ${evaluator.preferences.ethnicitiesSought.join(', ')}, but ${target.identity.name} identifies as ${target.identity.ethnicity}.`,
     })
   }
 
@@ -538,6 +559,147 @@ function evaluateDirection(
   }
 }
 
+function safeNum(val: any, fallback: number, min = 0, max = 100): number {
+  if (typeof val === 'number' && Number.isFinite(val)) {
+    return Math.max(min, Math.min(max, val))
+  }
+  return fallback
+}
+
+/**
+ * Sanitizes input profile objects against missing, corrupted, or fuzzed fields.
+ * Follows Apple's Zero-Crash / Zero-Panic defensiveness standard.
+ */
+export function sanitizeProfile(p: any): UniversalUserProfile {
+  if (!p || typeof p !== 'object') p = {}
+  return {
+    id: String(p.id || 'usr_anonymous'),
+    identity: {
+      name: String(p.identity?.name || 'Anonymous'),
+      age: safeNum(p.identity?.age, 28, 18, 120),
+      gender: String(p.identity?.gender || 'non_binary'),
+      genderPresentation: String(p.identity?.genderPresentation || 'flexible'),
+      pronouns: String(p.identity?.pronouns || 'they/them'),
+      bio: String(p.identity?.bio || ''),
+      photos: Array.isArray(p.identity?.photos) ? p.identity.photos : [],
+      verified: Boolean(p.identity?.verified),
+      ethnicity: p.identity?.ethnicity ? String(p.identity.ethnicity) : undefined,
+      culturalBackground: p.identity?.culturalBackground ? String(p.identity.culturalBackground) : undefined,
+      languages: Array.isArray(p.identity?.languages) && p.identity.languages.length > 0
+        ? p.identity.languages
+        : [{ code: 'en', name: 'English', proficiency: 'fluent' }],
+    },
+    intention: {
+      primaryIntent: String(p.intention?.primaryIntent || 'Committed Relationship'),
+      relationshipStructure: (p.intention?.relationshipStructure || 'monogamous') as any,
+      intentFlexibility: safeNum(p.intention?.intentFlexibility, 50, 0, 100),
+    },
+    attractionPreferences: {
+      physical: safeNum(p.attractionPreferences?.physical, 3, 1, 5),
+      emotional: safeNum(p.attractionPreferences?.emotional, 4, 1, 5),
+      intellectual: safeNum(p.attractionPreferences?.intellectual, 4, 1, 5),
+      romantic: safeNum(p.attractionPreferences?.romantic, 3, 1, 5),
+      sexual: safeNum(p.attractionPreferences?.sexual, 3, 1, 5),
+      social: safeNum(p.attractionPreferences?.social, 3, 1, 5),
+    },
+    family: {
+      hasChildren: (p.family?.hasChildren || 'none') as any,
+      wantsChildren: (p.family?.wantsChildren || 'unsure') as any,
+    },
+    lifestyle: {
+      diet: (p.lifestyle?.diet || 'omnivore') as any,
+      smoking: (p.lifestyle?.smoking || 'never') as any,
+      alcohol: (p.lifestyle?.alcohol || 'occasional') as any,
+      cannabis: (p.lifestyle?.cannabis || 'never') as any,
+      cleanlinessStandard: (safeNum(p.lifestyle?.cleanlinessStandard, 3, 1, 5) as any),
+      pets: Array.isArray(p.lifestyle?.pets) ? p.lifestyle.pets : [],
+      petAllergies: Array.isArray(p.lifestyle?.petAllergies) ? p.lifestyle.petAllergies : [],
+    },
+    values: {
+      coreValues: Array.isArray(p.values?.coreValues) ? p.values.coreValues : ['Integrity', 'Autonomy'],
+      religion: String(p.values?.religion || 'secular'),
+      religiousObservance: (p.values?.religiousObservance !== undefined ? safeNum(p.values?.religiousObservance, 1, 1, 5) : undefined) as any,
+      worldview: String(p.values?.worldview || 'humanist'),
+      politicalCivic: String(p.values?.politicalCivic || 'moderate'),
+    },
+    communication: {
+      conflictStyle: (p.communication?.conflictStyle || 'diplomatic') as any,
+      digitalCadence: (p.communication?.digitalCadence || 'regular_intervals') as any,
+      loveLanguages: Array.isArray(p.communication?.loveLanguages) ? p.communication.loveLanguages : ['Quality Time'],
+      neurotype: Array.isArray(p.communication?.neurotype) ? p.communication.neurotype : ['neurotypical'],
+    },
+    accessibility: {
+      stepFreeRequired: Boolean(p.accessibility?.stepFreeRequired),
+      sensoryCalmRequired: Boolean(p.accessibility?.sensoryCalmRequired),
+      aslRequired: Boolean(p.accessibility?.aslRequired),
+      sleepChronotype: (String(p.accessibility?.sleepChronotype || 'intermediate') as any),
+    },
+    geography: {
+      cityName: String(p.geography?.cityName || 'Metropolis'),
+      coordinates: {
+        lat: safeNum(p.geography?.coordinates?.lat ?? p.geography?.latitude, 37.7749, -90, 90),
+        lng: safeNum(p.geography?.coordinates?.lng ?? p.geography?.longitude, -122.4194, -180, 180),
+      },
+      maxDistanceKm: safeNum(p.geography?.maxDistanceKm, 50, 1, 20000),
+      distanceFlexibilityKm: safeNum(p.geography?.distanceFlexibilityKm, 10, 0, 500),
+      openToRelocation: Boolean(p.geography?.openToRelocation),
+      openToLongDistance: Boolean(p.geography?.openToLongDistance),
+    },
+    availability: {
+      workSchedule: (String(p.availability?.workSchedule || 'standard_daytime') as any),
+      freeHoursPerWeek: safeNum(p.availability?.freeHoursPerWeek, 15, 0, 168),
+      preferredMeetingFormat: (String(p.availability?.preferredMeetingFormat || 'direct_coffee') as any),
+    },
+    preferences: {
+      gendersSought: Array.isArray(p.preferences?.gendersSought) ? p.preferences.gendersSought : ['all'],
+      ethnicitiesSought: Array.isArray(p.preferences?.ethnicitiesSought) ? p.preferences.ethnicitiesSought : ['all'],
+      minAge: safeNum(p.preferences?.minAge, 18, 18, 120),
+      maxAge: safeNum(p.preferences?.maxAge, 99, 18, 120),
+      ageFlexibilityYears: safeNum(p.preferences?.ageFlexibilityYears, 2, 0, 30),
+      structurePreference: {
+        dealbreaker: Boolean(p.preferences?.structurePreference?.dealbreaker),
+        requirementLevel: p.preferences?.structurePreference?.requirementLevel || 'PREFERENCE',
+        acceptableStructures: Array.isArray(p.preferences?.structurePreference?.acceptableStructures)
+          ? p.preferences.structurePreference.acceptableStructures
+          : ['monogamous', 'flexible'],
+      },
+      wantsChildrenPreference: {
+        dealbreaker: Boolean(p.preferences?.wantsChildrenPreference?.dealbreaker),
+        requirementLevel: p.preferences?.wantsChildrenPreference?.requirementLevel || 'PREFERENCE',
+        acceptableAnswers: Array.isArray(p.preferences?.wantsChildrenPreference?.acceptableAnswers)
+          ? p.preferences.wantsChildrenPreference.acceptableAnswers
+          : ['definitely_yes', 'leaning_yes', 'unsure'],
+      },
+      dietPreference: {
+        requirementLevel: p.preferences?.dietPreference?.requirementLevel || 'PREFERENCE',
+        preferredDiets: Array.isArray(p.preferences?.dietPreference?.preferredDiets)
+          ? p.preferences.dietPreference.preferredDiets
+          : ['omnivore', 'vegetarian', 'vegan'],
+        flexibility: safeNum(p.preferences?.dietPreference?.flexibility, 50, 0, 100),
+      },
+      smokingPreference: {
+        requirementLevel: p.preferences?.smokingPreference?.requirementLevel || 'PREFERENCE',
+        dealbreaker: Boolean(p.preferences?.smokingPreference?.dealbreaker),
+        allowedSmoking: Array.isArray(p.preferences?.smokingPreference?.allowedSmoking)
+          ? p.preferences.smokingPreference.allowedSmoking
+          : ['never', 'socially'],
+      },
+      valuesWeight: safeNum(p.preferences?.valuesWeight, 4, 1, 5),
+      communicationWeight: safeNum(p.preferences?.communicationWeight, 4, 1, 5),
+    },
+    privacy: {
+      incognitoMode: Boolean(p.privacy?.incognitoMode),
+      fuzzLocationRadiusKm: safeNum(p.privacy?.fuzzLocationRadiusKm, 0, 0, 50),
+    },
+    behaviour: {
+      responseRatePercent: safeNum(p.behaviour?.responseRatePercent, 100, 0, 100),
+      averageResponseHours: safeNum(p.behaviour?.averageResponseHours, 12, 0, 168),
+      ghostingReportsCount: safeNum(p.behaviour?.ghostingReportsCount, 0, 0, 1000),
+      handshakesInitiated: safeNum(p.behaviour?.handshakesInitiated, 0, 0, 10000),
+    },
+  }
+}
+
 /**
  * Evaluates bidirectional compatibility between User A and User B (Spec §7, §10, §15)
  */
@@ -545,13 +707,16 @@ export function evaluateMatch(
   userA: UniversalUserProfile,
   userB: UniversalUserProfile
 ): MatchEvaluation {
+  const safeA = sanitizeProfile(userA)
+  const safeB = sanitizeProfile(userB)
+
   // Check preference contradictions for User A
-  const contradictionsA = detectUserContradictions(userA)
+  const contradictionsA = detectUserContradictions(safeA)
 
   // Direction A -> B
-  const evalAtoB = evaluateDirection(userA, userB, 'A_to_B')
+  const evalAtoB = evaluateDirection(safeA, safeB, 'A_to_B')
   // Direction B -> A
-  const evalBtoA = evaluateDirection(userB, userA, 'B_to_A')
+  const evalBtoA = evaluateDirection(safeB, safeA, 'B_to_A')
 
   // Combine Hard Conflicts
   const hardConflicts = [...evalAtoB.hardConflicts, ...evalBtoA.hardConflicts]
@@ -576,7 +741,7 @@ export function evaluateMatch(
   const ratioA = evalAtoB.knownWeightTotal / Math.max(evalAtoB.allPossibleWeightTotal, 1)
   const ratioB = evalBtoA.knownWeightTotal / Math.max(evalBtoA.allPossibleWeightTotal, 1)
   const minRatio = Math.min(ratioA, ratioB)
-  const verificationFactor = userA.identity.verified && userB.identity.verified ? 1.0 : 0.85
+  const verificationFactor = safeA.identity.verified && safeB.identity.verified ? 1.0 : 0.85
   const confidenceScore = Math.round(minRatio * 100 * verificationFactor)
 
   let confidenceRating: 'LOW' | 'MODERATE' | 'HIGH' = 'MODERATE'
@@ -656,7 +821,7 @@ export function evaluateMatch(
     strongAlignment: allSynergies.slice(0, 5),
     potentialFriction: allFrictions.slice(0, 3),
     unknownInformation: [...evalAtoB.unknownAttributes, ...evalBtoA.unknownAttributes],
-    confidenceRationale: `Evaluation backed by ${confidenceScore}% profile completeness with ${userB.identity.verified ? 'verified' : 'unverified'} identity data.`,
+    confidenceRationale: `Evaluation backed by ${confidenceScore}% profile completeness with ${safeB.identity.verified ? 'verified' : 'unverified'} identity data.`,
   }
 
   return {

@@ -1,17 +1,19 @@
 // ============================================================================
 // server/src/routes/profile.ts
 // Progressive Disclosure Profile Endpoints (API_SPEC.md §2)
+// Protected with requireAuth & session-derived identity
 // ============================================================================
 
-import { Router, Request, Response } from 'express'
+import { Router, Response } from 'express'
 import { db } from '../data/dbStore.js'
 import { UniversalUserProfile } from '../../../src/types/index.js'
+import { requireAuth, AuthenticatedRequest } from '../middleware/auth.js'
 
 export const profileRouter = Router()
 
 // GET /api/v1/profile/me (Spec §2.1)
-profileRouter.get('/me', (req: Request, res: Response): void => {
-  const userId = (req.query.userId as string) || '11111111-1111-1111-1111-111111111111'
+profileRouter.get('/me', requireAuth, (req: AuthenticatedRequest, res: Response): void => {
+  const userId = req.actorUserId!
   const user = db.getUser(userId)
 
   if (!user) {
@@ -23,9 +25,9 @@ profileRouter.get('/me', (req: Request, res: Response): void => {
 })
 
 // PUT /api/v1/profile/stage/:stageNumber (Spec §2.2)
-profileRouter.put('/stage/:stageNumber', (req: Request, res: Response): void => {
+profileRouter.put('/stage/:stageNumber', requireAuth, (req: AuthenticatedRequest, res: Response): void => {
   const stageNumber = parseInt(req.params.stageNumber)
-  const userId = (req.body.userId as string) || '11111111-1111-1111-1111-111111111111'
+  const userId = req.actorUserId!
   const currentProfile = db.getUser(userId)
 
   if (!currentProfile) {

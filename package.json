@@ -9,11 +9,19 @@
     "build": "tsc -b && vite build",
     "lint": "oxlint",
     "preview": "vite preview",
+    "start": "tsx server/src/index.ts",
     "test:engine": "tsx src/utils/testMatchingEngine.ts",
     "test:db": "tsx db/validateMigrations.ts",
+    "test:workers": "tsx tools/testMatchPool.ts",
     "test:api": "tsx server/src/testApi.ts",
     "test:benchmark": "tsx tools/benchmarkModels.ts",
-    "test": "tsx src/utils/testMatchingEngine.ts && tsx db/validateMigrations.ts && tsx server/src/testApi.ts && tsx tools/benchmarkModels.ts"
+    "test:docker": "tsx tools/validateDocker.ts",
+    "sim:scale": "tsx tools/runScaleSimulation.ts",
+    "test:scaling": "tsx tools/testScalingPillars.ts",
+    "test:legal": "tsx tools/validateLegalCompliance.ts",
+    "test:apple": "tsx tools/testAppleStandard.ts",
+    "test:synthetic-world": "tsx tools/syntheticWorldEvaluation.ts",
+    "test": "tsx src/utils/testMatchingEngine.ts && tsx db/validateMigrations.ts && tsx tools/testMatchPool.ts && tsx server/src/testApi.ts && tsx tools/benchmarkModels.ts && tsx tools/validateDocker.ts && tsx tools/validateLegalCompliance.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
@@ -24,17 +32,19 @@
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "lucide-react": "^1.52.0",
+    "pg": "^8.23.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15"
   },
   "devDependencies": {
     "@types/node": "^24.13.3",
+    "@types/pg": "^8.23.1",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
     "oxlint": "^1.81.0",
-    "tsx": "^4.23.15",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
   }

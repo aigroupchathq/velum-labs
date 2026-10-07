@@ -165,3 +165,32 @@ Runs what-if simulation scenarios on relaxing candidate constraints (Spec §32).
 - `POST /api/v1/safety/block`: Immediately excludes target user symmetrically and removes all cached recommendations.
 - `POST /api/v1/safety/report`: Files an auditable moderation ticket with structured reasons and evidence payload.
 - `POST /api/v1/safety/privacy-permissions`: Updates per-attribute permissions (`store`, `display`, `searchable`, `matchable`, `private`).
+
+---
+
+## 6. Payments & Subscriptions Boundary Endpoints (Phase 11, Spec §33, Invariant D-23)
+
+> **Architectural Invariant D-23:** Payments and subscription states are strictly isolated from matching. No paid tier may modify matching scores, eligibility, exposure, or candidate ranking.
+
+### 6.1 `GET /api/v1/subscriptions/current`
+Retrieves current user's active subscription status, ethical entitlements, localized pricing (`currency` query parameter: `USD`, `GBP`, `EUR`, `CAD`, `AUD`), and explicit isolation guarantees.
+
+### 6.2 `GET /api/v1/subscriptions/features`
+Returns non-matching feature allowances (e.g., What-If simulation quotas, dossier export permissions), supported regional currencies, and global localized pricing lookup matrix.
+
+### 6.3 `POST /api/v1/subscriptions/checkout`
+Initiates payment checkout session. Requires `idempotencyKey` to prevent duplicate billing. Accepts optional `currency` parameter (`USD` default, `GBP`, `EUR`, `CAD`, `AUD`) with statutory VAT/GST inclusions.
+
+### 6.4 `POST /api/v1/subscriptions/webhook`
+Processes provider payment notifications with HMAC SHA-256 signature verification and replay prevention. Preserves transaction currency in idempotent payment records.
+
+### 6.5 `POST /api/v1/subscriptions/cancel`
+Schedules subscription cancellation at the end of the billing period without penalty.
+
+---
+
+## 7. Container Orchestration & Health Probes (Phase 12)
+
+- `GET /health/live`: Lightweight liveness probe for Kubernetes and Docker engine (`status: "live"`).
+- `GET /health/ready`: Readiness probe verifying backend connectivity and deterministic engine status (`status: "ready"`).
+- `GET /api/health`: Full service diagnostic check verifying deterministic and ML-free compliance.

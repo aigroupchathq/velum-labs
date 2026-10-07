@@ -1,0 +1,63 @@
+# ============================================================================
+# docker-compose.yml
+# Universal Compatibility & Relationship-Discovery Platform
+# Production Multi-Service Container Orchestration (Phase 12)
+# ============================================================================
+
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: modest-shannon-app
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - DATABASE_URL=postgresql://modest_admin:modest_secure_pass_2026@db:5432/modest_compatibility_db
+      - DEK_SECRET_KEY=e2e_prod_data_encryption_key_32_bytes_long_!
+      - WEBHOOK_SECRET=whsec_prod_live_boundary_secret_2026
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - modest_net
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:3001/health/live || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  db:
+    image: postgres:16-alpine
+    container_name: modest-shannon-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: modest_admin
+      POSTGRES_PASSWORD: modest_secure_pass_2026
+      POSTGRES_DB: modest_compatibility_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/migrations:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "5432:5432"
+    networks:
+      - modest_net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U modest_admin -d modest_compatibility_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  modest_net:
+    driver: bridge

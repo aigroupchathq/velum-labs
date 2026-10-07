@@ -1,17 +1,19 @@
 // ============================================================================
 // server/src/routes/preferences.ts
 // Preferences, Contradictions, and What-If Simulator Routes (API_SPEC.md §4)
+// Protected with requireAuth & authorizeSelf
 // ============================================================================
 
-import { Router, Request, Response } from 'express'
+import { Router, Response } from 'express'
 import { db } from '../data/dbStore.js'
 import { detectUserContradictions } from '../../../src/utils/matchingEngine.js'
+import { requireAuth, authorizeSelf, AuthenticatedRequest } from '../middleware/auth.js'
 
 export const preferencesRouter = Router()
 
 // GET /api/v1/preferences/contradictions (Spec §4.1)
-preferencesRouter.get('/contradictions', (req: Request, res: Response): void => {
-  const userId = (req.query.userId as string) || '11111111-1111-1111-1111-111111111111'
+preferencesRouter.get('/contradictions', requireAuth, (req: AuthenticatedRequest, res: Response): void => {
+  const userId = req.actorUserId!
   const user = db.getUser(userId)
 
   if (!user) {
@@ -29,11 +31,13 @@ preferencesRouter.get('/contradictions', (req: Request, res: Response): void => 
 })
 
 // POST /api/v1/preferences/optimize (Spec §4.2 What-If Simulator)
-preferencesRouter.post('/optimize', (req: Request, res: Response): void => {
+preferencesRouter.post('/optimize', requireAuth, (req: AuthenticatedRequest, res: Response): void => {
   const { userId, distanceDeltaKm = 0, ageFlexDeltaYears = 0, dietFlexDeltaPercent = 0 } = req.body
-  const targetUserId = userId || '11111111-1111-1111-1111-111111111111'
-  const user = db.getUser(targetUserId)
+  const targetUserId = userId || req.actorUserId!
 
+  if (!authorizeSelf(targetUserId, req, res)) return
+
+  const user = db.getUser(targetUserId)
   if (!user) {
     res.status(404).json({ error: 'User not found.' })
     return

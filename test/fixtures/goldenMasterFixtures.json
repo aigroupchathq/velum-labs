@@ -1,0 +1,3901 @@
+[
+  {
+    "fixtureId": "clearly_eligible",
+    "userAProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "usr_maya_01",
+      "identity": {
+        "name": "Maya Lin",
+        "age": 31,
+        "gender": "woman",
+        "genderPresentation": "feminine",
+        "pronouns": "she/her",
+        "bio": "Architectural acoustician & ceramicist. I spend weekends building soundscapes and fermentation jars. Looking for a conscious co-builder for long-term domestic life.",
+        "photos": [
+          "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "culturalBackground": "East Asian / Pacific Northwest",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "native"
+          },
+          {
+            "code": "zh",
+            "name": "Mandarin",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 15
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 5,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Secular Buddhist / Naturalist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Acts of Service"
+        ],
+        "neurotype": [
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis (East District)",
+        "coordinates": {
+          "lat": 37.7833,
+          "lng": -122.4167
+        },
+        "maxDistanceKm": 30,
+        "distanceFlexibilityKm": 15,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 20,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "woman",
+          "nonbinary",
+          "all"
+        ],
+        "minAge": 28,
+        "maxAge": 35,
+        "ageFlexibilityYears": 3,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 80
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 98,
+        "averageResponseHours": 2.1,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 6
+      }
+    },
+    "isEligible": true,
+    "hardConflicts": [],
+    "directionalScores": {
+      "aToB": 100,
+      "bToA": 99
+    },
+    "harmonicScore": 99,
+    "asymmetric": false,
+    "confidence": {
+      "score": 100,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 100,
+      "family": 100,
+      "lifestyle": 100,
+      "values": 100,
+      "attraction": 96,
+      "communication": 100,
+      "geography": 99,
+      "temporal": 100
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Identical primary intention (Long-Term Partnership / Marriage)",
+        "Strong overlap in core values (Integrity, Autonomy, Intellectual Curiosity, Compassion)",
+        "Shared dietary lifestyle (vegetarian)",
+        "Compatible conflict resolution style (reflective deliberate)",
+        "Proximate location (1 km away)"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 0
+  },
+  {
+    "fixtureId": "smoking_dealbreaker",
+    "userAProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "usr_liam_02",
+      "identity": {
+        "name": "Liam Vance",
+        "age": 32,
+        "gender": "man",
+        "pronouns": "he/him",
+        "bio": "Documentary cinematographer. Always on location or working in editing bays. Coffee enthusiast, occasional vinyl DJ.",
+        "photos": [
+          "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "native"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Short-Term Dating / Exploratory",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 50
+      },
+      "attractionPreferences": {
+        "physical": 4,
+        "emotional": 3,
+        "intellectual": 4,
+        "romantic": 2,
+        "sexual": 4,
+        "social": 4
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "definitely_not"
+      },
+      "lifestyle": {
+        "diet": "omnivore",
+        "smoking": "socially",
+        "alcohol": "frequent",
+        "cannabis": "socially",
+        "cleanlinessStandard": 2,
+        "pets": [
+          "dog"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Creativity",
+          "Adventure",
+          "Humor"
+        ],
+        "religion": "Atheist",
+        "worldview": "Pragmatist"
+      },
+      "communication": {
+        "conflictStyle": "direct_immediate",
+        "digitalCadence": "frequent",
+        "loveLanguages": [
+          "Physical Touch"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": false,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.76,
+          "lng": -122.44
+        },
+        "maxDistanceKm": 20,
+        "distanceFlexibilityKm": 5,
+        "openToRelocation": true,
+        "openToLongDistance": true
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 12,
+        "preferredMeetingFormat": "direct_coffee"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 24,
+        "maxAge": 34,
+        "ageFlexibilityYears": 1,
+        "dietPreference": {
+          "preferredDiets": [
+            "omnivore",
+            "vegetarian"
+          ],
+          "requirementLevel": "NEUTRAL",
+          "flexibility": 100
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never",
+            "socially"
+          ],
+          "requirementLevel": "NEUTRAL",
+          "dealbreaker": false
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_not"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "valuesWeight": 2,
+        "communicationWeight": 3
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 82,
+        "averageResponseHours": 8.4,
+        "ghostingReportsCount": 1,
+        "handshakesInitiated": 12
+      }
+    },
+    "isEligible": false,
+    "hardConflicts": [
+      {
+        "field": "smoking",
+        "evaluatorSide": "A_to_B",
+        "evaluatorRequirement": "Smoking must be in: [never]",
+        "targetValue": "socially",
+        "message": "Elena Rostova has a dealbreaker against smoking (socially)."
+      }
+    ],
+    "directionalScores": {
+      "aToB": 0,
+      "bToA": 0
+    },
+    "harmonicScore": 0,
+    "asymmetric": false,
+    "confidence": {
+      "score": 100,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 70,
+      "family": 60,
+      "lifestyle": 84,
+      "values": 40,
+      "attraction": 67,
+      "communication": 80,
+      "geography": 98,
+      "temporal": 100
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Compatible relational pacing",
+        "Complementary communication cadences",
+        "Proximate location (2.5 km away)",
+        "Synchronized sleep chronotype (night owl)",
+        "Mutual high value on intellectual resonance"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 0
+  },
+  {
+    "fixtureId": "children_intention_conflict",
+    "userAProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "usr_no_kids",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "definitely_not"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "dealbreaker": true,
+          "requirementLevel": "MUST",
+          "acceptableAnswers": [
+            "definitely_not"
+          ]
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "isEligible": false,
+    "hardConflicts": [
+      {
+        "field": "family_wants_children",
+        "evaluatorSide": "B_to_A",
+        "evaluatorRequirement": "Wants children must be in: [definitely_not]",
+        "targetValue": "leaning_yes",
+        "message": "Elena Rostova strictly requires partner children plans in [definitely_not], but Elena Rostova is leaning_yes."
+      }
+    ],
+    "directionalScores": {
+      "aToB": 0,
+      "bToA": 0
+    },
+    "harmonicScore": 0,
+    "asymmetric": false,
+    "confidence": {
+      "score": 100,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 100,
+      "family": 60,
+      "lifestyle": 100,
+      "values": 100,
+      "attraction": 100,
+      "communication": 100,
+      "geography": 100,
+      "temporal": 100
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Identical primary intention (Long-Term Partnership / Marriage)",
+        "Strong overlap in core values (Integrity, Autonomy, Intellectual Curiosity, Compassion)",
+        "Shared dietary lifestyle (vegetarian)",
+        "Compatible conflict resolution style (reflective deliberate)",
+        "Proximate location (0 km away)"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 0
+  },
+  {
+    "fixtureId": "structure_conflict",
+    "userAProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "usr_devon_04",
+      "identity": {
+        "name": "Devon Cruz",
+        "age": 33,
+        "gender": "man",
+        "pronouns": "he/they",
+        "bio": "Community organizer, cooperative housing steward, and experimental synthesist. Believes in expansive chosen family and transparent emotional accountability.",
+        "photos": [
+          "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "polyamorous",
+        "intentFlexibility": 0
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 5
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "unsure"
+      },
+      "lifestyle": {
+        "diet": "vegan",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 3,
+        "pets": [
+          "dog"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Community",
+          "Autonomy",
+          "Justice",
+          "Compassion"
+        ],
+        "religion": "Spiritual Naturalism",
+        "worldview": "Interdependent Humanism"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Words of Affirmation",
+          "Quality Time"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": false,
+        "aslRequired": false,
+        "sleepChronotype": "intermediate"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.765,
+          "lng": -122.42
+        },
+        "maxDistanceKm": 30,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 15,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 26,
+        "maxAge": 38,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegan",
+            "vegetarian"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 60
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "NEUTRAL",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "polyamorous",
+            "enm"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 4
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 91,
+        "averageResponseHours": 4.1,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 5
+      }
+    },
+    "isEligible": false,
+    "hardConflicts": [
+      {
+        "field": "relationship_structure",
+        "evaluatorSide": "A_to_B",
+        "evaluatorRequirement": "Structure must be in: [monogamous, flexible]",
+        "targetValue": "polyamorous",
+        "message": "Elena Rostova has a dealbreaker requiring [monogamous, flexible], but Devon Cruz is polyamorous."
+      },
+      {
+        "field": "relationship_structure",
+        "evaluatorSide": "B_to_A",
+        "evaluatorRequirement": "Structure must be in: [polyamorous, enm]",
+        "targetValue": "monogamous",
+        "message": "Devon Cruz has a dealbreaker requiring [polyamorous, enm], but Elena Rostova is monogamous."
+      }
+    ],
+    "directionalScores": {
+      "aToB": 0,
+      "bToA": 0
+    },
+    "harmonicScore": 0,
+    "asymmetric": false,
+    "confidence": {
+      "score": 100,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 100,
+      "family": 60,
+      "lifestyle": 94,
+      "values": 75,
+      "attraction": 92,
+      "communication": 100,
+      "geography": 99,
+      "temporal": 80
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Identical primary intention (Long-Term Partnership / Marriage)",
+        "Shared values: Autonomy, Compassion",
+        "Shared dietary lifestyle (vegan)",
+        "Shared dietary lifestyle (vegetarian)",
+        "Compatible conflict resolution style (reflective deliberate)"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 0
+  },
+  {
+    "fixtureId": "high_reciprocal_score",
+    "userAProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "syn_999_00001",
+      "completionStage": 6,
+      "identity": {
+        "name": "Logan A.",
+        "age": 38,
+        "gender": "man",
+        "genderPresentation": "androgynous",
+        "pronouns": "he/him",
+        "bio": "Synthetic test profile #1 generated for reproducible simulation benchmarks.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+        ],
+        "verified": true,
+        "culturalBackground": "Cosmopolitan",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Committed Relationship",
+        "relationshipStructure": "enm",
+        "intentFlexibility": 38
+      },
+      "attractionPreferences": {
+        "physical": 5,
+        "emotional": 1,
+        "intellectual": 4,
+        "romantic": 3,
+        "sexual": 4,
+        "social": 4
+      },
+      "family": {
+        "currentChildren": "none",
+        "wantsChildren": "definitely_yes",
+        "coParentingPhilosophy": "collaborative egalitarian"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "regularly",
+        "alcohol": "moderate",
+        "cannabis": "never",
+        "cleanlinessStandard": 3,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Social Justice",
+          "Spontaneity",
+          "Creativity"
+        ],
+        "politicalOrientation": "moderate",
+        "religiousTradition": "secular",
+        "communityInvolvement": "moderate"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "quality_time",
+          "words_of_affirmation"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": false,
+        "aslRequired": false,
+        "sleepChronotype": "intermediate"
+      },
+      "geography": {
+        "cityName": "San Francisco, CA",
+        "coordinates": {
+          "lat": 37.95370428927019,
+          "lng": -122.30557832725867
+        },
+        "maxDistanceKm": 60,
+        "distanceFlexibilityKm": 25,
+        "openToLongDistance": false,
+        "openToRelocation": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 15,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 28,
+        "maxAge": 48,
+        "ageFlexibilityYears": 3,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 34
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never",
+            "socially"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "enm",
+            "flexible"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "valuesWeight": 4,
+        "communicationWeight": 4
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 90,
+        "averageResponseHours": 4,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 2
+      }
+    },
+    "isEligible": false,
+    "hardConflicts": [
+      {
+        "field": "relationship_structure",
+        "evaluatorSide": "A_to_B",
+        "evaluatorRequirement": "Structure must be in: [monogamous, flexible]",
+        "targetValue": "enm",
+        "message": "Elena Rostova has a dealbreaker requiring [monogamous, flexible], but Logan A. is enm."
+      },
+      {
+        "field": "smoking",
+        "evaluatorSide": "A_to_B",
+        "evaluatorRequirement": "Smoking must be in: [never]",
+        "targetValue": "regularly",
+        "message": "Elena Rostova has a dealbreaker against smoking (regularly)."
+      }
+    ],
+    "directionalScores": {
+      "aToB": 0,
+      "bToA": 0
+    },
+    "harmonicScore": 0,
+    "asymmetric": false,
+    "confidence": {
+      "score": 100,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 70,
+      "family": 60,
+      "lifestyle": 94,
+      "values": 40,
+      "attraction": 60,
+      "communication": 100,
+      "geography": 88,
+      "temporal": 80
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Compatible relational pacing",
+        "Shared dietary lifestyle (vegetarian)",
+        "Compatible conflict resolution style (reflective deliberate)",
+        "Proximate location (22.3 km away)",
+        "Mutual high value on intellectual resonance"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 0
+  },
+  {
+    "fixtureId": "highly_asymmetric_score",
+    "userAProfile": {
+      "id": "usr_asym_a",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "omnivore",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "requirementLevel": "PREFERENCE",
+          "preferredDiets": [
+            "omnivore",
+            "vegetarian",
+            "vegan"
+          ],
+          "flexibility": 100
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "usr_asym_b",
+      "completionStage": 6,
+      "identity": {
+        "name": "Alex C.",
+        "age": 40,
+        "gender": "man",
+        "genderPresentation": "androgynous",
+        "pronouns": "he/him",
+        "bio": "Synthetic test profile #3 generated for reproducible simulation benchmarks.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+        ],
+        "verified": true,
+        "culturalBackground": "Cosmopolitan",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Committed Relationship",
+        "relationshipStructure": "flexible",
+        "intentFlexibility": 38
+      },
+      "attractionPreferences": {
+        "physical": 4,
+        "emotional": 3,
+        "intellectual": 2,
+        "romantic": 5,
+        "sexual": 3,
+        "social": 5
+      },
+      "family": {
+        "currentChildren": "none",
+        "wantsChildren": "open_to_children",
+        "coParentingPhilosophy": "collaborative egalitarian"
+      },
+      "lifestyle": {
+        "diet": "vegan",
+        "smoking": "never",
+        "alcohol": "moderate",
+        "cannabis": "never",
+        "cleanlinessStandard": 3,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Tradition",
+          "Compassion",
+          "Creativity",
+          "Intellectual Curiosity"
+        ],
+        "politicalOrientation": "moderate",
+        "religiousTradition": "secular",
+        "communityInvolvement": "moderate"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "quality_time",
+          "words_of_affirmation"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": false,
+        "aslRequired": false,
+        "sleepChronotype": "morning_lark"
+      },
+      "geography": {
+        "cityName": "San Francisco, CA",
+        "coordinates": {
+          "lat": 37.652267361262446,
+          "lng": -122.55689062046409
+        },
+        "maxDistanceKm": 60,
+        "distanceFlexibilityKm": 25,
+        "openToLongDistance": true,
+        "openToRelocation": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 15,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 30,
+        "maxAge": 50,
+        "ageFlexibilityYears": 3,
+        "dietPreference": {
+          "requirementLevel": "MUST",
+          "preferredDiets": [
+            "vegan"
+          ],
+          "flexibility": 0
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "open_to_children"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "flexible",
+            "flexible"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "valuesWeight": 4,
+        "communicationWeight": 4
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 90,
+        "averageResponseHours": 4,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 2
+      }
+    },
+    "isEligible": false,
+    "hardConflicts": [
+      {
+        "field": "age",
+        "evaluatorSide": "A_to_B",
+        "evaluatorRequirement": "Age between 27 and 36 (±2 yr flex)",
+        "targetValue": "Age 40",
+        "message": "Elena Rostova seeks ages 27–36, but Alex C. is 40."
+      },
+      {
+        "field": "diet",
+        "evaluatorSide": "B_to_A",
+        "evaluatorRequirement": "Requires diet in: [vegan]",
+        "targetValue": "omnivore",
+        "message": "Alex C. requires a partner who is vegan, but Elena Rostova is omnivore."
+      }
+    ],
+    "directionalScores": {
+      "aToB": 0,
+      "bToA": 0
+    },
+    "harmonicScore": 0,
+    "asymmetric": false,
+    "confidence": {
+      "score": 100,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 70,
+      "family": 60,
+      "lifestyle": 94,
+      "values": 75,
+      "attraction": 62,
+      "communication": 100,
+      "geography": 90,
+      "temporal": 50
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Compatible relational pacing",
+        "Shared values: Intellectual Curiosity, Compassion",
+        "Shared values: Compassion, Intellectual Curiosity",
+        "Shared dietary lifestyle (vegan)",
+        "Compatible conflict resolution style (reflective deliberate)"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 0
+  },
+  {
+    "fixtureId": "low_score_eligible",
+    "userAProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "syn_999_00006",
+      "completionStage": 6,
+      "identity": {
+        "name": "Avery F.",
+        "age": 27,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "he/him",
+        "bio": "Synthetic test profile #6 generated for reproducible simulation benchmarks.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+        ],
+        "verified": true,
+        "culturalBackground": "Cosmopolitan",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Friendship / Community",
+        "relationshipStructure": "flexible",
+        "intentFlexibility": 18
+      },
+      "attractionPreferences": {
+        "physical": 1,
+        "emotional": 4,
+        "intellectual": 5,
+        "romantic": 3,
+        "sexual": 4,
+        "social": 3
+      },
+      "family": {
+        "currentChildren": "none",
+        "wantsChildren": "unsure",
+        "coParentingPhilosophy": "collaborative egalitarian"
+      },
+      "lifestyle": {
+        "diet": "vegan",
+        "smoking": "socially",
+        "alcohol": "moderate",
+        "cannabis": "never",
+        "cleanlinessStandard": 3,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Compassion"
+        ],
+        "politicalOrientation": "moderate",
+        "religiousTradition": "secular",
+        "communityInvolvement": "moderate"
+      },
+      "communication": {
+        "conflictStyle": "diplomatic",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "quality_time",
+          "words_of_affirmation"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": false,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "San Francisco, CA",
+        "coordinates": {
+          "lat": 37.7342706025742,
+          "lng": -122.53028431049138
+        },
+        "maxDistanceKm": 60,
+        "distanceFlexibilityKm": 25,
+        "openToLongDistance": true,
+        "openToRelocation": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 15,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 18,
+        "maxAge": 37,
+        "ageFlexibilityYears": 3,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegan"
+          ],
+          "requirementLevel": "MUST",
+          "flexibility": 3
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never",
+            "socially"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "flexible",
+            "flexible"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "valuesWeight": 4,
+        "communicationWeight": 4
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 90,
+        "averageResponseHours": 4,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 2
+      }
+    },
+    "isEligible": false,
+    "hardConflicts": [
+      {
+        "field": "smoking",
+        "evaluatorSide": "A_to_B",
+        "evaluatorRequirement": "Smoking must be in: [never]",
+        "targetValue": "socially",
+        "message": "Elena Rostova has a dealbreaker against smoking (socially)."
+      },
+      {
+        "field": "diet",
+        "evaluatorSide": "B_to_A",
+        "evaluatorRequirement": "Requires diet in: [vegan]",
+        "targetValue": "vegetarian",
+        "message": "Avery F. requires a partner who is vegan, but Elena Rostova is vegetarian."
+      }
+    ],
+    "directionalScores": {
+      "aToB": 0,
+      "bToA": 0
+    },
+    "harmonicScore": 0,
+    "asymmetric": false,
+    "confidence": {
+      "score": 100,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 70,
+      "family": 60,
+      "lifestyle": 94,
+      "values": 100,
+      "attraction": 82,
+      "communication": 80,
+      "geography": 94,
+      "temporal": 100
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Compatible relational pacing",
+        "Strong overlap in core values (Integrity, Autonomy, Compassion)",
+        "Shared dietary lifestyle (vegan)",
+        "Complementary communication cadences",
+        "Proximate location (10.7 km away)"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 0
+  },
+  {
+    "fixtureId": "max_distance_boundary",
+    "userAProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "usr_max_dist",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 38.264900000000004,
+          "lng": -121.9294
+        },
+        "maxDistanceKm": 70,
+        "distanceFlexibilityKm": 0,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "isEligible": false,
+    "hardConflicts": [
+      {
+        "field": "distance",
+        "evaluatorSide": "A_to_B",
+        "evaluatorRequirement": "Max distance 25 km (+10 km flex)",
+        "targetValue": "69.4 km",
+        "message": "Elena Rostova is 69.4 km away, exceeding Elena Rostova's maximum boundary of 35 km."
+      }
+    ],
+    "directionalScores": {
+      "aToB": 0,
+      "bToA": 0
+    },
+    "harmonicScore": 0,
+    "asymmetric": false,
+    "confidence": {
+      "score": 100,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 100,
+      "family": 100,
+      "lifestyle": 100,
+      "values": 100,
+      "attraction": 100,
+      "communication": 100,
+      "geography": 45,
+      "temporal": 100
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Identical primary intention (Long-Term Partnership / Marriage)",
+        "Strong overlap in core values (Integrity, Autonomy, Intellectual Curiosity, Compassion)",
+        "Shared dietary lifestyle (vegetarian)",
+        "Compatible conflict resolution style (reflective deliberate)",
+        "Proximate location (69.4 km away)"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 0
+  },
+  {
+    "fixtureId": "sparse_profile",
+    "userAProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "usr_nadia_05",
+      "identity": {
+        "name": "Nadia Al-Mansoor",
+        "age": 28,
+        "gender": "woman",
+        "pronouns": "she/her",
+        "bio": "Comparative literature doctoral student. Currently writing about translation ethics and poetry of exile. Quiet cafe reader.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534751516642-a1714f5a3068?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": false,
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ar",
+            "name": "Arabic",
+            "proficiency": "native"
+          },
+          {
+            "code": "fr",
+            "name": "French",
+            "proficiency": "fluent"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 2,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 2,
+        "social": 2
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "unsure"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "sober",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Intellectual Curiosity",
+          "Integrity"
+        ],
+        "religion": "Cultural Islam / Philosophical Agnosticism"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Words of Affirmation"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis (University Heights)",
+        "coordinates": {
+          "lat": 37.77,
+          "lng": -122.43
+        },
+        "maxDistanceKm": 20,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 14,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 26,
+        "maxAge": 35,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian"
+          ],
+          "requirementLevel": "NEUTRAL",
+          "flexibility": 100
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "NEUTRAL",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 4,
+        "communicationWeight": 4
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 88,
+        "averageResponseHours": 4.9,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 2
+      }
+    },
+    "isEligible": true,
+    "hardConflicts": [],
+    "directionalScores": {
+      "aToB": 89,
+      "bToA": 90
+    },
+    "harmonicScore": 89,
+    "asymmetric": false,
+    "confidence": {
+      "score": 85,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 100,
+      "family": 60,
+      "lifestyle": 100,
+      "values": 75,
+      "attraction": 92,
+      "communication": 100,
+      "geography": 99,
+      "temporal": 100
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Identical primary intention (Long-Term Partnership / Marriage)",
+        "Shared values: Integrity, Intellectual Curiosity",
+        "Shared values: Intellectual Curiosity, Integrity",
+        "Shared dietary lifestyle (vegetarian)",
+        "Compatible conflict resolution style (reflective deliberate)"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 0
+  },
+  {
+    "fixtureId": "identical_profiles",
+    "userAProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "isEligible": true,
+    "hardConflicts": [],
+    "directionalScores": {
+      "aToB": 100,
+      "bToA": 100
+    },
+    "harmonicScore": 100,
+    "asymmetric": false,
+    "confidence": {
+      "score": 100,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 100,
+      "family": 100,
+      "lifestyle": 100,
+      "values": 100,
+      "attraction": 100,
+      "communication": 100,
+      "geography": 100,
+      "temporal": 100
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Identical primary intention (Long-Term Partnership / Marriage)",
+        "Strong overlap in core values (Integrity, Autonomy, Intellectual Curiosity, Compassion)",
+        "Shared dietary lifestyle (vegetarian)",
+        "Compatible conflict resolution style (reflective deliberate)",
+        "Proximate location (0 km away)"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 0
+  },
+  {
+    "fixtureId": "contradictory_profile",
+    "userAProfile": {
+      "id": "usr_elena_current",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 25,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": false
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "flexibility": 70
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "userBProfile": {
+      "id": "usr_contradictory",
+      "identity": {
+        "name": "Elena Rostova",
+        "age": 30,
+        "gender": "woman",
+        "genderPresentation": "androgynous",
+        "pronouns": "she/her",
+        "bio": "System designer & speculative fiction reader. Passionate about urban ecology, ambient music synthesizers, and intentional slow living.",
+        "photos": [
+          "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
+          "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80"
+        ],
+        "verified": true,
+        "ethnicity": "Caucasian / White",
+        "culturalBackground": "Eastern European / Mediterranean diaspora",
+        "languages": [
+          {
+            "code": "en",
+            "name": "English",
+            "proficiency": "fluent"
+          },
+          {
+            "code": "ru",
+            "name": "Russian",
+            "proficiency": "native"
+          },
+          {
+            "code": "es",
+            "name": "Spanish",
+            "proficiency": "conversational"
+          }
+        ]
+      },
+      "intention": {
+        "primaryIntent": "Long-Term Partnership / Marriage",
+        "relationshipStructure": "monogamous",
+        "intentFlexibility": 20
+      },
+      "attractionPreferences": {
+        "physical": 3,
+        "emotional": 5,
+        "intellectual": 5,
+        "romantic": 4,
+        "sexual": 3,
+        "social": 3
+      },
+      "family": {
+        "hasChildren": "none",
+        "wantsChildren": "leaning_yes"
+      },
+      "lifestyle": {
+        "diet": "vegetarian",
+        "smoking": "never",
+        "alcohol": "occasional",
+        "cannabis": "never",
+        "cleanlinessStandard": 4,
+        "pets": [
+          "cat"
+        ],
+        "petAllergies": []
+      },
+      "values": {
+        "coreValues": [
+          "Integrity",
+          "Autonomy",
+          "Intellectual Curiosity",
+          "Compassion"
+        ],
+        "religion": "Agnostic / Humanist",
+        "religiousObservance": 1,
+        "worldview": "Scientific Rationalism & Existential Humanism",
+        "politicalCivic": "Progressive / Democratic Green"
+      },
+      "communication": {
+        "conflictStyle": "reflective_deliberate",
+        "digitalCadence": "regular_intervals",
+        "loveLanguages": [
+          "Quality Time",
+          "Words of Affirmation"
+        ],
+        "neurotype": [
+          "AuDHD",
+          "Sensory sensitive"
+        ]
+      },
+      "accessibility": {
+        "stepFreeRequired": false,
+        "sensoryCalmRequired": true,
+        "aslRequired": false,
+        "sleepChronotype": "night_owl"
+      },
+      "geography": {
+        "cityName": "Metropolis",
+        "coordinates": {
+          "lat": 37.7749,
+          "lng": -122.4194
+        },
+        "maxDistanceKm": 5,
+        "distanceFlexibilityKm": 10,
+        "openToRelocation": false,
+        "openToLongDistance": true
+      },
+      "availability": {
+        "workSchedule": "flexible",
+        "freeHoursPerWeek": 18,
+        "preferredMeetingFormat": "thoughtful_messaging_first"
+      },
+      "preferences": {
+        "gendersSought": [
+          "all"
+        ],
+        "minAge": 27,
+        "maxAge": 36,
+        "ageFlexibilityYears": 2,
+        "dietPreference": {
+          "preferredDiets": [
+            "vegetarian",
+            "vegan"
+          ],
+          "requirementLevel": "MUST",
+          "flexibility": 95
+        },
+        "smokingPreference": {
+          "allowedSmoking": [
+            "never"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "wantsChildrenPreference": {
+          "acceptableAnswers": [
+            "definitely_yes",
+            "leaning_yes",
+            "unsure"
+          ],
+          "requirementLevel": "PREFERENCE",
+          "dealbreaker": false
+        },
+        "structurePreference": {
+          "acceptableStructures": [
+            "monogamous",
+            "flexible"
+          ],
+          "requirementLevel": "MUST",
+          "dealbreaker": true
+        },
+        "valuesWeight": 5,
+        "communicationWeight": 5
+      },
+      "privacy": {
+        "incognitoMode": false,
+        "fuzzLocationRadiusKm": 1.5
+      },
+      "behaviour": {
+        "responseRatePercent": 96,
+        "averageResponseHours": 3.2,
+        "ghostingReportsCount": 0,
+        "handshakesInitiated": 4
+      }
+    },
+    "isEligible": true,
+    "hardConflicts": [],
+    "directionalScores": {
+      "aToB": 100,
+      "bToA": 100
+    },
+    "harmonicScore": 100,
+    "asymmetric": false,
+    "confidence": {
+      "score": 100,
+      "rating": "HIGH"
+    },
+    "facets": {
+      "relationship": 100,
+      "family": 100,
+      "lifestyle": 100,
+      "values": 100,
+      "attraction": 100,
+      "communication": 100,
+      "geography": 100,
+      "temporal": 100
+    },
+    "explanation": {
+      "strongAlignment": [
+        "Identical primary intention (Long-Term Partnership / Marriage)",
+        "Strong overlap in core values (Integrity, Autonomy, Intellectual Curiosity, Compassion)",
+        "Shared dietary lifestyle (vegetarian)",
+        "Compatible conflict resolution style (reflective deliberate)",
+        "Proximate location (0 km away)"
+      ]
+    },
+    "userAContradictionsCount": 0,
+    "userBContradictionsCount": 2
+  }
+]

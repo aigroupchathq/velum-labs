@@ -45,7 +45,8 @@ Details: SYSTEM_ARCHITECTURE.md, MATCHING_SPEC.md, DATA_MODEL.md.
 | D-20 | Fairness thresholds that fail CI | Spec says measure, don't claim | Measure only until thresholds are chosen |
 | D-21 | Synthetic response model for the baseline experiment | Avoid circular evaluation | Independently specified, documented model |
 | D-22 | Units and locale (km vs miles; prototype uses miles) | Data model | Store metric, display per locale |
-| D-23 | Business tiers (spec §33) — which features are paid | Must not touch matching | Defer to Phase 11; rule: no paid feature changes scores or eligibility |
+| D-23 | Business tiers (spec §33) — which features are paid | Must not touch matching | **RESOLVED in Phase 11:** strictly isolated boundary; mathematical invariant proven in Test 10 with 0.000% score leakage. |
+| D-24 | High-scale candidate culling for N = 100,000+ users | O(N) evaluation collapses at scale | **RESOLVED in Phase 14:** 3-Pillar Architecture: 15km Hex Spatial Bins (100k -> 250) + O(1) Integer Bitmasks (250 -> 65) + Nightly Match Slates with Redis/BullMQ caching (< 0.05ms retrieval). |
 
 ## 3. Contradictions
 

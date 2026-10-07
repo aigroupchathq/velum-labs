@@ -2,135 +2,409 @@
 
 @layer base {
   :root {
-    --brand-primary: #fe3c72;
-    --brand-gradient-start: #fd267a;
-    --brand-gradient-end: #ff6036;
-    --like-color: #20c997;
-    --nope-color: #fd5068;
-    --superlike-color: #29b6f6;
-    --boost-color: #b650ff;
-    --gold-color: #f5b800;
+    --apple-bg: #09090b;
+    --apple-surface: rgba(24, 24, 27, 0.65);
+    --apple-border: rgba(255, 255, 255, 0.08);
+    --apple-blue: #0071e3;
+    --apple-emerald: #30d158;
+    --apple-amber: #ff9f0a;
+    --apple-rose: #ff453a;
   }
 
   * {
     -webkit-tap-highlight-color: transparent;
-    user-select: none;
-    -webkit-user-select: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #070709;
+    color: #f4f4f5;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
+    letter-spacing: -0.015em;
   }
 }
 
-/* Custom Gradients */
-.bg-brand-gradient {
-  background: linear-gradient(135deg, #fd267a, #ff6036);
+/* ============================================================
+   APPLE FROSTED GLASS PANELS
+   ============================================================ */
+.apple-panel {
+  background: rgba(18, 18, 22, 0.75);
+  backdrop-filter: blur(32px) saturate(180%);
+  -webkit-backdrop-filter: blur(32px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 16px 36px -12px rgba(0, 0, 0, 0.6);
 }
 
-.text-brand-gradient {
-  background: linear-gradient(135deg, #fd267a, #ff6036);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.apple-panel-interactive {
+  background: rgba(20, 20, 25, 0.65);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.bg-gold-gradient {
-  background: linear-gradient(135deg, #ffe082 0%, #ffb300 50%, #ff8f00 100%);
+.apple-panel-interactive:hover {
+  background: rgba(28, 28, 34, 0.85);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.12),
+    0 24px 48px -15px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
-.text-gold-gradient {
-  background: linear-gradient(135deg, #ffe082 0%, #ffb300 50%, #ff8f00 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Apple Segmented Control Pill */
+.apple-segmented-control {
+  background: rgba(12, 12, 15, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 3px;
+  border-radius: 9999px;
 }
 
-.bg-platinum-gradient {
-  background: linear-gradient(135deg, #4f525c 0%, #101113 100%);
+.apple-pill-btn {
+  border-radius: 9999px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.bg-superlike-gradient {
-  background: linear-gradient(135deg, #2bebef 0%, #0083f8 100%);
+.apple-pill-btn:active {
+  transform: scale(0.96);
 }
 
-.bg-boost-gradient {
-  background: linear-gradient(135deg, #ce79ff 0%, #7a00cd 100%);
+/* Hairline dividers */
+.hairline-border {
+  border-color: rgba(255, 255, 255, 0.07);
 }
 
-/* Tinder Swipe Stamps */
-.stamp-like {
-  border: 4px solid #20c997;
-  color: #20c997;
-  transform: rotate(-15deg);
-  border-radius: 8px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  box-shadow: 0 0 12px rgba(32, 201, 151, 0.4);
+/* Subtle typography accents */
+.apple-subhead {
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  color: #a1a1aa;
 }
 
-.stamp-nope {
-  border: 4px solid #fd5068;
-  color: #fd5068;
-  transform: rotate(15deg);
-  border-radius: 8px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  box-shadow: 0 0 12px rgba(253, 80, 104, 0.4);
-}
-
-.stamp-superlike {
-  border: 4px solid #29b6f6;
-  color: #29b6f6;
-  transform: rotate(0deg);
-  border-radius: 8px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  box-shadow: 0 0 12px rgba(41, 182, 246, 0.4);
-}
-
-/* Custom Scrollbar */
+/* Custom Minimal Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(150, 150, 150, 0.3);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(150, 150, 150, 0.5);
+  background: rgba(255, 255, 255, 0.25);
 }
 
-/* Radar Animation for Empty Deck */
-@keyframes radar-pulse {
-  0% {
-    transform: scale(0.8);
-    opacity: 0.8;
+/* ============================================================
+   CORE KEYFRAME ANIMATIONS
+   ============================================================ */
+
+/* Orbital ring spinning */
+@keyframes harmonicOrbit {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes harmonicOrbitReverse {
+  0%   { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Breathe / glow pulse */
+@keyframes ambientGlowPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.35;
   }
   50% {
-    opacity: 0.4;
+    transform: translate(-50%, -50%) scale(1.22);
+    opacity: 0.7;
+  }
+}
+
+/* Particle float up */
+@keyframes particleFloat {
+  0%   { transform: translateY(0) scale(1);   opacity: 1; }
+  100% { transform: translateY(-80px) scale(0); opacity: 0; }
+}
+
+/* Score counter pulse */
+@keyframes scorePulse {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.06); }
+}
+
+/* Shimmer sweep */
+@keyframes shimmerSweep {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Connection beam pulse */
+@keyframes beamPulse {
+  0%, 100% { opacity: 0.5; stroke-width: 1.5; }
+  50%       { opacity: 1;   stroke-width: 3; }
+}
+
+/* Waveform bounce */
+@keyframes waveformBounce {
+  0%, 100% { transform: scaleY(0.4); }
+  50%       { transform: scaleY(1); }
+}
+
+/* Slow float for ambient orbs */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-12px) rotate(2deg); }
+  66%       { transform: translateY(6px) rotate(-1deg); }
+}
+
+/* Ripple expand */
+@keyframes rippleOut {
+  0%   { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* Glow flicker */
+@keyframes glowFlicker {
+  0%, 100% { filter: drop-shadow(0 0 6px rgba(255,255,255,0.6)); }
+  25%       { filter: drop-shadow(0 0 14px rgba(255,255,255,1)); }
+  75%       { filter: drop-shadow(0 0 4px rgba(255,255,255,0.4)); }
+}
+
+/* Fade in up */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Spin slow ccw */
+@keyframes spinCCW {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+/* ============================================================
+   ANIMATION UTILITY CLASSES
+   ============================================================ */
+
+.ambient-glow-animated {
+  animation: ambientGlowPulse 8s ease-in-out infinite;
+}
+
+.harmonic-orbit-slow {
+  animation: harmonicOrbit 38s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.harmonic-orbit-reverse {
+  animation: harmonicOrbitReverse 42s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.score-pulse {
+  animation: scorePulse 3s ease-in-out infinite;
+}
+
+.beam-pulse {
+  animation: beamPulse 2.5s ease-in-out infinite;
+}
+
+.float-slow {
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+.glow-flicker {
+  animation: glowFlicker 4s ease-in-out infinite;
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ============================================================
+   WAVEFORM BARS (Music-Style Equalizer)
+   ============================================================ */
+
+.waveform-bar {
+  display: inline-block;
+  width: 3px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.75);
+  animation: waveformBounce 1.1s ease-in-out infinite;
+}
+
+.waveform-bar:nth-child(1)  { animation-delay: 0s;     height: 8px; }
+.waveform-bar:nth-child(2)  { animation-delay: 0.12s;  height: 16px; }
+.waveform-bar:nth-child(3)  { animation-delay: 0.24s;  height: 22px; }
+.waveform-bar:nth-child(4)  { animation-delay: 0.06s;  height: 14px; }
+.waveform-bar:nth-child(5)  { animation-delay: 0.18s;  height: 20px; }
+.waveform-bar:nth-child(6)  { animation-delay: 0.30s;  height: 18px; }
+.waveform-bar:nth-child(7)  { animation-delay: 0.09s;  height: 12px; }
+.waveform-bar:nth-child(8)  { animation-delay: 0.21s;  height: 24px; }
+.waveform-bar:nth-child(9)  { animation-delay: 0.15s;  height: 10px; }
+.waveform-bar:nth-child(10) { animation-delay: 0.03s;  height: 18px; }
+.waveform-bar:nth-child(11) { animation-delay: 0.27s;  height: 14px; }
+
+/* ============================================================
+   RIPPLE EFFECT (Orbit Rings)
+   ============================================================ */
+.ring-ripple {
+  animation: rippleOut 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.ring-ripple:nth-child(2) { animation-delay: 1s; }
+.ring-ripple:nth-child(3) { animation-delay: 2s; }
+
+/* ============================================================
+   SHIMMER TEXT (Score)
+   ============================================================ */
+.shimmer-text {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.4) 0%,
+    rgba(255,255,255,1) 40%,
+    rgba(255,255,255,0.6) 60%,
+    rgba(255,255,255,0.9) 100%
+  );
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmerSweep 3s linear infinite;
+}
+
+/* ============================================================
+   CUSTOM RANGE SLIDER - CINEMATIC
+   ============================================================ */
+input[type="range"].cinematic-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+input[type="range"].cinematic-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.95), rgba(200,200,220,0.8));
+  box-shadow:
+    0 0 0 3px rgba(255,255,255,0.15),
+    0 0 16px rgba(255,255,255,0.5),
+    0 2px 8px rgba(0,0,0,0.6);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+input[type="range"].cinematic-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  box-shadow:
+    0 0 0 5px rgba(255,255,255,0.2),
+    0 0 28px rgba(255,255,255,0.8),
+    0 2px 12px rgba(0,0,0,0.7);
+}
+
+input[type="range"].cinematic-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.95), rgba(200,200,220,0.8));
+  box-shadow: 0 0 16px rgba(255,255,255,0.5), 0 2px 8px rgba(0,0,0,0.6);
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s;
+}
+
+/* ============================================================
+   GLASS CARD HOVER GLOW BORDER
+   ============================================================ */
+.glow-card {
+  position: relative;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glow-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--glow-angle, 0deg),
+    transparent 0%,
+    rgba(255,255,255,0.15) 20%,
+    transparent 40%
+  );
+  animation: spinCCW 6s linear infinite;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.glow-card:hover::before {
+  opacity: 1;
+}
+
+/* ============================================================
+   PARTICLE DOT
+   ============================================================ */
+.particle-dot {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: particleFloat linear forwards;
+}
+
+/* ============================================================
+   LUXURY EDITORIAL & SMOOTH STEP ANIMATIONS
+   ============================================================ */
+.font-serif-editorial {
+  font-family: "SF Pro Display", Georgia, "Times New Roman", serif;
+  letter-spacing: -0.02em;
+}
+
+@keyframes stepSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
   }
   100% {
-    transform: scale(2.2);
-    opacity: 0;
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-.animate-radar-1 {
-  animation: radar-pulse 3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+@keyframes goldenAuraPulse {
+  0%, 100% {
+    box-shadow: 0 0 30px rgba(226,194,144,0.15);
+  }
+  50% {
+    box-shadow: 0 0 60px rgba(226,194,144,0.35);
+  }
 }
 
-.animate-radar-2 {
-  animation: radar-pulse 3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-  animation-delay: 1s;
+.step-slide-in {
+  animation: stepSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.animate-radar-3 {
-  animation: radar-pulse 3s cubic-bezier(0, 0.2, 0.8, 1) infinite;
-  animation-delay: 2s;
+.golden-aura {
+  animation: goldenAuraPulse 4s ease-in-out infinite;
 }
+

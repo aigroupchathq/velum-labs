@@ -58,6 +58,7 @@ export interface UniversalUserProfile {
     bio: string
     photos: string[]
     verified: boolean
+    ethnicity?: string // e.g. "Caucasian / White", "Black / African Descent", "East Asian", etc.
     culturalBackground?: string
     languages: { code: string; name: string; proficiency: 'native' | 'fluent' | 'conversational' }[]
   }
@@ -134,9 +135,11 @@ export interface UniversalUserProfile {
   // 11. Stated Preferences (Targeting Partners)
   preferences: {
     gendersSought: string[]
+    ethnicitiesSought?: string[] // e.g. ["Caucasian / White", "Any"]
     minAge: number
     maxAge: number
     ageFlexibilityYears: number
+    acceptablePartnerAgeRange?: { min: number; max: number } // explicitly what user is open to receiving
     
     // Diet preference (Spec §5: distinguish "I am", "I prefer", "I require", "I don't care")
     dietPreference: {
@@ -262,4 +265,26 @@ export interface MatchEvaluation {
 export interface RecommendedCandidate {
   candidate: UniversalUserProfile
   evaluation: MatchEvaluation
+}
+
+export interface DyadMessage {
+  id: string
+  senderId: string
+  recipientId: string
+  content: string
+  timestamp: string
+  isPromptAnswer?: boolean
+  promptTopic?: string
+}
+
+export interface DyadConversation {
+  id: string
+  partnerId: string
+  status: 'pending_consent' | 'active' | 'closed_gracefully'
+  createdAt: string
+  lastActivity: string
+  consentGivenBy: string[] // user IDs
+  sharedPrompts: string[]
+  messages: DyadMessage[]
+  closureReason?: string
 }

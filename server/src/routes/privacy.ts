@@ -2,23 +2,28 @@
 // server/src/routes/privacy.ts
 // Privacy, Consent Permissions, and Field-Level Encryption Endpoints
 // Conforms to: PRIVACY_SPEC.md §2, §3, and SECURITY_SPEC.md §3
+// Protected with requireAuth & authorizeSelf
 // ============================================================================
 
-import { Router, Request, Response } from 'express'
+import { Router, Response } from 'express'
 import { db } from '../data/dbStore.js'
 import { fieldEncryptionService } from '../security/encryption.js'
+import { requireAuth, authorizeSelf, AuthenticatedRequest } from '../middleware/auth.js'
 
 export const privacyRouter = Router()
 
 // POST /api/v1/privacy/tier4/store
 // Stores a Tier 4 sensitive attribute encrypted via AES-256-GCM
-privacyRouter.post('/tier4/store', (req: Request, res: Response): void => {
+privacyRouter.post('/tier4/store', requireAuth, (req: AuthenticatedRequest, res: Response): void => {
   const { userId, attributeId, plainValue, permMatchable = false, permDisplay = false } = req.body
 
   if (!userId || !attributeId || plainValue === undefined) {
     res.status(400).json({ error: 'userId, attributeId, and plainValue are required.' })
     return
   }
+
+  // Authorization check: Actor must be the target user
+  if (!authorizeSelf(userId, req, res)) return
 
   const user = db.getUser(userId)
   if (!user) {
@@ -44,13 +49,16 @@ privacyRouter.post('/tier4/store', (req: Request, res: Response): void => {
 
 // POST /api/v1/privacy/tier4/retrieve
 // Decrypts and retrieves a Tier 4 sensitive attribute (authorized user self-inspection only)
-privacyRouter.post('/tier4/retrieve', (req: Request, res: Response): void => {
+privacyRouter.post('/tier4/retrieve', requireAuth, (req: AuthenticatedRequest, res: Response): void => {
   const { userId, attributeId } = req.body
 
   if (!userId || !attributeId) {
     res.status(400).json({ error: 'userId and attributeId are required.' })
     return
   }
+
+  // Authorization check: Actor must be the target user
+  if (!authorizeSelf(userId, req, res)) return
 
   const record = db.getEncryptedAttribute(userId, attributeId)
   if (!record) {
@@ -68,7 +76,7 @@ privacyRouter.post('/tier4/retrieve', (req: Request, res: Response): void => {
       permMatchable: record.permMatchable,
       permDisplay: record.permDisplay,
     })
-  } catch (err: any) {
+  } catch {
     res.status(500).json({ error: 'Decryption failed: Integrity check or tag mismatch.' })
   }
 })

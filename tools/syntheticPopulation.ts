@@ -42,11 +42,11 @@ export function generateSyntheticPopulation(options: GeneratorOptions): Universa
     'Integrity', 'Autonomy', 'Intellectual Curiosity', 'Compassion',
     'Social Justice', 'Ambition', 'Spontaneity', 'Tradition', 'Creativity'
   ]
-  const commStyles = [
-    'reflective deliberate',
-    'direct immediate',
-    'collaborative consensus',
-    'processing solitary'
+  const commStyles: Array<'direct_immediate' | 'reflective_deliberate' | 'space_first' | 'diplomatic'> = [
+    'reflective_deliberate',
+    'direct_immediate',
+    'space_first',
+    'diplomatic',
   ]
   const chronotypes = ['morning_lark', 'intermediate', 'night_owl']
 
@@ -135,7 +135,7 @@ export function generateSyntheticPopulation(options: GeneratorOptions): Universa
         communityInvolvement: 'moderate',
       },
       communication: {
-        conflictStyle: 'reflective_deliberate',
+        conflictStyle: commStyle,
         digitalCadence: 'regular_intervals',
         loveLanguages: ['quality_time', 'words_of_affirmation'],
       },

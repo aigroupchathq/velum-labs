@@ -11,7 +11,6 @@
 
 import { generateSyntheticPopulation } from './syntheticPopulation.js'
 import { evaluateMatch } from '../src/utils/matchingEngine.js'
-import type { UniversalUserProfile } from '../src/types/index.js'
 
 export interface ModelMetrics {
   modelName: string
