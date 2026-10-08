@@ -22,21 +22,54 @@ export function requireAuth(req: AuthenticatedRequest, res: Response, next: Next
   const devUserIdHeader = req.headers['x-user-id'] as string
 
   // 1. Bearer Token Inspection
-  if (authHeader && authHeader.startsWith('Bearer ')) {
-    const token = authHeader.substring(7)
-    // Support token format: dev_session_<userId> or raw userId token in dev
+  if (authHeader) {
+    if (!authHeader.startsWith('Bearer ')) {
+      res.status(401).json({
+        error: 'Unauthorized: Malformed Authorization header. Expected Bearer token format.',
+        code: 'UNAUTHENTICATED',
+      })
+      return
+    }
+
+    const token = authHeader.substring(7).trim()
+    if (!token) {
+      res.status(401).json({
+        error: 'Unauthorized: Empty Bearer token provided.',
+        code: 'UNAUTHENTICATED',
+      })
+      return
+    }
+
+    // In production, development sessions and untrusted tokens are strictly rejected.
+    // Invariant: Production must NEVER authenticate a caller purely from dev_session_<userId> or dev headers.
+    // Since no real production issuer verifier (e.g. JWT/OAuth2) is configured, fail closed.
+    if (process.env.NODE_ENV === 'production') {
+      res.status(401).json({
+        error: 'Unauthorized: Production token verifier is not configured. Development tokens are rejected in production mode.',
+        code: 'PRODUCTION_VERIFIER_UNAVAILABLE',
+      })
+      return
+    }
+
+    // In development/test mode: Support token format dev_session_<userId> or raw userId token
     const tokenUserId = token.startsWith('dev_session_') ? token.replace('dev_session_', '') : token
     const user = db.getUser(tokenUserId)
     if (user) {
       req.actorUserId = user.id
-      req.isDevelopmentAuth = process.env.NODE_ENV !== 'production'
+      req.isDevelopmentAuth = true
       return next()
     }
+
+    res.status(401).json({
+      error: 'Unauthorized: Invalid token user session.',
+      code: 'UNAUTHENTICATED',
+    })
+    return
   }
 
   // 2. Controlled Development-Only Fallback
   if (process.env.NODE_ENV !== 'production') {
-    const actingId = devUserIdHeader || (req.headers['x-authenticated-user'] as string) || (req.query.userId as string) || (req.body.userId as string) || 'usr_elena_current'
+    const actingId = devUserIdHeader || (req.headers['x-authenticated-user'] as string) || (req.query.userId as string) || (req.body?.userId as string) || 'usr_elena_current'
     const user = db.getUser(actingId)
     if (user) {
       req.actorUserId = user.id
