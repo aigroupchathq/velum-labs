@@ -232,7 +232,7 @@ export interface PartnerDemandProfile {
 
 export interface DecoupledUserProfile {
   userId: string
-  completionStage: number
+  completionStage?: number
   selfSupply: SelfSupplyProfile // Y_i
   partnerDemand: PartnerDemandProfile // X_i
   privacy: UniversalUserProfile['privacy']
