@@ -1,17 +1,18 @@
 // ============================================================================
 // src/components/AlgorithmNetworkVisualizer.tsx
-// Wingman: Constellation & Encounter Odds Visualizer
-// Physics-Grade 5-Facet Gravitational Pull & 30-Day Spacetime Encounter Manifold
-// Enhanced with Onlook Studio Architecture:
-// - 3-Zone Studio Workspace (Facet Hierarchy, Gravitational Canvas, Telemetry Dossier)
-// - Floating Canvas HUD Dock with Spacetime Scrubber, Pole Focus, & Orbit Modes
-// - Deep Zinc-950 Tokens, Micro-Borders, and Monospace Telemetry Badges
+// Wingman: The Living Constellation & 30-Day Serendipity Projection
+// A soulful, celestial map of mutual human resonance in London.
+// 
+// Blending real human warmth with grounded relational science:
+// - Spatiotemporal Poisson Mobility Models (Brockmann / Gonzalez et al.)
+// - Kuramoto Circadian Phase Synchronization & Gottman Dyadic Stability
+// - Aron Self-Expansion & Optimal Stopping Principles
 //
-// References:
-// - Spatiotemporal Poisson Point Processes for Urban Mobility (Brockmann / Gonzalez et al.)
-// - Barycentric Potential Wells & Metric Multidimensional Scaling (MDS)
-// - Kuramoto Circadian Phase Synchronization & Gottman Dyadic Differential Equations
-// - Optimal Stopping 37% & Aron's Self-Expansion Model
+// Zero screen clipping on any viewport width (320px to 4K ultra-wide).
+// Mobile-first ergonomics with 3 intuitive view tabs:
+// 1. Constellation (The Night Sky Hero)
+// 2. Five Harmonies (Tactile tuning sliders with haptic feedback)
+// 3. Connection Story (Deep dyadic story, London near-misses, and meeting spots)
 // ============================================================================
 
 import React, { useState, useMemo, useEffect } from 'react'
@@ -20,8 +21,6 @@ import {
   Sparkles,
   MapPin,
   ShieldCheck,
-  Brain,
-  TrendingUp,
   Flame,
   X,
   FileText,
@@ -34,11 +33,13 @@ import {
   PanelRight,
   Search,
   SlidersHorizontal,
-  Layers,
   Activity,
   Filter,
   ChevronRight,
-  Focus,
+  Coffee,
+  Heart,
+  Star,
+  Info,
 } from 'lucide-react'
 import type { UniversalUserProfile, MatchEvaluation } from '../types'
 import { evaluateMatch } from '../utils/matchingEngine'
@@ -46,7 +47,7 @@ import { mockCandidates } from '../data/mockProfiles'
 import { sounds } from '../utils/sound'
 
 // ==========================================
-// 1. DATA TYPES & 5 CORE GRAVITATIONAL FACETS
+// 1. THE FIVE LIFE HARMONIES (SOULFUL DEFINITIONS)
 // ==========================================
 
 export type FacetKey = 'crossing' | 'rhythm' | 'values' | 'interests' | 'mutual'
@@ -54,76 +55,94 @@ export type FacetKey = 'crossing' | 'rhythm' | 'values' | 'interests' | 'mutual'
 export interface FacetDefinition {
   key: FacetKey
   label: string
+  shortLabel: string
   shortSymbol: string
   colorHex: string
+  glowColor: string
   badgeBg: string
   badgeText: string
-  angleRad: number // Barycentric pole angle on unit circle
+  angleRad: number // Celestial star pole angle on unit circle
   scientificName: string
   appliedTheory: string
+  poeticSubtitle: string
   description: string
 }
 
 const FACETS: Record<FacetKey, FacetDefinition> = {
   crossing: {
     key: 'crossing',
-    label: 'Paths crossing',
-    shortSymbol: 'λ_transit',
-    colorHex: '#c084fc', // Vibrant purple
+    label: 'Shared Paths in London',
+    shortLabel: 'Shared Paths',
+    shortSymbol: 'City Routes',
+    colorHex: '#c084fc', // Lilac starlight
+    glowColor: 'rgba(192, 132, 252, 0.4)',
     badgeBg: 'bg-purple-500/20',
     badgeText: 'text-purple-300',
     angleRad: -Math.PI / 2, // 12 o'clock (top)
-    scientificName: 'Spacetime Poisson Transit Intensity',
-    appliedTheory: 'Urban Mobility Overlap & Continuous Poisson Process',
-    description: 'Physical & transit route overlap across London transport and hubs',
+    scientificName: 'Urban Transit & Path Serendipity',
+    appliedTheory: 'Continuous Spatiotemporal Mobility Overlap',
+    poeticSubtitle: 'Where your daily steps, cafes, and commutes cross in real life',
+    description: 'Physical route overlap across London transport, neighborhood markets, and morning coffee spots',
   },
   rhythm: {
     key: 'rhythm',
-    label: 'Daily rhythm',
-    shortSymbol: 'ω_circadian',
-    colorHex: '#34d399', // Emerald green
+    label: 'Daily Living Rhythm',
+    shortLabel: 'Daily Rhythm',
+    shortSymbol: 'Living Pace',
+    colorHex: '#34d399', // Emerald aurora
+    glowColor: 'rgba(52, 211, 153, 0.4)',
     badgeBg: 'bg-emerald-500/20',
     badgeText: 'text-emerald-300',
     angleRad: -Math.PI * 0.1, // ~2 o'clock
-    scientificName: 'Kuramoto Phase Synchronization',
-    appliedTheory: 'Sleep Chronotype & Peak Energy Phase Coherence',
-    description: 'Sleep chronotype, peak active hours, weekend downtime synchronization',
+    scientificName: 'Circadian Synchronization & Peak Pace',
+    appliedTheory: 'Sleep Chronotype & Energy Window Alignment',
+    poeticSubtitle: 'Morning wakefulness, quiet evenings, and weekend pace',
+    description: 'Sleep chronotype, energy peaks, and weekend downtime synchrony — sharing a life without draining each other',
   },
   values: {
     key: 'values',
-    label: 'Shared values',
-    shortSymbol: 'H_gottman',
-    colorHex: '#fb7185', // Rose / coral
+    label: 'Core Anchors & Safety',
+    shortLabel: 'Core Anchors',
+    shortSymbol: 'Core Values',
+    colorHex: '#fb7185', // Rose ember
+    glowColor: 'rgba(251, 113, 133, 0.4)',
     badgeBg: 'bg-rose-500/20',
     badgeText: 'text-rose-300',
     angleRad: Math.PI * 0.35, // ~4:30 o'clock
-    scientificName: 'Gottman Stability Invariant',
-    appliedTheory: '5:1 Positivity Ratio & Low Negativity Threshold',
-    description: 'Gottman 5:1 ratio, attachment safety, long-term life trajectory alignment',
+    scientificName: 'Gottman Stability & Emotional Safety',
+    appliedTheory: '5:1 Positivity Ratio & Early Gentle Conflict Repair',
+    poeticSubtitle: 'Unspoken ethics, emotional honesty, and mutual care',
+    description: 'Emotional accountability, attachment security, and long-term life trajectory alignment',
   },
   interests: {
     key: 'interests',
-    label: 'Interests',
-    shortSymbol: 'E_aron',
-    colorHex: '#fbbf24', // Amber
+    label: 'Shared Curiosities',
+    shortLabel: 'Curiosities',
+    shortSymbol: 'Curiosities',
+    colorHex: '#fbbf24', // Warm golden spark
+    glowColor: 'rgba(251, 191, 36, 0.4)',
     badgeBg: 'bg-amber-500/20',
     badgeText: 'text-amber-300',
     angleRad: Math.PI * 0.82, // ~7:30 o'clock
-    scientificName: 'Aron Self-Expansion Tensor',
+    scientificName: 'Aron Self-Expansion & Wonder',
     appliedTheory: 'Cognitive Horizon Growth & Mutual Novelty',
-    description: 'Aron self-expansion topics: books, arts, architecture, passions',
+    poeticSubtitle: 'Books, quiet galleries, neighborhood walks, and laughter',
+    description: 'Shared passions, creative sparks, and expanding each other’s inner world without losing your own',
   },
   mutual: {
     key: 'mutual',
-    label: 'Mutual Interest',
-    shortSymbol: 'S_reciprocal',
-    colorHex: '#38bdf8', // Sky cyan
+    label: 'Mutual Warmth & Ease',
+    shortLabel: 'Mutual Warmth',
+    shortSymbol: 'Natural Flow',
+    colorHex: '#38bdf8', // Sky starlight
+    glowColor: 'rgba(56, 189, 248, 0.4)',
     badgeBg: 'bg-sky-500/20',
     badgeText: 'text-sky-300',
     angleRad: -Math.PI * 0.9, // ~10 o'clock
-    scientificName: 'Leary Sociometer & Harmonic Mutuality',
-    appliedTheory: 'Reciprocal Attraction & Low Rejection Latency',
-    description: 'Sociometer reciprocity, low rejection latency, warm conversational tempo',
+    scientificName: 'Reciprocal Attraction & Low Latency',
+    appliedTheory: 'Reciprocal Warmth & Rejection Freedom',
+    poeticSubtitle: 'A connection that feels effortless and safe from minute one',
+    description: 'Low conversational friction, natural reciprocal curiosity, and feeling completely comfortable being yourself',
   },
 }
 
@@ -158,26 +177,26 @@ interface AlgorithmNetworkVisualizerProps {
   onSelectCandidate?: (candidate: UniversalUserProfile, evaluation: MatchEvaluation) => void
 }
 
-// Preset configurations for facet weights
-const FACET_PRESETS: { name: string; description: string; weights: Record<FacetKey, number> }[] = [
+// Preset configurations with warm, human names
+const HARMONY_PRESETS: { name: string; description: string; weights: Record<FacetKey, number> }[] = [
   {
-    name: 'Balanced Field',
-    description: 'Equal 20% distribution across all 5 dimensions',
+    name: 'Balanced Harmonies',
+    description: 'Equal 20% balance across all five dimensions of life',
     weights: { crossing: 20, rhythm: 20, values: 20, interests: 20, mutual: 20 },
   },
   {
-    name: 'Transit & Routine',
-    description: 'Prioritise serendipitous physical and temporal intersection',
+    name: 'City Serendipity',
+    description: 'Prioritises people whose everyday steps and transit routines cross yours',
     weights: { crossing: 45, rhythm: 25, values: 15, interests: 5, mutual: 10 },
   },
   {
-    name: 'Gottman Sanctuary',
-    description: 'Deep core values and reciprocal conflict resilience',
+    name: 'Emotional Sanctuary',
+    description: 'Deep core values, emotional safety, and gentle conflict resilience',
     weights: { values: 45, mutual: 25, rhythm: 15, crossing: 10, interests: 5 },
   },
   {
-    name: 'Aron Self-Expansion',
-    description: 'Novelty, passions, and reciprocal psychological expansion',
+    name: 'Curiosity & Spark',
+    description: 'Shared passions, creative sparks, and intellectual self-expansion',
     weights: { interests: 40, values: 25, rhythm: 15, mutual: 10, crossing: 10 },
   },
 ]
@@ -190,8 +209,11 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
   currentUser,
   onSelectCandidate,
 }) => {
-  // Mode toggle: 'Best fit' vs 'Fit + odds' vs 'Field physics'
-  const [viewMode, setViewMode] = useState<'best_fit' | 'fit_odds' | 'field_physics'>('fit_odds')
+  // View mode toggle
+  const [viewMode, setViewMode] = useState<'harmony' | 'projection' | 'rays'>('projection')
+
+  // Mobile navigation tabs: 'constellation' | 'harmonies' | 'story'
+  const [mobileTab, setMobileTab] = useState<'constellation' | 'harmonies' | 'story'>('constellation')
 
   // Interactive slider weights (summing to ~100)
   const [weights, setWeights] = useState<Record<FacetKey, number>>({
@@ -217,17 +239,14 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
   const [sortCriteria, setSortCriteria] = useState<'fit' | 'odds' | 'name'>('fit')
 
   // Modals
-  const [showPsychologyModal, setShowPsychologyModal] = useState<boolean>(false)
+  const [showScienceModal, setShowScienceModal] = useState<boolean>(false)
   const [suggestMeetingModal, setSuggestMeetingModal] = useState<boolean>(false)
 
-  // ----------------------------------------------------
-  // ONLOOK STUDIO WORKSPACE STATE
-  // ----------------------------------------------------
+  // Desktop panel states
   const [leftPanelOpen, setLeftPanelOpen] = useState<boolean>(true)
   const [rightPanelOpen, setRightPanelOpen] = useState<boolean>(true)
   const [zenMode, setZenMode] = useState<boolean>(false)
   const [activeAttractorFocus, setActiveAttractorFocus] = useState<'all' | FacetKey>('all')
-  const [interactionMode, setInteractionMode] = useState<'select' | 'field'>('select')
   const [searchFilter, setSearchFilter] = useState<string>('')
 
   // Timeline playback loop
@@ -239,35 +258,35 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
           if (prev >= 30) return 1
           return prev + 1
         })
-      }, 250)
+      }, 240)
     }
     return () => clearInterval(timer)
   }, [isPlayingTimeline])
 
-  // Pre-calculate candidate items with deep engine metrics + realistic London transit spacetime logs
+  // Pre-calculate candidate items with realistic London transit spacetime logs
   const candidateItems = useMemo<CandidateNetworkItem[]>(() => {
     const defaultNearMisses: Record<string, NearMissLog[]> = {
       usr_maya_01: [
-        { time: 'Tue 08:12', description: '40 m apart, same platform', venue: 'Waterloo station' },
-        { time: 'Sat 11:20', description: 'Both in the queue', venue: 'Borough Market' },
-        { time: 'Thu 18:45', description: 'Adjacent carriage northbound', venue: 'Northern line' },
+        { time: 'Tue 08:12', description: '40 m apart, both ordering flat whites', venue: 'Waterloo Station' },
+        { time: 'Sat 11:20', description: 'Both picking up fresh sourdough at the same stall', venue: 'Borough Market' },
+        { time: 'Thu 18:45', description: 'Adjacent carriages northbound across the river', venue: 'Northern line' },
       ],
       usr_liam_02: [
-        { time: 'Mon 09:05', description: 'Opposite platform', venue: 'Liverpool Street' },
-        { time: 'Fri 19:20', description: 'Attending same gallery opening', venue: 'Whitechapel Gallery' },
+        { time: 'Mon 09:05', description: 'Opposite platform heading central', venue: 'Liverpool Street' },
+        { time: 'Fri 19:20', description: 'Attending same photography opening', venue: 'Whitechapel Gallery' },
       ],
       usr_priya_03: [
-        { time: 'Wed 13:10', description: 'Reading 2 tables away', venue: 'Wellcome Collection Café' },
-        { time: 'Sun 16:30', description: 'Crossed paths at pedestrian crossing', venue: 'Russell Square' },
+        { time: 'Wed 13:10', description: 'Reading two tables away in the quiet garden', venue: 'Wellcome Collection' },
+        { time: 'Sun 16:30', description: 'Crossed paths at the pedestrian crossing', venue: 'Russell Square' },
       ],
       usr_marcus_04: [
         { time: 'Thu 12:40', description: 'Same bakery checkout counter', venue: 'E5 Bakehouse' },
       ],
       usr_sofia_05: [
-        { time: 'Fri 18:15', description: 'Both waiting outside canal steps', venue: 'Granary Square' },
+        { time: 'Fri 18:15', description: 'Both resting by the canal steps at golden hour', venue: 'Granary Square' },
       ],
       usr_chloe_06: [
-        { time: 'Sun 14:00', description: 'Passed by conservatory terrace', venue: 'Barbican Centre' },
+        { time: 'Sun 14:00', description: 'Passed by the conservatory terrace', venue: 'Barbican Centre' },
       ],
     }
 
@@ -281,28 +300,24 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
       const mutualScore = evaluation.communicationAlignment?.score != null ? Math.round(evaluation.communicationAlignment.score * 100) : 78
       const geoScore = evaluation.geographicFeasibility?.score != null ? Math.round(evaluation.geographicFeasibility.score * 100) : 85
 
-      // Transit / Paths crossing derived from distance + geography
       const crossingScore = Math.max(35, Math.min(98, Math.round(geoScore * 0.9 + (12 - idx * 2))))
 
-      // 30-Day Poisson base odds P(30d)
       const oddsBase = Math.round(Math.max(12, Math.min(55, crossingScore * 0.48 + (10 - idx * 2))))
       const oddsRange: [number, number] = [
         Math.max(8, oddsBase - 11),
         Math.min(65, oddsBase + 9),
       ]
 
-      // Poisson encounter rate parameter lambda per day: P(30) = 1 - exp(-lambda * 30) => lambda = -ln(1 - P)/30
       const probDecimal = Math.min(0.85, oddsBase / 100)
       const poissonIntensity = -Math.log(1 - probDecimal) / 30
 
-      // Circadian phase difference (hours)
       const circadianPhaseGapHours = parseFloat(((idx * 0.6 + 0.3) % 2.5).toFixed(1))
 
       const currentUserName = currentUser.identity.name.split(' ')[0]
       const candFirstName = cand.identity.name.split(' ')[0]
 
       const candNearMisses = defaultNearMisses[cand.id] || [
-        { time: 'Sat 15:30', description: 'In the same bookstore aisle', venue: 'Foyles Charing Cross' },
+        { time: 'Sat 15:30', description: 'In the same philosophy section', venue: 'Foyles Charing Cross' },
         { time: 'Tue 18:00', description: 'Exiting same underground gate', venue: 'Tottenham Court Road' },
       ]
 
@@ -329,12 +344,12 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
           gottmanRatio: idx === 0 ? '6.4 : 1' : `${(4.8 + (overall / 100) * 1.5).toFixed(1)} : 1`,
           lowNegativityThreshold:
             idx === 0
-              ? 'Calm, rapid micro-repair within 15 mins'
-              : 'Direct communication, cognitive reappraisal active',
+              ? 'Calm, gentle repair within 15 minutes of tension'
+              : 'Direct communication, zero passive aggression',
           decisionPhase:
             overall >= 75
-              ? 'Phase 3: High Self-Expansion Commitment Candidate'
-              : 'Phase 2: Calibrated Exploratory Stage',
+              ? 'High Long-Term Resonance · Natural Fit'
+              : 'Warm Exploratory Dynamic',
         },
       }
     })
@@ -349,7 +364,7 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
     return Object.values(weights).reduce((a, b) => a + b, 0)
   }, [weights])
 
-  // Compute dynamic fit scores for all candidates based on sliders
+  // Compute dynamic fit scores for all candidates
   const scoredCandidates = useMemo(() => {
     const safeTotalWeight = totalWeight > 0 ? totalWeight : 1
     return candidateItems.map(item => {
@@ -359,11 +374,9 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
       })
       const fitScore = Math.round(weightedSum / safeTotalWeight)
 
-      // Time-evolved Poisson probability for timelineDay t: P(t) = 1 - exp(-lambda * t)
       const timeProb = 1 - Math.exp(-item.poissonIntensity * timelineDay)
       const currentDayOdds = Math.round(timeProb * 100)
 
-      // Modify odds if location signals are disabled
       const effectiveOdds = locationSignals ? currentDayOdds : 0
       const effectiveRange: [number, number] = locationSignals
         ? [
@@ -386,7 +399,7 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
     return scoredCandidates.find(c => c.profile.id === selectedId) || scoredCandidates[0]
   }, [scoredCandidates, selectedId])
 
-  // Pool averages to calculate point differentials
+  // Pool averages to calculate differentials
   const poolAverages = useMemo(() => {
     const avgs: Record<FacetKey, number> = {
       crossing: 0,
@@ -407,7 +420,7 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
     return avgs
   }, [scoredCandidates])
 
-  // Differentials for the selected match (e.g. +9.8, -0.3)
+  // Differentials for the selected match
   const differentials = useMemo(() => {
     const diffs: Record<FacetKey, number> = {
       crossing: 0,
@@ -424,7 +437,7 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
     return diffs
   }, [selectedCandidate, poolAverages])
 
-  // Identify strongest edge & biggest drag
+  // Identify strongest harmony & area needing care
   const { strongestEdge, biggestDrag } = useMemo(() => {
     let maxK: FacetKey = 'crossing'
     let minK: FacetKey = 'interests'
@@ -448,7 +461,7 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
     }
   }, [differentials])
 
-  // Filtered & Sorted list for candidate tree and ranking table
+  // Filtered & Sorted list for candidate tree and ranking
   const filteredCandidates = useMemo(() => {
     if (!searchFilter.trim()) return scoredCandidates
     const q = searchFilter.toLowerCase()
@@ -473,19 +486,23 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
   }, [filteredCandidates, sortCriteria])
 
   // ========================================================
-  // 3. BARYCENTRIC GRAVITATIONAL MANIFOLD & RADAR MATH
+  // 3. ZERO-CLIPPING CELESTIAL GEOMETRY & COORDINATES
   // ========================================================
-  const radarCenter = 240
-  const radarMaxRadius = 180
+  // Generous 620 x 620 viewBox centered at (310, 310)
+  // Max node radius: 155px. Attractor anchor radius: 180px.
+  // Labels are safely anchored inside [30, 590] on X and [50, 570] on Y.
+  // ========================================================
+  const canvasCenter = 310
+  const maxOrbitRadius = 155
 
-  // Calculate Cartesian (x, y) coordinates for each candidate node
+  // Calculate Cartesian (x, y) coordinates for each star
   const candidateCoordinates = useMemo(() => {
     return scoredCandidates.map(c => {
-      // 1. Radial Distance: Ground-state Keplerian potential (Higher fit = tighter inner orbit)
-      const normalizedDist = Math.max(0.12, Math.min(1, (100 - c.fitScore) / 52))
-      const radius = 34 + normalizedDist * (radarMaxRadius - 42)
+      // 1. Radial Distance: Higher fit score = closer to your inner orbit
+      const normalizedDist = Math.max(0.12, Math.min(1, (100 - c.fitScore) / 48))
+      const radius = 40 + normalizedDist * (maxOrbitRadius - 40)
 
-      // 2. Barycentric Gravitational Vector Pull: Net force from the 5 poles
+      // 2. Gravitational Pull Vector: Weighted direction towards the 5 life harmonies
       let pullX = 0
       let pullY = 0
       const facetPullStrengths: Record<FacetKey, number> = {} as any
@@ -501,13 +518,13 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
 
       const dominantAngle = Math.atan2(pullY, pullX)
 
-      // 3. Spacetime Encounter Wave Radius: Proportional to Poisson probability P(t)
+      // 3. Star Aura Radius: proportional to 30-day encounter chance
       const dotRadius =
-        locationSignals && viewMode !== 'best_fit'
-          ? Math.max(6, (c.effectiveOdds / 55) * 16)
-          : 8
+        locationSignals && viewMode !== 'harmony'
+          ? Math.max(8, (c.effectiveOdds / 55) * 16)
+          : 9
 
-      // 4. Strongest pulling facet for node color & telemetry
+      // 4. Strongest harmony
       let topFacet: FacetKey = 'crossing'
       let topScore = -1
       ;(Object.keys(FACETS) as FacetKey[]).forEach(k => {
@@ -517,23 +534,18 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
         }
       })
 
-      // 5. Polar coordinates & effective gravitational potential U
-      const polarR = Math.round(radius)
-      const polarThetaDeg = Math.round(((dominantAngle * 180) / Math.PI + 360) % 360)
-      const potentialEnergyU = parseFloat((-((c.fitScore / 100) * 5)).toFixed(2))
+      const cx = canvasCenter + radius * Math.cos(dominantAngle)
+      const cy = canvasCenter + radius * Math.sin(dominantAngle)
 
       return {
         ...c,
-        cx: radarCenter + radius * Math.cos(dominantAngle),
-        cy: radarCenter + radius * Math.sin(dominantAngle),
+        cx,
+        cy,
         radius,
         dominantAngle,
-        polarR,
-        polarThetaDeg,
-        potentialEnergyU,
-        facetPullStrengths,
         dotRadius,
         accentColor: FACETS[topFacet].colorHex,
+        glowColor: FACETS[topFacet].glowColor,
         dominantFacetLabel: FACETS[topFacet].label,
         dominantFacetKey: topFacet,
       }
@@ -582,25 +594,37 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
   }
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100 font-sans selection:bg-purple-500/30 selection:text-white">
+    <div className="min-h-screen bg-[#07070c] text-zinc-100 font-sans selection:bg-purple-500/30 selection:text-white relative overflow-x-hidden">
       {/* ---------------------------------------------------- */}
-      {/* 1. ONLOOK-GRADE STUDIO TOP BAR                        */}
+      {/* 1. WARM CELESTIAL TOP BAR                             */}
       {/* ---------------------------------------------------- */}
-      <header className="sticky top-0 z-40 bg-[#09090b]/90 border-b border-white/[0.08] backdrop-blur-xl px-4 md:px-6 py-2.5 transition-all">
+      <header className="sticky top-0 z-40 bg-[#07070c]/90 border-b border-white/[0.08] backdrop-blur-xl px-4 md:px-6 py-2.5 transition-all">
         <div className="max-w-[1720px] mx-auto flex flex-wrap items-center justify-between gap-3">
-          {/* Left: Studio Identity & Telemetry Monospace Breadcrumb */}
+          {/* Left: Soulful Identity & Location Breadcrumb */}
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="px-2 py-0.5 text-[10px] font-mono font-bold tracking-widest uppercase bg-zinc-900 text-zinc-300 rounded border border-white/10">
-                STUDIO // MANIFOLD v2.4
-              </span>
+              <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-amber-400 to-rose-400 animate-pulse shadow-[0_0_8px_rgba(251,191,36,0.6)]" />
+              <div className="flex flex-col">
+                <span className="text-xs font-semibold tracking-wide text-white flex items-center space-x-1.5">
+                  <span>The Living Constellation</span>
+                  <span className="text-zinc-500 font-normal">·</span>
+                  <span className="text-zinc-400 text-[11px] font-normal">London</span>
+                </span>
+              </div>
             </div>
-            <div className="hidden lg:flex items-center space-x-2 text-[11px] font-mono text-zinc-400">
-              <span className="text-zinc-600">/</span>
-              <span>POISSON λ = {selectedCoordinates?.poissonIntensity.toFixed(3) || '0.041'}/d</span>
+
+            {/* Human Telemetry Badge (Desktop) */}
+            <div className="hidden lg:flex items-center space-x-2 text-[11px] text-zinc-400 bg-white/[0.03] border border-white/[0.06] px-2.5 py-0.5 rounded-full">
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>
+                {selectedCandidate.effectiveOdds > 0
+                  ? `${selectedCandidate.effectiveOdds}% natural meeting chance this month`
+                  : 'Paths map calibrated'}
+              </span>
               <span className="text-zinc-600">·</span>
-              <span className="text-purple-400 font-semibold">GOTTMAN RATIO: {selectedCandidate.psychology.gottmanRatio}</span>
+              <span className="text-emerald-400 font-medium">
+                {selectedCandidate.psychology.gottmanRatio} Kindness Ratio
+              </span>
             </div>
           </div>
 
@@ -609,97 +633,101 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
             <button
               onClick={() => {
                 sounds.playTap()
-                setViewMode('best_fit')
+                setViewMode('harmony')
               }}
               className={`px-3 py-1 rounded-full transition-all ${
-                viewMode === 'best_fit'
+                viewMode === 'harmony'
                   ? 'bg-zinc-800 text-white shadow-sm font-semibold border border-white/10'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
-              Best fit
+              Harmony Map
             </button>
             <button
               onClick={() => {
                 sounds.playTap()
-                setViewMode('fit_odds')
+                setViewMode('projection')
               }}
               className={`px-3 py-1 rounded-full transition-all ${
-                viewMode === 'fit_odds'
-                  ? 'bg-purple-600 text-white shadow-sm font-semibold'
+                viewMode === 'projection'
+                  ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-sm font-semibold'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
-              Fit + odds
+              30-Day Crossing
             </button>
             <button
               onClick={() => {
                 sounds.playTap()
-                setViewMode('field_physics')
+                setViewMode('rays')
               }}
               className={`px-3 py-1 rounded-full transition-all ${
-                viewMode === 'field_physics'
+                viewMode === 'rays'
                   ? 'bg-sky-600 text-white shadow-sm font-semibold'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
-              Field physics
+              Harmonic Rays
             </button>
           </div>
 
-          {/* Right: Studio Panel Visibility Toggles & Love Architecture Action */}
+          {/* Right: Studio Toggles & Science Action */}
           <div className="flex items-center space-x-2">
+            {/* Desktop Panel Toggles */}
+            <div className="hidden lg:flex items-center space-x-1.5">
+              <button
+                onClick={() => {
+                  sounds.playTap()
+                  setLeftPanelOpen(!leftPanelOpen)
+                }}
+                title={leftPanelOpen ? 'Hide Harmonies Panel' : 'Show Harmonies Panel'}
+                className={`p-1.5 rounded-lg border text-xs transition ${
+                  leftPanelOpen
+                    ? 'bg-zinc-800/80 border-white/10 text-white'
+                    : 'bg-zinc-900 border-white/5 text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                <PanelLeft className="w-3.5 h-3.5" />
+              </button>
+
+              <button
+                onClick={() => {
+                  sounds.playTap()
+                  setRightPanelOpen(!rightPanelOpen)
+                }}
+                title={rightPanelOpen ? 'Hide Connection Story' : 'Show Connection Story'}
+                className={`p-1.5 rounded-lg border text-xs transition ${
+                  rightPanelOpen
+                    ? 'bg-zinc-800/80 border-white/10 text-white'
+                    : 'bg-zinc-900 border-white/5 text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                <PanelRight className="w-3.5 h-3.5" />
+              </button>
+
+              <button
+                onClick={toggleZenMode}
+                title={zenMode ? 'Exit Zen Mode' : 'Enter Zen Sky Mode'}
+                className={`p-1.5 rounded-lg border text-xs transition ${
+                  zenMode
+                    ? 'bg-purple-600 border-purple-500 text-white'
+                    : 'bg-zinc-900 border-white/5 text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                {zenMode ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
+              </button>
+            </div>
+
+            {/* Science Modal Trigger */}
             <button
               onClick={() => {
                 sounds.playTap()
-                setLeftPanelOpen(!leftPanelOpen)
+                setShowScienceModal(true)
               }}
-              title={leftPanelOpen ? 'Collapse Facet Tree' : 'Expand Facet Tree'}
-              className={`p-1.5 rounded-lg border text-xs transition ${
-                leftPanelOpen
-                  ? 'bg-zinc-800/80 border-white/10 text-white'
-                  : 'bg-zinc-900 border-white/5 text-zinc-400 hover:text-zinc-200'
-              }`}
+              className="inline-flex items-center space-x-1.5 px-3 py-1 text-xs font-semibold rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-zinc-200 transition shadow-sm cursor-pointer"
             >
-              <PanelLeft className="w-3.5 h-3.5" />
-            </button>
-
-            <button
-              onClick={() => {
-                sounds.playTap()
-                setRightPanelOpen(!rightPanelOpen)
-              }}
-              title={rightPanelOpen ? 'Collapse Dossier Inspector' : 'Expand Dossier Inspector'}
-              className={`p-1.5 rounded-lg border text-xs transition ${
-                rightPanelOpen
-                  ? 'bg-zinc-800/80 border-white/10 text-white'
-                  : 'bg-zinc-900 border-white/5 text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              <PanelRight className="w-3.5 h-3.5" />
-            </button>
-
-            <button
-              onClick={toggleZenMode}
-              title={zenMode ? 'Exit Zen Mode' : 'Enter Zen Canvas Mode'}
-              className={`p-1.5 rounded-lg border text-xs transition ${
-                zenMode
-                  ? 'bg-purple-600 border-purple-500 text-white'
-                  : 'bg-zinc-900 border-white/5 text-zinc-400 hover:text-zinc-200'
-              }`}
-            >
-              {zenMode ? <Minimize2 className="w-3.5 h-3.5" /> : <Maximize2 className="w-3.5 h-3.5" />}
-            </button>
-
-            <button
-              onClick={() => {
-                sounds.playTap()
-                setShowPsychologyModal(true)
-              }}
-              className="inline-flex items-center space-x-1.5 px-3 py-1 text-xs font-semibold rounded-full bg-gradient-to-r from-purple-600/30 to-sky-600/30 border border-purple-500/40 text-purple-200 hover:border-purple-400 hover:text-white transition shadow-sm"
-            >
-              <Brain className="w-3.5 h-3.5 text-purple-400" />
-              <span className="hidden sm:inline">Fry × Gottman Architecture</span>
+              <Info className="w-3.5 h-3.5 text-purple-400" />
+              <span className="hidden sm:inline">The Science of Fit</span>
               <span className="sm:hidden">Science</span>
             </button>
           </div>
@@ -707,30 +735,87 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
       </header>
 
       {/* ---------------------------------------------------- */}
-      {/* 2. 3-ZONE STUDIO WORKSPACE LAYOUT                     */}
+      {/* MOBILE SEGMENT TABS (Only visible on < lg screens)    */}
+      {/* ---------------------------------------------------- */}
+      <div className="lg:hidden sticky top-[53px] z-30 bg-[#07070c]/95 backdrop-blur-md px-3 py-2 border-b border-white/[0.06]">
+        <div className="flex rounded-xl bg-white/[0.04] p-1 border border-white/[0.08]">
+          <button
+            type="button"
+            onClick={() => {
+              sounds.playTap()
+              setMobileTab('constellation')
+            }}
+            className={`flex-1 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition ${
+              mobileTab === 'constellation'
+                ? 'bg-white/15 text-white shadow-sm'
+                : 'text-zinc-400 hover:text-zinc-200'
+            }`}
+          >
+            <Compass className="w-3.5 h-3.5 text-purple-400" />
+            <span>Constellation</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              sounds.playTap()
+              setMobileTab('harmonies')
+            }}
+            className={`flex-1 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition ${
+              mobileTab === 'harmonies'
+                ? 'bg-white/15 text-white shadow-sm'
+                : 'text-zinc-400 hover:text-zinc-200'
+            }`}
+          >
+            <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400" />
+            <span>Harmonies</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              sounds.playTap()
+              setMobileTab('story')
+            }}
+            className={`flex-1 py-1.5 rounded-lg text-xs font-semibold flex items-center justify-center space-x-1.5 transition ${
+              mobileTab === 'story'
+                ? 'bg-white/15 text-white shadow-sm'
+                : 'text-zinc-400 hover:text-zinc-200'
+            }`}
+          >
+            <Heart className="w-3.5 h-3.5 text-rose-400" />
+            <span>Story</span>
+          </button>
+        </div>
+      </div>
+
+      {/* ---------------------------------------------------- */}
+      {/* 2. 3-ZONE WORKSPACE LAYOUT (PANORAMIC & RESPONSIVE)   */}
       {/* ---------------------------------------------------- */}
       <div className="max-w-[1720px] mx-auto p-3 sm:p-4 md:p-6 flex flex-col lg:flex-row gap-5 items-stretch min-h-[calc(100vh-65px)]">
 
         {/* ==================================================== */}
-        {/* ZONE 1 (LEFT): FACETS & CANDIDATE HIERARCHY TREE     */}
+        {/* ZONE 1: HARMONIES & CANDIDATE SELECTOR               */}
         {/* ==================================================== */}
-        {leftPanelOpen && (
-          <aside className="w-full lg:w-80 flex-shrink-0 space-y-4 animate-in fade-in duration-200 flex flex-col justify-between">
-            {/* CARD 1A: CANDIDATE DIRECTORY & TREE */}
-            <div className="bg-[#121216] border border-white/[0.08] rounded-2xl p-4 shadow-xl space-y-3.5">
+        {(leftPanelOpen || mobileTab === 'harmonies') && (
+          <aside
+            className={`w-full lg:w-80 flex-shrink-0 space-y-4 animate-in fade-in duration-200 flex flex-col justify-between ${
+              mobileTab !== 'harmonies' ? 'hidden lg:flex' : 'flex'
+            }`}
+          >
+            {/* CARD 1A: PEOPLE IN YOUR ORBIT */}
+            <div className="bg-[#0f0f15] border border-white/[0.08] rounded-3xl p-4 shadow-xl space-y-3.5">
               <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
                 <div className="flex items-center space-x-2">
-                  <Layers className="w-4 h-4 text-purple-400" />
-                  <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
-                    Candidate Graph Tree
+                  <Star className="w-4 h-4 text-amber-400 fill-amber-400/20" />
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+                    People in Your Orbit
                   </h3>
                 </div>
-                <span className="text-[10px] font-mono text-zinc-400 bg-zinc-900 px-2 py-0.5 rounded border border-white/5">
-                  {scoredCandidates.length} nodes
+                <span className="text-[10px] text-zinc-400 bg-white/[0.04] px-2 py-0.5 rounded-full border border-white/5">
+                  {scoredCandidates.length} Resonant Profiles
                 </span>
               </div>
 
-              {/* Micro Search Input */}
+              {/* Search Filter */}
               <div className="relative">
                 <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-2.5 top-2.5" />
                 <input
@@ -738,7 +823,7 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                   value={searchFilter}
                   onChange={e => setSearchFilter(e.target.value)}
                   placeholder="Filter by name or neighborhood..."
-                  className="w-full pl-8 pr-3 py-1.5 bg-zinc-950/80 border border-white/[0.08] rounded-lg text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-purple-500/60"
+                  className="w-full pl-8 pr-3 py-1.5 bg-zinc-950/80 border border-white/[0.08] rounded-xl text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-purple-500/60"
                 />
               </div>
 
@@ -752,26 +837,26 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                     <div
                       key={cand.profile.id}
                       onClick={() => handleSelectCandidate(cand.profile.id)}
-                      className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-2.5 ${
+                      className={`p-2.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-2.5 ${
                         isSelected
-                          ? 'bg-purple-950/40 border-purple-500/60 shadow-md ring-1 ring-purple-500/30'
+                          ? 'bg-purple-950/40 border-purple-500/60 shadow-lg ring-1 ring-purple-500/30'
                           : 'bg-zinc-950/40 border-white/[0.04] hover:border-white/15 hover:bg-zinc-900/60'
                       }`}
                     >
-                      <div className="flex items-center space-x-2 min-w-[90px]">
-                        <span className="text-[10px] font-mono text-zinc-500 w-3.5">#{idx + 1}</span>
+                      <div className="flex items-center space-x-2.5 min-w-[95px]">
+                        <span className="text-[10px] font-mono text-zinc-500 w-3">#{idx + 1}</span>
                         <img
                           src={cand.profile.identity.photos[0]}
                           alt={cand.profile.identity.name}
-                          className="w-6 h-6 rounded-full object-cover border border-white/10"
+                          className="w-7 h-7 rounded-full object-cover border border-white/10"
                         />
                         <span className={`text-xs font-semibold truncate ${isSelected ? 'text-white' : 'text-zinc-300'}`}>
                           {firstName}
                         </span>
                       </div>
 
-                      {/* 5-Facet Stacked Mini-Bar */}
-                      <div className="flex-1 max-w-[80px] h-1.5 bg-zinc-800 rounded-full overflow-hidden flex">
+                      {/* 5-Facet Mini Harmony Bar */}
+                      <div className="flex-1 max-w-[70px] h-1.5 bg-zinc-800 rounded-full overflow-hidden flex">
                         {(Object.keys(FACETS) as FacetKey[]).map(k => {
                           const w = weights[k]
                           const score = cand.scores[k]
@@ -789,9 +874,9 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                         })}
                       </div>
 
-                      <div className="text-right min-w-[32px]">
+                      <div className="text-right min-w-[34px]">
                         <span className={`font-mono text-xs font-bold ${isSelected ? 'text-purple-300' : 'text-zinc-300'}`}>
-                          {cand.fitScore}
+                          {cand.fitScore}%
                         </span>
                       </div>
                     </div>
@@ -800,28 +885,28 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
               </div>
             </div>
 
-            {/* CARD 1B: GRAVITATIONAL PRIORITY SLIDERS */}
-            <div className="bg-[#121216] border border-white/[0.08] rounded-2xl p-4 shadow-xl space-y-3.5 flex-1 flex flex-col justify-between">
+            {/* CARD 1B: THE FIVE LIFE HARMONIES SLIDERS */}
+            <div className="bg-[#0f0f15] border border-white/[0.08] rounded-3xl p-4 shadow-xl space-y-3.5 flex-1 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between pb-2 border-b border-white/[0.06] mb-3">
                   <div className="flex items-center space-x-2">
                     <SlidersHorizontal className="w-4 h-4 text-emerald-400" />
-                    <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
-                      Field Gravity Poles
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+                      The Five Life Harmonies
                     </h3>
                   </div>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-900 text-zinc-300 border border-white/5">
-                    Σ <strong className={totalWeight === 100 ? 'text-emerald-400' : 'text-amber-400'}>{totalWeight}</strong>
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-zinc-300 border border-white/5">
+                    Tune What Matters
                   </span>
                 </div>
 
                 {/* Preset Chips */}
                 <div className="grid grid-cols-2 gap-1.5 mb-3.5">
-                  {FACET_PRESETS.map(preset => (
+                  {HARMONY_PRESETS.map(preset => (
                     <button
                       key={preset.name}
                       onClick={() => applyPreset(preset.weights)}
-                      className="px-2 py-1 text-[10px] font-mono font-medium rounded-lg bg-zinc-950 border border-white/[0.06] text-zinc-400 hover:text-white hover:border-purple-500/40 hover:bg-zinc-900 transition text-left truncate"
+                      className="px-2.5 py-1.5 text-[10px] font-medium rounded-xl bg-zinc-950/80 border border-white/[0.06] text-zinc-400 hover:text-white hover:border-purple-500/40 hover:bg-zinc-900 transition text-left truncate cursor-pointer"
                       title={preset.description}
                     >
                       {preset.name}
@@ -839,13 +924,12 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                         <div className="flex items-center justify-between text-[11px] font-medium">
                           <span className="flex items-center space-x-1.5">
                             <span
-                              className="w-2 h-2 rounded-full inline-block"
+                              className="w-2 h-2 rounded-full inline-block shadow-sm"
                               style={{ backgroundColor: facet.colorHex }}
                             />
-                            <span className="text-zinc-300 font-semibold">{facet.label}</span>
-                            <span className="text-[9px] text-zinc-500 font-mono">({facet.shortSymbol})</span>
+                            <span className="text-zinc-200 font-semibold">{facet.shortLabel}</span>
                           </span>
-                          <span className="font-mono text-zinc-400 text-[11px]">{val}</span>
+                          <span className="font-mono text-zinc-400 text-[11px]">{val}%</span>
                         </div>
                         <div className="flex items-center space-x-2">
                           <button
@@ -863,7 +947,7 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                             step="5"
                             value={val}
                             onChange={e => handleSliderChange(key, parseInt(e.target.value, 10))}
-                            className="flex-1 cursor-pointer accent-purple"
+                            className="flex-1 cursor-pointer accent-purple-400"
                           />
                           <button
                             type="button"
@@ -884,20 +968,20 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
               <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs">
                 <span className="text-[11px] text-zinc-400 flex items-center space-x-1.5">
                   <Activity className="w-3.5 h-3.5 text-sky-400" />
-                  <span>Poisson Transit Overlap</span>
+                  <span>London Transit Overlap</span>
                 </span>
                 <button
                   onClick={() => {
                     sounds.playTap()
                     setLocationSignals(!locationSignals)
                   }}
-                  className={`px-2.5 py-0.5 rounded text-[10px] font-mono font-semibold transition ${
+                  className={`px-3 py-1 rounded-full text-[10px] font-semibold transition cursor-pointer ${
                     locationSignals
-                      ? 'bg-emerald-500/10 text-emerald-300 border border-emerald-500/30'
+                      ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30'
                       : 'bg-zinc-800 text-zinc-400 border border-zinc-700'
                   }`}
                 >
-                  {locationSignals ? 'Active' : 'Paused'}
+                  {locationSignals ? 'Active in London' : 'Paused'}
                 </button>
               </div>
             </div>
@@ -905,374 +989,391 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
         )}
 
         {/* ==================================================== */}
-        {/* ZONE 2 (CENTER): GRAVITATIONAL MANIFOLD CANVAS       */}
+        {/* ZONE 2: THE LIVING CONSTELLATION CANVAS              */}
         {/* ==================================================== */}
-        <main className="flex-1 min-w-0 bg-[#0c0c10] border border-white/[0.08] rounded-3xl p-4 md:p-6 backdrop-blur-2xl shadow-2xl relative overflow-hidden flex flex-col justify-between select-none">
-          {/* Subtle Dot Grid Background Pattern */}
-          <div
-            className="absolute inset-0 pointer-events-none opacity-20"
-            style={{
-              backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px)',
-              backgroundSize: '24px 24px',
-            }}
-          />
+        {(mobileTab === 'constellation' || (!zenMode && true)) && (
+          <main
+            className={`flex-1 min-w-0 bg-[#0a0a10] border border-white/[0.08] rounded-3xl p-4 md:p-6 backdrop-blur-2xl shadow-2xl relative overflow-hidden flex flex-col justify-between select-none ${
+              mobileTab !== 'constellation' ? 'hidden lg:flex' : 'flex'
+            }`}
+          >
+            {/* Ambient Celestial Glows */}
+            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-900/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-900/10 rounded-full blur-3xl pointer-events-none" />
 
-          {/* Top Canvas Bar: Telemetry Readouts & Orbit Labels */}
-          <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.06]">
-            <div>
-              <h2 className="text-base sm:text-lg font-bold text-white flex items-center space-x-2">
-                <Compass className="w-4 h-4 text-purple-400" />
-                <span>Celestial Gravitational Manifold</span>
-              </h2>
-              <p className="text-[11px] text-zinc-400 font-mono mt-0.5">
-                5-Facet Potential Well · Day {timelineDay} Poisson Forecast · r ∝ (100 - Fit)
-              </p>
+            {/* Canvas Header */}
+            <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.06]">
+              <div>
+                <h2 className="text-base sm:text-lg font-bold text-white flex items-center space-x-2">
+                  <Compass className="w-4 h-4 text-purple-400" />
+                  <span>The Night Sky of Your Compatibility</span>
+                </h2>
+                <p className="text-[11px] text-zinc-400 mt-0.5">
+                  Closer stars share your core anchors · Day {timelineDay} serendipity projection in London
+                </p>
+              </div>
+
+              {/* Selected Candidate Resonance Badge */}
+              {selectedCoordinates && (
+                <div className="flex items-center space-x-2.5 text-xs bg-zinc-950/80 border border-white/[0.08] px-3 py-1.5 rounded-full text-zinc-300">
+                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: selectedCoordinates.accentColor }} />
+                  <span className="text-white font-bold">{selectedCandidate.profile.identity.name.split(' ')[0]}</span>
+                  <span className="text-zinc-600">·</span>
+                  <span className="text-purple-300 font-semibold">{selectedCandidate.fitScore}% Fit</span>
+                  <span className="text-zinc-600 hidden sm:inline">·</span>
+                  <span className="text-emerald-300 hidden sm:inline">{selectedCandidate.effectiveOdds}% 30-Day Chance</span>
+                </div>
+              )}
             </div>
 
-            {/* Live Polar Orbit Telemetry Card */}
-            {selectedCoordinates && (
-              <div className="flex items-center space-x-3 text-[10px] font-mono bg-zinc-950/80 border border-white/[0.08] px-3 py-1.5 rounded-xl text-zinc-300">
-                <div>
-                  <span className="text-zinc-500">POLAR: </span>
-                  <span className="text-white font-bold">{selectedCoordinates.polarR}px</span> @ {selectedCoordinates.polarThetaDeg}°
-                </div>
-                <div className="hidden sm:block text-zinc-600">|</div>
-                <div className="hidden sm:block">
-                  <span className="text-zinc-500">U(r): </span>
-                  <span className="text-purple-300 font-semibold">{selectedCoordinates.potentialEnergyU} J</span>
-                </div>
-                <div className="hidden md:block text-zinc-600">|</div>
-                <div className="hidden md:block">
-                  <span className="text-zinc-500">Δφ: </span>
-                  <span className="text-sky-300">{selectedCoordinates.circadianPhaseGapHours}h</span>
-                </div>
-              </div>
-            )}
-          </div>
+            {/* ==================================================== */}
+            {/* SVG CONSTELLATION MAP (ZERO-CLIPPING 620 x 620 BOX)  */}
+            {/* ==================================================== */}
+            <div className="relative flex-1 flex items-center justify-center py-2 sm:py-4 my-auto min-h-[340px] sm:min-h-[420px] md:min-h-[480px]">
+              <svg
+                viewBox="0 0 620 620"
+                className="w-full max-w-[560px] h-auto select-none overflow-visible"
+              >
+                <defs>
+                  {/* Central "You" Radial Glow */}
+                  <radialGradient id="centerStarGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.8" />
+                    <stop offset="30%" stopColor="#fb7185" stopOpacity="0.4" />
+                    <stop offset="70%" stopColor="#a855f7" stopOpacity="0.15" />
+                    <stop offset="100%" stopColor="#a855f7" stopOpacity="0" />
+                  </radialGradient>
 
-          {/* SVG RADAR & GRAVITATIONAL PARTICLES */}
-          <div className="relative flex-1 flex items-center justify-center py-4 my-auto min-h-[360px] md:min-h-[460px]">
-            <svg
-              viewBox="0 0 480 480"
-              className="w-full max-w-[500px] h-auto select-none overflow-visible"
-            >
-              <defs>
-                <radialGradient id="centerGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.5" />
-                  <stop offset="60%" stopColor="#38bdf8" stopOpacity="0.12" />
-                  <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
-                </radialGradient>
-                <radialGradient id="selectionHalo" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#a855f7" stopOpacity="0.5" />
-                  <stop offset="100%" stopColor="#a855f7" stopOpacity="0" />
-                </radialGradient>
-                <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
-                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                </filter>
-              </defs>
+                  {/* Candidate Selection Aura */}
+                  <radialGradient id="candidateGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#c084fc" stopOpacity="0.6" />
+                    <stop offset="60%" stopColor="#c084fc" stopOpacity="0.15" />
+                    <stop offset="100%" stopColor="#c084fc" stopOpacity="0" />
+                  </radialGradient>
 
-              {/* Cosmic Starfield */}
-              {[
-                [65, 80], [410, 95], [110, 390], [390, 370], [85, 230],
-                [420, 240], [210, 60], [290, 420], [180, 430], [320, 50],
-              ].map(([sx, sy], i) => (
-                <circle key={i} cx={sx} cy={sy} r="0.75" fill="#94a3b8" opacity={0.3 + (i % 3) * 0.2} />
-              ))}
+                  {/* Starlight Ray Gradient */}
+                  <linearGradient id="starlightRay" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.9" />
+                    <stop offset="50%" stopColor="#c084fc" stopOpacity="0.7" />
+                    <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.9" />
+                  </linearGradient>
+                </defs>
 
-              {/* Keplerian Gravitational Orbit Zones */}
-              {[45, 90, 135, 180].map((r, i) => (
-                <g key={r}>
+                {/* 1. TWINKLING BACKGROUND STARS (Night Sky) */}
+                {[
+                  [75, 90], [130, 60], [480, 80], [540, 130], [90, 480],
+                  [140, 540], [500, 490], [530, 420], [80, 290], [540, 310],
+                  [310, 45], [310, 575], [210, 95], [410, 100], [180, 490],
+                  [440, 520], [250, 540], [370, 545], [105, 180], [515, 210],
+                ].map(([sx, sy], i) => (
                   <circle
-                    cx={radarCenter}
-                    cy={radarCenter}
-                    r={r}
-                    fill="none"
-                    stroke="#27272a"
-                    strokeWidth="1"
-                    strokeDasharray={i === 3 ? '4 4' : '2 2'}
-                    opacity={0.6 + i * 0.1}
+                    key={i}
+                    cx={sx}
+                    cy={sy}
+                    r={i % 3 === 0 ? 1.2 : 0.8}
+                    fill="#e2e8f0"
+                    opacity={0.25 + (i % 4) * 0.15}
+                  />
+                ))}
+
+                {/* 2. ORBIT HARMONY RINGS (Concentric Circles) */}
+                {[
+                  { r: 45, label: 'Core Orbit · 90%+ fit' },
+                  { r: 85, label: 'Close Orbit · 80% fit' },
+                  { r: 125, label: 'Harmonic Orbit · 70% fit' },
+                  { r: 165, label: 'Outer Horizon · 60% fit' },
+                ].map((ring, idx) => (
+                  <g key={ring.r}>
+                    <circle
+                      cx={canvasCenter}
+                      cy={canvasCenter}
+                      r={ring.r}
+                      fill="none"
+                      stroke="#27272a"
+                      strokeWidth="1"
+                      strokeDasharray={idx === 3 ? '4 4' : '2 3'}
+                      opacity={0.6 + idx * 0.1}
+                    />
+                    <text
+                      x={canvasCenter + 6}
+                      y={canvasCenter - ring.r + 12}
+                      fill="#71717a"
+                      fontSize="9"
+                      fontFamily="sans-serif"
+                      opacity="0.85"
+                    >
+                      {ring.label}
+                    </text>
+                  </g>
+                ))}
+
+                {/* 3. FIVE HARMONY ATTRACTOR POLES & SPOKES */}
+                {(Object.keys(FACETS) as FacetKey[]).map(key => {
+                  const facet = FACETS[key]
+                  const poleWeight = weights[key]
+                  const isFocused = activeAttractorFocus === 'all' || activeAttractorFocus === key
+
+                  // Spoke endpoint at radius 165
+                  const spokeX = canvasCenter + 165 * Math.cos(facet.angleRad)
+                  const spokeY = canvasCenter + 165 * Math.sin(facet.angleRad)
+
+                  // Anchor circle at radius 180
+                  const anchorX = canvasCenter + 180 * Math.cos(facet.angleRad)
+                  const anchorY = canvasCenter + 180 * Math.sin(facet.angleRad)
+
+                  // Smart label coordinates (ensuring ZERO clipping)
+                  // Top (crossing): radius 215, centered
+                  // Rhythm (right top): radius 200, left-aligned
+                  // Values (right bottom): radius 200, left-aligned
+                  // Interests (left bottom): radius 200, right-aligned
+                  // Mutual (left top): radius 200, right-aligned
+                  let labelRadius = 205
+                  if (key === 'crossing') labelRadius = 212
+
+                  const labelX = canvasCenter + labelRadius * Math.cos(facet.angleRad)
+                  const labelY = canvasCenter + labelRadius * Math.sin(facet.angleRad)
+
+                  // Determine text-anchor
+                  const cosVal = Math.cos(facet.angleRad)
+                  let textAnchor: 'start' | 'middle' | 'end' = 'middle'
+                  if (cosVal > 0.3) textAnchor = 'start'
+                  else if (cosVal < -0.3) textAnchor = 'end'
+
+                  return (
+                    <g
+                      key={key}
+                      className="cursor-pointer"
+                      onClick={() => {
+                        sounds.playTap()
+                        setActiveAttractorFocus(activeAttractorFocus === key ? 'all' : key)
+                      }}
+                    >
+                      {/* Spoke ray line */}
+                      <line
+                        x1={canvasCenter}
+                        y1={canvasCenter}
+                        x2={spokeX}
+                        y2={spokeY}
+                        stroke={facet.colorHex}
+                        strokeWidth={isFocused ? 1.5 : 0.75}
+                        strokeDasharray={isFocused ? '2 2' : '1 6'}
+                        opacity={isFocused ? 0.6 : 0.15}
+                      />
+
+                      {/* Attractor Anchor Dot */}
+                      <circle
+                        cx={anchorX}
+                        cy={anchorY}
+                        r={isFocused ? 4.5 + (poleWeight / 50) * 2.5 : 3.5}
+                        fill={facet.colorHex}
+                        opacity={isFocused ? 0.9 : 0.35}
+                      />
+
+                      {/* Pill Badge & Label inside SVG */}
+                      <text
+                        x={labelX}
+                        y={labelY + 4}
+                        fill={facet.colorHex}
+                        fontSize="11"
+                        fontWeight="600"
+                        opacity={isFocused ? 1 : 0.4}
+                        textAnchor={textAnchor}
+                        className="select-none font-sans drop-shadow-md"
+                      >
+                        {facet.shortLabel} ({poleWeight}%)
+                      </text>
+                    </g>
+                  )
+                })}
+
+                {/* 4. CONSTELLATION LIGHT BRIDGE (RAY TO SELECTED CANDIDATE) */}
+                {selectedCoordinates && (
+                  <g>
+                    {/* Glowing golden-violet starlight ray */}
+                    <line
+                      x1={canvasCenter}
+                      y1={canvasCenter}
+                      x2={selectedCoordinates.cx}
+                      y2={selectedCoordinates.cy}
+                      stroke="url(#starlightRay)"
+                      strokeWidth="2"
+                      strokeDasharray="4 3"
+                      opacity="0.85"
+                    />
+
+                    {/* Subtle drifting particle on the ray */}
+                    <circle
+                      cx={(canvasCenter + selectedCoordinates.cx) / 2}
+                      cy={(canvasCenter + selectedCoordinates.cy) / 2}
+                      r="2"
+                      fill="#ffffff"
+                      opacity="0.9"
+                      className="animate-ping"
+                    />
+                  </g>
+                )}
+
+                {/* 5. CENTER "YOU" STAR */}
+                <g>
+                  {/* Outer pulsating aura */}
+                  <circle
+                    cx={canvasCenter}
+                    cy={canvasCenter}
+                    r="48"
+                    fill="url(#centerStarGlow)"
+                    className="animate-pulse"
+                  />
+                  {/* Outer ring */}
+                  <circle
+                    cx={canvasCenter}
+                    cy={canvasCenter}
+                    r="20"
+                    fill="#0f0f18"
+                    stroke="#fbbf24"
+                    strokeWidth="2.5"
+                    className="shadow-lg"
+                  />
+                  {/* Golden radiant core */}
+                  <circle
+                    cx={canvasCenter}
+                    cy={canvasCenter}
+                    r="7"
+                    fill="#f59e0b"
                   />
                   <text
-                    x={radarCenter + 6}
-                    y={radarCenter - r + 12}
-                    fill="#71717a"
-                    fontSize="9"
-                    fontFamily="monospace"
-                    opacity="0.9"
+                    x={canvasCenter}
+                    y={canvasCenter + 28}
+                    fill="#fbbf24"
+                    fontSize="11"
+                    fontWeight="bold"
+                    textAnchor="middle"
+                    className="font-sans select-none"
                   >
-                    {i === 0 ? '90+ fit' : i === 1 ? '80 fit' : i === 2 ? '70 fit' : '60 fit'}
+                    You
                   </text>
                 </g>
-              ))}
 
-              {/* Equipotential Field Lines (Field physics mode) */}
-              {(viewMode === 'field_physics' || interactionMode === 'field') && (
-                <g opacity="0.4">
-                  {[68, 112, 158].map(r => (
-                    <circle
-                      key={`pot_${r}`}
-                      cx={radarCenter}
-                      cy={radarCenter}
-                      r={r}
-                      fill="none"
-                      stroke="#38bdf8"
-                      strokeWidth="0.75"
-                      strokeDasharray="1 5"
-                    />
-                  ))}
-                </g>
-              )}
+                {/* 6. CANDIDATE STARS IN ORBIT */}
+                {candidateCoordinates.map(c => {
+                  const isSelected = c.profile.id === selectedId
+                  const isHovered = c.profile.id === hoveredId
+                  const firstName = c.profile.identity.name.split(' ')[0]
+                  const isPoleMatch = activeAttractorFocus === 'all' || c.dominantFacetKey === activeAttractorFocus
 
-              {/* 5 Barycentric Attractor Poles & Directional Rays */}
-              {(Object.keys(FACETS) as FacetKey[]).map(key => {
-                const facet = FACETS[key]
-                const poleX = radarCenter + radarMaxRadius * Math.cos(facet.angleRad)
-                const poleY = radarCenter + radarMaxRadius * Math.sin(facet.angleRad)
-                const labelX = radarCenter + (radarMaxRadius + 32) * Math.cos(facet.angleRad)
-                const labelY = radarCenter + (radarMaxRadius + 32) * Math.sin(facet.angleRad)
-                const poleWeight = weights[key]
-                const isFocusedPole = activeAttractorFocus === 'all' || activeAttractorFocus === key
+                  // Determine smart label position relative to node
+                  const isRightSide = c.cx >= canvasCenter
+                  const labelOffsetX = isRightSide ? c.dotRadius + 7 : -(c.dotRadius + 7)
+                  const labelAnchor = isRightSide ? 'start' : 'end'
 
-                return (
-                  <g
-                    key={key}
-                    className="cursor-pointer"
-                    onClick={() => {
-                      sounds.playTap()
-                      setActiveAttractorFocus(activeAttractorFocus === key ? 'all' : key)
-                    }}
-                  >
-                    {/* Spoke line */}
-                    <line
-                      x1={radarCenter}
-                      y1={radarCenter}
-                      x2={poleX}
-                      y2={poleY}
-                      stroke={facet.colorHex}
-                      strokeWidth={isFocusedPole ? 1.5 : 0.75}
-                      strokeDasharray={isFocusedPole ? '2 2' : '1 6'}
-                      opacity={isFocusedPole ? 0.7 : 0.15}
-                    />
-
-                    {/* Outer Attractor Anchor */}
-                    <circle
-                      cx={radarCenter + (radarMaxRadius + 10) * Math.cos(facet.angleRad)}
-                      cy={radarCenter + (radarMaxRadius + 10) * Math.sin(facet.angleRad)}
-                      r={isFocusedPole ? 5 + (poleWeight / 50) * 3 : 3}
-                      fill={facet.colorHex}
-                      opacity={isFocusedPole ? 1 : 0.4}
-                      className="transition-all duration-300"
-                    />
-
-                    {/* Pole Label */}
-                    <text
-                      x={labelX}
-                      y={labelY + 3}
-                      fill={facet.colorHex}
-                      fontSize="11"
-                      fontWeight="600"
-                      opacity={isFocusedPole ? 1 : 0.35}
-                      textAnchor={
-                        Math.abs(Math.cos(facet.angleRad)) < 0.2
-                          ? 'middle'
-                          : Math.cos(facet.angleRad) > 0
-                          ? 'start'
-                          : 'end'
-                      }
-                      className="font-sans drop-shadow-sm select-none"
+                  return (
+                    <g
+                      key={c.profile.id}
+                      className="cursor-pointer transition-transform duration-300"
+                      onClick={() => handleSelectCandidate(c.profile.id)}
+                      onMouseEnter={() => setHoveredId(c.profile.id)}
+                      onMouseLeave={() => setHoveredId(null)}
+                      opacity={isPoleMatch ? 1 : 0.2}
                     >
-                      {facet.label} ({poleWeight})
-                    </text>
-                  </g>
-                )
-              })}
-
-              {/* CENTER "YOU" NODE */}
-              <circle cx={radarCenter} cy={radarCenter} r="46" fill="url(#centerGlow)" />
-              <circle
-                cx={radarCenter}
-                cy={radarCenter}
-                r="18"
-                fill="#09090b"
-                stroke="#38bdf8"
-                strokeWidth="2.5"
-              />
-              <text
-                x={radarCenter}
-                y={radarCenter + 4}
-                fill="#ffffff"
-                fontSize="10"
-                fontWeight="bold"
-                textAnchor="middle"
-              >
-                You
-              </text>
-
-              {/* CANDIDATE PARTICLES & GRAVITATIONAL FORCES */}
-              {candidateCoordinates.map(c => {
-                const isSelected = c.profile.id === selectedId
-                const isHovered = c.profile.id === hoveredId
-                const firstName = c.profile.identity.name.split(' ')[0]
-                const isPoleMatch = activeAttractorFocus === 'all' || c.dominantFacetKey === activeAttractorFocus
-
-                return (
-                  <g
-                    key={c.profile.id}
-                    className="cursor-pointer transition-transform duration-300"
-                    onClick={() => handleSelectCandidate(c.profile.id)}
-                    onMouseEnter={() => setHoveredId(c.profile.id)}
-                    onMouseLeave={() => setHoveredId(null)}
-                    opacity={isPoleMatch ? 1 : 0.2}
-                  >
-                    {/* Gravitational vector line from center to candidate */}
-                    {(isSelected || isHovered || viewMode === 'field_physics') && (
-                      <line
-                        x1={radarCenter}
-                        y1={radarCenter}
-                        x2={c.cx}
-                        y2={c.cy}
-                        stroke={c.accentColor}
-                        strokeWidth="1.2"
-                        strokeDasharray="2 3"
-                        opacity={isSelected ? 0.75 : 0.35}
-                      />
-                    )}
-
-                    {/* Dominant Gravity Pole Vector Ray */}
-                    {isSelected && (
-                      <line
-                        x1={c.cx}
-                        y1={c.cy}
-                        x2={radarCenter + radarMaxRadius * Math.cos(c.dominantAngle)}
-                        y2={radarCenter + radarMaxRadius * Math.sin(c.dominantAngle)}
-                        stroke={c.accentColor}
-                        strokeWidth="1.5"
-                        opacity="0.6"
-                      />
-                    )}
-
-                    {/* 30-Day Poisson Encounter Halo Wave */}
-                    {locationSignals && viewMode !== 'best_fit' && c.effectiveOdds > 0 && (
-                      <circle
-                        cx={c.cx}
-                        cy={c.cy}
-                        r={c.dotRadius + 8}
-                        fill={c.accentColor}
-                        fillOpacity="0.08"
-                        stroke={c.accentColor}
-                        strokeWidth="1"
-                        strokeDasharray="3 3"
-                        opacity={isSelected ? 0.9 : 0.4}
-                        className={isSelected ? 'animate-pulse' : ''}
-                      />
-                    )}
-
-                    {/* Active Selection Halo Ring */}
-                    {isSelected && (
-                      <circle
-                        cx={c.cx}
-                        cy={c.cy}
-                        r={c.dotRadius + 13}
-                        fill="url(#selectionHalo)"
-                        stroke={c.accentColor}
-                        strokeWidth="1.5"
-                        strokeDasharray="2 2"
-                        className="animate-spin"
-                        style={{ animationDuration: '18s' }}
-                      />
-                    )}
-
-                    {/* Particle Body */}
-                    <circle
-                      cx={c.cx}
-                      cy={c.cy}
-                      r={c.dotRadius}
-                      fill={c.accentColor}
-                      fillOpacity={isSelected ? 1 : 0.85}
-                      stroke="#09090b"
-                      strokeWidth="2"
-                    />
-
-                    {/* Name & Fit Score Label */}
-                    <text
-                      x={c.cx + c.dotRadius + 6}
-                      y={c.cy + 3}
-                      fill={isSelected ? '#ffffff' : '#a1a1aa'}
-                      fontSize={isSelected ? '12' : '10'}
-                      fontWeight={isSelected ? 'bold' : '500'}
-                      className="pointer-events-none drop-shadow select-none"
-                    >
-                      {firstName} ({c.fitScore})
-                    </text>
-
-                    {/* Tooltip on Hover */}
-                    {isHovered && !isSelected && (
-                      <g transform={`translate(${c.cx + 12}, ${c.cy - 34})`}>
-                        <rect
-                          x="0"
-                          y="0"
-                          width="150"
-                          height="48"
-                          rx="6"
-                          fill="#18181b"
-                          stroke="#3f3f46"
+                      {/* 30-Day Poisson Encounter Wave Halo */}
+                      {locationSignals && viewMode !== 'harmony' && c.effectiveOdds > 0 && (
+                        <circle
+                          cx={c.cx}
+                          cy={c.cy}
+                          r={c.dotRadius + 9}
+                          fill={c.accentColor}
+                          fillOpacity="0.08"
+                          stroke={c.accentColor}
                           strokeWidth="1"
+                          strokeDasharray="3 3"
+                          opacity={isSelected ? 0.9 : 0.35}
+                          className={isSelected ? 'animate-pulse' : ''}
                         />
-                        <text x="8" y="16" fill="#f4f4f5" fontSize="10" fontWeight="bold">
-                          {firstName} · Fit {c.fitScore}
-                        </text>
-                        <text x="8" y="30" fill="#a1a1aa" fontSize="9">
-                          Day {timelineDay} Odds: {c.effectiveOdds}% (λ={c.poissonIntensity.toFixed(3)})
-                        </text>
-                        <text x="8" y="42" fill="#c084fc" fontSize="8" fontFamily="monospace">
-                          Polar: ({c.polarR}px, {c.polarThetaDeg}°)
-                        </text>
-                      </g>
-                    )}
-                  </g>
-                )
-              })}
-            </svg>
-          </div>
+                      )}
 
-          {/* ---------------------------------------------------- */}
-          {/* FLOATING CANVAS HUD DOCK (ONLOOK SIGNATURE PILL)     */}
-          {/* ---------------------------------------------------- */}
-          <div className="relative z-30 flex justify-center pb-1">
-            <div className="bg-[#18181b]/90 border border-white/[0.12] rounded-full px-3 py-1.5 backdrop-blur-2xl shadow-2xl flex flex-wrap items-center gap-2 text-xs select-none">
-              {/* Interaction Mode Toggle */}
-              <div className="flex items-center space-x-1">
-                <button
-                  onClick={() => {
-                    sounds.playTap()
-                    setInteractionMode(interactionMode === 'select' ? 'field' : 'select')
-                  }}
-                  className={`px-2 py-1 rounded-full flex items-center space-x-1 text-[11px] font-medium transition ${
-                    interactionMode === 'field'
-                      ? 'bg-sky-600 text-white'
-                      : 'bg-zinc-800 text-zinc-300 hover:text-white'
-                  }`}
-                  title="Toggle Field Equipotential Vectors"
-                >
-                  <Focus className="w-3 h-3" />
-                  <span>{interactionMode === 'field' ? 'Field Vectors' : 'Interact'}</span>
-                </button>
-              </div>
+                      {/* Active Selection Orbit Ring */}
+                      {isSelected && (
+                        <circle
+                          cx={c.cx}
+                          cy={c.cy}
+                          r={c.dotRadius + 14}
+                          fill="url(#candidateGlow)"
+                          stroke={c.accentColor}
+                          strokeWidth="1.5"
+                          strokeDasharray="3 3"
+                          className="animate-spin"
+                          style={{ animationDuration: '24s' }}
+                        />
+                      )}
 
-              <div className="w-px h-4 bg-zinc-700" />
+                      {/* Star Body */}
+                      <circle
+                        cx={c.cx}
+                        cy={c.cy}
+                        r={c.dotRadius}
+                        fill={c.accentColor}
+                        fillOpacity={isSelected ? 1 : 0.85}
+                        stroke="#07070c"
+                        strokeWidth="2.5"
+                      />
 
-              {/* Spacetime Timeline Scrubber Controls */}
-              <div className="flex items-center space-x-2">
+                      {/* Candidate Name & Fit Tag */}
+                      <text
+                        x={c.cx + labelOffsetX}
+                        y={c.cy + 4}
+                        fill={isSelected ? '#ffffff' : '#cbd5e1'}
+                        fontSize={isSelected ? '12' : '10'}
+                        fontWeight={isSelected ? 'bold' : '500'}
+                        textAnchor={labelAnchor}
+                        className="pointer-events-none drop-shadow select-none font-sans"
+                      >
+                        {firstName} · {c.fitScore}%
+                      </text>
+
+                      {/* Tooltip on Hover */}
+                      {isHovered && !isSelected && (
+                        <g transform={`translate(${c.cx > canvasCenter ? c.cx - 160 : c.cx + 15}, ${c.cy - 36})`}>
+                          <rect
+                            x="0"
+                            y="0"
+                            width="150"
+                            height="48"
+                            rx="8"
+                            fill="#18181b"
+                            stroke="#3f3f46"
+                            strokeWidth="1"
+                          />
+                          <text x="8" y="16" fill="#f4f4f5" fontSize="10" fontWeight="bold">
+                            {firstName} · {c.fitScore}% Fit
+                          </text>
+                          <text x="8" y="30" fill="#a1a1aa" fontSize="9">
+                            Day {timelineDay} Odds: {c.effectiveOdds}% meeting chance
+                          </text>
+                          <text x="8" y="42" fill="#c084fc" fontSize="8">
+                            Strongest: {c.dominantFacetLabel}
+                          </text>
+                        </g>
+                      )}
+                    </g>
+                  )
+                })}
+              </svg>
+            </div>
+
+            {/* ---------------------------------------------------- */}
+            {/* FLOATING SPATIAL HUD DOCK (SPACETIME SCRUBBER)       */}
+            {/* ---------------------------------------------------- */}
+            <div className="relative z-30 flex justify-center pb-1">
+              <div className="bg-[#121218]/95 border border-white/[0.12] rounded-full px-3 py-1.5 backdrop-blur-2xl shadow-2xl flex flex-wrap items-center gap-2 text-xs select-none">
+                {/* Play / Pause Toggle */}
                 <button
                   onClick={togglePlayback}
-                  className="p-1 rounded-full bg-purple-600 hover:bg-purple-500 text-white transition shadow-sm"
-                  title={isPlayingTimeline ? 'Pause time-lapse forecast' : 'Play 30-day encounter forecast'}
+                  className="p-1.5 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white transition shadow-sm cursor-pointer"
+                  title={isPlayingTimeline ? 'Pause timeline' : 'Simulate 30-day serendipity'}
                 >
                   {isPlayingTimeline ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3" />}
                 </button>
 
-                <div className="w-20 sm:w-28 flex items-center">
+                {/* Timeline Scrubber Slider */}
+                <div className="w-20 sm:w-32 flex items-center">
                   <input
                     type="range"
                     min="1"
@@ -1280,15 +1381,15 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                     step="1"
                     value={timelineDay}
                     onChange={e => setTimelineDay(parseInt(e.target.value, 10))}
-                    className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                    className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-purple-400"
                   />
                 </div>
 
-                <span className="text-[10px] font-mono text-purple-300 font-bold whitespace-nowrap">
+                <span className="text-[11px] font-mono text-purple-300 font-bold whitespace-nowrap">
                   Day {timelineDay}/30
                 </span>
 
-                {/* Quick Day Presets */}
+                {/* Quick Jumps */}
                 <div className="hidden sm:flex items-center space-x-1">
                   {[1, 15, 30].map(day => (
                     <button
@@ -1298,119 +1399,149 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                         setTimelineDay(day)
                         setIsPlayingTimeline(false)
                       }}
-                      className={`px-1.5 py-0.5 rounded text-[9px] font-mono transition ${
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-mono transition cursor-pointer ${
                         timelineDay === day
-                          ? 'bg-purple-600 text-white'
+                          ? 'bg-purple-600 text-white font-bold'
                           : 'bg-zinc-800 text-zinc-400 hover:text-white'
                       }`}
                     >
-                      D{day}
+                      {day === 1 ? 'Today' : day === 15 ? 'Day 15' : '1 Month'}
                     </button>
                   ))}
                 </div>
+
+                <div className="w-px h-4 bg-zinc-700" />
+
+                {/* Attractor Focus Filter */}
+                <button
+                  onClick={() => {
+                    sounds.playTap()
+                    const keys: ('all' | FacetKey)[] = ['all', 'crossing', 'rhythm', 'values', 'interests', 'mutual']
+                    const nextIdx = (keys.indexOf(activeAttractorFocus) + 1) % keys.length
+                    setActiveAttractorFocus(keys[nextIdx])
+                  }}
+                  className="px-2.5 py-1 rounded-full bg-zinc-800 text-zinc-300 hover:text-white flex items-center space-x-1 text-[11px] transition cursor-pointer"
+                  title="Filter stars by dominant harmony"
+                >
+                  <Filter className="w-3 h-3 text-purple-400" />
+                  <span>
+                    {activeAttractorFocus === 'all'
+                      ? 'All Harmonies'
+                      : FACETS[activeAttractorFocus].shortLabel}
+                  </span>
+                </button>
+
+                <div className="w-px h-4 bg-zinc-700" />
+
+                {/* Reset Viewport */}
+                <button
+                  onClick={resetViewport}
+                  className="p-1 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition cursor-pointer"
+                  title="Reset scrubber to 30 days"
+                >
+                  <RotateCcw className="w-3 h-3" />
+                </button>
               </div>
-
-              <div className="w-px h-4 bg-zinc-700" />
-
-              {/* Attractor Focus Cycle */}
-              <button
-                onClick={() => {
-                  sounds.playTap()
-                  const keys: ('all' | FacetKey)[] = ['all', 'crossing', 'rhythm', 'values', 'interests', 'mutual']
-                  const nextIdx = (keys.indexOf(activeAttractorFocus) + 1) % keys.length
-                  setActiveAttractorFocus(keys[nextIdx])
-                }}
-                className="px-2 py-1 rounded-full bg-zinc-800 text-zinc-300 hover:text-white flex items-center space-x-1 text-[11px] font-mono transition"
-                title="Filter by Gravitational Attractor Pole"
-              >
-                <Filter className="w-3 h-3 text-purple-400" />
-                <span>
-                  {activeAttractorFocus === 'all'
-                    ? 'All Poles'
-                    : FACETS[activeAttractorFocus].shortSymbol}
-                </span>
-              </button>
-
-              <div className="w-px h-4 bg-zinc-700" />
-
-              {/* Reset Viewport */}
-              <button
-                onClick={resetViewport}
-                className="p-1 rounded-full bg-zinc-800 hover:bg-zinc-700 text-zinc-300 hover:text-white transition"
-                title="Reset Viewport & Scrubber"
-              >
-                <RotateCcw className="w-3 h-3" />
-              </button>
             </div>
-          </div>
 
-          {/* Sub-Legend Pill */}
-          <div className="pt-2 border-t border-white/[0.06] flex flex-wrap items-center justify-between text-[11px] text-zinc-400 gap-2">
-            <span className="flex items-center space-x-1.5">
-              <span className="w-2 h-2 rounded-full bg-purple-400" />
-              <span>Distance = fit score</span>
-            </span>
-            <span className="flex items-center space-x-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-400" />
-              <span>Size = 30-day encounter odds</span>
-            </span>
-            <span className="flex items-center space-x-1.5">
-              <span className="w-2 h-2 rounded-full bg-amber-400" />
-              <span>Color = dominant gravity attractor</span>
-            </span>
-          </div>
-        </main>
+            {/* Mobile Candidate Quick Selector Bar (Only on Mobile) */}
+            <div className="lg:hidden pt-3 border-t border-white/[0.06] flex items-center space-x-2 overflow-x-auto pb-1">
+              {sortedRanking.map(cand => {
+                const isSelected = cand.profile.id === selectedId
+                return (
+                  <button
+                    key={cand.profile.id}
+                    onClick={() => handleSelectCandidate(cand.profile.id)}
+                    className={`flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold shrink-0 transition ${
+                      isSelected
+                        ? 'bg-purple-600 text-white shadow-md'
+                        : 'bg-white/[0.04] text-zinc-300 hover:bg-white/[0.08]'
+                    }`}
+                  >
+                    <img
+                      src={cand.profile.identity.photos[0]}
+                      alt={cand.profile.identity.name}
+                      className="w-4 h-4 rounded-full object-cover"
+                    />
+                    <span>{cand.profile.identity.name.split(' ')[0]}</span>
+                    <span className="font-mono text-[10px] opacity-80">{cand.fitScore}%</span>
+                  </button>
+                )
+              })}
+            </div>
+
+            {/* Canvas Sub-Legend Pill */}
+            <div className="pt-2 border-t border-white/[0.06] hidden sm:flex flex-wrap items-center justify-between text-[11px] text-zinc-400 gap-2">
+              <span className="flex items-center space-x-1.5">
+                <span className="w-2 h-2 rounded-full bg-purple-400" />
+                <span>Distance = Overall mutual fit</span>
+              </span>
+              <span className="flex items-center space-x-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                <span>Star halo = 30-day natural encounter odds</span>
+              </span>
+              <span className="flex items-center space-x-1.5">
+                <span className="w-2 h-2 rounded-full bg-amber-400" />
+                <span>Color = Strongest life harmony</span>
+              </span>
+            </div>
+          </main>
+        )}
 
         {/* ==================================================== */}
-        {/* ZONE 3 (RIGHT): TELEMETRY DOSSIER & RANKINGS         */}
+        {/* ZONE 3: CONNECTION STORY & RESONANCE DOSSIER         */}
         {/* ==================================================== */}
-        {rightPanelOpen && (
-          <aside className="w-full lg:w-96 flex-shrink-0 space-y-4 animate-in fade-in duration-200">
-            {/* CARD 3A: SELECTED CANDIDATE DOSSIER */}
-            <div className="bg-[#121216] border border-white/[0.08] rounded-2xl p-4 shadow-xl space-y-4">
+        {(rightPanelOpen || mobileTab === 'story') && (
+          <aside
+            className={`w-full lg:w-96 flex-shrink-0 space-y-4 animate-in fade-in duration-200 ${
+              mobileTab !== 'story' ? 'hidden lg:block' : 'block'
+            }`}
+          >
+            {/* CARD 3A: SELECTED CANDIDATE CONNECTION STORY */}
+            <div className="bg-[#0f0f15] border border-white/[0.08] rounded-3xl p-4 sm:p-5 shadow-xl space-y-4">
               <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-purple-300 font-bold flex items-center space-x-1.5">
-                  <Activity className="w-3.5 h-3.5" />
-                  <span>Dyad Dossier // {selectedCandidate.profile.id}</span>
+                <span className="text-xs uppercase tracking-wider text-purple-300 font-bold flex items-center space-x-1.5">
+                  <Heart className="w-3.5 h-3.5 text-rose-400 fill-rose-400/20" />
+                  <span>Connection Story</span>
                 </span>
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">
-                  {selectedCandidate.fitScore}% Fit
+                <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-purple-500/15 text-purple-300 border border-purple-500/30 font-bold">
+                  {selectedCandidate.fitScore}% Mutual Fit
                 </span>
               </div>
 
               {/* Candidate Profile Avatar & Pair Title */}
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-3.5">
                 <img
                   src={selectedCandidate.profile.identity.photos[0]}
                   alt={selectedCandidate.profile.identity.name}
-                  className="w-12 h-12 rounded-xl object-cover border border-purple-500/40 shadow-md"
+                  className="w-14 h-14 rounded-2xl object-cover border border-purple-500/40 shadow-md"
                 />
                 <div>
                   <h3 className="text-base font-bold text-white leading-tight">
                     {selectedCandidate.pairTitle}
                   </h3>
-                  <p className="text-xs text-zinc-400">
+                  <p className="text-xs text-zinc-400 mt-0.5">
                     {selectedCandidate.profile.geography.cityName} · {selectedCandidate.jobTitle}
                   </p>
                 </div>
               </div>
 
               {/* 30-Day Crossing Odds Metric & Confidence Bar */}
-              <div className="bg-zinc-950/80 border border-white/[0.08] rounded-xl p-3.5 space-y-2">
+              <div className="bg-zinc-950/80 border border-white/[0.08] rounded-2xl p-4 space-y-2">
                 <div className="flex items-baseline justify-between">
                   <span className="text-xs font-bold text-white">
                     {selectedCandidate.effectiveOdds}% chance your paths cross in {timelineDay} days
                   </span>
                 </div>
 
-                <div className="text-[10px] text-zinc-400 font-mono">
+                <div className="text-[11px] text-zinc-400">
                   {locationSignals
-                    ? `range ${selectedCandidate.effectiveRange[0]}–${selectedCandidate.effectiveRange[1]}% (95% CI)`
+                    ? `Estimated range ${selectedCandidate.effectiveRange[0]}% – ${selectedCandidate.effectiveRange[1]}% without an app forcing it`
                     : 'Location signals paused'}
                 </div>
 
                 {/* Range bar graphic */}
-                <div className="w-full bg-zinc-800 h-2 rounded-full overflow-hidden relative">
+                <div className="w-full bg-zinc-800 h-2.5 rounded-full overflow-hidden relative mt-1">
                   {locationSignals && (
                     <>
                       <div
@@ -1421,7 +1552,7 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                         }}
                       />
                       <div
-                        className="absolute h-full bg-gradient-to-r from-purple-500 to-sky-400 rounded-full"
+                        className="absolute h-full bg-gradient-to-r from-purple-500 via-rose-500 to-amber-400 rounded-full"
                         style={{ width: `${selectedCandidate.effectiveOdds}%` }}
                       />
                     </>
@@ -1429,13 +1560,13 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                 </div>
               </div>
 
-              {/* Feature Attribution Differentials */}
+              {/* Harmony Differentials */}
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between text-xs">
                   <h4 className="font-bold text-white text-xs">
-                    Points above/below typical match
+                    Where This Connection Shines
                   </h4>
-                  <span className="text-[10px] text-zinc-500 font-mono">Δ vs Mean</span>
+                  <span className="text-[10px] text-zinc-500">vs. Average</span>
                 </div>
 
                 <div className="space-y-1.5">
@@ -1446,12 +1577,12 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
 
                     return (
                       <div key={key} className="flex items-center text-xs">
-                        <span className="w-24 text-zinc-300 font-medium truncate flex items-center space-x-1.5 text-[11px]">
+                        <span className="w-28 text-zinc-300 font-medium truncate flex items-center space-x-1.5 text-[11px]">
                           <span
-                            className="w-1.5 h-1.5 rounded-full inline-block flex-shrink-0"
+                            className="w-2 h-2 rounded-full inline-block flex-shrink-0"
                             style={{ backgroundColor: facet.colorHex }}
                           />
-                          <span>{facet.label}</span>
+                          <span>{facet.shortLabel}</span>
                         </span>
 
                         {/* Divergent Bar */}
@@ -1490,38 +1621,38 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                   })}
                 </div>
 
-                <div className="p-2 rounded-lg bg-zinc-950/80 border border-white/[0.06] text-[11px] text-zinc-300">
-                  <span className="text-purple-400 font-semibold">Strongest edge:</span> {strongestEdge}{' '}
+                <div className="p-2.5 rounded-xl bg-zinc-950/80 border border-white/[0.06] text-[11px] text-zinc-300">
+                  <span className="text-purple-400 font-semibold">Strongest harmony:</span> {strongestEdge}{' '}
                   <span className="text-zinc-600 mx-1">·</span>{' '}
-                  <span className="text-amber-400 font-semibold">Biggest drag:</span> {biggestDrag}
+                  <span className="text-amber-400 font-semibold">Gentle area:</span> {biggestDrag}
                 </div>
               </div>
 
-              {/* Spacetime Near Misses */}
+              {/* Transit Near Misses in London */}
               <div className="space-y-2 pt-2 border-t border-white/[0.06]">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-bold text-white flex items-center space-x-1.5">
                     <MapPin className="w-3.5 h-3.5 text-purple-400" />
-                    <span>Transit Near-Misses</span>
+                    <span>Where Your Stories Cross</span>
                   </h4>
-                  <span className="text-[10px] text-zinc-500 font-mono">London Route Sync</span>
+                  <span className="text-[10px] text-zinc-500">London Paths</span>
                 </div>
 
                 <div className="space-y-1.5">
                   {selectedCandidate.nearMisses.map((miss, idx) => (
                     <div
                       key={idx}
-                      className="p-2 rounded-xl bg-zinc-950/70 border border-white/[0.06] flex items-start justify-between text-xs gap-2"
+                      className="p-2.5 rounded-xl bg-zinc-950/70 border border-white/[0.06] flex items-start justify-between text-xs gap-2"
                     >
                       <div className="space-y-0.5">
-                        <span className="font-mono text-purple-300 font-bold block text-[11px]">
+                        <span className="text-purple-300 font-semibold block text-[11px]">
                           {miss.time}
                         </span>
-                        <span className="text-zinc-300 text-[11px]">
+                        <span className="text-zinc-300 text-[11px] leading-relaxed">
                           {miss.description}
                         </span>
                       </div>
-                      <span className="text-zinc-400 font-medium text-[10px] text-right bg-zinc-900 px-1.5 py-0.5 rounded border border-white/5 whitespace-nowrap">
+                      <span className="text-zinc-400 font-medium text-[10px] text-right bg-zinc-900 px-2 py-0.5 rounded-full border border-white/5 whitespace-nowrap">
                         {miss.venue}
                       </span>
                     </div>
@@ -1536,10 +1667,10 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                     sounds.playTap()
                     setSuggestMeetingModal(true)
                   }}
-                  className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-900/30 flex items-center justify-center space-x-2 transition"
+                  className="w-full py-2.5 px-4 rounded-xl font-semibold text-xs bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white shadow-lg shadow-purple-900/30 flex items-center justify-center space-x-2 transition cursor-pointer"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-purple-200" />
-                  <span>Suggest Optimal Transit Midpoint</span>
+                  <Coffee className="w-3.5 h-3.5 text-amber-300" />
+                  <span>Suggest a Quiet Place to Meet</span>
                 </button>
 
                 {onSelectCandidate && (
@@ -1548,32 +1679,32 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                       sounds.playTap()
                       onSelectCandidate(selectedCandidate.profile, selectedCandidate.evaluation)
                     }}
-                    className="w-full py-2 px-4 rounded-xl font-medium text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-white/10 flex items-center justify-center space-x-2 transition"
+                    className="w-full py-2 px-4 rounded-xl font-medium text-xs bg-zinc-900 hover:bg-zinc-800 text-zinc-200 border border-white/10 flex items-center justify-center space-x-2 transition cursor-pointer"
                   >
                     <FileText className="w-3 h-3 text-zinc-400" />
-                    <span>Inspect 12-Dimension Match Report</span>
+                    <span>Explore Full Compatibility Story</span>
                   </button>
                 )}
               </div>
             </div>
 
-            {/* CARD 3B: SORTED RANKING CARD */}
-            <div className="bg-[#121216] border border-white/[0.08] rounded-2xl p-4 shadow-xl space-y-3">
+            {/* CARD 3B: SORTED LEADERBOARD */}
+            <div className="bg-[#0f0f15] border border-white/[0.08] rounded-3xl p-4 shadow-xl space-y-3">
               <div className="flex items-center justify-between pb-1 border-b border-white/[0.06]">
-                <h3 className="text-xs font-mono font-bold uppercase tracking-wider text-white">
-                  Leaderboard Index
+                <h3 className="text-xs font-bold uppercase tracking-wider text-white">
+                  Resonance Index
                 </h3>
                 <div className="flex items-center space-x-1.5 text-xs">
-                  <span className="text-[10px] text-zinc-500 font-mono">Sort:</span>
+                  <span className="text-[10px] text-zinc-500">Sort:</span>
                   <select
                     value={sortCriteria}
                     onChange={e => {
                       sounds.playTap()
                       setSortCriteria(e.target.value as any)
                     }}
-                    className="bg-zinc-950 text-[11px] font-mono text-zinc-300 border border-white/10 rounded-lg px-2 py-0.5 focus:outline-none focus:border-purple-500"
+                    className="bg-zinc-950 text-[11px] text-zinc-300 border border-white/10 rounded-lg px-2 py-0.5 focus:outline-none focus:border-purple-500 cursor-pointer"
                   >
-                    <option value="fit">by fit</option>
+                    <option value="fit">by fit score</option>
                     <option value="odds">by meeting odds</option>
                     <option value="name">by name</option>
                   </select>
@@ -1587,7 +1718,7 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                     <div
                       key={cand.profile.id}
                       onClick={() => handleSelectCandidate(cand.profile.id)}
-                      className={`px-2.5 py-1.5 rounded-lg border text-xs flex items-center justify-between cursor-pointer transition ${
+                      className={`px-3 py-2 rounded-xl border text-xs flex items-center justify-between cursor-pointer transition ${
                         isSelected
                           ? 'bg-purple-950/40 border-purple-500/50 text-white'
                           : 'bg-zinc-950/40 border-transparent text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200'
@@ -1609,29 +1740,29 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
       </div>
 
       {/* ================================================== */}
-      {/* MODAL 1: INTELLIGENT ARCHITECTURE (FRY × PSYCHOLOGY) */}
+      {/* MODAL 1: THE SCIENCE OF HUMAN FIT                  */}
       {/* ================================================== */}
-      {showPsychologyModal && (
+      {showScienceModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="bg-[#121216] border border-white/[0.08] max-w-3xl w-full rounded-2xl p-6 md:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-[#121218] border border-white/[0.08] max-w-3xl w-full rounded-3xl p-6 md:p-8 space-y-6 shadow-2xl max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
               <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-xl bg-purple-500/20 text-purple-400">
-                  <Brain className="w-6 h-6" />
+                <div className="p-2.5 rounded-2xl bg-purple-500/20 text-purple-400">
+                  <Sparkles className="w-6 h-6" />
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-white">
-                    The Intelligent Love Architecture
+                    The Science Behind the Constellation
                   </h3>
-                  <p className="text-xs text-zinc-400 font-mono">
-                    Hannah Fry’s Mathematics × Attachment Theory & Gottman Dyadics
+                  <p className="text-xs text-zinc-400">
+                    Why real compatibility is about shared life rhythms, not swiping volume
                   </p>
                 </div>
               </div>
 
               <button
-                onClick={() => setShowPsychologyModal(false)}
-                className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition"
+                onClick={() => setShowScienceModal(false)}
+                className="p-1.5 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -1639,71 +1770,71 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
 
             {/* 4 Architectural Pillars */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
+              <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
                 <div className="flex items-center space-x-2 text-purple-400 font-bold text-sm">
                   <Flame className="w-4 h-4" />
-                  <span>1. Upgraded 37% Optimal Stopping</span>
+                  <span>1. The 37% Decision Window</span>
                 </div>
                 <p className="text-xs text-zinc-300 leading-relaxed">
-                  Rather than sampling blindly in the first 37%, you calibrate your evaluation function against attachment wounds. You do not pick the "best so far" — you select for Aron’s <strong>Self-Expansion</strong> and secure co-regulation.
+                  Optimal stopping theory shows that endlessly chasing an imaginary ideal leads to exhaustion. Rather than sampling blindly, you calibrate what genuinely sustains you — looking for mutual growth and secure co-regulation.
                 </p>
-                <div className="text-[11px] font-mono text-purple-300 bg-purple-950/40 p-2 rounded border border-purple-900/60">
-                  Current Partner Score: {selectedCandidate.psychology.selfExpansionScore}% Self-Expansion
+                <div className="text-[11px] font-mono text-purple-300 bg-purple-950/40 p-2 rounded-xl border border-purple-900/60">
+                  Current Match Score: {selectedCandidate.psychology.selfExpansionScore}% Self-Expansion
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
+              <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
                 <div className="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
-                  <TrendingUp className="w-4 h-4" />
-                  <span>2. Gottman Coupled Equations</span>
+                  <Heart className="w-4 h-4" />
+                  <span>2. The Gottman 5:1 Kindness Ratio</span>
                 </div>
                 <p className="text-xs text-zinc-300 leading-relaxed">
-                  Predicts dyadic stability via non-linear influence functions. Successful relationships maintain a <strong>5:1 positivity ratio</strong> and a low negativity threshold, surfacing micro-friction early without contempt.
+                  Decades of dyadic research reveal that lasting love requires at least 5 positive, validating moments for every 1 moment of friction. We look for gentle, early micro-repair rather than cold stonewalling.
                 </p>
-                <div className="text-[11px] font-mono text-emerald-300 bg-emerald-950/40 p-2 rounded border border-emerald-900/60">
-                  Positivity Dyad: {selectedCandidate.psychology.gottmanRatio} (Optimal)
+                <div className="text-[11px] font-mono text-emerald-300 bg-emerald-950/40 p-2 rounded-xl border border-emerald-900/60">
+                  Dyad Kindness Ratio: {selectedCandidate.psychology.gottmanRatio} (Optimal)
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
+              <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
                 <div className="flex items-center space-x-2 text-sky-400 font-bold text-sm">
                   <Compass className="w-4 h-4" />
-                  <span>3. Scale-Free Sexual Networks</span>
+                  <span>3. Scale-Free Urban Serendipity</span>
                 </div>
                 <p className="text-xs text-zinc-300 leading-relaxed">
-                  Partner networks follow scale-free power laws, not bell curves. By aligning transit routines and circadian rhythms, your node degree expands organically without burnout.
+                  Real relationships naturally form where everyday transit routines, bakeries, and reading spots overlap. You aren’t forced into artificial dates — you connect where your lives already touch.
                 </p>
-                <div className="text-[11px] font-mono text-sky-300 bg-sky-950/40 p-2 rounded border border-sky-900/60">
+                <div className="text-[11px] font-mono text-sky-300 bg-sky-950/40 p-2 rounded-xl border border-sky-900/60">
                   Attachment Mode: {selectedCandidate.psychology.attachment}
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
+              <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
                 <div className="flex items-center space-x-2 text-amber-400 font-bold text-sm">
                   <ShieldCheck className="w-4 h-4" />
                   <span>4. Bowen Differentiation</span>
                 </div>
                 <p className="text-xs text-zinc-300 leading-relaxed">
-                  Staying intimately connected while maintaining self-sovereignty. Prevents dorsal vagal shutdown and anxious protest loops during high-stakes decisions.
+                  Staying deeply connected while maintaining your sovereignty and boundaries. Protects against losing your identity or falling into anxious protest loops.
                 </p>
-                <div className="text-[11px] font-mono text-amber-300 bg-amber-950/40 p-2 rounded border border-amber-900/60">
+                <div className="text-[11px] font-mono text-amber-300 bg-amber-950/40 p-2 rounded-xl border border-amber-900/60">
                   Micro-Repair: {selectedCandidate.psychology.lowNegativityThreshold}
                 </div>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-purple-950/30 border border-purple-800/60 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-purple-950/30 border border-purple-800/60 flex items-center justify-between">
               <div>
                 <span className="text-xs text-purple-300 font-bold block uppercase tracking-wider">
-                  Recommended Algorithmic Action
+                  Current Match Assessment
                 </span>
                 <span className="text-sm text-zinc-200">
                   {selectedCandidate.psychology.decisionPhase}
                 </span>
               </div>
               <button
-                onClick={() => setShowPsychologyModal(false)}
-                className="px-4 py-2 rounded-xl bg-purple-600 text-white text-xs font-semibold hover:bg-purple-500 transition"
+                onClick={() => setShowScienceModal(false)}
+                className="px-4 py-2 rounded-xl bg-purple-600 text-white text-xs font-semibold hover:bg-purple-500 transition cursor-pointer"
               >
                 Understood
               </button>
@@ -1713,48 +1844,48 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
       )}
 
       {/* ================================================== */}
-      {/* MODAL 2: SUGGEST A PLACE TO MEET                   */}
+      {/* MODAL 2: SUGGEST A QUIET PLACE TO MEET             */}
       {/* ================================================== */}
       {suggestMeetingModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="bg-[#121216] border border-white/[0.08] max-w-lg w-full rounded-2xl p-6 space-y-5 shadow-2xl">
+          <div className="bg-[#121218] border border-white/[0.08] max-w-lg w-full rounded-3xl p-6 space-y-5 shadow-2xl">
             <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
               <div className="flex items-center space-x-2">
-                <Sparkles className="w-5 h-5 text-purple-400" />
+                <Coffee className="w-5 h-5 text-amber-400" />
                 <h3 className="text-lg font-bold text-white">
-                  Optimal Transit Midpoint for {selectedCandidate.pairTitle}
+                  A Gentle Place to Meet for {selectedCandidate.pairTitle}
                 </h3>
               </div>
               <button
                 onClick={() => setSuggestMeetingModal(false)}
-                className="p-1 rounded-lg text-zinc-400 hover:text-white transition"
+                className="p-1 rounded-lg text-zinc-400 hover:text-white transition cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <p className="text-xs text-zinc-300 leading-relaxed">
-              Based on your daily rhythm synchronization and verified near-misses around <strong>Waterloo and Borough Market</strong>:
+              Based on your daily rhythm and verified route crossings around <strong>Waterloo and Borough Market</strong>:
             </p>
 
             <div className="space-y-2.5">
-              <div className="p-3.5 rounded-xl bg-zinc-950 border border-purple-500/40 space-y-1">
+              <div className="p-3.5 rounded-2xl bg-zinc-950 border border-purple-500/40 space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-sm text-white">Monmouth Coffee Company</span>
-                  <span className="text-xs font-mono text-purple-300 font-bold">98% Midpoint Fit</span>
+                  <span className="text-xs font-mono text-purple-300 font-bold">98% Transit Match</span>
                 </div>
                 <p className="text-xs text-zinc-400">
-                  27 Park St, Borough Market · 8 mins from your Northern line route
+                  27 Park St, Borough Market · 8 mins from your Northern line route · Great coffee & walk
                 </p>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-zinc-950 border border-white/[0.08] space-y-1">
+              <div className="p-3.5 rounded-2xl bg-zinc-950 border border-white/[0.08] space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="font-bold text-sm text-white">Tate Modern Espresso Bar</span>
-                  <span className="text-xs font-mono text-zinc-400">92% Midpoint Fit</span>
+                  <span className="text-xs font-mono text-zinc-400">92% Transit Match</span>
                 </div>
                 <p className="text-xs text-zinc-400">
-                  Bankside · Calmer ambient volume, optimal for cognitive co-regulation
+                  Bankside · Calmer ambient volume, perfect for an unpressured riverside stroll
                 </p>
               </div>
             </div>
@@ -1762,7 +1893,7 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
             <div className="flex justify-end space-x-2 pt-2">
               <button
                 onClick={() => setSuggestMeetingModal(false)}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white transition"
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-zinc-400 hover:text-white transition cursor-pointer"
               >
                 Cancel
               </button>
@@ -1771,9 +1902,9 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                   sounds.playMatch()
                   setSuggestMeetingModal(false)
                 }}
-                className="px-5 py-2 rounded-xl text-xs font-semibold bg-purple-600 text-white hover:bg-purple-500 transition"
+                className="px-5 py-2 rounded-xl text-xs font-semibold bg-gradient-to-r from-purple-600 to-indigo-600 text-white hover:from-purple-500 hover:to-indigo-500 transition cursor-pointer shadow-md"
               >
-                Send Invitation
+                Send Gentle Invitation
               </button>
             </div>
           </div>

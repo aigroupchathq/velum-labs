@@ -672,7 +672,7 @@ export const FirstRunOnboardingModal: React.FC<FirstRunOnboardingModalProps> = (
                 className="px-4 py-2.5 rounded-full text-xs font-medium bg-neutral-900 hover:bg-neutral-800 text-purple-300 border border-purple-500/30 flex items-center space-x-1.5 transition cursor-pointer"
               >
                 <Compass className="w-3.5 h-3.5 text-purple-400" />
-                <span>Constellation Manifold</span>
+                <span>The Living Constellation</span>
               </button>
 
               <button

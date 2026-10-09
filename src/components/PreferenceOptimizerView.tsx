@@ -739,8 +739,8 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
         </div>
 
         {/* SVG Curve */}
-        <div className="relative py-2">
-          <svg viewBox="0 0 700 240" className="w-full h-auto select-none overflow-visible">
+        <div className="relative py-2 overflow-x-auto">
+          <svg viewBox="0 0 730 250" className="w-full min-w-[500px] h-auto select-none overflow-visible">
             <defs>
               <linearGradient id="frontierFill" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#a855f7" stopOpacity="0.25" />
@@ -750,17 +750,17 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
 
             {/* Grid Lines */}
             {[50, 100, 150, 200].map(y => (
-              <line key={y} x1="50" y1={y} x2="670" y2={y} stroke="#334155" strokeWidth="0.5" strokeDasharray="3 3" opacity="0.4" />
+              <line key={y} x1="50" y1={y} x2="680" y2={y} stroke="#334155" strokeWidth="0.5" strokeDasharray="3 3" opacity="0.4" />
             ))}
             {[150, 300, 450, 600].map(x => (
               <line key={x} x1={x} y1="30" x2={x} y2="210" stroke="#334155" strokeWidth="0.5" strokeDasharray="3 3" opacity="0.4" />
             ))}
 
             {/* Axis Labels */}
-            <text x="50" y="225" fill="#64748b" fontSize="10" fontFamily="sans-serif">180 people</text>
-            <text x="280" y="225" fill="#64748b" fontSize="10" fontFamily="sans-serif">2,500 people</text>
-            <text x="490" y="225" fill="#64748b" fontSize="10" fontFamily="sans-serif">5,000 people</text>
-            <text x="640" y="225" fill="#64748b" fontSize="10" fontFamily="sans-serif">7,000+</text>
+            <text x="50" y="228" fill="#64748b" fontSize="10" fontFamily="sans-serif">180 people</text>
+            <text x="280" y="228" fill="#64748b" fontSize="10" fontFamily="sans-serif">2,500 people</text>
+            <text x="490" y="228" fill="#64748b" fontSize="10" fontFamily="sans-serif">5,000 people</text>
+            <text x="640" y="228" fill="#64748b" fontSize="10" fontFamily="sans-serif" textAnchor="middle">7,000+</text>
 
             <text x="42" y="55" fill="#64748b" fontSize="10" fontFamily="sans-serif" textAnchor="end">95%</text>
             <text x="42" y="105" fill="#64748b" fontSize="10" fontFamily="sans-serif" textAnchor="end">85%</text>

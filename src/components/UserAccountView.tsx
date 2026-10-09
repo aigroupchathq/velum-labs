@@ -633,9 +633,9 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
               },
               {
                 id: 'network',
-                title: 'Compatibility Constellation',
-                desc: 'Inspect topological clustering, community densities, and dyadic centrality.',
-                icon: <Compass className="w-5 h-5 text-cyan-400" />,
+                title: 'The Living Constellation',
+                desc: 'Explore the night sky of your connections — where paths cross, daily rhythms align, and values resonate in London.',
+                icon: <Compass className="w-5 h-5 text-purple-400" />,
                 action: () => (onNavigateToNetwork ? onNavigateToNetwork() : (onNavigateView && onNavigateView('network'))),
               },
               {
