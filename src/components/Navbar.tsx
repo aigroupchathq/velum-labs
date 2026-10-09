@@ -1,7 +1,7 @@
 // ============================================================================
 // src/components/Navbar.tsx
-// Universal Compatibility Platform: Apple-Grade Minimalist Navigation
-// Sequenced around 2 Mental Spaces: Relational Journey & Algorithmic Science
+// Universal Compatibility Platform: Apple-Grade Human-Centered Navigation
+// Clean, Human-Friendly Terminology with Effortless Mobile Navigation
 // ============================================================================
 
 import React, { useState, useRef, useEffect } from 'react'
@@ -21,6 +21,8 @@ import {
   Home,
   UserCheck,
   Scale,
+  HelpCircle,
+  MoreHorizontal,
 } from 'lucide-react'
 import type { UniversalUserProfile } from '../types'
 
@@ -36,6 +38,7 @@ export type ActiveView =
   | 'evaluator'
   | 'subscriptions'
   | 'network'
+  | 'about_faq'
 
 interface NavbarProps {
   activeView: ActiveView
@@ -58,20 +61,24 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [scienceMenuOpen, setScienceMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
+  const [mobileMoreOpen, setMobileMoreOpen] = useState(false)
+
   const scienceDropdownRef = useRef<HTMLDivElement>(null)
   const userDropdownRef = useRef<HTMLDivElement>(null)
+  const mobileMoreRef = useRef<HTMLDivElement>(null)
 
-  // Primary Relational Journey (Miller's Law compliant: 6 core items)
+  // Primary Human Journey (Everyday Language)
   const primaryNavItems: { id: ActiveView; label: string; icon: React.ReactNode }[] = [
     { id: 'landing', label: 'Home', icon: <Compass className="w-3.5 h-3.5 stroke-[1.75]" /> },
-    { id: 'onboarding', label: 'Sanctuary & Profile', icon: <Home className="w-3.5 h-3.5 stroke-[1.75] text-emerald-400" /> },
-    { id: 'recs', label: 'Discover', icon: <Sparkles className="w-3.5 h-3.5 stroke-[1.75] text-rose-400" /> },
-    { id: 'network', label: 'Constellation & Odds', icon: <Compass className="w-3.5 h-3.5 stroke-[1.75] text-purple-400" /> },
-    { id: 'conversations', label: 'Dialogue', icon: <MessageSquare className="w-3.5 h-3.5 stroke-[1.75] text-sky-400" /> },
-    { id: 'date_brief', label: 'Encounter', icon: <Coffee className="w-3.5 h-3.5 stroke-[1.75] text-amber-400" /> },
+    { id: 'onboarding', label: 'My Profile', icon: <Home className="w-3.5 h-3.5 stroke-[1.75] text-emerald-400" /> },
+    { id: 'recs', label: 'Discover Matches', icon: <Sparkles className="w-3.5 h-3.5 stroke-[1.75] text-rose-400" /> },
+    { id: 'network', label: 'Match Map', icon: <Compass className="w-3.5 h-3.5 stroke-[1.75] text-purple-400" /> },
+    { id: 'conversations', label: 'Messages', icon: <MessageSquare className="w-3.5 h-3.5 stroke-[1.75] text-sky-400" /> },
+    { id: 'date_brief', label: 'Date Planner', icon: <Coffee className="w-3.5 h-3.5 stroke-[1.75] text-amber-400" /> },
+    { id: 'about_faq', label: 'About & FAQ', icon: <HelpCircle className="w-3.5 h-3.5 stroke-[1.75] text-emerald-400" /> },
   ]
 
-  // Algorithmic Science & Laboratory Suite
+  // Secondary Tools (Simplified Human Subtitles)
   const scienceNavItems: {
     id: ActiveView
     label: string
@@ -81,33 +88,33 @@ export const Navbar: React.FC<NavbarProps> = ({
   }[] = [
     {
       id: 'intro',
-      label: 'Architecture & Math',
-      subtitle: 'The Match Universe & Simplified Formulas',
+      label: 'Platform Principles',
+      subtitle: 'How mutual matching and privacy science work',
       icon: <BookOpen className="w-3.5 h-3.5 text-cyan-400" />,
     },
     {
       id: 'optimizer',
-      label: 'Pareto Frontier',
-      subtitle: 'Multi-Objective Solution Space Explorer',
+      label: 'Preferences & Priorities',
+      subtitle: 'Customize dealbreakers and daily lifestyle settings',
       icon: <Sliders className="w-3.5 h-3.5 text-emerald-400" />,
     },
     {
       id: 'evaluator',
-      label: 'Pair Dyad Matrix',
-      subtitle: 'N x N Compatibility Tensor Inspector',
+      label: 'Match Comparison',
+      subtitle: 'Compare mutual compatibility side-by-side',
       icon: <Binary className="w-3.5 h-3.5 text-purple-400" />,
     },
     {
       id: 'contradictions',
-      label: 'Invariant Auditor',
-      subtitle: 'Formal Logic Preference Conflict Detector',
+      label: 'Conflict Checker',
+      subtitle: 'Detect conflicting or impossible preferences',
       icon: <AlertCircle className="w-3.5 h-3.5 text-amber-400" />,
       badge: contradictionCount,
     },
     {
       id: 'subscriptions',
-      label: 'Zero P2W Ethics',
-      subtitle: 'Invariant D-23 Proof & Subscription Tiers',
+      label: 'Fair Pricing & Pledge',
+      subtitle: 'Zero pay-to-win pledge and supporter plans',
       icon: <CreditCard className="w-3.5 h-3.5 text-rose-400" />,
     },
   ]
@@ -124,11 +131,15 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (userDropdownRef.current && !userDropdownRef.current.contains(e.target as Node)) {
         setUserMenuOpen(false)
       }
+      if (mobileMoreRef.current && !mobileMoreRef.current.contains(e.target as Node)) {
+        setMobileMoreOpen(false)
+      }
     }
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setScienceMenuOpen(false)
         setUserMenuOpen(false)
+        setMobileMoreOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -140,7 +151,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   }, [])
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-[#070709]/85 backdrop-blur-2xl">
+    <header className="sticky top-0 z-50 w-full border-b border-white/[0.06] bg-[#070709]/85 backdrop-blur-2xl pb-16 lg:pb-0">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         
         {/* Brand Monogram */}
@@ -166,9 +177,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Primary Desktop Navigation Bar (Slick & Grouped) */}
+        {/* Primary Desktop Navigation Bar */}
         <nav className="hidden lg:flex items-center p-1 rounded-full bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-inner space-x-0.5">
-          {/* Relational Journey Pills */}
           {primaryNavItems.map((item) => {
             const isActive = activeView === item.id
             return (
@@ -193,7 +203,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Divider */}
           <div className="h-4 w-[1px] bg-white/10 mx-1" />
 
-          {/* Algorithmic Science & Laboratory Dropdown */}
+          {/* How It Works & Settings Dropdown */}
           <div className="relative" ref={scienceDropdownRef}>
             <button
               onClick={() => setScienceMenuOpen(!scienceMenuOpen)}
@@ -204,7 +214,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               }`}
             >
               <Layers className="w-3.5 h-3.5 text-cyan-400" />
-              <span>{isScienceActive && activeScienceItem ? activeScienceItem.label : 'The Science'}</span>
+              <span>{isScienceActive && activeScienceItem ? activeScienceItem.label : 'How It Works'}</span>
               {contradictionCount > 0 && (
                 <span className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[9px] font-bold flex items-center justify-center">
                   {contradictionCount}
@@ -213,14 +223,14 @@ export const Navbar: React.FC<NavbarProps> = ({
               <ChevronDown className={`w-3 h-3 transition-transform ${scienceMenuOpen ? 'rotate-180' : ''}`} />
             </button>
 
-            {/* Science Dropdown Menu (Apple Glassmorphism) */}
+            {/* Science Dropdown Menu */}
             {scienceMenuOpen && (
-              <div className="absolute top-full right-0 mt-2 w-72 p-2 rounded-2xl bg-neutral-900/95 border border-white/10 shadow-2xl backdrop-blur-2xl z-50 animate-in fade-in slide-in-from-top-2 space-y-1">
+              <div className="absolute top-full right-0 mt-2 w-72 p-2 rounded-2xl bg-neutral-900/95 border border-white/10 shadow-2xl backdrop-blur-2xl z-50 space-y-1">
                 <div className="px-3 py-1.5 border-b border-white/[0.06] flex items-center justify-between">
                   <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400">
-                    Algorithmic Laboratory
+                    Platform Settings & Tools
                   </span>
-                  <span className="text-[10px] text-cyan-400 font-mono">v8.3 Deterministic</span>
+                  <span className="text-[10px] text-cyan-400 font-mono">v8.3 Verified</span>
                 </div>
 
                 {scienceNavItems.map((item) => {
@@ -260,19 +270,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </nav>
 
-        {/* Right Action Capsule: Wingman AI & User Sanctuary Hub */}
+        {/* Right Action Capsule */}
         <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
           {onOpenWingman && (
             <button
               onClick={onOpenWingman}
-              className="apple-pill-btn flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-semibold shadow-[0_2px_12px_rgba(255,255,255,0.15)] transition-all cursor-pointer"
+              className="apple-pill-btn flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-semibold shadow-sm transition-all cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-white" />
               <span className="hidden sm:inline">Check AI</span>
             </button>
           )}
 
-          {/* User Profile & Persona Capsule */}
+          {/* User Profile Popover */}
           <div className="relative" ref={userDropdownRef}>
             <button
               onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -296,9 +306,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               />
             </button>
 
-            {/* User Account Quick Popover */}
             {userMenuOpen && (
-              <div className="absolute top-full right-0 mt-2 w-64 p-2 rounded-2xl bg-neutral-900/95 border border-white/10 shadow-2xl backdrop-blur-2xl z-50 animate-in fade-in slide-in-from-top-2 space-y-1">
+              <div className="absolute top-full right-0 mt-2 w-64 p-2 rounded-2xl bg-neutral-900/95 border border-white/10 shadow-2xl backdrop-blur-2xl z-50 space-y-1">
                 <div className="px-3 py-2 border-b border-white/[0.06] flex items-center space-x-2.5">
                   <img
                     src={currentUser.identity.photos[0]}
@@ -321,7 +330,18 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className="w-full text-left p-2 rounded-xl text-xs hover:bg-white/[0.08] text-neutral-200 hover:text-white flex items-center space-x-2 transition cursor-pointer"
                 >
                   <Home className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Open Sanctuary & Profile Hub</span>
+                  <span>My Profile & Preferences</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    onSelectView('about_faq')
+                    setUserMenuOpen(false)
+                  }}
+                  className="w-full text-left p-2 rounded-xl text-xs hover:bg-white/[0.08] text-neutral-200 hover:text-white flex items-center space-x-2 transition cursor-pointer"
+                >
+                  <HelpCircle className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>About & FAQ Center</span>
                 </button>
 
                 <button
@@ -344,7 +364,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     className="w-full text-left p-2 rounded-xl text-xs hover:bg-white/[0.08] text-neutral-400 hover:text-white flex items-center space-x-2 transition cursor-pointer border-t border-white/[0.06] pt-2 mt-1"
                   >
                     <Scale className="w-3.5 h-3.5 text-amber-400" />
-                    <span>Terms & Statutory Disclosures</span>
+                    <span>Terms & Disclosures</span>
                   </button>
                 )}
               </div>
@@ -353,47 +373,144 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Mobile Sub-Navigation Bar (Scrollable chips with grouped badges) */}
-      <nav aria-label="Mobile navigation views" className="lg:hidden flex items-center justify-start overflow-x-auto px-4 py-2 border-t border-white/[0.05] bg-[#070709]/95 space-x-1.5 scrollbar-none">
-        {primaryNavItems.map((item) => {
-          const isActive = activeView === item.id
-          return (
-            <button
-              key={item.id}
-              onClick={() => onSelectView(item.id)}
-              aria-current={isActive ? 'page' : undefined}
-              className={`apple-pill-btn whitespace-nowrap px-3.5 py-1.5 min-h-[36px] text-xs flex items-center space-x-1.5 rounded-full cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none ${
-                isActive
-                  ? 'bg-white/15 text-white border border-white/20 font-semibold'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              {item.icon}
-              <span>{item.label}</span>
-            </button>
-          )
-        })}
+      {/* ==================================================== */}
+      {/* MOBILE BOTTOM NAVIGATION BAR (Effortless Phone UX)  */}
+      {/* ==================================================== */}
+      <nav
+        aria-label="Mobile Bottom Navigation"
+        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#070709]/95 backdrop-blur-2xl border-t border-white/10 flex items-center justify-around py-2 px-1 text-center shadow-2xl"
+      >
+        <button
+          onClick={() => onSelectView('landing')}
+          className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
+            activeView === 'landing' ? 'text-white font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          }`}
+        >
+          <Compass className={`w-5 h-5 mb-0.5 ${activeView === 'landing' ? 'text-white' : ''}`} />
+          <span className="text-[10px]">Home</span>
+        </button>
 
-        <div className="h-3 w-[1px] bg-white/10 shrink-0 mx-1" />
+        <button
+          onClick={() => onSelectView('recs')}
+          className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
+            activeView === 'recs' ? 'text-rose-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          }`}
+        >
+          <Sparkles className={`w-5 h-5 mb-0.5 ${activeView === 'recs' ? 'text-rose-400' : ''}`} />
+          <span className="text-[10px]">Discover</span>
+        </button>
 
-        {scienceNavItems.map((item) => {
-          const isActive = activeView === item.id
-          return (
-            <button
-              key={item.id}
-              onClick={() => onSelectView(item.id)}
-              aria-current={isActive ? 'page' : undefined}
-              className={`apple-pill-btn whitespace-nowrap px-3.5 py-1.5 min-h-[36px] text-xs flex items-center space-x-1.5 rounded-full cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
-                isActive
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold'
-                  : 'text-neutral-400 hover:text-white'
-              }`}
-            >
-              {item.icon}
-              <span>{item.label}</span>
-            </button>
-          )
-        })}
+        <button
+          onClick={() => onSelectView('onboarding')}
+          className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
+            activeView === 'onboarding' ? 'text-emerald-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          }`}
+        >
+          <Home className={`w-5 h-5 mb-0.5 ${activeView === 'onboarding' ? 'text-emerald-400' : ''}`} />
+          <span className="text-[10px]">Profile</span>
+        </button>
+
+        <button
+          onClick={() => onSelectView('conversations')}
+          className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
+            activeView === 'conversations' ? 'text-sky-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          }`}
+        >
+          <MessageSquare className={`w-5 h-5 mb-0.5 ${activeView === 'conversations' ? 'text-sky-400' : ''}`} />
+          <span className="text-[10px]">Messages</span>
+        </button>
+
+        <button
+          onClick={() => onSelectView('about_faq')}
+          className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
+            activeView === 'about_faq' ? 'text-emerald-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          }`}
+        >
+          <HelpCircle className={`w-5 h-5 mb-0.5 ${activeView === 'about_faq' ? 'text-emerald-400' : ''}`} />
+          <span className="text-[10px]">FAQ</span>
+        </button>
+
+        {/* Mobile More Sheet Toggle */}
+        <div className="relative" ref={mobileMoreRef}>
+          <button
+            onClick={() => setMobileMoreOpen(!mobileMoreOpen)}
+            className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
+              isScienceActive || mobileMoreOpen ? 'text-cyan-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+            }`}
+          >
+            <MoreHorizontal className={`w-5 h-5 mb-0.5 ${isScienceActive ? 'text-cyan-400' : ''}`} />
+            <span className="text-[10px]">More</span>
+          </button>
+
+          {/* Mobile Popover Menu */}
+          {mobileMoreOpen && (
+            <div className="absolute bottom-full right-0 mb-3 w-64 p-2 rounded-2xl bg-neutral-900/98 border border-white/15 shadow-2xl backdrop-blur-2xl z-50 text-left space-y-1">
+              <div className="px-3 py-1.5 border-b border-white/[0.06] text-[10px] font-mono text-neutral-400 uppercase tracking-wider">
+                Tools & Settings
+              </div>
+              <button
+                onClick={() => {
+                  onSelectView('network')
+                  setMobileMoreOpen(false)
+                }}
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+              >
+                <Compass className="w-3.5 h-3.5 text-purple-400" />
+                <span>Match Map</span>
+              </button>
+              <button
+                onClick={() => {
+                  onSelectView('date_brief')
+                  setMobileMoreOpen(false)
+                }}
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+              >
+                <Coffee className="w-3.5 h-3.5 text-amber-400" />
+                <span>Date Planner</span>
+              </button>
+              <button
+                onClick={() => {
+                  onSelectView('optimizer')
+                  setMobileMoreOpen(false)
+                }}
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+              >
+                <Sliders className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Preferences & Priorities</span>
+              </button>
+              <button
+                onClick={() => {
+                  onSelectView('evaluator')
+                  setMobileMoreOpen(false)
+                }}
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+              >
+                <Binary className="w-3.5 h-3.5 text-purple-400" />
+                <span>Match Comparison</span>
+              </button>
+              <button
+                onClick={() => {
+                  onSelectView('contradictions')
+                  setMobileMoreOpen(false)
+                }}
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+              >
+                <AlertCircle className="w-3.5 h-3.5 text-amber-400" />
+                <span>Conflict Checker</span>
+              </button>
+              <button
+                onClick={() => {
+                  onSelectView('subscriptions')
+                  setMobileMoreOpen(false)
+                }}
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+              >
+                <CreditCard className="w-3.5 h-3.5 text-rose-400" />
+                <span>Fair Pricing & Pledge</span>
+              </button>
+            </div>
+          )}
+        </div>
       </nav>
     </header>
   )

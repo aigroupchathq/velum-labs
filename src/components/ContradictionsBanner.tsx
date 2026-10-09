@@ -24,7 +24,7 @@ export const ContradictionsBanner: React.FC<ContradictionsBannerProps> = ({
             <Check className="w-3.5 h-3.5 text-emerald-400 stroke-[2.5]" />
           </div>
           <span className="text-neutral-300 font-light">
-            Invariants Verified • No logical contradictions in current constraints.
+            Preference Helper • All your preferences and dealbreakers align cleanly.
           </span>
         </div>
       </div>

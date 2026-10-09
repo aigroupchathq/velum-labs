@@ -22,6 +22,7 @@ import { WingmanAssistantModal } from './components/WingmanAssistantModal'
 import { AlgorithmNetworkVisualizer } from './components/AlgorithmNetworkVisualizer'
 import { FirstRunOnboardingModal } from './components/FirstRunOnboardingModal'
 import { TermsModal } from './components/TermsModal'
+import { AboutFaqView } from './components/AboutFaqView'
 import { currentUser as initialUser, mockCandidates as initialCandidates } from './data/mockProfiles'
 import { evaluateMatch, detectUserContradictions } from './utils/matchingEngine'
 import type { UniversalUserProfile, MatchEvaluation } from './types'
@@ -137,6 +138,15 @@ export function App() {
             onOpenProfile={() => setActiveView('onboarding')}
             onOpenFirstRun={() => setIsFirstRunOpen(true)}
             currentUser={currentUser}
+          />
+        )}
+
+        {/* 0.25 ABOUT & FAQ CENTER */}
+        {activeView === 'about_faq' && (
+          <AboutFaqView
+            onNavigateToDiscover={() => setActiveView('recs')}
+            onNavigateToProfile={() => setActiveView('onboarding')}
+            onOpenTerms={() => setIsTermsOpen(true)}
           />
         )}
 
@@ -292,10 +302,10 @@ export function App() {
         {activeView === 'contradictions' && (
           <div className="max-w-4xl mx-auto space-y-6">
             <div className="p-6 rounded-3xl apple-panel space-y-1">
-              <span className="apple-subhead text-amber-400">Formal Logic Invariants</span>
-              <h1 className="text-2xl font-semibold tracking-tight text-white">Preference Invariant Auditor</h1>
+              <span className="apple-subhead text-amber-400">Boundary Helper</span>
+              <h1 className="text-2xl font-semibold tracking-tight text-white">Preference Conflict Checker</h1>
               <p className="text-xs text-neutral-400 font-light">
-                Continuous background verification detecting self-contradicting criteria, impossible geometric filters, and logical deadlocks.
+                Surfaces any conflicting or impossible preference settings so your candidate queue stays open and accurate.
               </p>
             </div>
             <ContradictionsBanner

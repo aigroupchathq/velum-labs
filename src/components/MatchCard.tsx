@@ -431,7 +431,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
                     {isLowConfidence ? 'Provisional' : 'Mutual Resonance'}
                   </span>
                   <span className="text-[10px] text-neutral-400 font-mono">
-                    {eligible ? 'Harmonic Dyad M_ij' : 'Boundary Gate (D-14)'}
+                    {eligible ? 'Overall Compatibility' : 'Boundary Exclusion'}
                   </span>
                 </div>
               </div>
