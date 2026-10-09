@@ -257,7 +257,7 @@ export const FirstRunOnboardingModal: React.FC<FirstRunOnboardingModalProps> = (
             <div className="p-3.5 rounded-2xl bg-emerald-950/30 border border-emerald-500/20 text-xs text-emerald-300 flex items-start space-x-2.5">
               <Home className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
               <p className="leading-relaxed font-light">
-                <strong>Airbnb House Rules Benchmark:</strong> Dignified, non-negotiable boundaries. Any candidate violating these standards is filtered out unconditionally ($E_&#123;ij&#125; = 0$). Zero awkward compromises.
+                <strong>Clear Personal Boundaries:</strong> Dignified, non-negotiable standards. Anyone who doesn't fit these core priorities is filtered out with 100% protection, so neither of you ever has to make awkward compromises.
               </p>
             </div>
 

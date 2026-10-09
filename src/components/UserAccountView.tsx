@@ -223,7 +223,7 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
           </div>
 
           <div className="text-[11px] text-neutral-500 font-mono">
-            <span>Dyad Engine: v8.3 Deterministic</span>
+            <span>Matching Engine: Fair &amp; Verified</span>
           </div>
         </div>
       </section>
@@ -239,42 +239,42 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
       {/* ======================================================== */}
       {/* 2. DUAL ARCHITECTURE PILL TABS                           */}
       {/* ======================================================== */}
-      <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
-        <div className="flex items-center p-1 rounded-full bg-white/[0.04] border border-white/[0.08]">
+      <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 overflow-x-auto no-scrollbar">
+        <div className="flex items-center p-1 rounded-full bg-white/[0.04] border border-white/[0.08] shrink-0">
           <button
             onClick={() => setActiveTab('blend')}
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition flex items-center space-x-2 cursor-pointer ${
+            className={`min-h-[44px] px-4 py-2 rounded-full text-xs font-medium transition flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
               activeTab === 'blend'
-                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-sm'
+                ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30 shadow-sm font-semibold'
                 : 'text-neutral-400 hover:text-white border border-transparent'
             }`}
           >
-            <Music className="w-3.5 h-3.5 text-rose-400" />
-            <span>The Spotify Blend (Taste & Chemistry)</span>
+            <Music className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+            <span>Shared Chemistry <span className="hidden sm:inline">(Taste Blend)</span></span>
           </button>
 
           <button
             onClick={() => setActiveTab('sanctuary')}
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition flex items-center space-x-2 cursor-pointer ${
+            className={`min-h-[44px] px-4 py-2 rounded-full text-xs font-medium transition flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
               activeTab === 'sanctuary'
-                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-sm'
+                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 shadow-sm font-semibold'
                 : 'text-neutral-400 hover:text-white border border-transparent'
             }`}
           >
-            <Home className="w-3.5 h-3.5 text-emerald-400" />
-            <span>My Relational Sanctuary (Airbnb Rules)</span>
+            <Home className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <span>My Boundaries <span className="hidden sm:inline">(House Rules)</span></span>
           </button>
 
           <button
             onClick={() => setActiveTab('security')}
-            className={`px-4 py-1.5 rounded-full text-xs font-medium transition flex items-center space-x-2 cursor-pointer ${
+            className={`min-h-[44px] px-4 py-2 rounded-full text-xs font-medium transition flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
               activeTab === 'security'
-                ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30 shadow-sm'
+                ? 'bg-sky-500/20 text-sky-300 border border-sky-500/30 shadow-sm font-semibold'
                 : 'text-neutral-400 hover:text-white border border-transparent'
             }`}
           >
-            <Lock className="w-3.5 h-3.5 text-sky-400" />
-            <span>Privacy & Invariants</span>
+            <Lock className="w-3.5 h-3.5 text-sky-400 shrink-0" />
+            <span>Privacy &amp; Security</span>
           </button>
         </div>
 
@@ -714,7 +714,7 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
               Clear, Dignified Boundaries. Zero Hostility.
             </h2>
             <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-3xl leading-relaxed">
-              Inspired by Airbnb House Rules: Nobody likes defensive dating bios or bitter demands. When hosting someone in your life, you set calm, matter-of-fact standards: smoke-free living, long-term intention, and honest communication. Candidates crossing hard boundaries are filtered unconditionally ($E_&#123;ij&#125; = 0$).
+              Clear personal standards for peace of mind. Nobody likes defensive dating bios or bitter demands. When welcoming someone into your world, you set calm, honest foundations: smoke-free living, aligned intentions, and mutual respect. Anyone crossing hard boundaries is filtered out with complete protection, so you never have to make painful compromises.
             </p>
           </div>
 

@@ -403,7 +403,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* ==================================================== */}
       <nav
         aria-label="Mobile Bottom Navigation"
-        className={`fixed bottom-0 left-0 right-0 z-50 bg-[#070709]/95 backdrop-blur-2xl border-t border-white/10 flex items-center justify-around py-1.5 px-1 text-center shadow-2xl ${
+        className={`fixed bottom-0 left-0 right-0 z-50 bg-[#070709]/95 backdrop-blur-2xl border-t border-white/10 flex items-center justify-around pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom,8px))] px-1 text-center shadow-2xl ${
           isPhoneMode ? 'flex' : 'lg:hidden'
         }`}
       >

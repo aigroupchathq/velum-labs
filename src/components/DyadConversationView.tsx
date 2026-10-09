@@ -13,6 +13,7 @@ import {
   Coffee,
   XCircle,
   CheckCircle2,
+  ChevronLeft,
 } from 'lucide-react'
 import type { UniversalUserProfile, DyadConversation, DyadMessage } from '../types'
 import { mockCandidates } from '../data/mockProfiles'
@@ -114,6 +115,7 @@ export const DyadConversationView: React.FC<DyadConversationViewProps> = ({
   const [activePartnerId, setActivePartnerId] = useState<string>(mockCandidates[0].id)
   const [inputText, setInputText] = useState('')
   const [isClosureModalOpen, setIsClosureModalOpen] = useState(false)
+  const [mobileThreadOpen, setMobileThreadOpen] = useState(false)
 
   // Find partner and evaluation
   const activePartner =
@@ -187,7 +189,7 @@ export const DyadConversationView: React.FC<DyadConversationViewProps> = ({
       {/* 2. MAIN CONVERSATION MASTER-DETAIL VIEW */}
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6 min-h-[620px]">
         {/* Left Column: Active Handshakes & Conversations List */}
-        <div className="md:col-span-4 space-y-2">
+        <div className={`${mobileThreadOpen ? 'hidden md:block' : 'block'} md:col-span-4 space-y-2`}>
           <div className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 px-1 pb-1">
             Active Connections ({conversations.length})
           </div>
@@ -202,7 +204,10 @@ export const DyadConversationView: React.FC<DyadConversationViewProps> = ({
               return (
                 <div
                   key={conv.id}
-                  onClick={() => setActivePartnerId(partner.id)}
+                  onClick={() => {
+                    setActivePartnerId(partner.id)
+                    setMobileThreadOpen(true)
+                  }}
                   className={`apple-panel p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center space-x-3.5 select-none ${
                     isSelected
                       ? 'bg-white/10 border-white/25 shadow-md'
@@ -244,14 +249,22 @@ export const DyadConversationView: React.FC<DyadConversationViewProps> = ({
         </div>
 
         {/* Right Column: Thoughtful Dialogue Stage */}
-        <div className="md:col-span-8 apple-panel rounded-3xl p-6 flex flex-col justify-between border-white/10 shadow-2xl relative">
+        <div className={`${mobileThreadOpen ? 'flex' : 'hidden md:flex'} md:col-span-8 apple-panel rounded-3xl p-4 sm:p-6 flex-col justify-between border-white/10 shadow-2xl relative min-h-[580px]`}>
           {/* Conversation Stage Top Bar */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.06]">
             <div className="flex items-center space-x-3.5">
+              <button
+                type="button"
+                onClick={() => setMobileThreadOpen(false)}
+                className="md:hidden p-2 -ml-1 rounded-xl bg-white/10 hover:bg-white/15 active:scale-95 text-white flex items-center justify-center cursor-pointer transition shrink-0"
+                aria-label="Back to conversations list"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
               <img
                 src={activePartner.identity.photos[0]}
                 alt={activePartner.identity.name}
-                className="w-12 h-12 rounded-2xl object-cover ring-1 ring-white/20"
+                className="w-12 h-12 rounded-2xl object-cover ring-1 ring-white/20 shrink-0"
               />
               <div>
                 <div className="flex items-center space-x-2">
