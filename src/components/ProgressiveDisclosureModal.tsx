@@ -469,12 +469,7 @@ export const ProgressiveDisclosureModal: React.FC<ProgressiveDisclosureProps> = 
                       })
                       setSelectedQuickPreset(null)
                     }}
-                    className="cinematic-slider w-full"
-                    style={{
-                      background: `linear-gradient(90deg, ${persona.accentColor} ${
-                        ((userState.preferences.minAge - 18) / 62) * 100
-                      }%, rgba(255,255,255,0.1) 0%)`,
-                    }}
+                    className="w-full accent-purple"
                   />
                 </div>
 
@@ -496,12 +491,7 @@ export const ProgressiveDisclosureModal: React.FC<ProgressiveDisclosureProps> = 
                       })
                       setSelectedQuickPreset(null)
                     }}
-                    className="cinematic-slider w-full"
-                    style={{
-                      background: `linear-gradient(90deg, ${persona.accentColor} ${
-                        ((userState.preferences.maxAge - 18) / 62) * 100
-                      }%, rgba(255,255,255,0.1) 0%)`,
-                    }}
+                    className="w-full accent-purple"
                   />
                 </div>
               </div>
@@ -676,12 +666,7 @@ export const ProgressiveDisclosureModal: React.FC<ProgressiveDisclosureProps> = 
                     },
                   })
                 }
-                className="cinematic-slider w-full"
-                style={{
-                  background: `linear-gradient(90deg, ${persona.accentColor} ${
-                    (userState.preferences.ageFlexibilityYears / 5) * 100
-                  }%, rgba(255,255,255,0.1) 0%)`,
-                }}
+                className="w-full accent-purple"
               />
               <p className="text-[11px] text-neutral-400 font-light">
                 Gives partial credit to candidates who fall just slightly outside your target age window instead of rejecting them.
@@ -714,10 +699,7 @@ export const ProgressiveDisclosureModal: React.FC<ProgressiveDisclosureProps> = 
                     },
                   })
                 }
-                className="cinematic-slider w-full"
-                style={{
-                  background: `linear-gradient(90deg, ${persona.accentColor} ${userState.preferences.dietPreference.flexibility}%, rgba(255,255,255,0.1) 0%)`,
-                }}
+                className="w-full accent-purple"
               />
               <div
                 className="p-4 rounded-xl text-xs space-y-1"

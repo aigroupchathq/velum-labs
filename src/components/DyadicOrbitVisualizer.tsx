@@ -466,28 +466,53 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
                 {aToB}%
               </span>
             </div>
-            {/* Progress track */}
-            <div className="relative h-1.5 rounded-full bg-white/10 overflow-hidden">
+            {/* Single Luxury Integrated Slider */}
+            <div className="relative flex items-center h-8 group select-none mt-1">
+              {/* Outer Sleek Obsidian Track */}
+              <div className="relative w-full h-2 rounded-full bg-white/[0.08] border border-white/[0.08] overflow-hidden shadow-inner">
+                {/* Luminous Dynamic Fill */}
+                <div
+                  className="absolute left-0 top-0 h-full rounded-full transition-all duration-150 ease-out"
+                  style={{
+                    width: `${aToB}%`,
+                    background: `linear-gradient(90deg, ${colors.ring}90, ${colors.ring})`,
+                    boxShadow: `0 0 12px ${colors.glow}`,
+                  }}
+                />
+              </div>
+
+              {/* Glowing Ceramic Thumb Indicator */}
               <div
-                className="absolute left-0 top-0 h-full rounded-full transition-all duration-300"
-                style={{
-                  width: `${aToB}%`,
-                  background: `linear-gradient(90deg, ${colors.ring}88, ${colors.ring})`,
-                  boxShadow: `0 0 10px ${colors.glow}`,
+                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
+                style={{ left: `${aToB}%` }}
+              >
+                <div
+                  className="w-5 h-5 rounded-full bg-white border border-white/80 flex items-center justify-center transition-all duration-200"
+                  style={{
+                    boxShadow: `0 0 0 1px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.6), 0 0 14px ${colors.glow}`,
+                  }}
+                >
+                  <div
+                    className="w-1.5 h-1.5 rounded-full transition-colors duration-200"
+                    style={{ backgroundColor: colors.ring }}
+                  />
+                </div>
+              </div>
+
+              {/* Native touch-responsive transparent input on top */}
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={aToB}
+                onChange={(e) => {
+                  setAToB(+e.target.value)
+                  setActivePreset(null)
                 }}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                aria-label={`${nameA} to ${nameB} mutual resonance`}
               />
             </div>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={aToB}
-              onChange={e => { setAToB(+e.target.value); setActivePreset(null) }}
-              className="cinematic-slider w-full"
-              style={{
-                background: `linear-gradient(90deg, ${colors.ring} ${aToB}%, rgba(255,255,255,0.1) ${aToB}%)`,
-              }}
-            />
           </div>
 
           {/* Slider B → A */}
@@ -507,27 +532,54 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
                 {bToA}%
               </span>
             </div>
-            <div className="relative h-1.5 rounded-full bg-white/10 overflow-hidden">
+
+            {/* Single Luxury Integrated Slider */}
+            <div className="relative flex items-center h-8 group select-none mt-1">
+              {/* Outer Sleek Obsidian Track */}
+              <div className="relative w-full h-2 rounded-full bg-white/[0.08] border border-white/[0.08] overflow-hidden shadow-inner">
+                {/* Luminous Dynamic Fill */}
+                <div
+                  className="absolute left-0 top-0 h-full rounded-full transition-all duration-150 ease-out"
+                  style={{
+                    width: `${bToA}%`,
+                    background: `linear-gradient(90deg, ${colors.ring}90, ${colors.ring})`,
+                    boxShadow: `0 0 12px ${colors.glow}`,
+                  }}
+                />
+              </div>
+
+              {/* Glowing Ceramic Thumb Indicator */}
               <div
-                className="absolute left-0 top-0 h-full rounded-full transition-all duration-300"
-                style={{
-                  width: `${bToA}%`,
-                  background: `linear-gradient(90deg, ${colors.ring}88, ${colors.ring})`,
-                  boxShadow: `0 0 10px ${colors.glow}`,
+                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
+                style={{ left: `${bToA}%` }}
+              >
+                <div
+                  className="w-5 h-5 rounded-full bg-white border border-white/80 flex items-center justify-center transition-all duration-200"
+                  style={{
+                    boxShadow: `0 0 0 1px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.6), 0 0 14px ${colors.glow}`,
+                  }}
+                >
+                  <div
+                    className="w-1.5 h-1.5 rounded-full transition-colors duration-200"
+                    style={{ backgroundColor: colors.ring }}
+                  />
+                </div>
+              </div>
+
+              {/* Native touch-responsive transparent input on top */}
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={bToA}
+                onChange={(e) => {
+                  setBToA(+e.target.value)
+                  setActivePreset(null)
                 }}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                aria-label={`${nameB} to ${nameA} mutual resonance`}
               />
             </div>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={bToA}
-              onChange={e => { setBToA(+e.target.value); setActivePreset(null) }}
-              className="cinematic-slider w-full"
-              style={{
-                background: `linear-gradient(90deg, ${colors.ring} ${bToA}%, rgba(255,255,255,0.1) ${bToA}%)`,
-              }}
-            />
           </div>
         </div>
 

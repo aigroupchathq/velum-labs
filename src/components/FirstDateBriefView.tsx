@@ -417,18 +417,37 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
               </span>
               <span className="font-bold font-mono text-white">{lightingTemp}K</span>
             </div>
-            <input
-              type="range"
-              min="2200"
-              max="4000"
-              step="100"
-              value={lightingTemp}
-              onChange={(e) => setLightingTemp(+e.target.value)}
-              className="cinematic-slider w-full"
-              style={{
-                background: 'linear-gradient(90deg, #ff9729 0%, #fbbf24 50%, #38bdf8 100%)',
-              }}
-            />
+            {/* Luxury Integrated Lighting Slider */}
+            <div className="relative flex items-center h-8 group select-none">
+              <div className="relative w-full h-2 rounded-full bg-white/[0.08] border border-white/[0.08] overflow-hidden shadow-inner">
+                <div
+                  className="absolute left-0 top-0 h-full rounded-full transition-all duration-150"
+                  style={{
+                    width: `${((lightingTemp - 2200) / 1800) * 100}%`,
+                    background: 'linear-gradient(90deg, #ff9729, #fbbf24)',
+                    boxShadow: '0 0 10px rgba(251, 191, 36, 0.5)',
+                  }}
+                />
+              </div>
+              <div
+                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
+                style={{ left: `${((lightingTemp - 2200) / 1800) * 100}%` }}
+              >
+                <div className="w-5 h-5 rounded-full bg-white border border-white/80 shadow-md flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                </div>
+              </div>
+              <input
+                type="range"
+                min="2200"
+                max="4000"
+                step="100"
+                value={lightingTemp}
+                onChange={(e) => setLightingTemp(+e.target.value)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                aria-label="Lighting Temperature"
+              />
+            </div>
             <p className="text-[11px] text-neutral-400 font-light">
               Simulates low-glare warm lighting. Research shows 2700K ambient illumination reduces social anxiety by 34%.
             </p>
@@ -456,17 +475,36 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
                 />
               ))}
             </div>
-            <input
-              type="range"
-              min="35"
-              max="65"
-              value={decibelTarget}
-              onChange={(e) => setDecibelTarget(+e.target.value)}
-              className="cinematic-slider w-full"
-              style={{
-                background: 'linear-gradient(90deg, #34d399 0%, #fbbf24 100%)',
-              }}
-            />
+            {/* Luxury Integrated Decibel Slider */}
+            <div className="relative flex items-center h-8 group select-none">
+              <div className="relative w-full h-2 rounded-full bg-white/[0.08] border border-white/[0.08] overflow-hidden shadow-inner">
+                <div
+                  className="absolute left-0 top-0 h-full rounded-full transition-all duration-150"
+                  style={{
+                    width: `${((decibelTarget - 35) / 30) * 100}%`,
+                    background: 'linear-gradient(90deg, #34d399, #10b981)',
+                    boxShadow: '0 0 10px rgba(52, 211, 153, 0.5)',
+                  }}
+                />
+              </div>
+              <div
+                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
+                style={{ left: `${((decibelTarget - 35) / 30) * 100}%` }}
+              >
+                <div className="w-5 h-5 rounded-full bg-white border border-white/80 shadow-md flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                </div>
+              </div>
+              <input
+                type="range"
+                min="35"
+                max="65"
+                value={decibelTarget}
+                onChange={(e) => setDecibelTarget(+e.target.value)}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                aria-label="Acoustic Decibel Target"
+              />
+            </div>
           </div>
         </div>
 
