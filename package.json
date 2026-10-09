@@ -20,8 +20,10 @@
     "test:scaling": "tsx tools/testScalingPillars.ts",
     "test:legal": "tsx tools/validateLegalCompliance.ts",
     "test:apple": "tsx tools/testAppleStandard.ts",
-    "test:synthetic-world": "tsx tools/syntheticWorldEvaluation.ts",
-    "test": "tsx src/utils/testMatchingEngine.ts && tsx db/validateMigrations.ts && tsx tools/testMatchPool.ts && tsx server/src/testApi.ts && tsx tools/benchmarkModels.ts && tsx tools/validateDocker.ts && tsx tools/validateLegalCompliance.ts"
+    "test:security": "tsx test/securityEncryption.test.ts && tsx test/securityAuthorizationAndCors.test.ts",
+    "test:golden-master": "tsx test/verifyGoldenMaster.ts",
+    "test:decoupled": "tsx test/phase2DecoupledModel.test.ts",
+    "test": "tsx src/utils/testMatchingEngine.ts && tsx test/verifyGoldenMaster.ts && tsx test/securityEncryption.test.ts && tsx test/securityAuthorizationAndCors.test.ts && tsx test/phase2DecoupledModel.test.ts && tsx db/validateMigrations.ts && tsx tools/testMatchPool.ts && tsx server/src/testApi.ts && tsx tools/benchmarkModels.ts && tsx tools/validateDocker.ts && tsx tools/validateLegalCompliance.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
