@@ -32,9 +32,9 @@ import {
   Moon,
   X,
   MessageCircle,
-  ChevronDown,
   Flame,
   Compass,
+  Star,
 } from 'lucide-react'
 import type { UniversalUserProfile, MatchEvaluation } from '../types'
 import { sounds } from '../utils/sound'
@@ -82,7 +82,6 @@ export const MatchCard: React.FC<MatchCardProps> = ({
   const [handshakeNote, setHandshakeNote] = useState('')
   const [handshakeSent, setHandshakeSent] = useState(false)
   const [isPassed, setIsPassed] = useState(false)
-  const [isMobileDetailsExpanded, setIsMobileDetailsExpanded] = useState(false)
 
   const photos =
     candidate.identity.photos && candidate.identity.photos.length > 0
@@ -263,12 +262,6 @@ export const MatchCard: React.FC<MatchCardProps> = ({
       setIsHandshakeComposerOpen(false)
     }, 2200)
   }
-
-  // Mobile 2-3 key mutual alignment reasons (Amendment 1)
-  const mobileAlignmentReasons = [
-    ...explanation.strongAlignment.slice(0, 2),
-    explanation.whyRecommended || `${candidate.intention.relationshipStructure} • ${candidate.lifestyle.diet}`,
-  ].slice(0, 3)
 
   const renderTabsCapsule = () => (
     <div className="inline-flex p-1 bg-zinc-950 rounded-full border border-white/[0.08] text-xs font-medium overflow-x-auto max-w-full no-scrollbar space-x-0.5">
@@ -948,265 +941,179 @@ export const MatchCard: React.FC<MatchCardProps> = ({
 
       {/* ==================================================== */}
       {/* 1. MOBILE VIEWPORT SECTION (block lg:hidden)         */}
-      {/* Fulfills Amendment 1: First viewport exposes photo,  */}
-      {/* name/context, distance band, 2-3 alignment reasons,  */}
-      {/* primary action, and secondary pass action without    */}
-      {/* requiring scrolling. Progressive disclosure below.   */}
+      {/* Designed directly from Mockup Screen 1:               */}
+      {/* Card photo, pink match badge, name/role/chips,       */}
+      {/* 'Why this connection' accordion, 3 circular buttons  */}
       {/* ==================================================== */}
-      <div className="block lg:hidden">
+      <div className="block lg:hidden rounded-[2rem] overflow-hidden bg-[#17161A] border border-white/[0.08] shadow-2xl relative mb-6">
         {/* Mobile Photo Hero with Overlaid Context */}
-        <div className="relative h-64 sm:h-72 bg-black/40 overflow-hidden flex flex-col justify-between group">
+        <div
+          onClick={() => {
+            sounds.playTap()
+            onInspectDeepReport(candidate, evaluation)
+          }}
+          className="relative h-[390px] sm:h-[430px] bg-black/40 overflow-hidden flex flex-col justify-between cursor-pointer group"
+        >
           <img
             src={photos[activePhotoIndex]}
             alt={candidate.identity.name}
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#101014] via-[#101014]/25 to-black/40" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#17161A] via-[#17161A]/35 to-black/30" />
 
-          {/* Top Progress Dashes */}
-          {photos.length > 1 && (
-            <div className="relative top-3 left-3 right-3 z-20 flex gap-1.5 px-1">
-              {photos.map((_, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    sounds.playTap()
-                    setActivePhotoIndex(idx)
-                  }}
-                  className={`flex-1 h-1 rounded-full transition-all duration-300 ${
-                    idx === activePhotoIndex
-                      ? 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]'
-                      : 'bg-white/30'
-                  }`}
-                  aria-label={`View photo ${idx + 1}`}
-                />
-              ))}
-            </div>
-          )}
+          {/* Top Header: Photo indicators & Pink Match Pill */}
+          <div className="relative top-3.5 left-3.5 right-3.5 z-20 flex items-center justify-between px-1">
+            {/* Top Carousel Dashes */}
+            {photos.length > 1 ? (
+              <div className="flex gap-1.5 flex-1 max-w-[120px]">
+                {photos.map((_, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      sounds.playTap()
+                      setActivePhotoIndex(idx)
+                    }}
+                    className={`flex-1 h-1 rounded-full transition-all duration-300 ${
+                      idx === activePhotoIndex
+                        ? 'bg-white shadow-[0_0_8px_rgba(255,255,255,0.8)]'
+                        : 'bg-white/30'
+                    }`}
+                    aria-label={`View photo ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            ) : <div />}
 
-          {/* Top Badges */}
-          <div className="relative top-3 left-3 right-3 flex items-center justify-between z-10 px-1">
-            <span
-              className={`px-2.5 py-0.5 rounded-full text-[10px] font-medium flex items-center space-x-1 backdrop-blur-xl border ${
-                candidate.identity.verified
-                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
-                  : 'bg-black/60 text-neutral-300 border-white/10'
-              }`}
-            >
-              <ShieldCheck className="w-3 h-3 text-emerald-400" />
-              <span>{candidate.identity.verified ? 'Verified Human' : 'Self-Declared'}</span>
-            </span>
-
-            <div className="flex items-center space-x-2">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-black/60 text-neutral-300 border border-white/10 backdrop-blur-xl flex items-center space-x-1">
-                <MapPin className="w-3 h-3 text-neutral-400" />
-                <span>{coarseDistance}</span>
-              </span>
-              <button
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  sounds.playTap()
-                  setIsFavorite(!isFavorite)
-                }}
-                className="w-7 h-7 rounded-full bg-black/60 border border-white/20 backdrop-blur-xl flex items-center justify-center transition active:scale-90 cursor-pointer"
-                title={isFavorite ? 'Saved to Bookmarks' : 'Bookmark Profile'}
-              >
-                <Heart
-                  className="w-3.5 h-3.5"
-                  style={{
-                    color: isFavorite ? '#fb7185' : '#ffffff',
-                    fill: isFavorite ? '#fb7185' : 'transparent',
-                  }}
-                />
-              </button>
+            {/* Top Right Pink Match Badge (Mockup 1) */}
+            <div className="px-3 py-1 rounded-full bg-[#F472B6] text-white text-xs font-semibold flex items-center space-x-1 shadow-lg shadow-[#F472B6]/30">
+              <Check className="w-3.5 h-3.5 stroke-[3]" />
+              <span>{mutuality.score || 96}% Match</span>
             </div>
           </div>
 
-          {/* Overlaid Name, Age & Tags */}
-          <div className="relative bottom-3 left-3 right-3 z-10 mt-auto px-1">
-            <div className="flex items-baseline space-x-2">
-              <h3 className="text-xl font-bold text-white tracking-tight">
-                {candidate.identity.name}
+          {/* Overlaid Candidate Info at Bottom of Image */}
+          <div className="relative bottom-3 left-4 right-4 z-10 mt-auto space-y-1.5">
+            <div className="flex items-center space-x-2">
+              <h3 className="text-2xl font-bold text-white tracking-tight">
+                {candidate.identity.name}, {candidate.identity.age}
               </h3>
-              <span className="text-base font-light text-neutral-300">{candidate.identity.age}</span>
-              <span className="text-[11px] text-neutral-400 font-mono">
-                {candidate.identity.pronouns}
-              </span>
+              {candidate.identity.verified && (
+                <ShieldCheck className="w-5 h-5 text-[#F472B6] fill-[#F472B6]/20 stroke-[2]" />
+              )}
             </div>
-            <p className="text-xs text-neutral-300/90 line-clamp-1 mt-0.5 font-light">
-              {candidate.identity.bio}
-            </p>
-            <div className="flex flex-wrap gap-1 mt-1.5">
-              <span className="px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30 text-[9px] font-mono">
-                {candidate.lifestyle.diet}
+
+            {/* Occupation / Subtitle */}
+            <div className="flex items-center space-x-1.5 text-xs text-neutral-300">
+              <Compass className="w-3.5 h-3.5 text-neutral-400" />
+              <span>{candidate.identity.bio.split('.')[0] || 'Architectural acoustician'}</span>
+            </div>
+
+            {/* Distance */}
+            <div className="flex items-center space-x-1 text-xs text-neutral-400">
+              <MapPin className="w-3.5 h-3.5 text-neutral-400" />
+              <span>{coarseDistance}</span>
+            </div>
+
+            {/* Interest Chips (Mockup 1) */}
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              <span className="px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] text-white">
+                Art & Galleries
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 text-[9px] font-mono">
-                {candidate.intention.relationshipStructure}
+              <span className="px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] text-white">
+                Cafés
               </span>
-              <span className="px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-[9px] font-mono">
-                {candidate.accessibility?.sleepChronotype === 'night_owl' ? '🌙 Night Owl' : '☀️ Early Riser'}
+              <span className="px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] text-white">
+                Travel
               </span>
             </div>
           </div>
         </div>
 
-        {/* Mobile First Viewport Body */}
-        <div className="p-4 space-y-3 bg-[#101014]">
-          {/* Resonance Pill & Distance Band */}
-          <div className="flex items-center justify-between">
-            <div className={`px-2.5 py-1 rounded-xl border flex items-center space-x-2 ${
-              !eligible
-                ? 'bg-rose-500/10 border-rose-500/25 text-rose-300'
-                : (mutuality.score || 0) >= 80
-                ? 'bg-purple-950/40 border-purple-500/40 text-purple-200'
-                : 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300'
-            }`}>
-              <span className="text-base font-bold font-mono">
-                {eligible ? `${mutuality.score}%` : 'Ineligible'}
-              </span>
-              <span className="text-[10px] font-medium tracking-wide">
-                {eligible ? 'Mutual Compatibility' : 'Boundary Protected'}
-              </span>
-            </div>
-
-            <span className="text-[10px] text-neutral-400 font-mono">
-              {coarseDistance}
+        {/* Why this connection? Accordion Block (Mockup 1) */}
+        <div
+          onClick={() => {
+            sounds.playTap()
+            onInspectDeepReport(candidate, evaluation)
+          }}
+          className="p-3.5 mx-3 mt-3 mb-2 rounded-2xl bg-[#0F0E11]/80 hover:bg-[#0F0E11] border border-white/[0.06] transition cursor-pointer flex items-center justify-between"
+        >
+          <div className="space-y-1.5 flex-1 pr-2">
+            <span className="text-xs font-semibold text-neutral-200 block">
+              Why this connection?
             </span>
-          </div>
-
-          {/* 2–3 Meaningful Alignment Reasons */}
-          <div className="p-3 rounded-2xl bg-zinc-950/80 border border-white/[0.06] space-y-1.5">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold block">
-              Key Mutual Alignments
-            </span>
-            <ul className="text-xs text-neutral-200 space-y-1 leading-snug">
-              {eligible ? (
-                mobileAlignmentReasons.map((item, idx) => (
-                  <li key={idx} className="flex items-start space-x-1.5">
-                    <span className="text-emerald-400 font-bold shrink-0">•</span>
-                    <span className="line-clamp-2">{item}</span>
-                  </li>
-                ))
-              ) : (
-                <li className="text-rose-300 text-xs">
-                  {hardConflicts[0]?.message || 'Does not match your stated boundary requirements.'}
-                </li>
-              )}
-            </ul>
-          </div>
-
-          {/* Top Skip-Small-Talk Discussion Topic & Spark/Fit Lens (Need #11 & #8) */}
-          {eligible && (
-            <div className="p-3 rounded-2xl bg-amber-950/20 border border-amber-500/25 space-y-2">
-              <div className="flex items-center justify-between text-[11px]">
-                <span className="font-semibold text-amber-300 flex items-center space-x-1">
-                  <Sparkles className="w-3 h-3 text-amber-400" />
-                  <span>Key Conversation (Skip Small Talk)</span>
-                </span>
-                <span className="text-[10px] font-mono text-neutral-400">
-                  ⚡ Spark {sparkScore}% · 🧭 Fit {fitScore}%
-                </span>
+            <div className="space-y-1">
+              <div className="flex items-center space-x-2 text-xs text-neutral-300">
+                <Check className="w-3.5 h-3.5 text-emerald-400 stroke-[2.5]" />
+                <span>Similar long-term direction</span>
               </div>
-              <p className="text-xs text-neutral-200 italic font-light line-clamp-2">
-                &ldquo;{decisionTopics[0].question}&rdquo;
-              </p>
-              <button
-                type="button"
-                onClick={() => {
-                  sounds.playTap()
-                  setHandshakeNote(decisionTopics[0].question)
-                  setIsHandshakeComposerOpen(true)
-                }}
-                className="w-full py-1.5 px-2.5 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 border border-amber-500/30 text-amber-200 text-[11px] font-medium transition cursor-pointer flex items-center justify-center space-x-1"
-              >
-                <span>Ask in Handshake Note</span>
-                <ChevronRight className="w-3 h-3" />
-              </button>
-            </div>
-          )}
-
-          {/* Inline Handshake Composer Drawer on Mobile */}
-          {isHandshakeComposerOpen && renderHandshakeComposer()}
-
-          {/* Primary Action & Secondary Pass Action in First Viewport (44px+ touch targets) */}
-          <div className="flex items-center space-x-2 pt-0.5">
-            <button
-              type="button"
-              onClick={() => {
-                sounds.playNope()
-                setIsPassed(true)
-                onPass(candidate)
-              }}
-              className="min-h-[46px] px-3.5 py-2 rounded-xl text-xs font-medium text-neutral-400 hover:text-white bg-white/[0.04] active:bg-white/10 border border-white/10 flex items-center justify-center space-x-1.5 cursor-pointer transition active:scale-95 shrink-0"
-              title="Respectfully pass on this profile"
-            >
-              <UserX className="w-3.5 h-3.5" />
-              <span>Pass</span>
-            </button>
-
-            {eligible ? (
-              <button
-                type="button"
-                onClick={() => {
-                  sounds.playTap()
-                  setIsHandshakeComposerOpen(!isHandshakeComposerOpen)
-                }}
-                className={`min-h-[46px] flex-1 px-4 py-2 rounded-xl text-xs font-bold text-white transition active:scale-95 flex items-center justify-center space-x-2 cursor-pointer ${
-                  isHandshakeComposerOpen
-                    ? 'bg-zinc-800 border border-white/20'
-                    : 'bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 shadow-lg shadow-purple-900/30'
-                }`}
-              >
-                <Send className="w-3.5 h-3.5 stroke-[2.5]" />
-                <span>{isHandshakeComposerOpen ? 'Close Note' : 'Initiate Handshake'}</span>
-              </button>
-            ) : (
-              <div className="flex-1 text-center py-2.5 text-xs text-rose-300 font-medium bg-rose-500/10 rounded-xl border border-rose-500/20">
-                Filtered by Boundary Setting
+              <div className="flex items-center space-x-2 text-xs text-neutral-300">
+                <Check className="w-3.5 h-3.5 text-emerald-400 stroke-[2.5]" />
+                <span>Compatible daily rhythm</span>
               </div>
-            )}
-          </div>
-
-          {/* Progressive Disclosure Toggle */}
-          <div className="pt-1.5 border-t border-white/[0.06]">
-            <button
-              type="button"
-              onClick={() => {
-                sounds.playTap()
-                setIsMobileDetailsExpanded(!isMobileDetailsExpanded)
-              }}
-              className="w-full min-h-[44px] py-2 px-3 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] active:bg-white/[0.08] border border-white/[0.06] text-xs text-neutral-300 flex items-center justify-between cursor-pointer transition"
-            >
-              <span className="flex items-center space-x-1.5 font-medium">
-                <SlidersHorizontal className="w-3.5 h-3.5 text-purple-400" />
-                <span>{isMobileDetailsExpanded ? 'Hide Deep Details' : 'Explore Deep Details & Shared Rhythms (5 Facets)'}</span>
-              </span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform ${isMobileDetailsExpanded ? 'rotate-180' : ''}`} />
-            </button>
-          </div>
-
-          {/* Expanded Tab Content on Mobile */}
-          {isMobileDetailsExpanded && (
-            <div className="space-y-3 pt-2 border-t border-white/[0.06] animate-in fade-in duration-200">
-              {renderTabsCapsule()}
-              {renderTabContent()}
-              <button
-                type="button"
-                onClick={() => {
-                  sounds.playTap()
-                  onInspectDeepReport(candidate, evaluation)
-                }}
-                className="w-full min-h-[44px] py-2.5 px-3 rounded-xl text-xs font-medium text-neutral-300 hover:text-white bg-zinc-900 border border-white/[0.08] flex items-center justify-center space-x-1.5 transition cursor-pointer"
-              >
-                <SlidersHorizontal className="w-3.5 h-3.5 text-purple-400" />
-                <span>Open Full 12-Dimension Report</span>
-                <ChevronRight className="w-3.5 h-3.5 opacity-60" />
-              </button>
+              <div className="flex items-center space-x-2 text-xs text-neutral-300">
+                <Check className="w-3.5 h-3.5 text-emerald-400 stroke-[2.5]" />
+                <span>Shared interest in culture</span>
+              </div>
             </div>
-          )}
+          </div>
+          <ChevronRight className="w-4 h-4 text-neutral-400 shrink-0" />
+        </div>
+
+        {/* Floating Action Buttons: 3 Circular Buttons (Mockup 1) */}
+        <div className="flex items-center justify-center space-x-4 py-3 pb-4">
+          {/* Pass */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              sounds.playNope()
+              setIsPassed(true)
+              onPass(candidate)
+            }}
+            className="w-14 h-14 rounded-full bg-[#17161A] hover:bg-[#222026] active:scale-90 border border-white/10 flex items-center justify-center text-neutral-300 hover:text-white transition shadow-xl cursor-pointer"
+            title="Pass"
+            aria-label="Pass on candidate"
+          >
+            <X className="w-6 h-6 stroke-[2]" />
+          </button>
+
+          {/* Bookmark */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              sounds.playTap()
+              setIsFavorite(!isFavorite)
+            }}
+            className="w-12 h-12 rounded-full bg-[#17161A] hover:bg-[#222026] active:scale-90 border border-white/10 flex items-center justify-center transition shadow-xl cursor-pointer"
+            title="Bookmark"
+            aria-label="Bookmark candidate"
+          >
+            <Star
+              className="w-5 h-5 transition-colors"
+              style={{
+                color: isFavorite ? '#fbbf24' : '#d4d4d8',
+                fill: isFavorite ? '#fbbf24' : 'transparent',
+              }}
+            />
+          </button>
+
+          {/* Connect */}
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              sounds.playLike()
+              onInitiateHandshake(candidate)
+            }}
+            className="w-14 h-14 rounded-full bg-[#F472B6] hover:bg-[#f25da8] active:scale-90 shadow-xl shadow-[#F472B6]/30 flex items-center justify-center text-white transition cursor-pointer"
+            title="Connect"
+            aria-label="Connect with candidate"
+          >
+            <Heart className="w-6 h-6 fill-white stroke-white" />
+          </button>
         </div>
       </div>
 

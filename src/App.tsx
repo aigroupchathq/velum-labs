@@ -13,6 +13,7 @@ import { NaturalPreferenceBar } from './components/NaturalPreferenceBar'
 import { LoginModal } from './components/LoginModal'
 import { MatchCard } from './components/MatchCard'
 import { DeepReportModal } from './components/DeepReportModal'
+import { MatchDetailModal } from './components/MatchDetailModal'
 import { UserAccountView } from './components/UserAccountView'
 import { PreferenceOptimizerView } from './components/PreferenceOptimizerView'
 import { ContradictionsBanner } from './components/ContradictionsBanner'
@@ -437,7 +438,7 @@ export function App() {
             currentUser={currentUser}
             onUpdateUser={(updated) => {
               setCurrentUser(updated)
-              showToast('Sanctuary & Blend configuration saved.')
+              showToast('Profile configuration saved.')
             }}
             onSwitchPersona={(user) => {
               setCurrentUser(user)
@@ -447,6 +448,9 @@ export function App() {
             onNavigateToDialogue={() => setActiveView('conversations')}
             onNavigateToNetwork={() => setActiveView('network')}
             onLaunchFTUX={() => setIsFirstRunOpen(true)}
+            onNavigateView={setActiveView}
+            onOpenTerms={() => setIsTermsOpen(true)}
+            onOpenLogin={() => setIsLoginOpen(true)}
           />
         )}
 
@@ -493,15 +497,31 @@ export function App() {
         )}
       </main>
 
-      {/* Deep 12-Dimension Report Modal */}
-      {selectedReport && (
+      {/* Candidate Deep Report / Match Detail (Full-Screen Match Detail on Mobile - Mockup 1B) */}
+      {selectedReport && isPhoneMode ? (
+        <MatchDetailModal
+          candidate={selectedReport.candidate}
+          evaluation={selectedReport.evaluation}
+          currentUser={currentUser}
+          isOpen={Boolean(selectedReport)}
+          onClose={() => setSelectedReport(null)}
+          onPass={(cand) => {
+            showToast(`Respectfully passed on ${cand.identity.name}.`)
+            setSelectedReport(null)
+          }}
+          onConnect={(cand) => {
+            showToast(`Connection invitation sent to ${cand.identity.name}!`)
+            setSelectedReport(null)
+          }}
+        />
+      ) : selectedReport ? (
         <DeepReportModal
           candidate={selectedReport.candidate}
           evaluation={selectedReport.evaluation}
           currentUser={currentUser}
           onClose={() => setSelectedReport(null)}
         />
-      )}
+      ) : null}
 
       {/* Wingman AI Intelligence & Predictor Suite Modal */}
       {isWingmanOpen && (

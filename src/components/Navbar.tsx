@@ -22,9 +22,10 @@ import {
   UserCheck,
   Scale,
   HelpCircle,
-  MoreHorizontal,
   Smartphone,
   Monitor,
+  Calendar,
+  User,
 } from 'lucide-react'
 import type { UniversalUserProfile } from '../types'
 
@@ -67,11 +68,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [scienceMenuOpen, setScienceMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
-  const [mobileMoreOpen, setMobileMoreOpen] = useState(false)
 
   const scienceDropdownRef = useRef<HTMLDivElement>(null)
   const userDropdownRef = useRef<HTMLDivElement>(null)
-  const mobileMoreRef = useRef<HTMLDivElement>(null)
 
   // Primary Human Journey (Everyday Language)
   const primaryNavItems: { id: ActiveView; label: string; icon: React.ReactNode }[] = [
@@ -137,15 +136,11 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (userDropdownRef.current && !userDropdownRef.current.contains(e.target as Node)) {
         setUserMenuOpen(false)
       }
-      if (mobileMoreRef.current && !mobileMoreRef.current.contains(e.target as Node)) {
-        setMobileMoreOpen(false)
-      }
     }
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setScienceMenuOpen(false)
         setUserMenuOpen(false)
-        setMobileMoreOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -399,211 +394,112 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* ==================================================== */}
-      {/* MOBILE BOTTOM NAVIGATION BAR (Effortless Phone UX)  */}
+      {/* MOBILE BOTTOM NAVIGATION BAR (Exact 4 Destinations) */}
       {/* ==================================================== */}
       <nav
         aria-label="Mobile Bottom Navigation"
-        className={`fixed bottom-0 left-0 right-0 z-50 bg-[#070709]/95 backdrop-blur-2xl border-t border-white/10 flex items-center justify-around pt-1.5 pb-[max(0.5rem,env(safe-area-inset-bottom,8px))] px-1 text-center shadow-2xl ${
-          isPhoneMode ? 'flex' : 'lg:hidden'
+        className={`fixed bottom-0 left-0 right-0 z-50 bg-[#0F0E11]/95 backdrop-blur-2xl border-t border-white/[0.08] grid grid-cols-4 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom,10px))] px-2 text-center shadow-[0_-10px_30px_rgba(0,0,0,0.8)] ${
+          isPhoneMode ? 'grid' : 'lg:hidden'
         }`}
       >
         {/* Tab 1: Discover */}
         <button
           type="button"
           onClick={() => onSelectView('recs')}
-          className={`flex flex-col items-center justify-center min-w-[50px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
-            activeView === 'recs' ? 'text-rose-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          className={`flex flex-col items-center justify-center min-h-[48px] py-1 rounded-xl transition-all cursor-pointer ${
+            activeView === 'recs' || activeView === 'landing'
+              ? 'text-[#F472B6] font-medium'
+              : 'text-[#71717A] hover:text-neutral-200'
           }`}
           aria-label="Discover Matches"
         >
-          <Sparkles className={`w-5 h-5 mb-0.5 ${activeView === 'recs' ? 'text-rose-400' : ''}`} />
-          <span className="text-[10px]">Discover</span>
+          <Sparkles className={`w-5 h-5 mb-0.5 stroke-[1.8] ${activeView === 'recs' || activeView === 'landing' ? 'text-[#F472B6]' : ''}`} />
+          <span className="text-[11px] tracking-tight">Discover</span>
+          {(activeView === 'recs' || activeView === 'landing') && (
+            <span className="w-1 h-1 rounded-full bg-[#F472B6] mt-0.5" />
+          )}
         </button>
 
         {/* Tab 2: Messages */}
         <button
           type="button"
           onClick={() => onSelectView('conversations')}
-          className={`flex flex-col items-center justify-center min-w-[50px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
-            activeView === 'conversations' ? 'text-sky-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          className={`flex flex-col items-center justify-center min-h-[48px] py-1 rounded-xl transition-all cursor-pointer ${
+            activeView === 'conversations'
+              ? 'text-[#F472B6] font-medium'
+              : 'text-[#71717A] hover:text-neutral-200'
           }`}
-          aria-label="Direct Messages"
+          aria-label="Messages"
         >
-          <MessageSquare className={`w-5 h-5 mb-0.5 ${activeView === 'conversations' ? 'text-sky-400' : ''}`} />
-          <span className="text-[10px]">Messages</span>
+          <MessageSquare className={`w-5 h-5 mb-0.5 stroke-[1.8] ${activeView === 'conversations' ? 'text-[#F472B6]' : ''}`} />
+          <span className="text-[11px] tracking-tight">Messages</span>
+          {activeView === 'conversations' && (
+            <span className="w-1 h-1 rounded-full bg-[#F472B6] mt-0.5" />
+          )}
         </button>
 
         {/* Tab 3: Date Plan */}
         <button
           type="button"
           onClick={() => onSelectView('date_brief')}
-          className={`flex flex-col items-center justify-center min-w-[50px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
-            activeView === 'date_brief' ? 'text-amber-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          className={`flex flex-col items-center justify-center min-h-[48px] py-1 rounded-xl transition-all cursor-pointer ${
+            activeView === 'date_brief'
+              ? 'text-[#F472B6] font-medium'
+              : 'text-[#71717A] hover:text-neutral-200'
           }`}
-          aria-label="Date Planner"
+          aria-label="Date Plan"
         >
-          <Coffee className={`w-5 h-5 mb-0.5 ${activeView === 'date_brief' ? 'text-amber-400' : ''}`} />
-          <span className="text-[10px]">Date Plan</span>
+          <Calendar className={`w-5 h-5 mb-0.5 stroke-[1.8] ${activeView === 'date_brief' ? 'text-[#F472B6]' : ''}`} />
+          <span className="text-[11px] tracking-tight">Date Plan</span>
+          {activeView === 'date_brief' && (
+            <span className="w-1 h-1 rounded-full bg-[#F472B6] mt-0.5" />
+          )}
         </button>
 
         {/* Tab 4: Profile */}
         <button
           type="button"
           onClick={() => onSelectView('onboarding')}
-          className={`flex flex-col items-center justify-center min-w-[50px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
-            activeView === 'onboarding' ? 'text-emerald-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          className={`flex flex-col items-center justify-center min-h-[48px] py-1 rounded-xl transition-all cursor-pointer ${
+            activeView === 'onboarding' ||
+            activeView === 'subscriptions' ||
+            activeView === 'about_faq' ||
+            activeView === 'optimizer' ||
+            activeView === 'contradictions' ||
+            activeView === 'evaluator' ||
+            activeView === 'network' ||
+            activeView === 'intro'
+              ? 'text-[#F472B6] font-medium'
+              : 'text-[#71717A] hover:text-neutral-200'
           }`}
-          aria-label="My Profile & Sanctuary"
+          aria-label="My Profile"
         >
-          <Home className={`w-5 h-5 mb-0.5 ${activeView === 'onboarding' ? 'text-emerald-400' : ''}`} />
-          <span className="text-[10px]">Profile</span>
-        </button>
-
-        {/* Tab 5: Pricing (Direct Ethical Pricing) */}
-        <button
-          type="button"
-          onClick={() => onSelectView('subscriptions')}
-          className={`flex flex-col items-center justify-center min-w-[50px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
-            activeView === 'subscriptions' ? 'text-emerald-300 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
-          }`}
-          aria-label="Fair Pricing & Membership"
-        >
-          <CreditCard className={`w-5 h-5 mb-0.5 ${activeView === 'subscriptions' ? 'text-emerald-300' : ''}`} />
-          <span className="text-[10px]">Pricing</span>
-        </button>
-
-        {/* Tab 6: More Sheet Toggle */}
-        <div className="relative" ref={mobileMoreRef}>
-          <button
-            type="button"
-            onClick={() => setMobileMoreOpen(!mobileMoreOpen)}
-            className={`flex flex-col items-center justify-center min-w-[46px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
-              isScienceActive || mobileMoreOpen ? 'text-cyan-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          <User
+            className={`w-5 h-5 mb-0.5 stroke-[1.8] ${
+              activeView === 'onboarding' ||
+              activeView === 'subscriptions' ||
+              activeView === 'about_faq' ||
+              activeView === 'optimizer' ||
+              activeView === 'contradictions' ||
+              activeView === 'evaluator' ||
+              activeView === 'network' ||
+              activeView === 'intro'
+                ? 'text-[#F472B6]'
+                : ''
             }`}
-            aria-label="More Features"
-          >
-            <MoreHorizontal className={`w-5 h-5 mb-0.5 ${isScienceActive || mobileMoreOpen ? 'text-cyan-400' : ''}`} />
-            <span className="text-[10px]">More</span>
-          </button>
-
-          {/* Mobile Popover Menu */}
-          {mobileMoreOpen && (
-            <div className="absolute bottom-full right-0 mb-3 w-64 p-2 rounded-2xl bg-neutral-900/98 border border-white/15 shadow-2xl backdrop-blur-2xl z-50 text-left space-y-1">
-              <div className="px-3 py-1.5 border-b border-white/[0.06] text-[10px] font-mono text-neutral-400 uppercase tracking-wider flex items-center justify-between">
-                <span>All Check Tools</span>
-                <span className="text-emerald-400 font-mono">v8.3</span>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectView('landing')
-                  setMobileMoreOpen(false)
-                }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
-              >
-                <Compass className="w-3.5 h-3.5 text-neutral-300" />
-                <span>Home Landing Page</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectView('about_faq')
-                  setMobileMoreOpen(false)
-                }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
-              >
-                <HelpCircle className="w-3.5 h-3.5 text-emerald-400" />
-                <span>About & FAQ Center</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectView('network')
-                  setMobileMoreOpen(false)
-                }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
-              >
-                <Compass className="w-3.5 h-3.5 text-purple-400" />
-                <span>4D Match Map</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectView('intro')
-                  setMobileMoreOpen(false)
-                }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Platform Principles</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectView('optimizer')
-                  setMobileMoreOpen(false)
-                }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
-              >
-                <Sliders className="w-3.5 h-3.5 text-emerald-400" />
-                <span>Preferences & Priorities</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectView('evaluator')
-                  setMobileMoreOpen(false)
-                }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
-              >
-                <Binary className="w-3.5 h-3.5 text-purple-400" />
-                <span>Match Comparison</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectView('contradictions')
-                  setMobileMoreOpen(false)
-                }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
-              >
-                <AlertCircle className="w-3.5 h-3.5 text-amber-400" />
-                <div className="flex items-center justify-between flex-1">
-                  <span>Conflict Checker</span>
-                  {contradictionCount > 0 && (
-                    <span className="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 text-[9px] font-mono">
-                      {contradictionCount}
-                    </span>
-                  )}
-                </div>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onOpenLogin()
-                  setMobileMoreOpen(false)
-                }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer border-t border-white/[0.06] pt-2"
-              >
-                <UserCheck className="w-3.5 h-3.5 text-cyan-400" />
-                <span>Switch Demo Persona</span>
-              </button>
-              {onOpenTerms && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    onOpenTerms()
-                    setMobileMoreOpen(false)
-                  }}
-                  className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-400 hover:text-white flex items-center space-x-2 cursor-pointer"
-                >
-                  <Scale className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Terms & Disclosures</span>
-                </button>
-              )}
-            </div>
+          />
+          <span className="text-[11px] tracking-tight">Profile</span>
+          {(activeView === 'onboarding' ||
+            activeView === 'subscriptions' ||
+            activeView === 'about_faq' ||
+            activeView === 'optimizer' ||
+            activeView === 'contradictions' ||
+            activeView === 'evaluator' ||
+            activeView === 'network' ||
+            activeView === 'intro') && (
+            <span className="w-1 h-1 rounded-full bg-[#F472B6] mt-0.5" />
           )}
-        </div>
+        </button>
       </nav>
     </header>
   )
