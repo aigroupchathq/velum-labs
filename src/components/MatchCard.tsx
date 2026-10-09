@@ -35,6 +35,7 @@ import {
 } from 'lucide-react'
 import type { UniversalUserProfile, MatchEvaluation } from '../types'
 import { sounds } from '../utils/sound'
+import { coarsenDistanceKm } from '../utils/matchingEngine'
 
 interface MatchCardProps {
   candidate: UniversalUserProfile
@@ -63,16 +64,9 @@ export const MatchCard: React.FC<MatchCardProps> = ({
     geographicFeasibility,
   } = evaluation
 
-  // Anti-Trilateration Distance Coarsening (Dual-Unit Localization)
+  // Anti-Trilateration Distance Coarsening (Privacy P-02)
   const rawDistanceKm = parseFloat(geographicFeasibility.summary.split(' ')[0]) || 10
-  let coarseDistance = 'Local (< 10 km / ~6 mi)'
-  if (rawDistanceKm > 50) {
-    coarseDistance = 'Over 50 km / 30+ mi'
-  } else if (rawDistanceKm > 25) {
-    coarseDistance = 'Regional (25–50 km / 15–30 mi)'
-  } else if (rawDistanceKm > 10) {
-    coarseDistance = 'Metro (10–25 km / 6–15 mi)'
-  }
+  const coarseDistance = `Location Band: ${coarsenDistanceKm(rawDistanceKm)}`
 
   const isLowConfidence = confidence.score < 60
 
