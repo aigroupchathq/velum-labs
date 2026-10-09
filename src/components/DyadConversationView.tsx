@@ -171,16 +171,16 @@ export const DyadConversationView: React.FC<DyadConversationViewProps> = ({
         <div>
           <span className="apple-subhead">Stage 4 of Human Journey</span>
           <h1 className="text-3xl font-semibold tracking-tight text-white mt-1">
-            Graduated Dialogue
+            Thoughtful Conversations
           </h1>
           <p className="text-xs sm:text-sm text-neutral-400 mt-1 max-w-2xl font-light leading-relaxed">
-            Asynchronous conversation anchored in mutual values. No frantic read receipts, no gamified notifications, and zero ambiguity.
+            Real conversation without the anxiety. No frantic typing bubbles, no pressure to reply in 5 seconds, and no mind games. Just honest connection at a human pace.
           </p>
         </div>
 
         <div className="flex items-center space-x-2 text-xs text-neutral-400 font-mono">
           <ShieldCheck className="w-4 h-4 text-emerald-400" />
-          <span>Encrypted Dyadic Channel</span>
+          <span>Private &amp; Encrypted Chat</span>
         </div>
       </div>
 
@@ -278,7 +278,7 @@ export const DyadConversationView: React.FC<DyadConversationViewProps> = ({
                 className="apple-pill-btn px-3 py-1.5 text-xs font-medium text-white bg-white/[0.08] hover:bg-white/[0.14] border border-white/[0.1] flex items-center space-x-1.5 cursor-pointer"
               >
                 <Coffee className="w-3.5 h-3.5 text-amber-300" />
-                <span>Encounter Blueprint</span>
+                <span>Plan First Date</span>
               </button>
 
               {activeConv.status === 'active' && (
@@ -288,13 +288,13 @@ export const DyadConversationView: React.FC<DyadConversationViewProps> = ({
                   title="Conclude conversation respectfully without ghosting"
                 >
                   <XCircle className="w-3.5 h-3.5" />
-                  <span>Gentle Exit</span>
+                  <span>Gracious Closure</span>
                 </button>
               )}
             </div>
           </div>
 
-          {/* Value Anchor Pill (Clinical Foundation) */}
+          {/* Value Anchor Pill */}
           <div className="my-3 px-4 py-2.5 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-between text-xs text-neutral-300">
             <div className="flex items-center space-x-2">
               <HeartHandshake className="w-4 h-4 text-white/80" />
@@ -303,7 +303,7 @@ export const DyadConversationView: React.FC<DyadConversationViewProps> = ({
               </span>
             </div>
             <span className="text-[10px] font-mono text-neutral-400 hidden sm:inline">
-              Gottman Dyadic Baseline
+              Common Ground
             </span>
           </div>
 
@@ -357,7 +357,7 @@ export const DyadConversationView: React.FC<DyadConversationViewProps> = ({
                 type="text"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
-                placeholder={`Send an intentional response to ${activePartner.identity.name.split(' ')[0]}...`}
+                placeholder={`Write a thoughtful note to ${activePartner.identity.name.split(' ')[0]}...`}
                 className="flex-1 bg-white/[0.04] focus:bg-white/[0.07] border border-white/[0.08] focus:border-white/20 rounded-full px-4 py-2.5 text-xs sm:text-sm text-white placeholder-neutral-500 focus:outline-none transition-all"
               />
               <button

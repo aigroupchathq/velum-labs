@@ -54,7 +54,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
   const [flippedCardId, setFlippedCardId] = useState<number | null>(null)
   const [selectedMidpointIndex, setSelectedMidpointIndex] = useState<number>(0)
 
-  // Real-World London Transit Midpoints Derived from Near-Miss Spacetime Overlaps
+  // Real-World London Transit Midpoints Derived from Convenient Travel Overlaps
   const candidateMidpoints: Record<string, MidpointVenue[]> = {
     usr_maya_01: [
       {
@@ -63,7 +63,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         travelTimes: 'Elena: 9m (Northern) · Maya: 12m (Jubilee)',
         lightingK: 2600,
         noiseDb: 42,
-        suitabilityRationale: 'Spacious high-timber seating, warm natural daylight, optimal acoustic dampening for deep dialogue.',
+        suitabilityRationale: 'Cozy timber booths, warm natural daylight, and quiet corners where you can hear every laugh without shouting.',
       },
       {
         name: 'Tate Modern Espresso Pavilion',
@@ -71,7 +71,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         travelTimes: 'Elena: 14m (Thames Path) · Maya: 15m (Blackfriars)',
         lightingK: 2800,
         noiseDb: 38,
-        suitabilityRationale: 'Riverfront views with low cognitive friction; museum environment encourages slow, side-by-side walking.',
+        suitabilityRationale: 'Scenic riverfront views and calming art spaces; perfect for an unhurried, side-by-side walk where silence never feels awkward.',
       },
     ],
     usr_liam_02: [
@@ -81,7 +81,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         travelTimes: 'Elena: 15m (District) · Liam: 8m (Walk)',
         lightingK: 2700,
         noiseDb: 40,
-        suitabilityRationale: 'High-ceilinged calm gallery sanctuary; zero loud music, curated single-origin tea selection.',
+        suitabilityRationale: 'Peaceful gallery hideaway; gentle background ambiance, warm pots of tea, and zero noisy distractions.',
       },
       {
         name: 'Town Hall Hotel Tea Lounge',
@@ -89,7 +89,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         travelTimes: 'Elena: 18m (Central) · Liam: 12m (Overground)',
         lightingK: 2400,
         noiseDb: 36,
-        suitabilityRationale: 'Heritage art deco restoration with plush acoustic furnishings and intimate lighting.',
+        suitabilityRationale: 'Intimate vintage tea lounge with plush velvet armchairs, soft lighting, and an unhurried afternoon vibe.',
       },
     ],
     usr_priya_03: [
@@ -99,7 +99,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         travelTimes: 'Elena: 11m (Northern) · Priya: 14m (Victoria)',
         lightingK: 2700,
         noiseDb: 35,
-        suitabilityRationale: 'Medical & science history library environment; deeply respectful quiet culture.',
+        suitabilityRationale: 'A quiet, thoughtful bookshop cafe with comfy chairs, warm mugs, and a calm, unpretentious atmosphere.',
       },
       {
         name: 'Brunswick Centre Courtyard Tea Room',
@@ -107,7 +107,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         travelTimes: 'Elena: 13m (Russell Sq) · Priya: 16m (King’s Cross)',
         lightingK: 3000,
         noiseDb: 44,
-        suitabilityRationale: 'Pedestrianised modernist concrete plaza; open sky with calm ambient movement.',
+        suitabilityRationale: 'Sunny pedestrian plaza with open sky, peaceful outdoor tables, and relaxed foot traffic.',
       },
     ],
     usr_marcus_04: [
@@ -117,7 +117,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         travelTimes: 'Elena: 22m (Overground) · Marcus: 6m (Walk)',
         lightingK: 2800,
         noiseDb: 46,
-        suitabilityRationale: 'Artisanal sourdough bakery with outdoor railway arch seating; natural, unpretentious cadence.',
+        suitabilityRationale: 'Fresh warm sourdough bakery with outdoor bench seating; honest, relaxed, and wonderfully laid-back.',
       },
     ],
     usr_sofia_05: [
@@ -127,7 +127,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         travelTimes: 'Elena: 16m (Northern) · Sofia: 12m (St Pancras)',
         lightingK: 3200,
         noiseDb: 42,
-        suitabilityRationale: 'Waterfront steps along Regent’s Canal; ideal for low-pressure side-by-side walking.',
+        suitabilityRationale: 'Breezy steps right beside the canal; grab a flat white and enjoy an effortless walk in the afternoon sun.',
       },
     ],
     usr_chloe_06: [
@@ -137,7 +137,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         travelTimes: 'Elena: 18m (Moorgate) · Chloe: 8m (Barbican)',
         lightingK: 2900,
         noiseDb: 34,
-        suitabilityRationale: 'Tropical botanical sanctuary enclosed in brutalist architecture; peaceful and visually stunning.',
+        suitabilityRationale: 'A hidden glasshouse paradise of tropical ferns and exotic flora; peaceful, romantic, and breathtakingly unique.',
       },
     ],
   }
@@ -192,10 +192,10 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
     },
     {
       id: 3,
-      level: 'Level 3 • Dyadic Safety',
-      title: 'Nervous System Grounding',
-      front: '“When life feels overwhelming, does your nervous system need quiet space or warm presence?”',
-      back: `Connects directly to conflict style (${candidate.communication.conflictStyle}). Establishes deep emotional containment.`,
+      level: 'Level 3 • Emotional Safe Harbor',
+      title: 'What Comfort Looks Like',
+      front: '“When life gets heavy, what helps you feel grounded—a quiet evening to decompress, or someone holding your hand?”',
+      back: `Connects to how they handle stress (${candidate.communication.conflictStyle}). Shows genuine care for how they recharge.`,
     },
   ]
 
@@ -216,19 +216,19 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         <div className="space-y-1">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-mono">
             <Compass className="w-3.5 h-3.5 text-amber-400" />
-            <span>Dyadic Relational Protocol</span>
+            <span>First Date Planner</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white mt-1">
-            First Encounter Blueprint
+            Planning Your First Real Date
           </h1>
           <p className="text-xs sm:text-sm text-neutral-400 max-w-2xl font-light leading-relaxed">
-            Clinical research proves that successful first dates are about establishing psychological safety and mutual vulnerability in low-stress sensory environments.
+            First dates shouldn’t feel like stressful job interviews or shouting over loud pub noise. We help you pick calm, intimate spots where you can both relax, hear each other laugh, and let a real connection unfold naturally.
           </p>
         </div>
 
         {/* Candidate Selector Capsule */}
         <div className="flex items-center space-x-2 shrink-0">
-          <span className="text-xs text-neutral-400 font-mono">Select Dyad:</span>
+          <span className="text-xs text-neutral-400 font-mono">Plan date with:</span>
           <div className="flex p-1.5 rounded-full bg-zinc-950 border border-white/[0.08] backdrop-blur-md">
             {mockCandidates.map((c) => (
               <button
@@ -299,12 +299,12 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
             {evaluation.eligible ? `${evaluation.mutuality.score}%` : 'Disqualified'}
           </span>
           <span className="text-xs font-mono text-neutral-400">
-            {isHighFit ? '✦ Twin Resonance Dyad' : 'Reciprocal Mutual Fit'}
+            {isHighFit ? '✦ Rare Heartfelt Spark' : 'Reciprocal Mutual Fit'}
           </span>
         </div>
       </div>
 
-      {/* 3. REAL-WORLD TRANSIT MIDPOINT VENUES (CONNECTED TO CONSTELLATION POISSON OVERLAPS) */}
+      {/* 3. REAL-WORLD TRANSIT MIDPOINT VENUES */}
       <div className="bg-[#121216] border border-white/[0.08] rounded-[2.5rem] p-6 sm:p-8 space-y-5 shadow-2xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/[0.06]">
           <div className="flex items-center space-x-3">
@@ -313,16 +313,16 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
             </div>
             <div>
               <span className="text-[10px] font-mono uppercase tracking-wider text-purple-400 font-bold block">
-                London Transit Geometry
+                Fair &amp; Easy Meeting Spots
               </span>
               <h3 className="text-lg font-bold text-white tracking-tight">
-                Verified Commute Midpoints for {candidate.identity.name.split(' ')[0]}
+                Convenient Midpoints for {candidate.identity.name.split(' ')[0]}
               </h3>
             </div>
           </div>
 
           <span className="text-xs font-mono px-3 py-1 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/20">
-            Matched to Poisson Overlap
+            Halfway Between Both of You
           </span>
         </div>
 
@@ -391,10 +391,10 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
             </div>
             <div>
               <span className="text-[10px] font-mono uppercase tracking-wider block" style={{ color: lightStyle.glow }}>
-                Sensory Ergonomics
+                Atmosphere &amp; Comfort
               </span>
               <h3 className="text-lg font-bold text-white tracking-tight">
-                Date Spot Ambiance Simulator: {activeMidpoint.name}
+                Setting the Scene: {activeMidpoint.name}
               </h3>
             </div>
           </div>
@@ -469,7 +469,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
               </button>
             </div>
             <p className="text-[11px] text-neutral-400 font-light">
-              Simulates low-glare warm lighting. Research shows 2700K ambient illumination reduces social anxiety by 34%.
+              Soft, warm candlelight glow. Gentle ambient light helps you let your guard down, eases nervous jitters, and makes conversation flow with natural warmth.
             </p>
           </div>
 
@@ -551,7 +551,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
 
         {/* Venue Format Buttons */}
         <div className="space-y-2 pt-2">
-          <span className="text-xs font-bold text-neutral-300 block">Recommended Low-Friction Venue Formats</span>
+          <span className="text-xs font-bold text-neutral-300 block">Thoughtful Date Settings</span>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
             {[
               { id: 'coffee', label: 'Craft Tea & Coffee', icon: Coffee, desc: 'Quiet booth · ≤45 dB' },
@@ -592,13 +592,13 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
         <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
           <div>
             <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold block">
-              Aron &amp; Gottman Fast Friends Protocol
+              Skip The Small Talk
             </span>
             <h3 className="text-xl font-bold text-white">
-              3 Tailored Icebreaker Prompt Cards
+              3 Genuine Conversation Starters
             </h3>
             <p className="text-xs text-neutral-400 font-light">
-              Tap any card to reveal the psychological rationale tailored for {candidate.identity.name.split(' ')[0]}.
+              Tap any card to see why this question sparks warmth with {candidate.identity.name.split(' ')[0]}.
             </p>
           </div>
           <Brain className="w-5 h-5 text-emerald-400" />
@@ -628,7 +628,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
                       {card.level}
                     </span>
                     <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-neutral-300">
-                      {isFlipped ? 'Rationale' : 'Tap to Flip ↻'}
+                      {isFlipped ? 'Why this matters' : 'Tap to Flip ↻'}
                     </span>
                   </div>
 
@@ -640,7 +640,7 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
                 </div>
 
                 <div className="pt-3 border-t border-white/[0.05] flex items-center justify-between text-[10px] text-neutral-400 font-mono">
-                  <span>{isFlipped ? 'Deep Alignment' : 'Tap to reveal rationale'}</span>
+                  <span>{isFlipped ? 'Deep Alignment' : 'Tap to flip card'}</span>
                   <Sparkles className="w-3 h-3 text-emerald-400" />
                 </div>
               </div>
@@ -655,18 +655,18 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
           <div className="flex items-center space-x-2">
             <Scale className="w-4 h-4 text-purple-400" />
             <h4 className="text-sm font-bold text-white tracking-tight">
-              Anti-Ghosting Dignified Closure Guarantee
+              Kindness, Even When It&apos;s Not a Match
             </h4>
           </div>
           <p className="text-xs text-neutral-400 font-light max-w-xl leading-relaxed">
-            Encounters are protected by an ethical commitment. If either person feels no spark after meeting, a single-click <em>Gentle Closure Handshake</em> sends a courteous, automated acknowledgement. Zero evasion; zero awkwardness.
+            If the spark isn&apos;t there after meeting, no one is ever left guessing or ghosted. Send a gracious, respectful note with one tap so both of you leave with closure, dignity, and zero bitter feelings.
           </p>
         </div>
 
         <div className="flex items-center space-x-3 shrink-0">
           <div className="text-right">
-            <span className="text-[10px] font-mono text-neutral-400 uppercase block">Closure Health</span>
-            <span className="text-sm font-semibold text-emerald-400 font-mono">99.2% Graceful Closure</span>
+            <span className="text-[10px] font-mono text-neutral-400 uppercase block">Respectful Closure</span>
+            <span className="text-sm font-semibold text-emerald-400 font-mono">Zero Ghosting Culture</span>
           </div>
           <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
             <CheckCircle2 className="w-5 h-5 text-emerald-400" />

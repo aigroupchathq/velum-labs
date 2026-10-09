@@ -418,7 +418,7 @@ export const SubscriptionsView: React.FC<{ userId?: string }> = ({ userId = 'usr
                 <span className="apple-subhead text-emerald-300">Curated Journey</span>
                 <h3 className="text-xl font-bold text-white mt-0.5">Plus Member</h3>
                 <p className="text-xs text-neutral-400 font-light mt-0.5">
-                  Effortless low-pressure dates & deep dyadic clarity.
+                  Effortless low-pressure dates &amp; deep connection clarity.
                 </p>
               </div>
               {subData.plan === 'supporter' && (
@@ -445,11 +445,11 @@ export const SubscriptionsView: React.FC<{ userId?: string }> = ({ userId = 'usr
             <ul className="space-y-3 text-xs text-white font-light pt-2">
               <li className="flex items-center space-x-2.5">
                 <Coffee className="w-4 h-4 text-amber-400 shrink-0" />
-                <span><strong>3rd-Space Date Concierge</strong> (calm acoustic cafes & gardens)</span>
+                <span><strong>3rd-Space Date Concierge</strong> (calm acoustic cafes &amp; gardens)</span>
               </li>
               <li className="flex items-center space-x-2.5">
                 <Check className="w-4 h-4 text-emerald-400 shrink-0 stroke-[2.5]" />
-                <span><strong>Dyadic Compatibility Dossier</strong> (communication & repair styles)</span>
+                <span><strong>Deep Compatibility Report</strong> (communication &amp; repair styles)</span>
               </li>
               <li className="flex items-center space-x-2.5">
                 <Zap className="w-4 h-4 text-cyan-400 shrink-0" />
@@ -615,7 +615,7 @@ export const SubscriptionsView: React.FC<{ userId?: string }> = ({ userId = 'usr
                   <td className="py-2.5 px-3 text-center"><Check className="w-4 h-4 text-emerald-400 mx-auto" /></td>
                 </tr>
                 <tr>
-                  <td className="py-2.5 font-medium text-white">Dyadic Compatibility Dossier (Repair & Rhythm)</td>
+                  <td className="py-2.5 font-medium text-white">Deep Compatibility Report (Repair &amp; Rhythm)</td>
                   <td className="py-2.5 px-3 text-center"><Minus className="w-4 h-4 text-neutral-600 mx-auto" /></td>
                   <td className="py-2.5 px-3 text-center bg-white/[0.02]"><Check className="w-4 h-4 text-emerald-400 mx-auto" /></td>
                   <td className="py-2.5 px-3 text-center"><Check className="w-4 h-4 text-emerald-400 mx-auto" /></td>

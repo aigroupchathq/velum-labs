@@ -42,31 +42,31 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
       category: 'overview',
       question: 'What is Check and how is it different from dating apps?',
       answer:
-        'Check is built for adults seeking genuine, long-term partnership rather than superficial swiping games. Unlike conventional apps that use addictive swipe loops, popularity rankings, or pay-to-win boosts, Check focuses on mutual compatibility across 12 dimensions of real daily life—such as communication styles, core values, dietary habits, and family intentions.',
+        'We built Check because we were sick and tired of modern dating apps treating human hearts like slot machines. Traditional apps make money by keeping you hooked, single, and swiping forever. They reward superficial looks, sell paid boosts, and hide your real matches behind paywalls. Check does the exact opposite. We match you on the quiet, essential truths that make love actually last—shared values, life dreams, emotional rhythm, communication styles, and mutual respect. You get a small handful of deeply aligned introductions a day, with zero pay-to-win tricks.',
     },
     {
       category: 'overview',
       question: 'Why are there no endless swiping feeds?',
       answer:
-        'Endless swiping creates cognitive overload, decision fatigue, and treats real humans like trading cards. On Check, you receive a curated daily set of mutually resonant profiles where both of you meet each other’s non-negotiable boundaries.',
+        'Because endless swiping numbs your heart. Swiping through hundreds of photos an hour turns living, breathing souls into disposable trading cards and leaves you feeling completely drained and lonely before you fall asleep. Real love requires presence, not an endless scroll. Check gives you a curated daily selection of people where both of you already meet each other’s non-negotiable boundaries, giving each connection the attention and care it deserves.',
     },
     {
       category: 'overview',
       question: 'Can I use Check on my mobile phone? How does Phone Mode work?',
       answer:
-        'Yes, Check is 100% mobile-friendly! You can use it directly on your mobile browser or toggle the "Phone Mode" button in the top bar or menu to experience the app as an ultra-streamlined mobile interface with a convenient 5-tab bottom navigation dock, full-bleed cards, and 44px+ touch-optimized controls.',
+        'Yes, Check was built from the ground up to feel wonderful in your hands. You can open it in any mobile browser or tap the "Phone Mode" button in the menu. Everything transforms into an ultra-smooth mobile experience with a dedicated bottom navigation bar, full-screen cards, easy-to-read text, and big, comfortable touch targets.',
     },
     {
       category: 'overview',
       question: 'How do I get started?',
       answer:
-        'Simply complete your profile under "My Profile & Preferences". Set your location, daily lifestyle habits, communication preferences, and hard non-negotiables (like smoking or family plans). The system instantly calculates mutual compatibility against active candidate profiles.',
+        'Tell us who you really are and what you’re longing for. In "My Profile & Preferences", share your true self—your lifestyle, your favorite quiet moments, your communication style, and your honest non-negotiables (like family dreams or personal values). We’ll instantly introduce you to people whose hearts and futures align with yours.',
     },
     {
       category: 'overview',
       question: 'How does "Verified Human" work?',
       answer:
-        'To eliminate bots, fake accounts, and catfish, Check incorporates biometric liveness verification. Real humans only, with zero commercial spam profiles.',
+        'To make sure you never waste another ounce of emotional energy on fake accounts, bots, or romance scammers, every profile on Check is verified as a living, breathing human being. You can open your heart knowing that whoever is on the other side is real, honest, and truly looking for connection.',
     },
 
     // 2. MATCHING & BOUNDARIES
@@ -74,37 +74,37 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
       category: 'matching',
       question: 'How does mutual compatibility work?',
       answer:
-        'Matching evaluates two sides simultaneously: what you bring and what you seek in a partner, and what your potential partner brings and seeks in you. If either person has a non-negotiable boundary that is violated (for example, a strict non-smoker paired with a regular smoker), the system filters out the match automatically.',
+        'True love has to be mutual from the very start. We don’t just look at whether someone matches your dream—we make sure you are also what they’ve been hoping to find. If either person has a non-negotiable dealbreaker (like one person smoking and the other needing clean air, or differing visions on having children), we never pair you up. We protect both of you from avoidable heartbreak.',
     },
     {
       category: 'matching',
       question: 'What are the 12 compatibility dimensions evaluated?',
       answer:
-        'We evaluate the foundational pillars of shared living: 1) Core Values & Ethics, 2) Daily Lifestyle Rhythms (morning vs evening), 3) Communication & Conflict Resolution, 4) Dietary Respect, 5) Social Energy (introvert/extrovert balance), 6) Long-term Family Intentions, 7) Financial Outlook, 8) Sensory Ergonomics (noise & lighting sensitivity), 9) Physical Affection & Warmth, 10) Practical Distance & Transit Overlap, 11) Emotional Attachment Styles, and 12) Mutual Life Aspirations.',
+        'The foundational truths of shared living and loving: 1) Core Values & Morals, 2) Daily Life Rhythms (early risers & night owls), 3) Communication & How You Handle Disagreements, 4) Food & Kitchen Harmony, 5) Social Energy (introvert & extrovert needs), 6) Long-term Family Intentions, 7) Financial Outlook & Ambition, 8) Home Peace (calm lighting, quiet spaces, sensory comfort), 9) Physical Warmth & Affection, 10) Practical Distance & Travel Overlap, 11) Emotional Security, and 12) Shared Long-term Dreams.',
     },
     {
       category: 'matching',
       question: 'Can someone bypass or ignore my non-negotiable dealbreakers?',
       answer:
-        'Never. If you mark a boundary as non-negotiable (such as non-smoking, diet, or family plans), candidates violating that boundary are completely excluded from your feed. Unlike other apps, dealbreakers can never be overridden by paying for a premium subscription.',
+        'Never. Not for any amount of money in the world. Your boundaries exist to keep you safe and honored. Under our Zero Pay-to-Win Pledge (Invariant D-23), no one can pay to override your dealbreakers or force themselves into your feed. If it doesn’t align with your core values, it won’t show up.',
     },
     {
       category: 'matching',
       question: 'What does the Match Percentage score mean?',
       answer:
-        'The match percentage reflects how well your preferences, lifestyle habits, values, and daily routines align reciprocally. It is an indicator of mutual resonance—not an artificial algorithm score. You can view the full breakdown of why you matched at any time.',
+        'It is an honest reflection of how naturally your daily lives, values, and emotional styles fit together. It is not an arbitrary popularity contest or a secret score designed to manipulate you. You can tap into any profile to see the transparent breakdown of why you two resonate.',
     },
     {
       category: 'matching',
       question: 'Can I change my preferences, age range, or dealbreakers later?',
       answer:
-        'Yes, anytime. Visit "My Profile" or the "Preferences & Priorities" tab to update your age horizon, distance radius, dietary tolerances, or non-negotiables. Your match recommendations update instantaneously.',
+        'Always. As you learn more about yourself and what you need in a partner, you can adjust your preferences, distance, or non-negotiables anytime in your profile settings. Your match recommendations will update right away.',
     },
     {
       category: 'matching',
       question: 'What happens if my preferences contradict each other?',
       answer:
-        'Our background Preference Conflict Helper detects impossible criteria—such as marking diet flexibility as 90% while also setting it as a strict non-negotiable requirement. The system alerts you immediately with clear instructions to adjust your settings.',
+        'Our system gently watches out for you. If you accidentally set conflicting goals (like wanting strict vegan-only living while also setting dietary flexibility to high), we’ll gently point it out with a clear suggestion so your matches stay authentic and accurate.',
     },
 
     // 3. PRIVACY & SAFETY
@@ -112,25 +112,25 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
       category: 'privacy',
       question: 'How is my location privacy protected?',
       answer:
-        'Check never displays your precise address or exact GPS coordinates. We use broad distance bands (such as "< 5 km" or "15–30 km") and coordinate fuzzing to prevent location tracking or trilateration.',
+        'Your safety and peace of mind come before everything. Check never shares your exact GPS coordinates or street address with anyone. We only display broad distance bands (like "< 5 km" or "15–30 km") so no one can ever track where you live or work.',
     },
     {
       category: 'privacy',
       question: 'Is my sensitive personal data encrypted?',
       answer:
-        'Yes. All sensitive personal details, lifestyle preferences, and conflict styles are encrypted using bank-grade AES-256-GCM encryption. Your raw data is never sold, leased, or shared with advertising networks.',
+        'Yes, completely. Your personal reflections, boundary settings, and intimate conversations are encrypted using bank-grade AES-256-GCM encryption. We will never sell, lease, or monetize your private life with advertisers or data brokers.',
     },
     {
       category: 'privacy',
       question: 'Can I delete my account and permanently erase all my data?',
       answer:
-        'Yes. In full compliance with GDPR Art. 17 (Right to Erasure) and California CCPA, you can permanently delete your profile, photos, encrypted data, and chat history with one click. Erasure is instant and complete.',
+        'Yes. In full compliance with GDPR Art. 17 (Right to Erasure) and California CCPA, you can permanently delete your profile, photos, conversations, and every trace of your data with a single click. When you leave, you leave cleanly—no lingering records.',
     },
     {
       category: 'privacy',
       question: 'How do I block or report someone?',
       answer:
-        'You can block or report any profile instantly from their profile card or messaging view. Blocking is bidirectional and immediate—neither person will see or be able to contact the other again.',
+        'You have full power over your space. You can block or report any profile instantly from their card or your conversation. Blocking is immediate and two-way: neither of you will ever see each other’s profile or be able to message again.',
     },
 
     // 4. FAIR PRICING & ETHICS
@@ -138,45 +138,45 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
       category: 'pricing',
       question: 'Is Check pay-to-win?',
       answer:
-        'No. Under our Zero Pay-to-Win Pledge (Invariant D-23), subscription upgrades never grant priority matching, artificial score boosts, or the ability to bypass another person’s dealbreakers. Everyone receives equal algorithmic fairness regardless of subscription status.',
+        'Never. Under our Zero Pay-to-Win Pledge (Invariant D-23), money will never buy priority in someone’s feed, boost someone’s visibility, or override a dealbreaker. We believe love is sacred, and giving unfair advantages to the highest bidder corrupts human connection. Everyone is treated with equal dignity.',
     },
     {
       category: 'pricing',
       question: 'What subscription options are available?',
       answer:
-        'We offer a 100% Free Sanctuary tier with unlimited mutual matching, plus ethical supporter tiers (Plus Member at $14.99/mo or $7.99/mo annually, and Patron Circle) for users who wish to support independent privacy-first software with advanced sensory date filters. All pricing clearly includes local taxes (such as 20% UK VAT or EU TVA) with no surprise charges.',
+        'We provide a 100% Free Sanctuary tier that includes full mutual matching and messaging for everyone—forever. For members who want to support our mission of healing modern dating, we offer optional Supporter tiers (Plus Member at $14.99/mo or $7.99/mo annually, and Patron Circle) which unlock advanced calm date planning and deeper compatibility reports. All pricing clearly includes 20% UK VAT or local taxes with zero surprise charges.',
     },
     {
       category: 'pricing',
       question: 'How do cancellations and refunds work? Is there a cooling-off period?',
       answer:
-        'You can cancel your subscription at any time with one click. In compliance with the UK Consumer Contracts Regulations 2013, EU Directive 2011/83/EU, and California Civil Code § 1694.1, you have a 14-day cooling-off window for a 100% full refund with zero questions asked.',
+        'You can cancel your subscription at any time with 1 click in your account—no phone calls, no guilt trips, and no tricky cancellation mazes. In compliance with the UK Consumer Contracts Regulations 2013, EU Directive 2011/83/EU, and California Civil Code § 1694.1, you have an unconditional 14-day cooling-off window for a 100% full refund with zero questions asked.',
     },
 
     // 5. FIRST DATES & MESSAGING
     {
       category: 'dates',
-      question: 'What is the Date Planner (Encounter Blueprint)?',
+      question: 'What is the Date Planner (First Date Blueprint)?',
       answer:
-        'The Date Planner provides calm, low-pressure date suggestions based on shared preferences—such as recommending quiet specialty coffee shops, botanical gardens, or galleries that match both users’ sensory and schedule needs.',
+        'First dates shouldn’t feel like stressful interrogations. The Date Planner suggests peaceful, low-pressure date spots based on both of your tastes—like cozy specialty coffee nooks, quiet art galleries, or tranquil park walks where you can actually hear each other speak and be yourselves.',
     },
     {
       category: 'dates',
       question: 'Why are date spots tested for low noise (≤ 45 dB) and warm lighting?',
       answer:
-        'Clinical studies show that loud, crowded environments cause sensory fatigue and elevate cortisol, making first dates stressful and superficial. We test venues for ambient noise levels under 45 dB and warm 2700K lighting so you can hear each other clearly and relax.',
+        'Because nobody ever fell in love while shouting over noisy espresso machines or crowded bars. When an environment is noisy and glaring, your nervous system stays on high alert. We recommend venues with gentle amber lighting and soft acoustics so you can both take a deep breath, let your guard down, and connect from the heart.',
     },
     {
       category: 'dates',
       question: 'How does the Transit Midpoint Calculator work?',
       answer:
-        'It calculates a fair, balanced meeting neighborhood situated equidistant between both individuals’ general transit lines—eliminating the awkwardness of one person traveling an hour while the other walks down the street.',
+        'It finds a fair, convenient meeting spot situated halfway along both of your usual transit routes. No more one person traveling an hour across the city while the other walks down the block. It starts your connection on equal, considerate footing.',
     },
     {
       category: 'dates',
       question: 'Why is messaging designed with thoughtful pacing?',
       answer:
-        'We support asynchronous, respectful communication. There is no pressure for instant responses, and users can agree on comfortable response cadences to cultivate meaningful conversations without anxiety.',
+        'We believe great conversations take time to breathe. We intentionally removed the anxiety of "read receipts" and typing bubbles so you never feel pressured to reply in five seconds. Take your time, write what you mean, and enjoy getting to know someone without the dread of being left on read.',
     },
   ]
 
@@ -206,15 +206,15 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
         <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-white/10 backdrop-blur-xl">
           <HelpCircle className="w-3.5 h-3.5 text-emerald-400" />
           <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-300">
-            Clear Answers • Transparent Science
+            Honest Answers • Real Human Connection
           </span>
         </div>
 
         <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white">
-          Everything You Need to Know
+          Everything You Need to Know About Check
         </h1>
         <p className="text-sm text-neutral-400 font-light max-w-xl mx-auto leading-relaxed">
-          How Check works, how your privacy is protected, and why we built a human-first platform free from swiping casinos and hidden pay-to-win tricks.
+          Why endless swiping burnt everyone out, how we protect your heart from games and pay-to-win tricks, and what happens when two people actually want the same life.
         </p>
 
         {/* Quick Search Bar */}
@@ -299,25 +299,25 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
         <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.07] space-y-2">
           <ShieldCheck className="w-5 h-5 text-emerald-400" />
-          <h4 className="text-xs font-semibold text-white">Bank-Grade Privacy</h4>
+          <h4 className="text-xs font-semibold text-white">Your Privacy Is Sacred</h4>
           <p className="text-[11px] text-neutral-400 font-light leading-normal">
-            AES-256 encryption protects your personal preferences. Location is coarsened into safe distance bands.
+            AES-256 encryption protects your personal stories. Location is shielded in safe distance bands so you can explore love without fear.
           </p>
         </div>
 
         <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.07] space-y-2">
           <Sparkles className="w-5 h-5 text-purple-400" />
-          <h4 className="text-xs font-semibold text-white">Zero Pay-to-Win</h4>
+          <h4 className="text-xs font-semibold text-white">Zero Pay-to-Win Pledge</h4>
           <p className="text-[11px] text-neutral-400 font-light leading-normal">
-            No paid priority boosts or artificial ranking tricks. Compatibility is strictly reciprocal and equal for all users.
+            No paid boosts, no visibility auctions, and no games. Compatibility is equal and mutual for everyone, always.
           </p>
         </div>
 
         <div className="p-5 rounded-2xl bg-white/[0.03] border border-white/[0.07] space-y-2">
           <Heart className="w-5 h-5 text-rose-400" />
-          <h4 className="text-xs font-semibold text-white">Non-Negotiable Boundaries</h4>
+          <h4 className="text-xs font-semibold text-white">Your Heart, Protected</h4>
           <p className="text-[11px] text-neutral-400 font-light leading-normal">
-            Your hard non-negotiable boundaries are strictly respected—preventing incompatible pairings upfront.
+            Your non-negotiable boundaries are honored unconditionally. No one can ever pay to bypass your boundaries or waste your time.
           </p>
         </div>
       </div>

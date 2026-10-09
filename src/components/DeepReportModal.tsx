@@ -102,7 +102,7 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
             <div>
               <div className="flex items-center space-x-2">
                 <h2 className="text-base sm:text-lg font-bold text-white tracking-tight">
-                  Dyadic Compatibility Dossier
+                  Full Compatibility Report
                 </h2>
                 {candidate.identity.verified && (
                   <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 stroke-[2]" />
@@ -112,7 +112,7 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
                 </span>
               </div>
               <p className="text-xs text-neutral-400 font-mono mt-0.5">
-                {currentUser.identity.name.split(' ')[0]} ⇄ {candidate.identity.name.split(' ')[0]} · Deterministic Invariant Ruleset v2.4
+                {currentUser.identity.name.split(' ')[0]} ⇄ {candidate.identity.name.split(' ')[0]} · Balanced Invariant Ruleset v2.4
               </p>
             </div>
           </div>
@@ -121,7 +121,7 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
             <button
               onClick={handleClose}
               className="p-2 rounded-xl text-neutral-400 hover:text-white bg-zinc-900 hover:bg-zinc-800 border border-white/[0.08] transition"
-              title="Close Dossier"
+              title="Close Report"
             >
               <X className="w-4 h-4" />
             </button>
@@ -142,7 +142,7 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
               }`}
             >
               <Layers className="w-3 h-3" />
-              <span>Vector C_ij</span>
+              <span>Harmony Overview</span>
             </button>
             <button
               onClick={() => handleTabChange('spectra')}
@@ -153,7 +153,7 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
               }`}
             >
               <Activity className="w-3 h-3" />
-              <span>8-D Spectra</span>
+              <span>8 Core Areas</span>
             </button>
             <button
               onClick={() => handleTabChange('psychology')}
@@ -164,7 +164,7 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
               }`}
             >
               <Brain className="w-3 h-3" />
-              <span>Gottman &amp; Aron</span>
+              <span>Emotional &amp; Conflict Style</span>
             </button>
             <button
               onClick={() => handleTabChange('sanctuary')}
@@ -175,7 +175,7 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
               }`}
             >
               <Home className="w-3 h-3" />
-              <span>Sanctuary Rules</span>
+              <span>Boundaries &amp; Safe Haven</span>
             </button>
           </div>
 
@@ -224,10 +224,10 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
               </span>
             </div>
 
-            {/* Epistemic Certainty */}
+            {/* Profile Completeness & Certainty */}
             <div className="space-y-1">
               <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block">
-                Epistemic Certainty
+                Profile Completeness
               </span>
               <div className="text-2xl sm:text-3xl font-bold text-white tracking-tight font-mono">
                 {confidence.score}%
@@ -253,20 +253,20 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
             </div>
           )}
 
-          {/* TAB 1: COMPATIBILITY VECTOR C_ij */}
+          {/* TAB 1: COMPATIBILITY VECTOR */}
           {activeTab === 'vectors' && (
             <div className="bg-[#121216] rounded-2xl p-5 sm:p-6 space-y-5 border border-white/[0.08] animate-in fade-in duration-200">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
                 <div>
                   <span className="text-[10px] font-mono uppercase tracking-wider text-purple-400 font-bold block">
-                    Multi-Objective Compatibility Vector C_ij
+                    Comprehensive Compatibility Breakdown
                   </span>
                   <h3 className="text-base font-bold text-white tracking-tight">
                     Compatibility Explorer · {currentUser.identity.name.split(' ')[0]} ⇄ {candidate.identity.name.split(' ')[0]}
                   </h3>
                 </div>
                 <span className="text-[10px] font-mono text-neutral-400 px-2.5 py-1 rounded bg-zinc-950 border border-white/[0.08] self-start sm:self-auto">
-                  C_ij = (C_R, C_V, C_L, C_A, C_F, C_G, C_T, C_M, U)
+                  Multi-Factor Resonance
                 </span>
               </div>
 
@@ -458,19 +458,19 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
             </div>
           )}
 
-          {/* TAB 3: GOTTMAN & ARON PSYCHOLOGICAL ANALYSIS */}
+          {/* TAB 3: EMOTIONAL & CONFLICT DYNAMICS */}
           {activeTab === 'psychology' && (
             <div className="bg-[#121216] border border-white/[0.08] rounded-2xl p-5 sm:p-6 space-y-5 animate-in fade-in duration-200">
               <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
                 <div className="flex items-center space-x-2.5">
                   <Brain className="w-5 h-5 text-purple-400" />
                   <div>
-                    <h3 className="text-base font-bold text-white">Gottman Dyadic Stability &amp; Self-Expansion</h3>
-                    <p className="text-[10px] text-neutral-400 font-mono">Non-Linear Influence Dynamics &amp; 5:1 Equilibrium Ratio</p>
+                    <h3 className="text-base font-bold text-white">Emotional Connection &amp; Handling Disagreements</h3>
+                    <p className="text-[10px] text-neutral-400 font-mono">Calm De-escalation &amp; Natural Positivity</p>
                   </div>
                 </div>
                 <span className="text-xs font-mono px-2.5 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 font-bold">
-                  Stable Attractor
+                  Deep Harmony
                 </span>
               </div>
 
@@ -478,33 +478,33 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
                 <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.06] space-y-2">
                   <div className="flex items-center space-x-2 text-emerald-400 text-xs font-bold font-mono">
                     <TrendingUp className="w-4 h-4" />
-                    <span>Gottman 5:1 Positivity Ratio</span>
+                    <span>Gentle Conflict Repair</span>
                   </div>
                   <p className="text-xs text-neutral-300 leading-relaxed font-light">
-                    The dyadic interaction model predicts a calm micro-repair threshold. When friction occurs during disagreement, positive emotional repair attempts succeed with <strong>low latency</strong>.
+                    You both bring calm, mature emotional habits to the table. When differences or disagreements arise, you&apos;re both naturally inclined to listen, de-escalate with kindness, and repair quickly rather than holding grudges.
                   </p>
                   <div className="p-2 rounded bg-emerald-950/30 text-emerald-300 font-mono text-[11px] border border-emerald-900/40">
-                    Positivity Index: 5.8 to 1 (Optimal Co-Regulation Zone)
+                    Positivity Ratio: 5.8 to 1 (Warm &amp; Supportive Baseline)
                   </div>
                 </div>
 
                 <div className="p-4 rounded-xl bg-zinc-950/80 border border-white/[0.06] space-y-2">
                   <div className="flex items-center space-x-2 text-purple-400 text-xs font-bold font-mono">
                     <Sparkles className="w-4 h-4" />
-                    <span>Aron Self-Expansion Tensor</span>
+                    <span>Shared Curiosity &amp; Personal Growth</span>
                   </div>
                   <p className="text-xs text-neutral-300 leading-relaxed font-light">
-                    Both partners share high cognitive openness and mutual curiosity. Shared novel activities expand personal horizons without triggering attachment anxiety.
+                    You share genuine curiosity about life and love learning new things together. Exploring new ideas, places, and passions will feel inspiring and effortless rather than overwhelming.
                   </p>
                   <div className="p-2 rounded bg-purple-950/30 text-purple-300 font-mono text-[11px] border border-purple-900/40">
-                    Self-Expansion Score: 92% (Mutual Growth Catalyst)
+                    Growth Compatibility: 92% (Mutual Inspiration)
                   </div>
                 </div>
               </div>
 
               <div className="p-3.5 rounded-xl bg-zinc-950 border border-white/[0.06] flex items-center justify-between text-xs">
                 <span className="text-neutral-400">
-                  Dyadic Conflict Repair Style: <strong className="text-white">{candidate.communication.conflictStyle}</strong>
+                  Conflict Repair Style: <strong className="text-white">{candidate.communication.conflictStyle}</strong>
                 </span>
                 <span className="text-neutral-400">
                   Digital Cadence: <strong className="text-white">{candidate.communication.digitalCadence}</strong>
@@ -521,7 +521,7 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
                   <Home className="w-5 h-5 text-emerald-400" />
                   <div>
                     <h3 className="text-base font-bold text-white">Sanctuary House Rules Ledger</h3>
-                    <p className="text-[10px] text-neutral-400 font-mono">Airbnb-Style Non-Negotiable Boundaries &amp; Verification</p>
+                    <p className="text-[10px] text-neutral-400 font-mono">Honored Boundaries &amp; Mutual Non-Negotiables</p>
                   </div>
                 </div>
                 <span className="text-xs font-mono font-bold text-emerald-300 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
@@ -589,7 +589,7 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
             onClick={handleClose}
             className="px-6 py-2 rounded-xl text-xs font-bold text-black bg-white hover:bg-neutral-200 shadow-md transition active:scale-95"
           >
-            Dismiss Dossier
+            Close Report
           </button>
         </div>
       </div>

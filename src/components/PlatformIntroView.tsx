@@ -209,7 +209,7 @@ const SIMULATION_CANDIDATES: Record<string, SimulationCandidate> = {
     location: 'London · Bloomsbury',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150',
     mutualScore: 94,
-    compatibilityCategory: 'Exceptional Dyadic Harmony',
+    compatibilityCategory: 'Rare, Beautiful Connection',
     vector: {
       values: 95,
       lifestyle: 84,
@@ -776,7 +776,7 @@ export const PlatformIntroView: React.FC<PlatformIntroViewProps> = ({
             {/* Multi-Objective Compatibility Vector Bars */}
             <div className="space-y-2.5 pt-1">
               <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block">
-                Compatibility Vector C_ij
+                Multi-Dimension Compatibility
               </span>
 
               <div className="space-y-2 text-xs font-mono">
@@ -997,7 +997,7 @@ export const PlatformIntroView: React.FC<PlatformIntroViewProps> = ({
 
           <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800/80 space-y-1.5">
             <span className="text-[10px] text-purple-400 font-bold block">3. Multi-Vector Score</span>
-            <span className="text-white font-medium block">Vector C_ij</span>
+            <span className="text-white font-medium block">Core Life Alignment</span>
             <p className="text-[11px] text-slate-400 font-sans">
               Evaluates across 9 distinct compatibility objectives.
             </p>

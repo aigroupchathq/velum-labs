@@ -778,7 +778,7 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
 
           <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-1">
             <span className="text-[10px] text-purple-400 font-bold block">2. Vector</span>
-            <span className="text-white font-medium">Vector C_ij</span>
+            <span className="text-white font-medium">9-Facet Alignment</span>
             <p className="text-[10px] text-neutral-400 font-sans">Multi-objective breakdown across 9 facets.</p>
           </div>
 

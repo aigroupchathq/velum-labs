@@ -540,7 +540,7 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
                     <Music className="w-4 h-4" />
                     <span>Live Blend Simulator</span>
                   </span>
-                  <span className="text-[11px] text-neutral-400 font-mono">Dyadic Wavelengths</span>
+                  <span className="text-[11px] text-neutral-400 font-mono">How You Connect</span>
                 </div>
 
                 {/* Candidate Selector for Blend */}
