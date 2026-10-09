@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# ==============================================================================
+# .coderabbit.yaml
+# Universal Compatibility Platform ("Check") - CodeRabbit Review Configuration
+# ==============================================================================
+
+language: "en-US"
+early_access: false
+
+reviews:
+  # Review Profile: "assertive" enforces high engineering rigor, invariant verification,
+  # and architectural boundary isolation.
+  profile: "assertive"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - "main"
+      - "master"
+
+  # Path Filters: Exclude build artifacts, package managers, and binary caches
+  path_filters:
+    - "!**/node_modules/**"
+    - "!**/dist/**"
+    - "!**/.vite/**"
+    - "!**/.output/**"
+    - "!package-lock.json"
+    - "!**/*.lock"
+    - "!**/*.min.js"
+    - "!**/*.min.css"
+    - "!**/*.map"
+    - "!**/*.sqlite"
+    - "!**/*.sqlite-journal"
+    - "!**/*.db"
+    - "!.user_uploaded/**"
+    - "!**/.system_generated/**"
+    - "!**/scratch/**"
+
+  # Path-Specific Review Instructions
+  path_instructions:
+    - path: "server/src/scaling/**"
+      instructions: |
+        Verify O(1) bitmask calculations and Uber H3 / spatial index pruning are memory-efficient and thread-safe.
+        Assert Invariant D-14: Hard dealbreakers must strictly cull incompatible dyads with 0.000% leakage.
+
+    - path: "server/src/payments/**"
+      instructions: |
+        Strictly enforce Invariant D-23: Monetization and subscription tiers must NEVER bias, alter, or boost recommendation rankings or match scores (0.000% score deviation).
+        Verify idempotency on payment checkout sessions and webhook processing.
+        Verify multi-currency support (USD, GBP, EUR, CAD, AUD) and statutory compliance disclosures.
+
+    - path: "server/src/security/**"
+      instructions: |
+        Strictly enforce Invariant FLE-03: Sensitive Tier 4 attributes must use AES-256-GCM authenticated encryption with 96-bit IV and 128-bit authentication tag verification.
+        Ensure timing-safe authentication comparisons and zero plaintext leakage.
+
+    - path: "server/src/routes/privacy.ts"
+      instructions: |
+        Strictly enforce Invariant P-02: Zero raw GPS retention; ensure dual-unit coarse distance bands (<10 km / ~6 mi, etc.).
+        Verify GDPR Art. 9 explicit affirmative consent, Illinois BIPA 24-hour biometric deletion, and audit logging.
+
+    - path: "server/src/workers/**"
+      instructions: |
+        Ensure Node.js Worker Thread pool tasks run asynchronously without blocking the main event loop.
+        Verify that P99 event loop lag stays strictly below 75ms under heavy concurrency.
+
+    - path: "src/components/**"
+      instructions: |
+        Enforce Apple Human Interface Guidelines: tactile micro-interactions, dark obsidian aesthetics (#0c0c10), clean typography, and thoughtful, dignified copy.
+        Verify accessibility (ARIA attributes, semantic button elements, keyboard navigation, and color contrast).
+        Enforce React immutability, clean hook dependency arrays, and avoid synchronous setState calls within useEffect.
+
+    - path: "src/utils/matchingEngine.ts"
+      instructions: |
+        Assert dyadic harmonic mean calculation (M_ij), reciprocity symmetry, and boundary safeguards.
+        Guarantee deterministic floating-point stability and resilience against division by zero.
+
+    - path: "tools/**"
+      instructions: |
+        Verify benchmark scripts, chaos simulations, and test suites measure P99 latency, run deterministically, and avoid unhandled Promise rejections.
+
+chat:
+  auto_reply: true
