@@ -75,10 +75,10 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
 
   // Color system based on score
   const getScoreColor = useCallback(() => {
-    if (harmonicRaw >= 85) return { ring: '#ffffff', glow: 'rgba(255,255,255,0.7)', accent: '#e8e4d8', label: 'Twin Resonance', beam: '#c8c0b0' }
-    if (harmonicRaw >= 65) return { ring: '#34d399', glow: 'rgba(52,211,153,0.8)', accent: '#6ee7b7', label: 'Strong Affinity', beam: '#34d399' }
-    if (harmonicRaw >= 40) return { ring: '#fbbf24', glow: 'rgba(251,191,36,0.8)', accent: '#fcd34d', label: 'Moderate Tension', beam: '#f59e0b' }
-    return { ring: '#f87171', glow: 'rgba(248,113,113,0.8)', accent: '#fca5a5', label: 'Low Resonance', beam: '#ef4444' }
+    if (harmonicRaw >= 85) return { ring: '#ffffff', glow: 'rgba(255,255,255,0.7)', accent: '#e8e4d8', label: 'Natural Chemistry', beam: '#c8c0b0' }
+    if (harmonicRaw >= 65) return { ring: '#34d399', glow: 'rgba(52,211,153,0.8)', accent: '#6ee7b7', label: 'Strong Mutual Fit', beam: '#34d399' }
+    if (harmonicRaw >= 40) return { ring: '#fbbf24', glow: 'rgba(251,191,36,0.8)', accent: '#fcd34d', label: 'Different Priorities', beam: '#f59e0b' }
+    return { ring: '#f87171', glow: 'rgba(248,113,113,0.8)', accent: '#fca5a5', label: 'Boundary Conflict', beam: '#ef4444' }
   }, [harmonicRaw])
 
   const colors = getScoreColor()
@@ -109,10 +109,10 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
   }, [harmonicRaw])
 
   const presets = [
-    { id: 'twin', label: 'Twin Resonance', icon: '◈', aToB: 96, bToA: 94 },
-    { id: 'unrequited', label: 'Unrequited', icon: '⟢', aToB: 92, bToA: 28 },
-    { id: 'zero', label: 'Zero-Floor', icon: '✕', aToB: 88, bToA: 0 },
-    { id: 'open', label: 'Open', icon: '○', aToB: 55, bToA: 60 },
+    { id: 'twin', label: 'Soulmate Fit (95%)', icon: '✨', aToB: 96, bToA: 94 },
+    { id: 'unrequited', label: 'One-Sided Crush (43%)', icon: '⚡', aToB: 92, bToA: 28 },
+    { id: 'zero', label: 'Dealbreaker Conflict (0%)', icon: '🚫', aToB: 88, bToA: 0 },
+    { id: 'open', label: 'Growing Chemistry (57%)', icon: '🌱', aToB: 55, bToA: 60 },
   ]
 
   return (
@@ -148,12 +148,12 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
           <div>
             <span className="apple-subhead">{colors.label}</span>
             <h3 className="text-sm sm:text-base font-semibold text-white tracking-tight">
-              Two Gravitational Horizons · One Resonant Centre
+              Two Real People · One Mutual Harmony Score
             </h3>
           </div>
         </div>
 
-        {/* Tension badge */}
+        {/* Balance badge */}
         <div
           className="flex items-center space-x-2 px-3.5 py-2 rounded-2xl backdrop-blur border transition-colors duration-500"
           style={{
@@ -163,7 +163,7 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
         >
           <Activity className="w-3.5 h-3.5" style={{ color: asymmetryDelta > 20 ? '#fbbf24' : '#a1a1aa' }} />
           <span className="text-xs font-mono" style={{ color: asymmetryDelta > 20 ? '#fcd34d' : '#a1a1aa' }}>
-            Δ {asymmetryDelta}% {asymmetryDelta > 20 ? 'Directional Gap' : asymmetryDelta > 5 ? 'Near Balanced' : 'Symmetric Alignment'}
+            {asymmetryDelta > 20 ? 'Different Needs' : asymmetryDelta > 5 ? 'Closely Matched' : 'Perfect Balance'} (Δ {asymmetryDelta}%)
           </span>
         </div>
       </div>
@@ -453,12 +453,12 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
           <div
             className="p-4 rounded-2xl space-y-3 border transition-all duration-300"
             style={{
-              background: 'rgba(255,255,255,0.025)',
-              borderColor: 'rgba(255,255,255,0.06)',
+              background: 'rgba(255,255,255,0.03)',
+              borderColor: 'rgba(255,255,255,0.08)',
             }}
           >
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-neutral-300">{nameA} → {nameB}</span>
+              <span className="font-semibold text-neutral-200">{nameA} → {nameB}</span>
               <span
                 className="font-bold font-mono text-sm tabular-nums transition-colors duration-300"
                 style={{ color: aToB > 50 ? colors.ring : '#f87171' }}
@@ -466,52 +466,79 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
                 {aToB}%
               </span>
             </div>
-            {/* Single Luxury Integrated Slider */}
-            <div className="relative flex items-center h-8 group select-none mt-1">
-              {/* Outer Sleek Obsidian Track */}
-              <div className="relative w-full h-2 rounded-full bg-white/[0.08] border border-white/[0.08] overflow-hidden shadow-inner">
-                {/* Luminous Dynamic Fill */}
+
+            {/* Tactile Stepper + High-Visibility Slider */}
+            <div className="flex items-center space-x-2.5">
+              <button
+                type="button"
+                onClick={() => {
+                  setAToB(Math.max(0, aToB - 5))
+                  setActivePreset(null)
+                }}
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer shadow-sm transition"
+                aria-label={`Decrease ${nameA} resonance`}
+              >
+                -
+              </button>
+
+              <div className="relative flex-1 flex items-center h-11 group select-none">
+                {/* Visible Outer Track */}
+                <div className="relative w-full h-3 rounded-full bg-white/20 border border-white/30 overflow-hidden shadow-inner">
+                  {/* Luminous Dynamic Fill */}
+                  <div
+                    className="absolute left-0 top-0 h-full rounded-full transition-all duration-150 ease-out"
+                    style={{
+                      width: `${aToB}%`,
+                      background: `linear-gradient(90deg, ${colors.ring}90, ${colors.ring})`,
+                      boxShadow: `0 0 14px ${colors.glow}`,
+                    }}
+                  />
+                </div>
+
+                {/* Glowing Ceramic Thumb Indicator */}
                 <div
-                  className="absolute left-0 top-0 h-full rounded-full transition-all duration-150 ease-out"
-                  style={{
-                    width: `${aToB}%`,
-                    background: `linear-gradient(90deg, ${colors.ring}90, ${colors.ring})`,
-                    boxShadow: `0 0 12px ${colors.glow}`,
+                  className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
+                  style={{ left: `${aToB}%` }}
+                >
+                  <div
+                    className="w-7 h-7 rounded-full bg-white border-2 border-white flex items-center justify-center shadow-lg transition-all duration-200"
+                    style={{
+                      boxShadow: `0 2px 10px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,0,0,0.2), 0 0 16px ${colors.glow}`,
+                    }}
+                  >
+                    <div
+                      className="w-2 h-2 rounded-full transition-colors duration-200"
+                      style={{ backgroundColor: colors.ring }}
+                    />
+                  </div>
+                </div>
+
+                {/* Native touch-responsive transparent input on top */}
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={aToB}
+                  onChange={(e) => {
+                    setAToB(+e.target.value)
+                    setActivePreset(null)
                   }}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  aria-label={`${nameA} to ${nameB} mutual resonance`}
                 />
               </div>
 
-              {/* Glowing Ceramic Thumb Indicator */}
-              <div
-                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
-                style={{ left: `${aToB}%` }}
-              >
-                <div
-                  className="w-5 h-5 rounded-full bg-white border border-white/80 flex items-center justify-center transition-all duration-200"
-                  style={{
-                    boxShadow: `0 0 0 1px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.6), 0 0 14px ${colors.glow}`,
-                  }}
-                >
-                  <div
-                    className="w-1.5 h-1.5 rounded-full transition-colors duration-200"
-                    style={{ backgroundColor: colors.ring }}
-                  />
-                </div>
-              </div>
-
-              {/* Native touch-responsive transparent input on top */}
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={aToB}
-                onChange={(e) => {
-                  setAToB(+e.target.value)
+              <button
+                type="button"
+                onClick={() => {
+                  setAToB(Math.min(100, aToB + 5))
                   setActivePreset(null)
                 }}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                aria-label={`${nameA} to ${nameB} mutual resonance`}
-              />
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer shadow-sm transition"
+                aria-label={`Increase ${nameA} resonance`}
+              >
+                +
+              </button>
             </div>
           </div>
 
@@ -519,12 +546,12 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
           <div
             className="p-4 rounded-2xl space-y-3 border transition-all duration-300"
             style={{
-              background: 'rgba(255,255,255,0.025)',
-              borderColor: 'rgba(255,255,255,0.06)',
+              background: 'rgba(255,255,255,0.03)',
+              borderColor: 'rgba(255,255,255,0.08)',
             }}
           >
             <div className="flex items-center justify-between text-xs">
-              <span className="font-medium text-neutral-300">{nameB} → {nameA}</span>
+              <span className="font-semibold text-neutral-200">{nameB} → {nameA}</span>
               <span
                 className="font-bold font-mono text-sm tabular-nums transition-colors duration-300"
                 style={{ color: bToA > 50 ? colors.ring : '#f87171' }}
@@ -533,52 +560,78 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
               </span>
             </div>
 
-            {/* Single Luxury Integrated Slider */}
-            <div className="relative flex items-center h-8 group select-none mt-1">
-              {/* Outer Sleek Obsidian Track */}
-              <div className="relative w-full h-2 rounded-full bg-white/[0.08] border border-white/[0.08] overflow-hidden shadow-inner">
-                {/* Luminous Dynamic Fill */}
+            {/* Tactile Stepper + High-Visibility Slider */}
+            <div className="flex items-center space-x-2.5">
+              <button
+                type="button"
+                onClick={() => {
+                  setBToA(Math.max(0, bToA - 5))
+                  setActivePreset(null)
+                }}
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer shadow-sm transition"
+                aria-label={`Decrease ${nameB} resonance`}
+              >
+                -
+              </button>
+
+              <div className="relative flex-1 flex items-center h-11 group select-none">
+                {/* Visible Outer Track */}
+                <div className="relative w-full h-3 rounded-full bg-white/20 border border-white/30 overflow-hidden shadow-inner">
+                  {/* Luminous Dynamic Fill */}
+                  <div
+                    className="absolute left-0 top-0 h-full rounded-full transition-all duration-150 ease-out"
+                    style={{
+                      width: `${bToA}%`,
+                      background: `linear-gradient(90deg, ${colors.ring}90, ${colors.ring})`,
+                      boxShadow: `0 0 14px ${colors.glow}`,
+                    }}
+                  />
+                </div>
+
+                {/* Glowing Ceramic Thumb Indicator */}
                 <div
-                  className="absolute left-0 top-0 h-full rounded-full transition-all duration-150 ease-out"
-                  style={{
-                    width: `${bToA}%`,
-                    background: `linear-gradient(90deg, ${colors.ring}90, ${colors.ring})`,
-                    boxShadow: `0 0 12px ${colors.glow}`,
+                  className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
+                  style={{ left: `${bToA}%` }}
+                >
+                  <div
+                    className="w-7 h-7 rounded-full bg-white border-2 border-white flex items-center justify-center shadow-lg transition-all duration-200"
+                    style={{
+                      boxShadow: `0 2px 10px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,0,0,0.2), 0 0 16px ${colors.glow}`,
+                    }}
+                  >
+                    <div
+                      className="w-2 h-2 rounded-full transition-colors duration-200"
+                      style={{ backgroundColor: colors.ring }}
+                    />
+                  </div>
+                </div>
+
+                {/* Native touch-responsive transparent input on top */}
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={bToA}
+                  onChange={(e) => {
+                    setBToA(+e.target.value)
+                    setActivePreset(null)
                   }}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  aria-label={`${nameB} to ${nameA} mutual resonance`}
                 />
               </div>
 
-              {/* Glowing Ceramic Thumb Indicator */}
-              <div
-                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
-                style={{ left: `${bToA}%` }}
-              >
-                <div
-                  className="w-5 h-5 rounded-full bg-white border border-white/80 flex items-center justify-center transition-all duration-200"
-                  style={{
-                    boxShadow: `0 0 0 1px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.6), 0 0 14px ${colors.glow}`,
-                  }}
-                >
-                  <div
-                    className="w-1.5 h-1.5 rounded-full transition-colors duration-200"
-                    style={{ backgroundColor: colors.ring }}
-                  />
-                </div>
-              </div>
-
-              {/* Native touch-responsive transparent input on top */}
-              <input
-                type="range"
-                min="0"
-                max="100"
-                value={bToA}
-                onChange={(e) => {
-                  setBToA(+e.target.value)
+              <button
+                type="button"
+                onClick={() => {
+                  setBToA(Math.min(100, bToA + 5))
                   setActivePreset(null)
                 }}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                aria-label={`${nameB} to ${nameA} mutual resonance`}
-              />
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer shadow-sm transition"
+                aria-label={`Increase ${nameB} resonance`}
+              >
+                +
+              </button>
             </div>
           </div>
         </div>

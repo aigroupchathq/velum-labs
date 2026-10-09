@@ -52,9 +52,21 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
     },
     {
       category: 'overview',
+      question: 'Can I use Check on my mobile phone? How does Phone Mode work?',
+      answer:
+        'Yes, Check is 100% mobile-friendly! You can use it directly on your mobile browser or toggle the "Phone Mode" button in the top bar or menu to experience the app as an ultra-streamlined mobile interface with a convenient 5-tab bottom navigation dock, full-bleed cards, and 44px+ touch-optimized controls.',
+    },
+    {
+      category: 'overview',
       question: 'How do I get started?',
       answer:
-        'Simply complete your profile under "My Profile & Values". Set your location, daily lifestyle habits, communication preferences, and hard non-negotiables (like smoking or family plans). The system instantly calculates mutual compatibility against active candidate profiles.',
+        'Simply complete your profile under "My Profile & Preferences". Set your location, daily lifestyle habits, communication preferences, and hard non-negotiables (like smoking or family plans). The system instantly calculates mutual compatibility against active candidate profiles.',
+    },
+    {
+      category: 'overview',
+      question: 'How does "Verified Human" work?',
+      answer:
+        'To eliminate bots, fake accounts, and catfish, Check incorporates biometric liveness verification. Real humans only, with zero commercial spam profiles.',
     },
 
     // 2. MATCHING & BOUNDARIES
@@ -66,9 +78,27 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
     },
     {
       category: 'matching',
+      question: 'What are the 12 compatibility dimensions evaluated?',
+      answer:
+        'We evaluate the foundational pillars of shared living: 1) Core Values & Ethics, 2) Daily Lifestyle Rhythms (morning vs evening), 3) Communication & Conflict Resolution, 4) Dietary Respect, 5) Social Energy (introvert/extrovert balance), 6) Long-term Family Intentions, 7) Financial Outlook, 8) Sensory Ergonomics (noise & lighting sensitivity), 9) Physical Affection & Warmth, 10) Practical Distance & Transit Overlap, 11) Emotional Attachment Styles, and 12) Mutual Life Aspirations.',
+    },
+    {
+      category: 'matching',
+      question: 'Can someone bypass or ignore my non-negotiable dealbreakers?',
+      answer:
+        'Never. If you mark a boundary as non-negotiable (such as non-smoking, diet, or family plans), candidates violating that boundary are completely excluded from your feed. Unlike other apps, dealbreakers can never be overridden by paying for a premium subscription.',
+    },
+    {
+      category: 'matching',
       question: 'What does the Match Percentage score mean?',
       answer:
-        'The match percentage reflects how well your preferences, lifestyle habits, values, and daily routines align reciprocally. It is an indicator of mutual resonance—not a guarantee or authoritative judgment. We encourage you to inspect the detailed breakdown to see where your alignment is strongest.',
+        'The match percentage reflects how well your preferences, lifestyle habits, values, and daily routines align reciprocally. It is an indicator of mutual resonance—not an artificial algorithm score. You can view the full breakdown of why you matched at any time.',
+    },
+    {
+      category: 'matching',
+      question: 'Can I change my preferences, age range, or dealbreakers later?',
+      answer:
+        'Yes, anytime. Visit "My Profile" or the "Preferences & Priorities" tab to update your age horizon, distance radius, dietary tolerances, or non-negotiables. Your match recommendations update instantaneously.',
     },
     {
       category: 'matching',
@@ -92,6 +122,12 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
     },
     {
       category: 'privacy',
+      question: 'Can I delete my account and permanently erase all my data?',
+      answer:
+        'Yes. In full compliance with GDPR Art. 17 (Right to Erasure) and California CCPA, you can permanently delete your profile, photos, encrypted data, and chat history with one click. Erasure is instant and complete.',
+    },
+    {
+      category: 'privacy',
       question: 'How do I block or report someone?',
       answer:
         'You can block or report any profile instantly from their profile card or messaging view. Blocking is bidirectional and immediate—neither person will see or be able to contact the other again.',
@@ -102,13 +138,19 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
       category: 'pricing',
       question: 'Is Check pay-to-win?',
       answer:
-        'No. Under our Zero Pay-to-Win Pledge, subscription upgrades never grant priority matching, artificial score boosts, or the ability to bypass another person’s dealbreakers. Everyone receives equal algorithmic fairness regardless of subscription status.',
+        'No. Under our Zero Pay-to-Win Pledge (Invariant D-23), subscription upgrades never grant priority matching, artificial score boosts, or the ability to bypass another person’s dealbreakers. Everyone receives equal algorithmic fairness regardless of subscription status.',
     },
     {
       category: 'pricing',
       question: 'What subscription options are available?',
       answer:
-        'We offer a free Community tier as well as ethical supporter tiers for users who wish to support independent privacy-first software. All pricing clearly displays local taxes (such as VAT or GST) with no hidden fees.',
+        'We offer a 100% Free Sanctuary tier with unlimited mutual matching, plus ethical supporter tiers (Plus Member at $14.99/mo or $7.99/mo annually, and Patron Circle) for users who wish to support independent privacy-first software with advanced sensory date filters. All pricing clearly includes local taxes (such as 20% UK VAT or EU TVA) with no surprise charges.',
+    },
+    {
+      category: 'pricing',
+      question: 'How do cancellations and refunds work? Is there a cooling-off period?',
+      answer:
+        'You can cancel your subscription at any time with one click. In compliance with the UK Consumer Contracts Regulations 2013, EU Directive 2011/83/EU, and California Civil Code § 1694.1, you have a 14-day cooling-off window for a 100% full refund with zero questions asked.',
     },
 
     // 5. FIRST DATES & MESSAGING
@@ -117,6 +159,18 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
       question: 'What is the Date Planner (Encounter Blueprint)?',
       answer:
         'The Date Planner provides calm, low-pressure date suggestions based on shared preferences—such as recommending quiet specialty coffee shops, botanical gardens, or galleries that match both users’ sensory and schedule needs.',
+    },
+    {
+      category: 'dates',
+      question: 'Why are date spots tested for low noise (≤ 45 dB) and warm lighting?',
+      answer:
+        'Clinical studies show that loud, crowded environments cause sensory fatigue and elevate cortisol, making first dates stressful and superficial. We test venues for ambient noise levels under 45 dB and warm 2700K lighting so you can hear each other clearly and relax.',
+    },
+    {
+      category: 'dates',
+      question: 'How does the Transit Midpoint Calculator work?',
+      answer:
+        'It calculates a fair, balanced meeting neighborhood situated equidistant between both individuals’ general transit lines—eliminating the awkwardness of one person traveling an hour while the other walks down the street.',
     },
     {
       category: 'dates',

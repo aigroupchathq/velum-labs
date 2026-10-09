@@ -456,21 +456,53 @@ export const ProgressiveDisclosureModal: React.FC<ProgressiveDisclosureProps> = 
                     <span>Minimum Age</span>
                     <span className="font-mono">{userState.preferences.minAge}</span>
                   </div>
-                  <input
-                    type="range"
-                    min="18"
-                    max="80"
-                    value={userState.preferences.minAge}
-                    onChange={(e) => {
-                      const val = Math.min(+e.target.value, userState.preferences.maxAge - 1)
-                      setUserState({
-                        ...userState,
-                        preferences: { ...userState.preferences, minAge: val },
-                      })
-                      setSelectedQuickPreset(null)
-                    }}
-                    className="w-full accent-purple"
-                  />
+                  <div className="flex items-center space-x-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const val = Math.max(18, userState.preferences.minAge - 1)
+                        setUserState({
+                          ...userState,
+                          preferences: { ...userState.preferences, minAge: val },
+                        })
+                        setSelectedQuickPreset(null)
+                      }}
+                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-xs flex items-center justify-center shrink-0 cursor-pointer transition"
+                      aria-label="Decrease minimum age"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="range"
+                      min="18"
+                      max="80"
+                      value={userState.preferences.minAge}
+                      onChange={(e) => {
+                        const val = Math.min(+e.target.value, userState.preferences.maxAge - 1)
+                        setUserState({
+                          ...userState,
+                          preferences: { ...userState.preferences, minAge: val },
+                        })
+                        setSelectedQuickPreset(null)
+                      }}
+                      className="flex-1 accent-purple cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const val = Math.min(userState.preferences.maxAge - 1, userState.preferences.minAge + 1)
+                        setUserState({
+                          ...userState,
+                          preferences: { ...userState.preferences, minAge: val },
+                        })
+                        setSelectedQuickPreset(null)
+                      }}
+                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-xs flex items-center justify-center shrink-0 cursor-pointer transition"
+                      aria-label="Increase minimum age"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
 
                 <div className="space-y-1.5">
@@ -478,21 +510,53 @@ export const ProgressiveDisclosureModal: React.FC<ProgressiveDisclosureProps> = 
                     <span>Maximum Age</span>
                     <span className="font-mono">{userState.preferences.maxAge}</span>
                   </div>
-                  <input
-                    type="range"
-                    min="18"
-                    max="80"
-                    value={userState.preferences.maxAge}
-                    onChange={(e) => {
-                      const val = Math.max(+e.target.value, userState.preferences.minAge + 1)
-                      setUserState({
-                        ...userState,
-                        preferences: { ...userState.preferences, maxAge: val },
-                      })
-                      setSelectedQuickPreset(null)
-                    }}
-                    className="w-full accent-purple"
-                  />
+                  <div className="flex items-center space-x-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const val = Math.max(userState.preferences.minAge + 1, userState.preferences.maxAge - 1)
+                        setUserState({
+                          ...userState,
+                          preferences: { ...userState.preferences, maxAge: val },
+                        })
+                        setSelectedQuickPreset(null)
+                      }}
+                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-xs flex items-center justify-center shrink-0 cursor-pointer transition"
+                      aria-label="Decrease maximum age"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="range"
+                      min="18"
+                      max="80"
+                      value={userState.preferences.maxAge}
+                      onChange={(e) => {
+                        const val = Math.max(+e.target.value, userState.preferences.minAge + 1)
+                        setUserState({
+                          ...userState,
+                          preferences: { ...userState.preferences, maxAge: val },
+                        })
+                        setSelectedQuickPreset(null)
+                      }}
+                      className="flex-1 accent-purple cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const val = Math.min(80, userState.preferences.maxAge + 1)
+                        setUserState({
+                          ...userState,
+                          preferences: { ...userState.preferences, maxAge: val },
+                        })
+                        setSelectedQuickPreset(null)
+                      }}
+                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-xs flex items-center justify-center shrink-0 cursor-pointer transition"
+                      aria-label="Increase maximum age"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

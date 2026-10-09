@@ -93,107 +93,107 @@ export const MatchCard: React.FC<MatchCardProps> = ({
     ? '#34d399'
     : '#fbbf24'
 
-  // Spotify Blend Shared Taste Items (Celebratory Dyad Overlap)
+  // Shared Taste & Habits Overlap
   const blendTastes = [
     {
-      title: 'Shared Acoustic & Sensory Cadence',
-      description: 'Both prioritize low-stimulation quiet spaces, ambient soundscapes, and intentional conversation.',
+      title: 'Quiet Conversations & Relaxed Vibe',
+      description: 'Both prioritize calm, cozy spaces, peaceful music, and genuine unhurried conversation.',
       pct: Math.min(98, (mutuality.score || 80) + 6),
-      tag: 'Harmonic Sync',
+      tag: 'Shared Vibe',
     },
     {
-      title: 'Domestic & Weekend Ecology',
-      description: `Aligned on ${candidate.lifestyle.diet} cuisine, specialty tea/coffee rituals, and restorative Sundays.`,
+      title: 'Weekend & Daily Living Habits',
+      description: `Aligned on ${candidate.lifestyle.diet} food, morning tea/coffee rituals, and restorative weekends.`,
       pct: Math.min(95, (mutuality.score || 78) + 2),
-      tag: 'Living Rhythm',
+      tag: 'Daily Habits',
     },
     {
-      title: 'Aron Self-Expansion & Passions',
-      description: `Mutual passion for ${candidate.values.coreValues.slice(0, 3).join(', ')} and creative pursuits.`,
+      title: 'Passions & Lifelong Curiosity',
+      description: `Shared enthusiasm for ${candidate.values.coreValues.slice(0, 3).join(', ')} and creative projects.`,
       pct: Math.min(94, (mutuality.score || 75) + 4),
-      tag: 'Novelty Dyad',
+      tag: 'Shared Passions',
     },
   ]
 
-  // Dyadic Conversation Sparks (Bridge Prompts for Thoughtful Openers)
+  // Conversation Starter Sparks (Friendly Openers)
   const conversationSparks = [
-    `I resonated with your focus on ${candidate.lifestyle.diet} cuisine and intentional weekend rituals.`,
-    `Curious about your thoughts on ${candidate.values.coreValues[0]} and what anchors your day.`,
-    `Would love to explore a quiet, low-stimulus third space for a slow conversation sometime.`,
+    `I loved seeing your appreciation for ${candidate.lifestyle.diet} food and slow weekend mornings.`,
+    `Curious about what you enjoy most about ${candidate.values.coreValues[0]}—what does a great day look like for you?`,
+    `Would love to check out a quiet, cozy cafe for an unhurried conversation sometime.`,
   ]
 
-  // Airbnb-Grade Dignified "House Rules" & Sanctuary Boundaries
+  // Dignified "House Rules" & Mutual Boundaries
   const houseRules = [
     {
-      title: 'Smoke-Free Sanctuary',
-      rule: '100% tobacco and vape-free living space & personal cadence.',
+      title: 'Smoke-Free Living',
+      rule: '100% tobacco and vape-free lifestyle & personal space.',
       aligned: candidate.lifestyle.smoking === 'never',
     },
     {
-      title: 'Agreed Low-Pressure 3rd Space',
-      rule: 'First encounter strictly in a calm public third-space (specialty cafe, gallery, or botanical garden).',
+      title: 'Calm, Low-Pressure First Date',
+      rule: 'First meetup in a peaceful public spot (artisan cafe, gallery, or botanical garden).',
       aligned: true,
     },
     {
-      title: 'Asynchronous Calm (No Frantic Pacing)',
-      rule: 'Zero pressure for instant replies; a 24-hour thoughtful reflection cadence is fully respected.',
+      title: 'No Instant-Reply Pressure',
+      rule: 'Zero pressure for immediate text replies; taking time to thoughtfully respond is welcomed.',
       aligned: true,
     },
     {
-      title: 'Mutual Consent Digital Boundary',
-      rule: 'Phone numbers & private social handles exchanged only after mutual handshake.',
+      title: 'Mutual Privacy First',
+      rule: 'Phone numbers & private social handles shared only after you both feel comfortable.',
       aligned: true,
     },
   ]
 
-  // Thoughtful Personal Prompts (Interior World)
+  // Thoughtful Personal Prompts (Daily Life & Rituals)
   const interiorPrompts = [
     {
       prompt: 'A small ritual that anchors my week',
-      response: `Slow morning pour-over coffee, listening to ambient synthesizer vinyl, and reading essays without digital notifications.`,
+      response: `Slow morning pour-over coffee, listening to vinyl records, and reading without phone notifications.`,
       icon: Coffee,
     },
     {
-      prompt: 'How I recharge my nervous system',
-      response: `Warm incandescent lighting, stepping away from screens, cooking fresh seasonal food, and long quiet neighborhood walks.`,
+      prompt: 'How I recharge my batteries',
+      response: `Warm lighting, stepping away from screens, cooking fresh seasonal food, and long peaceful walks.`,
       icon: Moon,
     },
     {
       prompt: 'What emotional safety means to me',
-      response: `Space to pause during disagreement, where mutual autonomy and deep closeness nurture each other without pressure.`,
+      response: `Room to breathe and speak honestly during disagreement, where independence and closeness support each other.`,
       icon: Heart,
     },
   ]
 
-  // Steam-Style Featured Showcase Badges
+  // Featured Values & Milestone Badges
   const badges = [
     {
-      name: 'Sanctuary Tier 3',
-      desc: 'Confirmed profile & boundary alignment',
+      name: 'Verified Human',
+      desc: 'Confirmed authentic identity & boundary settings',
       icon: ShieldCheck,
       color: '#34d399',
       border: 'border-emerald-500/30',
       bg: 'bg-emerald-500/10',
     },
     {
-      name: 'Gottman 5:1 Equilibrium',
-      desc: 'High repair responsiveness & calm de-escalation style',
+      name: 'Calm Communicator',
+      desc: 'De-escalating, respectful communication style',
       icon: Heart,
       color: '#fb7185',
       border: 'border-rose-500/30',
       bg: 'bg-rose-500/10',
     },
     {
-      name: 'Zero-Ghosting Covenant',
-      desc: 'Committed to graceful closure handshake protocol',
+      name: 'Honest & Direct',
+      desc: 'Committed to open, respectful closure without ghosting',
       icon: Award,
       color: '#c084fc',
       border: 'border-purple-500/30',
       bg: 'bg-purple-500/10',
     },
     {
-      name: 'Aron Self-Expansion L2',
-      desc: 'Enthusiastic participant in mutual creative horizon growth',
+      name: 'Lifelong Learner',
+      desc: 'Loves discovering new ideas, creative hobbies & books',
       icon: Sparkles,
       color: '#38bdf8',
       border: 'border-sky-500/30',
@@ -458,7 +458,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
                   }`}
                 >
                   <Music className="w-3 h-3 text-purple-200" />
-                  <span>Taste Blend</span>
+                  <span>Shared Rhythms</span>
                 </button>
                 <button
                   onClick={() => handleTabChange('rules')}
@@ -469,7 +469,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
                   }`}
                 >
                   <Home className="w-3 h-3 text-emerald-200" />
-                  <span>House Rules</span>
+                  <span>Boundaries & Rules</span>
                 </button>
                 <button
                   onClick={() => handleTabChange('interior')}
@@ -480,7 +480,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
                   }`}
                 >
                   <BookOpen className="w-3 h-3 text-indigo-200" />
-                  <span>Interior World</span>
+                  <span>Daily Life & Rituals</span>
                 </button>
                 <button
                   onClick={() => handleTabChange('badges')}
@@ -491,7 +491,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
                   }`}
                 >
                   <Award className="w-3 h-3 text-sky-200" />
-                  <span>Badges</span>
+                  <span>Values & Milestones</span>
                 </button>
               </div>
             </div>

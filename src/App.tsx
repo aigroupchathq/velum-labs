@@ -227,6 +227,10 @@ export function App() {
             onOpenNetwork={() => setActiveView('network')}
             onOpenProfile={() => setActiveView('onboarding')}
             onOpenFirstRun={() => setIsFirstRunOpen(true)}
+            onOpenAboutFaq={() => setActiveView('about_faq')}
+            onOpenPricing={() => setActiveView('subscriptions')}
+            onOpenDatePlan={() => setActiveView('date_brief')}
+            onOpenTerms={() => setIsTermsOpen(true)}
             currentUser={currentUser}
           />
         )}

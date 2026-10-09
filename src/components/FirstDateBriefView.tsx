@@ -417,36 +417,56 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
               </span>
               <span className="font-bold font-mono text-white">{lightingTemp}K</span>
             </div>
-            {/* Luxury Integrated Lighting Slider */}
-            <div className="relative flex items-center h-8 group select-none">
-              <div className="relative w-full h-2 rounded-full bg-white/[0.08] border border-white/[0.08] overflow-hidden shadow-inner">
+            {/* Tactile Stepper + High-Visibility Lighting Slider */}
+            <div className="flex items-center space-x-2.5">
+              <button
+                type="button"
+                onClick={() => setLightingTemp(Math.max(2200, lightingTemp - 100))}
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer shadow-sm transition"
+                aria-label="Decrease lighting temperature"
+              >
+                -
+              </button>
+
+              <div className="relative flex-1 flex items-center h-11 group select-none">
+                <div className="relative w-full h-3 rounded-full bg-white/20 border border-white/30 overflow-hidden shadow-inner">
+                  <div
+                    className="absolute left-0 top-0 h-full rounded-full transition-all duration-150"
+                    style={{
+                      width: `${((lightingTemp - 2200) / 1800) * 100}%`,
+                      background: 'linear-gradient(90deg, #ff9729, #fbbf24)',
+                      boxShadow: '0 0 14px rgba(251, 191, 36, 0.6)',
+                    }}
+                  />
+                </div>
                 <div
-                  className="absolute left-0 top-0 h-full rounded-full transition-all duration-150"
-                  style={{
-                    width: `${((lightingTemp - 2200) / 1800) * 100}%`,
-                    background: 'linear-gradient(90deg, #ff9729, #fbbf24)',
-                    boxShadow: '0 0 10px rgba(251, 191, 36, 0.5)',
-                  }}
+                  className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
+                  style={{ left: `${((lightingTemp - 2200) / 1800) * 100}%` }}
+                >
+                  <div className="w-7 h-7 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-amber-400" />
+                  </div>
+                </div>
+                <input
+                  type="range"
+                  min="2200"
+                  max="4000"
+                  step="100"
+                  value={lightingTemp}
+                  onChange={(e) => setLightingTemp(+e.target.value)}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  aria-label="Lighting Temperature"
                 />
               </div>
-              <div
-                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
-                style={{ left: `${((lightingTemp - 2200) / 1800) * 100}%` }}
+
+              <button
+                type="button"
+                onClick={() => setLightingTemp(Math.min(4000, lightingTemp + 100))}
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer shadow-sm transition"
+                aria-label="Increase lighting temperature"
               >
-                <div className="w-5 h-5 rounded-full bg-white border border-white/80 shadow-md flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                </div>
-              </div>
-              <input
-                type="range"
-                min="2200"
-                max="4000"
-                step="100"
-                value={lightingTemp}
-                onChange={(e) => setLightingTemp(+e.target.value)}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                aria-label="Lighting Temperature"
-              />
+                +
+              </button>
             </div>
             <p className="text-[11px] text-neutral-400 font-light">
               Simulates low-glare warm lighting. Research shows 2700K ambient illumination reduces social anxiety by 34%.
@@ -475,35 +495,56 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
                 />
               ))}
             </div>
-            {/* Luxury Integrated Decibel Slider */}
-            <div className="relative flex items-center h-8 group select-none">
-              <div className="relative w-full h-2 rounded-full bg-white/[0.08] border border-white/[0.08] overflow-hidden shadow-inner">
+
+            {/* Tactile Stepper + High-Visibility Decibel Slider */}
+            <div className="flex items-center space-x-2.5">
+              <button
+                type="button"
+                onClick={() => setDecibelTarget(Math.max(35, decibelTarget - 5))}
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer shadow-sm transition"
+                aria-label="Decrease decibel target"
+              >
+                -
+              </button>
+
+              <div className="relative flex-1 flex items-center h-11 group select-none">
+                <div className="relative w-full h-3 rounded-full bg-white/20 border border-white/30 overflow-hidden shadow-inner">
+                  <div
+                    className="absolute left-0 top-0 h-full rounded-full transition-all duration-150"
+                    style={{
+                      width: `${((decibelTarget - 35) / 30) * 100}%`,
+                      background: 'linear-gradient(90deg, #34d399, #10b981)',
+                      boxShadow: '0 0 14px rgba(52, 211, 153, 0.6)',
+                    }}
+                  />
+                </div>
                 <div
-                  className="absolute left-0 top-0 h-full rounded-full transition-all duration-150"
-                  style={{
-                    width: `${((decibelTarget - 35) / 30) * 100}%`,
-                    background: 'linear-gradient(90deg, #34d399, #10b981)',
-                    boxShadow: '0 0 10px rgba(52, 211, 153, 0.5)',
-                  }}
+                  className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
+                  style={{ left: `${((decibelTarget - 35) / 30) * 100}%` }}
+                >
+                  <div className="w-7 h-7 rounded-full bg-white border-2 border-white shadow-lg flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500" />
+                  </div>
+                </div>
+                <input
+                  type="range"
+                  min="35"
+                  max="65"
+                  value={decibelTarget}
+                  onChange={(e) => setDecibelTarget(+e.target.value)}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  aria-label="Acoustic Decibel Target"
                 />
               </div>
-              <div
-                className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 pointer-events-none transition-transform duration-100 ease-out group-active:scale-115"
-                style={{ left: `${((decibelTarget - 35) / 30) * 100}%` }}
+
+              <button
+                type="button"
+                onClick={() => setDecibelTarget(Math.min(65, decibelTarget + 5))}
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer shadow-sm transition"
+                aria-label="Increase decibel target"
               >
-                <div className="w-5 h-5 rounded-full bg-white border border-white/80 shadow-md flex items-center justify-center">
-                  <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                </div>
-              </div>
-              <input
-                type="range"
-                min="35"
-                max="65"
-                value={decibelTarget}
-                onChange={(e) => setDecibelTarget(+e.target.value)}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
-                aria-label="Acoustic Decibel Target"
-              />
+                +
+              </button>
             </div>
           </div>
         </div>

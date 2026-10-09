@@ -847,15 +847,33 @@ export const AlgorithmNetworkVisualizer: React.FC<AlgorithmNetworkVisualizerProp
                           </span>
                           <span className="font-mono text-zinc-400 text-[11px]">{val}</span>
                         </div>
-                        <input
-                          type="range"
-                          min="0"
-                          max="60"
-                          step="5"
-                          value={val}
-                          onChange={e => handleSliderChange(key, parseInt(e.target.value, 10))}
-                          className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-purple-500"
-                        />
+                        <div className="flex items-center space-x-2">
+                          <button
+                            type="button"
+                            onClick={() => handleSliderChange(key, Math.max(0, val - 5))}
+                            className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-xs flex items-center justify-center shrink-0 cursor-pointer transition"
+                            aria-label={`Decrease ${facet.label} weight`}
+                          >
+                            -
+                          </button>
+                          <input
+                            type="range"
+                            min="0"
+                            max="60"
+                            step="5"
+                            value={val}
+                            onChange={e => handleSliderChange(key, parseInt(e.target.value, 10))}
+                            className="flex-1 cursor-pointer accent-purple"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleSliderChange(key, Math.min(60, val + 5))}
+                            className="w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-xs flex items-center justify-center shrink-0 cursor-pointer transition"
+                            aria-label={`Increase ${facet.label} weight`}
+                          >
+                            +
+                          </button>
+                        </div>
                       </div>
                     )
                   })}
