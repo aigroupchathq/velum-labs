@@ -17,6 +17,32 @@ export type AttractionModality =
   | 'sexual'
   | 'social'
 
+// --- PHASE 2 EPISTEMIC MEASUREMENT & PROVENANCE TYPES ---
+export type ObservationState =
+  | 'observed'
+  | 'not_observed'
+  | 'declined'
+  | 'not_applicable'
+
+export type AttributeProvenance =
+  | 'self_report'
+  | 'behavioral_inference'
+  | 'third_party_verified'
+
+export interface AttributeObservation<T = any> {
+  value: T
+  state: ObservationState
+  provenance: AttributeProvenance
+  confidence: number // 0.0 to 1.0 epistemic measurement confidence
+  observedAt?: string
+}
+
+export interface DistanceCoarseningZone {
+  exactDistanceKm: number
+  coarsenedBand: '< 5 km' | '5–15 km' | '15–30 km' | '30–50 km' | '50+ km'
+  fuzzedCoordinates: { lat: number; lng: number }
+}
+
 export interface AttractionProfile {
   physical: number // 1 to 5 importance
   emotional: number
@@ -48,6 +74,7 @@ export interface UserAttributeDeclaration<T = any> {
 // Full Structured User Model (Spec §6)
 export interface UniversalUserProfile {
   id: string
+  completionStage: number
   // 1. Identity
   identity: {
     name: string
@@ -58,19 +85,19 @@ export interface UniversalUserProfile {
     bio: string
     photos: string[]
     verified: boolean
-    ethnicity?: string // e.g. "Caucasian / White", "Black / African Descent", "East Asian", etc.
+    ethnicity?: string
     culturalBackground?: string
     languages: { code: string; name: string; proficiency: 'native' | 'fluent' | 'conversational' }[]
   }
   
   // 2. Relationship Objective & Intention
   intention: {
-    primaryIntent: string // e.g. "Long-Term Partnership / Marriage", "Intentional Discovery", "Casual"
+    primaryIntent: string
     relationshipStructure: 'monogamous' | 'polyamorous' | 'enm' | 'flexible' | 'undecided'
-    intentFlexibility: number // 0 to 100
+    intentFlexibility: number
   }
 
-  // 3. Attraction Preferences (Spec §12)
+  // 3. Attraction Preferences
   attractionPreferences: AttractionProfile
 
   // 4. Family Plans
@@ -85,14 +112,14 @@ export interface UniversalUserProfile {
     smoking: 'never' | 'socially' | 'regularly' | 'quitting'
     alcohol: 'sober' | 'occasional' | 'moderate' | 'frequent'
     cannabis: 'never' | 'socially' | 'regularly'
-    cleanlinessStandard: 1 | 2 | 3 | 4 | 5 // 1=relaxed to 5=immaculate
-    pets: string[] // e.g. ['dog', 'cat']
+    cleanlinessStandard: 1 | 2 | 3 | 4 | 5
+    pets: string[]
     petAllergies: string[]
   }
 
   // 6. Values & Philosophy
   values: {
-    coreValues: string[] // e.g. ['Integrity', 'Autonomy', 'Compassion', 'Growth']
+    coreValues: string[]
     religion?: string
     religiousObservance?: 1 | 2 | 3 | 4 | 5
     worldview?: string
@@ -135,52 +162,47 @@ export interface UniversalUserProfile {
   // 11. Stated Preferences (Targeting Partners)
   preferences: {
     gendersSought: string[]
-    ethnicitiesSought?: string[] // e.g. ["Caucasian / White", "Any"]
+    ethnicitiesSought?: string[]
     minAge: number
     maxAge: number
     ageFlexibilityYears: number
-    acceptablePartnerAgeRange?: { min: number; max: number } // explicitly what user is open to receiving
+    acceptablePartnerAgeRange?: { min: number; max: number }
     
-    // Diet preference (Spec §5: distinguish "I am", "I prefer", "I require", "I don't care")
     dietPreference: {
       preferredDiets: string[]
       requirementLevel: RequirementLevel
-      flexibility: number // 0 to 100
+      flexibility: number
     }
 
-    // Smoking requirement / preference
     smokingPreference: {
       allowedSmoking: string[]
       requirementLevel: RequirementLevel
       dealbreaker: boolean
     }
 
-    // Family / Children preference
     wantsChildrenPreference: {
       acceptableAnswers: string[]
       requirementLevel: RequirementLevel
       dealbreaker: boolean
     }
 
-    // Relationship Structure preference
     structurePreference: {
       acceptableStructures: string[]
       requirementLevel: RequirementLevel
       dealbreaker: boolean
     }
 
-    // Religion & Values preferences
-    valuesWeight: number // 1 to 5
-    communicationWeight: number // 1 to 5
+    valuesWeight: number
+    communicationWeight: number
   }
 
-  // 12. Privacy Controls & Safety Settings (Spec §19, §20)
+  // 12. Privacy Controls & Safety Settings
   privacy: {
     incognitoMode: boolean
     fuzzLocationRadiusKm: number
   }
 
-  // 13. Behavioral History (System Derived, Spec §22, §45)
+  // 13. Behavioral History
   behaviour: {
     responseRatePercent: number
     averageResponseHours: number
@@ -189,12 +211,90 @@ export interface UniversalUserProfile {
   }
 }
 
+// --- PHASE 2 DECOUPLED PROFILES (Y_i Self-Supply vs X_i Partner-Demand) ---
+
+export interface SelfSupplyProfile {
+  identity: UniversalUserProfile['identity']
+  intention: UniversalUserProfile['intention']
+  family: UniversalUserProfile['family']
+  lifestyle: UniversalUserProfile['lifestyle']
+  values: UniversalUserProfile['values']
+  communication: UniversalUserProfile['communication']
+  accessibility: UniversalUserProfile['accessibility']
+  geography: UniversalUserProfile['geography']
+  availability: UniversalUserProfile['availability']
+}
+
+export interface PartnerDemandProfile {
+  attractionPreferences: AttractionProfile
+  preferences: UniversalUserProfile['preferences']
+}
+
+export interface DecoupledUserProfile {
+  userId: string
+  completionStage: number
+  selfSupply: SelfSupplyProfile // Y_i
+  partnerDemand: PartnerDemandProfile // X_i
+  privacy: UniversalUserProfile['privacy']
+  behaviour: UniversalUserProfile['behaviour']
+}
+
+/**
+ * Decouples a monolithic profile into explicit Self-Supply (Y_i) and Partner-Demand (X_i)
+ */
+export function decoupleProfile(profile: UniversalUserProfile): DecoupledUserProfile {
+  return {
+    userId: profile.id,
+    completionStage: profile.completionStage,
+    selfSupply: {
+      identity: profile.identity,
+      intention: profile.intention,
+      family: profile.family,
+      lifestyle: profile.lifestyle,
+      values: profile.values,
+      communication: profile.communication,
+      accessibility: profile.accessibility,
+      geography: profile.geography,
+      availability: profile.availability,
+    },
+    partnerDemand: {
+      attractionPreferences: profile.attractionPreferences,
+      preferences: profile.preferences,
+    },
+    privacy: profile.privacy,
+    behaviour: profile.behaviour,
+  }
+}
+
+/**
+ * Reconstitutes a DecoupledUserProfile back into a UniversalUserProfile
+ */
+export function reconstituteProfile(decoupled: DecoupledUserProfile): UniversalUserProfile {
+  return {
+    id: decoupled.userId,
+    completionStage: decoupled.completionStage,
+    identity: decoupled.selfSupply.identity,
+    intention: decoupled.selfSupply.intention,
+    attractionPreferences: decoupled.partnerDemand.attractionPreferences,
+    family: decoupled.selfSupply.family,
+    lifestyle: decoupled.selfSupply.lifestyle,
+    values: decoupled.selfSupply.values,
+    communication: decoupled.selfSupply.communication,
+    accessibility: decoupled.selfSupply.accessibility,
+    geography: decoupled.selfSupply.geography,
+    availability: decoupled.selfSupply.availability,
+    preferences: decoupled.partnerDemand.preferences,
+    privacy: decoupled.privacy,
+    behaviour: decoupled.behaviour,
+  }
+}
+
 // --- EVALUATION OUTPUT STRUCTURES (Spec §7, §11, §15) ---
 
 export interface DimensionResult {
   dimensionId: string
   name: string
-  score: number | null // null when UNKNOWN (Spec §9)
+  score: number | null
   status: 'KNOWN' | 'PARTIAL' | 'UNKNOWN'
   knownWeight: number
   statedWeight: number
@@ -283,7 +383,7 @@ export interface DyadConversation {
   status: 'pending_consent' | 'active' | 'closed_gracefully'
   createdAt: string
   lastActivity: string
-  consentGivenBy: string[] // user IDs
+  consentGivenBy: string[]
   sharedPrompts: string[]
   messages: DyadMessage[]
   closureReason?: string

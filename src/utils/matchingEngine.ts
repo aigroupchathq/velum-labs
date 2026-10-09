@@ -33,6 +33,29 @@ export function calculateHaversineDistance(
 }
 
 /**
+ * Coarsens exact spatial Haversine distance into privacy-preserving geographic bands (Privacy P-02)
+ */
+export function coarsenDistanceKm(rawDistanceKm: number): '< 5 km' | '5–15 km' | '15–30 km' | '30–50 km' | '50+ km' {
+  if (rawDistanceKm < 5) return '< 5 km'
+  if (rawDistanceKm < 15) return '5–15 km'
+  if (rawDistanceKm < 30) return '15–30 km'
+  if (rawDistanceKm < 50) return '30–50 km'
+  return '50+ km'
+}
+
+/**
+ * Applies random / deterministic coordinate fuzzing (Anti-Trilateration Privacy P-02)
+ */
+export function fuzzCoordinates(lat: number, lng: number, fuzzRadiusKm = 1.5): { lat: number; lng: number } {
+  const latDelta = (fuzzRadiusKm / 111.0) * (Math.random() - 0.5)
+  const lngDelta = (fuzzRadiusKm / (111.0 * Math.cos((lat * Math.PI) / 180))) * (Math.random() - 0.5)
+  return {
+    lat: Math.round((lat + latDelta) * 10000) / 10000,
+    lng: Math.round((lng + lngDelta) * 10000) / 10000,
+  }
+}
+
+/**
  * Checks for logical contradictions in a user's stated preferences (Spec §14)
  */
 export function detectUserContradictions(user: UniversalUserProfile): PreferenceContradiction[] {
