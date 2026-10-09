@@ -49,13 +49,25 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
 }) => {
   // Local editable draft state
   const [profile, setProfile] = useState<UniversalUserProfile>(currentUser)
-  const [activeTab, setActiveTab] = useState<'sanctuary' | 'blend' | 'security' | 'onboarding'>('blend')
+  const [activeTab, setActiveTab] = useState<'vision' | 'sanctuary' | 'blend' | 'security' | 'onboarding'>('vision')
   const [selectedBlendCandidateId, setSelectedBlendCandidateId] = useState<string>(mockCandidates[0]?.id || '')
   const [saveToast, setSaveToast] = useState<string | null>(null)
   const [vibeStatus, setVibeStatus] = useState<string>(
     'Exploring quiet acoustics, gallery walks, and slow coffee in Bloomsbury.'
   )
   const [isEditingVibe, setIsEditingVibe] = useState<boolean>(false)
+
+  // Relationship Vision & Self-Mirror State (Needs #5, #6, #9, #12)
+  const [partnershipType, setPartnershipType] = useState<string>('Deep Companionship & Co-Creation')
+  const [cohabitationVision, setCohabitationVision] = useState<string>('Shared home with dedicated quiet nooks')
+  const [financePhilosophy, setFinancePhilosophy] = useState<string>('Proportional shared pool with open transparency')
+  const [reassuranceCadence, setReassuranceCadence] = useState<string>('Warm daily check-ins (1–2 thoughtful messages)')
+  const [conflictStyle, setConflictStyle] = useState<string>('Needs 20-min cool-down before speaking calmly')
+  const [rechargeStyle, setRechargeStyle] = useState<string>('Parallel play (reading/working quietly in the same room)')
+  const [acknowledgedPatterns, setAcknowledgedPatterns] = useState<string[]>([
+    'Confusing emotional adrenaline with genuine long-term fit',
+    'Ignoring mismatched family timelines early on',
+  ])
 
   // Onboarding wizard step state (if user runs the 5-step guided journey)
   const [wizardStep, setWizardStep] = useState<number>(1)
@@ -67,7 +79,7 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
 
   const handleSaveAll = () => {
     onUpdateUser(profile)
-    triggerToast('All changes saved to your Sanctuary & Blend profile.')
+    triggerToast('All changes saved to your Sanctuary & Relationship Vision.')
   }
 
   // Selected candidate for live Spotify-style Blend
@@ -242,6 +254,18 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
       <div className="flex items-center justify-between border-b border-white/[0.08] pb-4 overflow-x-auto no-scrollbar">
         <div className="flex items-center p-1 rounded-full bg-white/[0.04] border border-white/[0.08] shrink-0">
           <button
+            onClick={() => setActiveTab('vision')}
+            className={`min-h-[44px] px-4 py-2 rounded-full text-xs font-medium transition flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
+              activeTab === 'vision'
+                ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30 shadow-sm font-semibold'
+                : 'text-neutral-400 hover:text-white border border-transparent'
+            }`}
+          >
+            <Compass className="w-3.5 h-3.5 text-purple-400 shrink-0" />
+            <span>Relationship Vision <span className="hidden sm:inline">&amp; Self-Mirror</span></span>
+          </button>
+
+          <button
             onClick={() => setActiveTab('blend')}
             className={`min-h-[44px] px-4 py-2 rounded-full text-xs font-medium transition flex items-center space-x-2 cursor-pointer whitespace-nowrap ${
               activeTab === 'blend'
@@ -302,6 +326,342 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
           </div>
         )}
       </div>
+
+      {/* ======================================================== */}
+      {/* TAB 0: RELATIONSHIP VISION & SELF-MIRROR (NEEDS #5, #6, #9, #12) */}
+      {/* ======================================================== */}
+      {activeTab === 'vision' && (
+        <div className="space-y-8 animate-in fade-in duration-200">
+          {/* Editorial Intro Banner */}
+          <div className="bg-gradient-to-r from-purple-950/40 via-neutral-900/60 to-emerald-950/40 border border-purple-500/20 rounded-3xl p-6 sm:p-8 backdrop-blur-xl space-y-3">
+            <div className="flex items-center space-x-2 text-purple-300 text-xs font-mono font-semibold">
+              <Compass className="w-4 h-4" />
+              <span>THE RELATIONSHIP DECISION MIRROR</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight">
+              Turn &ldquo;I Want Someone Good&rdquo; Into a Concrete Life Vision
+            </h2>
+            <p className="text-xs sm:text-sm text-neutral-300 font-light max-w-3xl leading-relaxed">
+              Most dating apps only ask &ldquo;Who do you find attractive?&rdquo; Check acts as a mirror to help you answer the questions that actually determine your future: What kind of relationship are you building? How does your nervous system behave in intimacy? And which dating traps are you choosing to break?
+            </p>
+          </div>
+
+          {/* Module 1: What Kind of Relationship Am I Building? (Need #5) */}
+          <section className="bg-neutral-900/70 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6">
+            <div className="border-b border-white/[0.08] pb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div>
+                <span className="text-xs uppercase tracking-wider font-semibold text-purple-400">
+                  Partnership Architecture (Need #5)
+                </span>
+                <h3 className="text-lg font-bold text-white">
+                  The Kind of Partnership I Am Actively Building
+                </h3>
+              </div>
+              <span className="text-xs text-neutral-400 font-mono">
+                Active: {partnershipType}
+              </span>
+            </div>
+
+            {/* Partnership Type Cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                {
+                  id: 'Deep Companionship & Co-Creation',
+                  title: 'Deep Companionship & Co-Creation',
+                  icon: '🎨',
+                  desc: 'Shared creative, intellectual, and personal projects. Mutual emotional champions with deep conversations.',
+                },
+                {
+                  id: 'Quiet Domestic Sanctuary',
+                  title: 'Quiet Domestic Sanctuary',
+                  icon: '🏡',
+                  desc: 'Restorative home life, slow cooking, gentle rituals, low sensory stimulation, and peaceful evenings.',
+                },
+                {
+                  id: 'Family & Roots Anchor',
+                  title: 'Family & Roots Anchor',
+                  icon: '👶',
+                  desc: 'Committed home-building with shared desire for children, community roots, and generational warmth.',
+                },
+                {
+                  id: 'Independent Adventurers',
+                  title: 'Independent Adventurers',
+                  icon: '✈️',
+                  desc: 'Passionate emotional bond with high individual freedom, career autonomy, travel, and separate pursuits.',
+                },
+              ].map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => setPartnershipType(item.id)}
+                  className={`p-5 rounded-2xl border transition cursor-pointer flex flex-col justify-between space-y-3 ${
+                    partnershipType === item.id
+                      ? 'bg-purple-950/40 border-purple-500/60 shadow-[0_0_20px_rgba(168,85,247,0.2)]'
+                      : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.05] hover:border-white/15'
+                  }`}
+                >
+                  <div className="space-y-2">
+                    <span className="text-2xl block">{item.icon}</span>
+                    <h4 className="text-sm font-semibold text-white">{item.title}</h4>
+                    <p className="text-xs text-neutral-400 font-light leading-relaxed">{item.desc}</p>
+                  </div>
+                  <div className="flex items-center justify-between pt-2 border-t border-white/[0.06] text-xs">
+                    <span className="text-[11px] font-mono text-neutral-400">Status:</span>
+                    <span className={`text-[11px] font-semibold ${partnershipType === item.id ? 'text-purple-300' : 'text-neutral-500'}`}>
+                      {partnershipType === item.id ? 'Selected' : 'Select'}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Living Arrangement & Financial Philosophy Selectors */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-3">
+                <span className="text-xs font-semibold text-white block">Cohabitation &amp; Personal Space</span>
+                <div className="space-y-2 text-xs">
+                  {[
+                    'Shared home with dedicated quiet nooks',
+                    'Full full-time cohabitation in shared space',
+                    'Living in close proximity (separate homes)',
+                  ].map((opt) => (
+                    <label
+                      key={opt}
+                      onClick={() => setCohabitationVision(opt)}
+                      className={`p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition ${
+                        cohabitationVision === opt
+                          ? 'bg-purple-950/30 border-purple-500/50 text-white'
+                          : 'bg-white/[0.02] border-white/[0.06] text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      <span className="font-light">{opt}</span>
+                      {cohabitationVision === opt && <CheckCircle2 className="w-4 h-4 text-purple-400" />}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-3">
+                <span className="text-xs font-semibold text-white block">Financial Philosophy &amp; Transparency</span>
+                <div className="space-y-2 text-xs">
+                  {[
+                    'Proportional shared pool with open transparency',
+                    'Equal 50/50 split on household expenses',
+                    'Completely independent financial streams',
+                  ].map((opt) => (
+                    <label
+                      key={opt}
+                      onClick={() => setFinancePhilosophy(opt)}
+                      className={`p-2.5 rounded-xl border flex items-center justify-between cursor-pointer transition ${
+                        financePhilosophy === opt
+                          ? 'bg-emerald-950/30 border-emerald-500/50 text-white'
+                          : 'bg-white/[0.02] border-white/[0.06] text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      <span className="font-light">{opt}</span>
+                      {financePhilosophy === opt && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Module 2: Self in Relationships — The Mirror (Need #6) */}
+          <section className="bg-neutral-900/70 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6">
+            <div className="border-b border-white/[0.08] pb-4">
+              <span className="text-xs uppercase tracking-wider font-semibold text-emerald-400">
+                Self-Understanding Mirror (Need #6)
+              </span>
+              <h3 className="text-lg font-bold text-white">
+                How My Nervous System Operates in a Relationship
+              </h3>
+              <p className="text-xs text-neutral-400 font-light mt-0.5">
+                Reflecting your real-life relationship habits: communication reassurance, conflict style, and quiet recharge.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* 1. Reassurance Cadence */}
+              <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-3">
+                <span className="text-xs font-semibold text-white block">Reassurance &amp; Texting Cadence</span>
+                <div className="space-y-2 text-xs">
+                  {[
+                    'Warm daily check-ins (1–2 thoughtful messages)',
+                    'Thoughtful intermittent (fine with a quiet day)',
+                    'In-person centered (low texting between dates)',
+                  ].map((cad) => (
+                    <div
+                      key={cad}
+                      onClick={() => setReassuranceCadence(cad)}
+                      className={`p-2.5 rounded-xl border cursor-pointer transition flex items-center justify-between ${
+                        reassuranceCadence === cad
+                          ? 'bg-emerald-950/30 border-emerald-500/50 text-emerald-200'
+                          : 'bg-white/[0.02] border-white/[0.05] text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      <span className="text-xs font-light">{cad}</span>
+                      {reassuranceCadence === cad && <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0 ml-1.5" />}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[11px] text-neutral-500 font-light pt-1">
+                  Prevents mismatched expectations where one person feels ignored and the other feels overwhelmed.
+                </p>
+              </div>
+
+              {/* 2. Conflict Style */}
+              <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-3">
+                <span className="text-xs font-semibold text-white block">Conflict &amp; Disagreement Response</span>
+                <div className="space-y-2 text-xs">
+                  {[
+                    'Needs 20-min cool-down before speaking calmly',
+                    'Prefers talking it through immediately with care',
+                    'Drafts thoughts in writing first to avoid reactivity',
+                  ].map((cStyle) => (
+                    <div
+                      key={cStyle}
+                      onClick={() => setConflictStyle(cStyle)}
+                      className={`p-2.5 rounded-xl border cursor-pointer transition flex items-center justify-between ${
+                        conflictStyle === cStyle
+                          ? 'bg-purple-950/30 border-purple-500/50 text-purple-200'
+                          : 'bg-white/[0.02] border-white/[0.05] text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      <span className="text-xs font-light">{cStyle}</span>
+                      {conflictStyle === cStyle && <CheckCircle2 className="w-3.5 h-3.5 text-purple-400 shrink-0 ml-1.5" />}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[11px] text-neutral-500 font-light pt-1">
+                  Understanding de-escalation needs prevents 90% of cyclical relationship arguments.
+                </p>
+              </div>
+
+              {/* 3. Sensory Battery */}
+              <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-3">
+                <span className="text-xs font-semibold text-white block">Sensory Recharge &amp; Solitude</span>
+                <div className="space-y-2 text-xs">
+                  {[
+                    'Parallel play (reading/working quietly in the same room)',
+                    'Solitary sanctuary (needs 1–2 solo evenings weekly)',
+                    'Social host (recharges by hosting and socializing)',
+                  ].map((rStyle) => (
+                    <div
+                      key={rStyle}
+                      onClick={() => setRechargeStyle(rStyle)}
+                      className={`p-2.5 rounded-xl border cursor-pointer transition flex items-center justify-between ${
+                        rechargeStyle === rStyle
+                          ? 'bg-sky-950/30 border-sky-500/50 text-sky-200'
+                          : 'bg-white/[0.02] border-white/[0.05] text-neutral-400 hover:text-white'
+                      }`}
+                    >
+                      <span className="text-xs font-light">{rStyle}</span>
+                      {rechargeStyle === rStyle && <CheckCircle2 className="w-3.5 h-3.5 text-sky-400 shrink-0 ml-1.5" />}
+                    </div>
+                  ))}
+                </div>
+                <p className="text-[11px] text-neutral-500 font-light pt-1">
+                  Protects your battery from draining without making your partner feel rejected.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Module 3: Dating Pattern Awareness & Breaking Past Traps (Needs #2, #9, #12) */}
+          <section className="bg-neutral-900/70 border border-white/10 rounded-3xl p-6 sm:p-8 space-y-6">
+            <div className="border-b border-white/[0.08] pb-4">
+              <span className="text-xs uppercase tracking-wider font-semibold text-rose-400">
+                Pattern Awareness &amp; Past Lessons (Needs #2, #9, #12)
+              </span>
+              <h3 className="text-lg font-bold text-white">
+                Dating Traps I Am Actively Choosing to Break
+              </h3>
+              <p className="text-xs text-neutral-400 font-light mt-0.5">
+                Pattern awareness leads to better choices. Toggle the traps you recognize to keep Check calibrated as your ally.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                {
+                  id: 'Confusing emotional adrenaline with genuine long-term fit',
+                  title: 'Confusing Intensity with Intimacy',
+                  trap: 'Chasing unpredictable, aloof partners whose inconsistent replies trigger anxiety that mimics passion.',
+                  antidote: 'Check highlights grounded, consistent partners whose communication calms your nervous system.',
+                },
+                {
+                  id: 'Ignoring mismatched family timelines early on',
+                  title: 'The "They’ll Change Their Mind" Trap',
+                  trap: 'Investing months in someone whose timeline on marriage, kids, or location differs from yours, hoping love will fix it.',
+                  antidote: 'Check makes long-term life intent transparent on Day 1 so you don’t invest emotional energy blindly.',
+                },
+                {
+                  id: 'Compromising boundaries to avoid being alone',
+                  title: 'Self-Abandonment & Boundary Slippage',
+                  trap: 'Tolerating dealbreaker habits (substances, chaotic boundaries) because they look good on paper or feel charming.',
+                  antidote: 'Check strictly enforces your 3-tier dealbreakers with 0% boundary leakage.',
+                },
+                {
+                  id: 'Second-guessing your own intuition after bad dates',
+                  title: 'Distrusting Your Own Judgment',
+                  trap: 'Feeling cynical or overwhelmed after ghosting or manipulation, wondering if you can trust yourself.',
+                  antidote: 'Check never asks you to trust an algorithm. It presents transparent facts so you can trust your own informed decisions.',
+                },
+              ].map((trapItem) => {
+                const isSelected = acknowledgedPatterns.includes(trapItem.id)
+                return (
+                  <div
+                    key={trapItem.id}
+                    onClick={() => {
+                      setAcknowledgedPatterns((prev) =>
+                        prev.includes(trapItem.id)
+                          ? prev.filter((p) => p !== trapItem.id)
+                          : [...prev, trapItem.id]
+                      )
+                    }}
+                    className={`p-5 rounded-2xl border transition cursor-pointer space-y-3 ${
+                      isSelected
+                        ? 'bg-rose-950/20 border-rose-500/40 shadow-sm'
+                        : 'bg-white/[0.02] border-white/[0.06] hover:bg-white/[0.04]'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm font-semibold text-white">{trapItem.title}</h4>
+                      <span className={`text-[10px] font-mono px-2 py-0.5 rounded border ${
+                        isSelected
+                          ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
+                          : 'bg-white/[0.05] text-neutral-400 border-white/[0.08]'
+                      }`}>
+                        {isSelected ? 'Pattern Active' : 'Tap to Activate'}
+                      </span>
+                    </div>
+
+                    <p className="text-xs text-neutral-300 font-light leading-relaxed">
+                      <strong className="text-rose-300">The Past Habit:</strong> {trapItem.trap}
+                    </p>
+
+                    <p className="text-xs text-emerald-300 font-light leading-relaxed pt-2 border-t border-white/[0.06]">
+                      <strong className="text-emerald-400">The Check Antidote:</strong> {trapItem.antidote}
+                    </p>
+                  </div>
+                )
+              })}
+            </div>
+
+            {/* Save Button in Tab */}
+            <div className="pt-4 flex justify-end">
+              <button
+                type="button"
+                onClick={handleSaveAll}
+                className="px-6 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold shadow-lg shadow-emerald-900/30 transition flex items-center space-x-2 cursor-pointer"
+              >
+                <Check className="w-4 h-4" />
+                <span>Save Relationship Vision &amp; Self-Mirror</span>
+              </button>
+            </div>
+          </section>
+        </div>
+      )}
 
       {/* ======================================================== */}
       {/* TAB 1: THE SPOTIFY BLEND (TASTE & RESONANCE SPECTRUM)     */}

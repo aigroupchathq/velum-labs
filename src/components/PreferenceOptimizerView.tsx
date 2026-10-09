@@ -1,16 +1,19 @@
 // ============================================================================
 // src/components/PreferenceOptimizerView.tsx
-// Wingman: Explore My Compatibility Frontier & Pareto Optimization Engine
-// Treating dating as a constrained, reciprocal, multi-objective optimization problem
+// Wingman: Standards, Flexibility & Dating Pattern Decision Mirror
+// Helping users understand what works for them, separate dealbreakers from preferences,
+// and make grounded dating choices without clinical AI diagnosis or false precision.
 // ============================================================================
 
 import React, { useState, useMemo } from 'react'
 import {
   RotateCcw,
-  Sparkles,
-  Layers,
   Scale,
   CheckCircle2,
+  Compass,
+  Heart,
+  Flame,
+  Info,
 } from 'lucide-react'
 import type { UniversalUserProfile } from '../types'
 
@@ -18,7 +21,7 @@ interface PreferenceOptimizerProps {
   currentUser: UniversalUserProfile
 }
 
-// Preset Relaxation Scenarios (Exact specification from mathematical framework)
+// Preset Relaxation Scenarios in Human Language
 interface FrontierScenario {
   id: 'current' | 'distance' | 'diet' | 'both'
   title: string
@@ -35,7 +38,7 @@ const PRESET_SCENARIOS: FrontierScenario[] = [
   {
     id: 'current',
     title: 'Current Strict Criteria',
-    subtitle: 'Baseline hard constraints',
+    subtitle: 'Everything set to baseline strict requirements',
     matchesCount: 184,
     expectedCompatibility: 88,
     distanceKm: 0,
@@ -45,8 +48,8 @@ const PRESET_SCENARIOS: FrontierScenario[] = [
   },
   {
     id: 'distance',
-    title: 'Relax Distance',
-    subtitle: '+25 km regional transit envelope',
+    title: 'Open Transit Corridor',
+    subtitle: '+25 km regional transit envelope (40 min train)',
     matchesCount: 1240,
     expectedCompatibility: 84,
     distanceKm: 25,
@@ -56,8 +59,8 @@ const PRESET_SCENARIOS: FrontierScenario[] = [
   },
   {
     id: 'diet',
-    title: 'Relax Vegetarian Requirement',
-    subtitle: 'Flexitarian / Shared values with diet tolerance',
+    title: 'Kitchen Respect (Diet Tolerance)',
+    subtitle: 'Open to partners who respect your diet without needing identical plates',
     matchesCount: 2870,
     expectedCompatibility: 82,
     distanceKm: 0,
@@ -67,14 +70,97 @@ const PRESET_SCENARIOS: FrontierScenario[] = [
   },
   {
     id: 'both',
-    title: 'Relax Both (Distance + Diet)',
-    subtitle: 'Maximized solution space envelope',
+    title: 'Open Transit + Diet Tolerance',
+    subtitle: 'Widest healthy dating landscape preserving all core values',
     matchesCount: 6420,
     expectedCompatibility: 76,
     distanceKm: 30,
     dietFlex: 40,
     ageMargin: 2,
     badgeColor: 'border-cyan-500/30 text-cyan-300 bg-cyan-500/10',
+  },
+]
+
+type CriterionTier = 'preference' | 'friction' | 'dealbreaker'
+
+interface CriteriaItem {
+  id: string
+  label: string
+  detail: string
+  currentTier: CriterionTier
+  category: 'lifestyle' | 'values' | 'practical' | 'chemistry'
+}
+
+const INITIAL_CRITERIA: CriteriaItem[] = [
+  {
+    id: 'kids',
+    label: 'Family & Children Vision',
+    detail: 'Whether you want children, already have them, or are child-free.',
+    currentTier: 'dealbreaker',
+    category: 'values',
+  },
+  {
+    id: 'substance',
+    label: 'Smoke-Free & Substance Habits',
+    detail: 'Personal health and environmental comfort at home.',
+    currentTier: 'dealbreaker',
+    category: 'lifestyle',
+  },
+  {
+    id: 'structure',
+    label: 'Monogamous / Relationship Structure',
+    detail: 'Exclusive partnership vs polyamorous/ethical non-monogamy.',
+    currentTier: 'dealbreaker',
+    category: 'values',
+  },
+  {
+    id: 'honesty',
+    label: 'Direct Communication & No Ghosting',
+    detail: 'Emotional accountability and respect during conflict or closure.',
+    currentTier: 'dealbreaker',
+    category: 'values',
+  },
+  {
+    id: 'sleep_rhythm',
+    label: 'Morning Person vs Night Owl',
+    detail: 'Different wake/sleep rhythms and weekend pacing.',
+    currentTier: 'friction',
+    category: 'lifestyle',
+  },
+  {
+    id: 'social_battery',
+    label: 'Social Battery & Introversion',
+    detail: 'How much solitude or external socializing each person needs.',
+    currentTier: 'friction',
+    category: 'lifestyle',
+  },
+  {
+    id: 'texting_cadence',
+    label: 'Texting & Check-in Frequency',
+    detail: 'Daily constant updates vs thoughtful periodic messages.',
+    currentTier: 'friction',
+    category: 'chemistry',
+  },
+  {
+    id: 'diet_style',
+    label: 'Vegetarian / Dietary Practice',
+    detail: 'What you eat at home vs what a partner orders when dining out.',
+    currentTier: 'preference',
+    category: 'lifestyle',
+  },
+  {
+    id: 'distance_radius',
+    label: 'Lives Within 15 km Radius',
+    detail: 'Immediate neighborhood proximity vs a short transit ride.',
+    currentTier: 'preference',
+    category: 'practical',
+  },
+  {
+    id: 'hobbies',
+    label: 'Shared Hobbies & Music Taste',
+    detail: 'Overlapping Spotify genres, hiking, galleries, or cinema.',
+    currentTier: 'preference',
+    category: 'chemistry',
   },
 ]
 
@@ -87,10 +173,9 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
   const [ageFlexDelta, setAgeFlexDelta] = useState<number>(0)
   const [activeScenarioId, setActiveScenarioId] = useState<string>('current')
 
-  // Marketplace constraints state
-  const [exposureConcentrationTau, setExposureConcentrationTau] = useState<number>(0.35)
-  const [diversityDelta, setDiversityDelta] = useState<number>(0.65)
-  const [enforceMutualityHarmonic, setEnforceMutualityHarmonic] = useState<boolean>(true)
+  // Interactive Tri-Tier Sorter State
+  const [criteria, setCriteria] = useState<CriteriaItem[]>(INITIAL_CRITERIA)
+  const [activeMirrorFilter, setActiveMirrorFilter] = useState<'all' | 'dealbreaker' | 'friction' | 'preference'>('all')
 
   // Apply scenario preset
   const handleApplyScenario = (scenario: FrontierScenario) => {
@@ -100,15 +185,27 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
     setAgeFlexDelta(scenario.ageMargin)
   }
 
+  // Count criteria by tier
+  const dealbreakerCount = useMemo(() => criteria.filter(c => c.currentTier === 'dealbreaker').length, [criteria])
+  const frictionCount = useMemo(() => criteria.filter(c => c.currentTier === 'friction').length, [criteria])
+  const preferenceCount = useMemo(() => criteria.filter(c => c.currentTier === 'preference').length, [criteria])
+
+  // Move criterion to another tier
+  const handleMoveTier = (id: string, newTier: CriterionTier) => {
+    setCriteria(prev => prev.map(c => c.id === id ? { ...c, currentTier: newTier } : c))
+  }
+
   // Live dynamic calculations
   const basePool = 184
   const simulatedPool = useMemo(() => {
     const distMultiplier = 1 + (distanceDelta / 20) * 4.2
     const dietMultiplier = 1 + (dietFlexDelta / 30) * 8.5
     const ageMultiplier = 1 + (ageFlexDelta / 2) * 1.8
-    const total = Math.round(basePool * distMultiplier * dietMultiplier * ageMultiplier)
+    // Dealbreakers restrict, preferences give room
+    const tierMultiplier = Math.max(0.4, 1.2 - (dealbreakerCount - 4) * 0.15)
+    const total = Math.round(basePool * distMultiplier * dietMultiplier * ageMultiplier * tierMultiplier)
     return Math.min(10000, Math.max(184, total))
-  }, [distanceDelta, dietFlexDelta, ageFlexDelta])
+  }, [distanceDelta, dietFlexDelta, ageFlexDelta, dealbreakerCount])
 
   const simulatedExpectedCompatibility = useMemo(() => {
     const drop = (distanceDelta * 0.16) + (dietFlexDelta * 0.18) + (ageFlexDelta * 1.5)
@@ -120,53 +217,447 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
     setDistanceDelta(0)
     setDietFlexDelta(0)
     setAgeFlexDelta(0)
+    setCriteria(INITIAL_CRITERIA)
   }
 
+  // Picky Meter Diagnosis (Need #10 & #4)
+  const pickyAnalysis = useMemo(() => {
+    if (dealbreakerCount >= 7) {
+      return {
+        level: 'Potentially Too Rigid',
+        color: 'text-amber-400',
+        badgeBg: 'bg-amber-500/10 border-amber-500/30 text-amber-300',
+        headline: 'You may be treating flexible preferences as absolute dealbreakers.',
+        advice: 'When secondary habits (like proximity or identical diet) are treated as non-negotiables, you accidentally filter out emotionally mature people who share your deepest values. Consider keeping dealbreakers reserved for core safety, kids, and relationship structure.',
+      }
+    }
+    if (dealbreakerCount <= 2) {
+      return {
+        level: 'Risk of Over-Compromising',
+        color: 'text-rose-400',
+        badgeBg: 'bg-rose-500/10 border-rose-500/30 text-rose-300',
+        headline: 'You might not be protecting your boundaries firmly enough.',
+        advice: 'If you have very few non-negotiables, you risk entering relationships where you repeatedly abandon your own needs or tolerate core lifestyle mismatches hoping the other person will change.',
+      }
+    }
+    return {
+      level: 'Calibrated & Healthy',
+      color: 'text-emerald-400',
+      badgeBg: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300',
+      headline: 'Balanced standards: Firm on core values, open to human differences.',
+      advice: 'You have clear non-negotiables protecting your safety and long-term future, while leaving room for everyday differences and personal growth.',
+    }
+  }, [dealbreakerCount])
+
   return (
-    <div className="max-w-6xl mx-auto space-y-10 py-4 px-2 sm:px-4">
+    <div className="max-w-6xl mx-auto space-y-10 py-4 px-2 sm:px-4 text-neutral-100 font-sans">
 
       {/* ======================================================== */}
-      {/* 1. HEADER & FORMAL MATHEMATICAL FRAMING                  */}
+      {/* 1. HEADER & DIGNIFIED CONSUMER PHILOSOPHY                */}
       {/* ======================================================== */}
-      <header className="space-y-3 border-b border-white/[0.08] pb-6">
+      <header className="space-y-4 border-b border-white/[0.08] pb-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-mono">
-            <Layers className="w-3.5 h-3.5" />
-            <span>Multi-Objective Constrained Optimisation · Dynamic Graph</span>
+          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-medium">
+            <Compass className="w-3.5 h-3.5" />
+            <span>Relationship Decision Mirror · Pattern Awareness</span>
           </div>
 
-          <span className="text-xs font-mono text-neutral-400">
-            Model: max_π [Compatibility + Mutuality + Welfare]
-          </span>
+          <div className="flex items-center space-x-2 text-xs font-mono text-neutral-400">
+            <span className="text-emerald-400 font-semibold">{criteria.length} Calibrated Areas</span>
+            <span>•</span>
+            <span>Zero Algorithmic Coercion</span>
+          </div>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-white leading-tight">
-          Explore My Compatibility Frontier
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
+          My Standards &amp; Decision Mirror
         </h1>
-        <p className="text-sm sm:text-base text-neutral-400 font-light max-w-3xl leading-relaxed">
-          Instead of collapsing human complexity into a single superficial compatibility score, the system treats matching as a multi-objective search problem on a dynamic graph. Explore the solution space, understand non-dominated trade-offs, and inspect your Pareto efficiency frontier.
+        <p className="text-sm sm:text-base text-neutral-300 font-light max-w-3xl leading-relaxed">
+          Check is not here to fix you or diagnose your personality. It is a decision mirror to help you recognize your dating patterns: understand what kind of person actually works with you, separate real dealbreakers from everyday preferences, and avoid burning emotional energy on the wrong dynamics.
         </p>
+
+        {/* The Golden Rule Banner */}
+        <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+          <div className="flex items-center space-x-3">
+            <span className="p-2 rounded-xl bg-purple-500/10 text-purple-300 border border-purple-500/20">
+              <Scale className="w-4 h-4" />
+            </span>
+            <div>
+              <span className="font-semibold text-white block">The Golden Dating Distinction</span>
+              <span className="text-neutral-400 font-mono text-[11px]">
+                Preference ≠ Friction Point ≠ True Dealbreaker
+              </span>
+            </div>
+          </div>
+          <span className="text-neutral-400 text-xs italic font-light sm:text-right">
+            Confusing these three is why 80% of relationships waste months of energy.
+          </span>
+        </div>
       </header>
 
       {/* ======================================================== */}
-      {/* 2. FEATURE 7: EXPLORE COMPATIBILITY FRONTIER SCENARIOS   */}
+      {/* 2. THE TRI-TIER SORTER (NEED #3 & #4)                     */}
+      {/* ======================================================== */}
+      <section className="space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <span className="text-xs uppercase tracking-wider font-semibold text-purple-400">
+              Decision Architecture
+            </span>
+            <h2 className="text-xl font-bold text-white tracking-tight">
+              Separate What You Need From What You Like
+            </h2>
+            <p className="text-xs text-neutral-400 font-light mt-0.5">
+              Review how you treat each area of life. Click any tag to reclassify it and observe how your dating pool responds.
+            </p>
+          </div>
+
+          {/* Filter Pills */}
+          <div className="flex items-center space-x-1.5 p-1 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs">
+            <button
+              onClick={() => setActiveMirrorFilter('all')}
+              className={`px-3 py-1 rounded-full transition cursor-pointer ${
+                activeMirrorFilter === 'all'
+                  ? 'bg-white/20 text-white font-semibold'
+                  : 'text-neutral-400 hover:text-white'
+              }`}
+            >
+              All ({criteria.length})
+            </button>
+            <button
+              onClick={() => setActiveMirrorFilter('dealbreaker')}
+              className={`px-3 py-1 rounded-full transition cursor-pointer ${
+                activeMirrorFilter === 'dealbreaker'
+                  ? 'bg-rose-500/30 text-rose-200 font-semibold'
+                  : 'text-neutral-400 hover:text-white'
+              }`}
+            >
+              🔴 Dealbreakers ({dealbreakerCount})
+            </button>
+            <button
+              onClick={() => setActiveMirrorFilter('friction')}
+              className={`px-3 py-1 rounded-full transition cursor-pointer ${
+                activeMirrorFilter === 'friction'
+                  ? 'bg-amber-500/30 text-amber-200 font-semibold'
+                  : 'text-neutral-400 hover:text-white'
+              }`}
+            >
+              🟡 Friction ({frictionCount})
+            </button>
+            <button
+              onClick={() => setActiveMirrorFilter('preference')}
+              className={`px-3 py-1 rounded-full transition cursor-pointer ${
+                activeMirrorFilter === 'preference'
+                  ? 'bg-emerald-500/30 text-emerald-200 font-semibold'
+                  : 'text-neutral-400 hover:text-white'
+              }`}
+            >
+              🟢 Flexible ({preferenceCount})
+            </button>
+          </div>
+        </div>
+
+        {/* The Three Core Definitions Box */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="p-4 rounded-2xl bg-emerald-950/20 border border-emerald-500/30 space-y-2">
+            <div className="flex items-center space-x-2 text-emerald-300 font-semibold text-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+              <span>1. Preference (Flexible)</span>
+            </div>
+            <p className="text-xs text-neutral-300 font-light leading-relaxed">
+              "Nice-to-have qualities that bring joy, but wouldn't end an otherwise wonderful connection."
+            </p>
+            <span className="text-[11px] text-emerald-400/80 block font-mono">
+              Safe to relax · Greatly expands candidate variety
+            </span>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-amber-950/20 border border-amber-500/30 space-y-2">
+            <div className="flex items-center space-x-2 text-amber-300 font-semibold text-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+              <span>2. Friction Point (Manageable)</span>
+            </div>
+            <p className="text-xs text-neutral-300 font-light leading-relaxed">
+              "Differences requiring communication and gentle accommodation, but not fundamental incompatibilities."
+            </p>
+            <span className="text-[11px] text-amber-400/80 block font-mono">
+              Talk early · Solved by clear expectations
+            </span>
+          </div>
+
+          <div className="p-4 rounded-2xl bg-rose-950/20 border border-rose-500/30 space-y-2">
+            <div className="flex items-center space-x-2 text-rose-300 font-semibold text-sm">
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-400" />
+              <span>3. True Dealbreaker (Stay Firm)</span>
+            </div>
+            <p className="text-xs text-neutral-300 font-light leading-relaxed">
+              "Fundamental life directions and safety lines that cannot be compromised without resentment or self-loss."
+            </p>
+            <span className="text-[11px] text-rose-400/80 block font-mono">
+              Never compromise · Protects emotional sanity
+            </span>
+          </div>
+        </div>
+
+        {/* Criteria Interactive List */}
+        <div className="space-y-3 pt-2">
+          {criteria
+            .filter(c => activeMirrorFilter === 'all' || c.currentTier === activeMirrorFilter)
+            .map((item) => {
+              return (
+                <div
+                  key={item.id}
+                  className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.08] hover:border-white/15 transition flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                >
+                  <div className="space-y-1 max-w-xl">
+                    <div className="flex items-center space-x-2">
+                      <span className="font-semibold text-white text-sm">{item.label}</span>
+                      <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-white/[0.05] text-neutral-400">
+                        {item.category}
+                      </span>
+                    </div>
+                    <p className="text-xs text-neutral-400 font-light leading-relaxed">
+                      {item.detail}
+                    </p>
+                  </div>
+
+                  {/* 3-Tier Switcher Buttons */}
+                  <div className="flex items-center space-x-1.5 p-1 rounded-xl bg-neutral-900 border border-white/10 shrink-0 self-start sm:self-center">
+                    <button
+                      type="button"
+                      onClick={() => handleMoveTier(item.id, 'preference')}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-medium transition cursor-pointer flex items-center space-x-1 ${
+                        item.currentTier === 'preference'
+                          ? 'bg-emerald-600 text-white font-semibold shadow-sm'
+                          : 'text-neutral-400 hover:text-white'
+                      }`}
+                      title="Set as flexible preference"
+                    >
+                      <span>Flexible</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleMoveTier(item.id, 'friction')}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-medium transition cursor-pointer flex items-center space-x-1 ${
+                        item.currentTier === 'friction'
+                          ? 'bg-amber-600 text-white font-semibold shadow-sm'
+                          : 'text-neutral-400 hover:text-white'
+                      }`}
+                      title="Set as manageable friction point"
+                    >
+                      <span>Friction</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleMoveTier(item.id, 'dealbreaker')}
+                      className={`px-2.5 py-1 rounded-lg text-xs font-medium transition cursor-pointer flex items-center space-x-1 ${
+                        item.currentTier === 'dealbreaker'
+                          ? 'bg-rose-600 text-white font-semibold shadow-sm'
+                          : 'text-neutral-400 hover:text-white'
+                      }`}
+                      title="Set as strict dealbreaker"
+                    >
+                      <span>Dealbreaker</span>
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 3. "AM I TOO PICKY OR NOT PICKY ENOUGH?" (NEED #10 & #4) */}
+      {/* ======================================================== */}
+      <section className="p-6 sm:p-8 rounded-3xl bg-neutral-900/70 border border-white/10 space-y-6 relative overflow-hidden">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-white/[0.08]">
+          <div className="space-y-1">
+            <span className="text-xs uppercase tracking-wider font-semibold text-amber-400">
+              Self-Understanding Mirror
+            </span>
+            <h2 className="text-2xl font-bold text-white tracking-tight">
+              Am I Being Too Picky or Not Picky Enough?
+            </h2>
+            <p className="text-xs text-neutral-400 font-light">
+              Distinguishing high standards for safety from unnecessary restrictions on lifestyle quirks
+            </p>
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <div className={`px-3.5 py-1.5 rounded-full border text-xs font-semibold ${pickyAnalysis.badgeBg}`}>
+              {pickyAnalysis.level}
+            </div>
+          </div>
+        </div>
+
+        {/* Diagnosis Card */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">
+              {pickyAnalysis.headline}
+            </h3>
+            <p className="text-sm text-neutral-300 font-light leading-relaxed">
+              {pickyAnalysis.advice}
+            </p>
+
+            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] space-y-2 text-xs">
+              <span className="font-semibold text-white block">Key Self-Reflection Question:</span>
+              <p className="text-neutral-300 italic">
+                "If someone was deeply loving, honest, and shared my future life goals, would I reject them simply because of their diet, music taste, or because they live 20 minutes away?"
+              </p>
+            </div>
+          </div>
+
+          {/* Visual Gauge */}
+          <div className="p-6 rounded-2xl bg-black/40 border border-white/10 space-y-5">
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs">
+                <span className="text-neutral-400 font-medium">Standards Health (Core Safety &amp; Integrity)</span>
+                <span className="text-emerald-400 font-bold">Strong &amp; Protective</span>
+              </div>
+              <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+                <div className="bg-emerald-500 h-full rounded-full" style={{ width: '85%' }} />
+              </div>
+              <p className="text-[11px] text-neutral-400 font-light">
+                High standards on kindness, emotional honesty, and kids timeline are healthy. Never lower these.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs">
+                <span className="text-neutral-400 font-medium">Secondary Rigidity (Habits &amp; Proximity)</span>
+                <span className={`font-bold ${dealbreakerCount > 6 ? 'text-rose-400' : 'text-purple-400'}`}>
+                  {dealbreakerCount > 6 ? 'High (Constraining)' : 'Open (Flexible)'}
+                </span>
+              </div>
+              <div className="w-full bg-white/10 h-2 rounded-full overflow-hidden">
+                <div
+                  className={`h-full rounded-full ${dealbreakerCount > 6 ? 'bg-rose-500' : 'bg-purple-500'}`}
+                  style={{ width: `${Math.min(100, (dealbreakerCount / 10) * 100)}%` }}
+                />
+              </div>
+              <p className="text-[11px] text-neutral-400 font-light">
+                {dealbreakerCount > 6
+                  ? 'Notice: Treating habits as dealbreakers cuts out 70%+ of people who share your core values.'
+                  : 'Well-calibrated: Leaving room for diverse daily styles and serendipity.'}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 4. "WHAT KIND OF PERSON ACTUALLY WORKS WITH ME?" (NEED #1 & #2, #8) */}
+      {/* ======================================================== */}
+      <section className="space-y-5">
+        <div>
+          <span className="text-xs uppercase tracking-wider font-semibold text-rose-400">
+            Pattern Awareness
+          </span>
+          <h2 className="text-xl font-bold text-white tracking-tight">
+            Who You Find Exciting vs. What Actually Works Long-Term
+          </h2>
+          <p className="text-xs text-neutral-400 font-light mt-0.5">
+            Dating apps usually trap people in repeated attraction patterns. Check helps you see the difference between an intense spark and long-term peace.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Box 1: The Spark Trap */}
+          <div className="p-6 rounded-3xl bg-white/[0.02] border border-rose-500/20 space-y-4">
+            <div className="flex items-center space-x-3 text-rose-300 font-semibold text-base">
+              <span className="p-2 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400">
+                <Flame className="w-5 h-5" />
+              </span>
+              <div>
+                <span>The Intense Attraction Spark</span>
+                <span className="text-xs text-neutral-400 block font-normal">What feels instantly magnetic on paper</span>
+              </div>
+            </div>
+
+            <ul className="space-y-2 text-xs text-neutral-300 font-light">
+              <li className="flex items-start space-x-2">
+                <span className="text-rose-400 font-bold shrink-0">•</span>
+                <span>Highly charismatic, mysterious, or intensely flirtatious banter in the first 24 hours.</span>
+              </li>
+              <li className="flex items-start space-x-2">
+                <span className="text-rose-400 font-bold shrink-0">•</span>
+                <span>Unpredictable communication rhythms that trigger high emotional adrenaline and anxiety.</span>
+              </li>
+              <li className="flex items-start space-x-2">
+                <span className="text-rose-400 font-bold shrink-0">•</span>
+                <span>Vague or shifting answers about family plans, monogamy, or long-term vision.</span>
+              </li>
+              <li className="flex items-start space-x-2">
+                <span className="text-rose-400 font-bold shrink-0">•</span>
+                <span>Believing that strong chemistry will magically resolve conflicting life goals.</span>
+              </li>
+            </ul>
+
+            <div className="p-3 rounded-xl bg-rose-950/20 border border-rose-500/20 text-xs text-rose-200 font-light">
+              ⚠️ <strong>The Dating Trap:</strong> Confusing the anxiety of seeking validation with genuine romantic compatibility.
+            </div>
+          </div>
+
+          {/* Box 2: What Actually Works Long-Term */}
+          <div className="p-6 rounded-3xl bg-white/[0.02] border border-emerald-500/20 space-y-4">
+            <div className="flex items-center space-x-3 text-emerald-300 font-semibold text-base">
+              <span className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                <Heart className="w-5 h-5" />
+              </span>
+              <div>
+                <span>What Actually Sustains You</span>
+                <span className="text-xs text-neutral-400 block font-normal">What makes everyday partnership peaceful and secure</span>
+              </div>
+            </div>
+
+            <ul className="space-y-2 text-xs text-neutral-300 font-light">
+              <li className="flex items-start space-x-2">
+                <span className="text-emerald-400 font-bold shrink-0">•</span>
+                <span>Clear, predictable communication where you never have to wonder if they care or disappeared.</span>
+              </li>
+              <li className="flex items-start space-x-2">
+                <span className="text-emerald-400 font-bold shrink-0">•</span>
+                <span>Mutual respect for solitude, quiet mornings, and sensory battery recharge.</span>
+              </li>
+              <li className="flex items-start space-x-2">
+                <span className="text-emerald-400 font-bold shrink-0">•</span>
+                <span>Aligned timelines on home, children, and lifestyle so nobody feels pressured or resentful.</span>
+              </li>
+              <li className="flex items-start space-x-2">
+                <span className="text-emerald-400 font-bold shrink-0">•</span>
+                <span>Calm conflict resolution where disagreements are handled with care, not stonewalling or anger.</span>
+              </li>
+            </ul>
+
+            <div className="p-3 rounded-xl bg-emerald-950/20 border border-emerald-500/20 text-xs text-emerald-200 font-light">
+              ✨ <strong>The Grounded Result:</strong> A relationship that calms your nervous system instead of stressing it.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ======================================================== */}
+      {/* 5. EXPLORE REACHABLE RELATIONSHIP SCENARIOS              */}
       {/* ======================================================== */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <span className="apple-subhead text-emerald-400 font-mono">
-              Decision-Support Architecture
+            <span className="text-xs uppercase tracking-wider font-semibold text-cyan-400">
+              Reachable Landscape
             </span>
-            <h2 className="text-lg font-semibold text-white tracking-tight">
-              Frontier Relaxation Scenarios
+            <h2 className="text-lg font-bold text-white tracking-tight">
+              What Happens When You Relax Secondary Traits?
             </h2>
           </div>
           <span className="text-xs text-neutral-400 font-mono">
-            What happens when you relax one preference?
+            Simulate your dating landscape
           </span>
         </div>
 
-        {/* 4 Scenario Cards Grid (Exact data from specification) */}
+        {/* 4 Scenario Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {PRESET_SCENARIOS.map((scenario) => {
             const isSelected = activeScenarioId === scenario.id
@@ -200,13 +691,13 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
 
                 <div className="pt-3 border-t border-white/[0.06] space-y-1 font-mono">
                   <div className="flex justify-between items-baseline text-xs">
-                    <span className="text-neutral-400">Potential matches:</span>
+                    <span className="text-neutral-400">Reachable pool:</span>
                     <span className="text-white font-bold text-sm">
-                      {scenario.matchesCount.toLocaleString()}
+                      {scenario.matchesCount.toLocaleString()} candidates
                     </span>
                   </div>
                   <div className="flex justify-between items-baseline text-xs">
-                    <span className="text-neutral-400">Expected compatibility:</span>
+                    <span className="text-neutral-400">Avg fit score:</span>
                     <span className="text-purple-300 font-bold">
                       {scenario.expectedCompatibility}%
                     </span>
@@ -219,35 +710,35 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
       </section>
 
       {/* ======================================================== */}
-      {/* 3. INTERACTIVE PARETO TRADEOFF CURVE (XY VISUALIZATION) */}
+      {/* 6. VISUAL TRADE-OFF CURVE (LANDSCAPE EXPANSION)          */}
       {/* ======================================================== */}
       <section className="apple-panel rounded-3xl p-6 sm:p-8 space-y-6 bg-white/[0.02] border border-white/10">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/[0.06]">
           <div>
-            <span className="apple-subhead text-purple-400 font-mono">
-              Non-Dominated Solution Manifold
+            <span className="text-xs uppercase tracking-wider font-semibold text-purple-400">
+              Interactive Landscape Curve
             </span>
-            <h3 className="text-xl font-semibold text-white tracking-tight">
-              The Pareto Compatibility Frontier
+            <h3 className="text-xl font-bold text-white tracking-tight">
+              The Geometry of Dating Choices
             </h3>
             <p className="text-xs text-neutral-400 font-light mt-0.5">
-              Candidate Pool Size (X-Axis) vs. Expected Mutual Compatibility (Y-Axis)
+              Candidate Pool Size (X-Axis) vs. Expected Mutual Quality (Y-Axis)
             </p>
           </div>
 
           <div className="flex items-center space-x-4 text-xs font-mono">
             <div className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] text-right">
-              <span className="text-neutral-400 block text-[10px] uppercase">Active Solution Pool</span>
-              <strong className="text-white text-base">{simulatedPool.toLocaleString()}</strong> matches
+              <span className="text-neutral-400 block text-[10px] uppercase">Reachable Candidates</span>
+              <strong className="text-white text-base">{simulatedPool.toLocaleString()}</strong> people
             </div>
             <div className="p-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-right">
-              <span className="text-purple-300 block text-[10px] uppercase">Expected Compatibility</span>
+              <span className="text-purple-300 block text-[10px] uppercase">Expected Average Fit</span>
               <strong className="text-purple-300 text-base">{simulatedExpectedCompatibility}%</strong>
             </div>
           </div>
         </div>
 
-        {/* SVG Pareto Curve */}
+        {/* SVG Curve */}
         <div className="relative py-2">
           <svg viewBox="0 0 700 240" className="w-full h-auto select-none overflow-visible">
             <defs>
@@ -266,20 +757,16 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
             ))}
 
             {/* Axis Labels */}
-            <text x="50" y="225" fill="#64748b" fontSize="10" fontFamily="monospace">100 matches</text>
-            <text x="280" y="225" fill="#64748b" fontSize="10" fontFamily="monospace">2,500 matches</text>
-            <text x="490" y="225" fill="#64748b" fontSize="10" fontFamily="monospace">5,000 matches</text>
-            <text x="640" y="225" fill="#64748b" fontSize="10" fontFamily="monospace">7,000+</text>
+            <text x="50" y="225" fill="#64748b" fontSize="10" fontFamily="sans-serif">180 people</text>
+            <text x="280" y="225" fill="#64748b" fontSize="10" fontFamily="sans-serif">2,500 people</text>
+            <text x="490" y="225" fill="#64748b" fontSize="10" fontFamily="sans-serif">5,000 people</text>
+            <text x="640" y="225" fill="#64748b" fontSize="10" fontFamily="sans-serif">7,000+</text>
 
-            <text x="42" y="55" fill="#64748b" fontSize="10" fontFamily="monospace" textAnchor="end">95%</text>
-            <text x="42" y="105" fill="#64748b" fontSize="10" fontFamily="monospace" textAnchor="end">85%</text>
-            <text x="42" y="155" fill="#64748b" fontSize="10" fontFamily="monospace" textAnchor="end">75%</text>
+            <text x="42" y="55" fill="#64748b" fontSize="10" fontFamily="sans-serif" textAnchor="end">95%</text>
+            <text x="42" y="105" fill="#64748b" fontSize="10" fontFamily="sans-serif" textAnchor="end">85%</text>
+            <text x="42" y="155" fill="#64748b" fontSize="10" fontFamily="sans-serif" textAnchor="end">75%</text>
 
-            {/* Pareto Frontier Curve Path: (x, y) coordinates */}
-            {/* 184 matches -> y: 65 (88%)
-                1240 matches -> y: 92 (84%)
-                2870 matches -> y: 110 (82%)
-                6420 matches -> y: 155 (76%) */}
+            {/* Curve Path */}
             <path
               d="M 60 55 C 140 70, 220 90, 320 110 C 420 130, 530 150, 660 165 L 660 210 L 60 210 Z"
               fill="url(#frontierFill)"
@@ -291,26 +778,21 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
               strokeWidth="2.5"
             />
 
-            {/* Scenario Fixed Dots */}
-            {/* Current */}
+            {/* Scenario Dots */}
             <circle cx="70" cy="65" r="4" fill="#ffffff" stroke="#a855f7" strokeWidth="2" />
-            <text x="75" y="52" fill="#ffffff" fontSize="9" fontWeight="bold">Current (184 · 88%)</text>
+            <text x="75" y="52" fill="#ffffff" fontSize="9" fontWeight="bold">Current Strict (184 · 88%)</text>
 
-            {/* Relax Distance */}
             <circle cx="210" cy="92" r="4" fill="#c084fc" />
-            <text x="215" y="85" fill="#c084fc" fontSize="9">Relax Distance (1,240 · 84%)</text>
+            <text x="215" y="85" fill="#c084fc" fontSize="9">Open Transit (1,240 · 84%)</text>
 
-            {/* Relax Diet */}
             <circle cx="370" cy="110" r="4" fill="#fbbf24" />
-            <text x="375" y="103" fill="#fbbf24" fontSize="9">Relax Diet (2,870 · 82%)</text>
+            <text x="375" y="103" fill="#fbbf24" fontSize="9">Diet Tolerance (2,870 · 82%)</text>
 
-            {/* Relax Both */}
             <circle cx="620" cy="155" r="4" fill="#38bdf8" />
-            <text x="560" y="175" fill="#38bdf8" fontSize="9">Relax Both (6,420 · 76%)</text>
+            <text x="560" y="175" fill="#38bdf8" fontSize="9">Open Both (6,420 · 76%)</text>
 
             {/* Live Operational Point Marker */}
             {(() => {
-              // Normalized x: 184 -> 70, 6420 -> 620
               const normX = Math.min(640, Math.max(65, 70 + ((simulatedPool - 184) / 6236) * 550))
               const normY = Math.min(170, Math.max(55, 210 - ((simulatedExpectedCompatibility - 65) / 30) * 150))
               return (
@@ -324,24 +806,24 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
           </svg>
         </div>
 
-        <p className="text-xs text-neutral-400 font-light leading-relaxed">
-          The downward-sloping Pareto curve demonstrates the fundamental law of choice geometry: widening requirements rapidly increases network liquidity, with a predictable and measured gradient of compatibility decay.
+        <p className="text-xs text-neutral-300 font-light leading-relaxed">
+          <strong>The Insight:</strong> Notice how gently widening secondary traits (like allowing a 30-minute train ride or respecting different meal choices) expands your dating world from 184 to 2,870 people while your core compatibility barely drops from 88% to 82%. You preserve your non-negotiables while vastly improving your odds of finding a true partner.
         </p>
       </section>
 
       {/* ======================================================== */}
-      {/* 4. PARETO DOMINANCE INSPECTOR (CANDIDATE A vs B)        */}
+      {/* 7. WHY ONE SCORE FAILS: THE HONEST TRADE-OFF (A vs B)    */}
       {/* ======================================================== */}
       <section className="apple-panel rounded-3xl p-6 sm:p-8 space-y-6 bg-white/[0.02] border border-white/10">
         <div>
-          <span className="apple-subhead text-amber-400 font-mono">
-            Pareto Optimality Principle (Section 3)
+          <span className="text-xs uppercase tracking-wider font-semibold text-amber-400">
+            Real Decision Case Study
           </span>
-          <h2 className="text-xl font-semibold text-white tracking-tight">
-            Non-Dominated Dyad Comparisons
+          <h2 className="text-xl font-bold text-white tracking-tight">
+            Why Collapsing Humans Into One Score Fails
           </h2>
           <p className="text-xs text-neutral-400 font-light mt-0.5">
-            Why collapsing multidimensional compatibility into a single scalar destroys crucial information
+            Two different candidates can both be great matches, but for completely different reasons. An algorithm shouldn't make that choice for you.
           </p>
         </div>
 
@@ -351,30 +833,30 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-wider text-purple-300 font-bold block">
-                  Pareto-Optimal Candidate A
+                  Candidate A
                 </span>
-                <h4 className="text-base font-semibold text-white">Maya Lin (Profile A)</h4>
+                <h4 className="text-base font-semibold text-white">Maya Lin</h4>
               </div>
-              <span className="px-2.5 py-1 rounded bg-purple-500/20 text-purple-300 font-mono text-xs font-bold">
-                Non-Dominated
+              <span className="px-2.5 py-1 rounded bg-purple-500/20 text-purple-300 text-xs font-semibold">
+                High Worldview Alignment
               </span>
             </div>
 
-            <div className="space-y-2.5 font-mono text-xs">
+            <div className="space-y-2.5 text-xs">
               <div className="space-y-1">
                 <div className="flex justify-between text-neutral-300">
-                  <span>Values (C_V)</span>
-                  <span className="text-white font-bold">95</span>
+                  <span>Core Values &amp; Worldview</span>
+                  <span className="text-emerald-400 font-bold">95% (Near Twin)</span>
                 </div>
                 <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-purple-500 h-full rounded-full" style={{ width: '95%' }} />
+                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: '95%' }} />
                 </div>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-neutral-300">
-                  <span>Distance / Geography (C_G)</span>
-                  <span className="text-white font-bold">90</span>
+                  <span>Geographic Proximity</span>
+                  <span className="text-purple-300 font-bold">90% (Lives in same borough)</span>
                 </div>
                 <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
                   <div className="bg-purple-500 h-full rounded-full" style={{ width: '90%' }} />
@@ -383,37 +865,17 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
 
               <div className="space-y-1">
                 <div className="flex justify-between text-neutral-300">
-                  <span>Attraction (C_A)</span>
-                  <span className="text-white font-bold">80</span>
+                  <span>Family &amp; Kids Timeline</span>
+                  <span className="text-amber-300 font-bold">60% (Prefers 4–5 years / flexible)</span>
                 </div>
                 <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-purple-500 h-full rounded-full" style={{ width: '80%' }} />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <div className="flex justify-between text-neutral-300">
-                  <span>Lifestyle (C_L)</span>
-                  <span className="text-white font-bold">72</span>
-                </div>
-                <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-purple-500 h-full rounded-full" style={{ width: '72%' }} />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <div className="flex justify-between text-neutral-300">
-                  <span>Family (C_F)</span>
-                  <span className="text-white font-bold">60</span>
-                </div>
-                <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-purple-500 h-full rounded-full" style={{ width: '60%' }} />
+                  <div className="bg-amber-500 h-full rounded-full" style={{ width: '60%' }} />
                 </div>
               </div>
             </div>
 
-            <p className="text-[11px] text-neutral-400 font-light pt-2 border-t border-white/[0.04]">
-              Excels in shared philosophical values and urban proximity; lower on shared family timeline.
+            <p className="text-xs text-neutral-300 font-light pt-2 border-t border-white/[0.04] leading-relaxed">
+              <strong>The Trade-off:</strong> Maya offers an immediate, magical philosophical and conversational spark close to home, but you would need an early conversation about family pacing.
             </p>
           </div>
 
@@ -422,116 +884,92 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
             <div className="flex items-center justify-between pb-3 border-b border-white/[0.06]">
               <div>
                 <span className="text-[10px] font-mono uppercase tracking-wider text-cyan-300 font-bold block">
-                  Pareto-Optimal Candidate B
+                  Candidate B
                 </span>
-                <h4 className="text-base font-semibold text-white">Julian Vance (Profile B)</h4>
+                <h4 className="text-base font-semibold text-white">Julian Vance</h4>
               </div>
-              <span className="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 font-mono text-xs font-bold">
-                Non-Dominated
+              <span className="px-2.5 py-1 rounded bg-cyan-500/20 text-cyan-300 text-xs font-semibold">
+                High Domestic &amp; Family Alignment
               </span>
             </div>
 
-            <div className="space-y-2.5 font-mono text-xs">
+            <div className="space-y-2.5 text-xs">
               <div className="space-y-1">
                 <div className="flex justify-between text-neutral-300">
-                  <span>Lifestyle (C_L)</span>
-                  <span className="text-white font-bold">90</span>
+                  <span>Daily Living Rhythm &amp; Quiet Domestic Pace</span>
+                  <span className="text-emerald-400 font-bold">92% (Identical rhythm)</span>
                 </div>
                 <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-cyan-500 h-full rounded-full" style={{ width: '90%' }} />
+                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: '92%' }} />
                 </div>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-neutral-300">
-                  <span>Family (C_F)</span>
-                  <span className="text-white font-bold">90</span>
+                  <span>Family &amp; Children Timeline</span>
+                  <span className="text-emerald-400 font-bold">90% (Wants family in 2–3 yrs)</span>
                 </div>
                 <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-cyan-500 h-full rounded-full" style={{ width: '90%' }} />
+                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: '90%' }} />
                 </div>
               </div>
 
               <div className="space-y-1">
                 <div className="flex justify-between text-neutral-300">
-                  <span>Attraction (C_A)</span>
-                  <span className="text-white font-bold">85</span>
+                  <span>Geographic Proximity</span>
+                  <span className="text-amber-300 font-bold">50% (Lives 35 km away across town)</span>
                 </div>
                 <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-cyan-500 h-full rounded-full" style={{ width: '85%' }} />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <div className="flex justify-between text-neutral-300">
-                  <span>Values (C_V)</span>
-                  <span className="text-white font-bold">82</span>
-                </div>
-                <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-cyan-500 h-full rounded-full" style={{ width: '82%' }} />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <div className="flex justify-between text-neutral-300">
-                  <span>Distance / Geography (C_G)</span>
-                  <span className="text-white font-bold">50</span>
-                </div>
-                <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-cyan-500 h-full rounded-full" style={{ width: '50%' }} />
+                  <div className="bg-amber-500 h-full rounded-full" style={{ width: '50%' }} />
                 </div>
               </div>
             </div>
 
-            <p className="text-[11px] text-neutral-400 font-light pt-2 border-t border-white/[0.04]">
-              Excels in daily rhythm and family cohabitation; resides further across the metropolitan zone.
+            <p className="text-xs text-neutral-300 font-light pt-2 border-t border-white/[0.04] leading-relaxed">
+              <strong>The Trade-off:</strong> Julian matches your long-term domestic life and family dreams seamlessly, but seeing each other requires a train commute across the city.
             </p>
           </div>
         </div>
 
-        {/* Mathematical Proof Alert */}
+        {/* Human Agency Takeaway */}
         <div className="p-4 rounded-2xl bg-amber-500/[0.06] border border-amber-500/20 text-xs text-neutral-300 space-y-1.5 leading-relaxed font-light">
-          <div className="flex items-center space-x-2 text-amber-300 font-semibold font-mono text-xs">
-            <Scale className="w-4 h-4" />
-            <span>Mathematical Proof of Non-Domination</span>
+          <div className="flex items-center space-x-2 text-amber-300 font-semibold text-xs">
+            <Info className="w-4 h-4" />
+            <span>Check's Commitment to Your Autonomy</span>
           </div>
           <p>
-            Candidate A does not dominate Candidate B (C_A ≱ C_B), because Candidate B scores higher on Lifestyle (90 vs 72) and Family (90 vs 60). Conversely, Candidate B does not dominate Candidate A, because Candidate A scores higher on Values (95 vs 82) and Distance (90 vs 50).
-          </p>
-          <p className="font-mono text-amber-200">
-            <strong>Conclusion:</strong> Both candidates belong to your Pareto frontier (P*). Preserving both prevents arbitrary metric flattening and respects individual agency.
+            Neither candidate is "objectively better." Maya offers immediate intellectual and physical closeness; Julian offers deep long-term domestic security. An algorithm shouldn't pretend to know which one you value more today. Check surfaces the genuine trade-off with dignity, so you make your own informed decision.
           </p>
         </div>
       </section>
 
       {/* ======================================================== */}
-      {/* 5. CONTINUOUS TOLERANCE SLIDERS & FINE TUNING           */}
+      {/* 8. CONTINUOUS TOLERANCE SLIDERS                          */}
       {/* ======================================================== */}
       <section className="apple-panel rounded-3xl p-6 sm:p-7 space-y-6 bg-white/[0.02] border border-white/10">
         <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
           <div>
-            <h2 className="text-xs font-semibold text-white uppercase tracking-wider">
-              Continuous Solution Space Sliders
+            <h2 className="text-sm font-semibold text-white uppercase tracking-wider">
+              Fine-Tune Your Boundaries
             </h2>
             <p className="text-xs text-neutral-400 font-light">
-              Fine-tune your personal constraints to see the immediate expansion of reachable dyads
+              Adjust individual parameters to see how your reachable dating landscape responds in real-time
             </p>
           </div>
           <button
             onClick={handleReset}
-            className="apple-pill-btn px-3 py-1.5 text-xs text-neutral-400 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] flex items-center space-x-1.5"
+            className="apple-pill-btn px-3 py-1.5 text-xs text-neutral-400 hover:text-white bg-white/[0.05] hover:bg-white/[0.1] border border-white/[0.08] flex items-center space-x-1.5 cursor-pointer"
           >
             <RotateCcw className="w-3 h-3" />
-            <span>Reset to Strict</span>
+            <span>Reset All</span>
           </button>
         </div>
 
         {/* 1. Distance Radius */}
-        {/* 1. Distance Radius */}
         <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-3">
           <div className="flex justify-between items-center text-xs">
-            <span className="text-neutral-300 font-medium">Search Radius Flexibility</span>
-            <span className="font-mono text-purple-300 font-bold">+{distanceDelta} km</span>
+            <span className="text-neutral-300 font-medium">Search Distance Tolerance</span>
+            <span className="font-mono text-purple-300 font-bold">+{distanceDelta} km ({currentUser.geography.maxDistanceKm + distanceDelta} km total)</span>
           </div>
           <div className="flex items-center space-x-2.5">
             <button
@@ -570,8 +1008,8 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
             </button>
           </div>
           <div className="flex justify-between text-[11px] text-neutral-400 font-mono">
-            <span>Base: {currentUser.geography.maxDistanceKm} km</span>
-            <span>Simulated: {currentUser.geography.maxDistanceKm + distanceDelta} km</span>
+            <span>Tight neighborhood ({currentUser.geography.maxDistanceKm} km)</span>
+            <span>Wider regional transit ({currentUser.geography.maxDistanceKm + 60} km)</span>
           </div>
         </div>
 
@@ -618,8 +1056,8 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
             </button>
           </div>
           <div className="flex justify-between text-[11px] text-neutral-400 font-mono">
-            <span>Strict Diet (0%)</span>
-            <span>Kitchen Respect Allowed (50%)</span>
+            <span>Strict identical diet (0%)</span>
+            <span>Kitchen respect allowed (50%)</span>
           </div>
         </div>
 
@@ -666,158 +1104,75 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
             </button>
           </div>
           <div className="flex justify-between text-[11px] text-neutral-400 font-mono">
-            <span>Base: [{currentUser.preferences.minAge}–{currentUser.preferences.maxAge}]</span>
+            <span>Exact target: [{currentUser.preferences.minAge}–{currentUser.preferences.maxAge}]</span>
             <span>Simulated: [{currentUser.preferences.minAge - ageFlexDelta}–{currentUser.preferences.maxAge + ageFlexDelta}]</span>
           </div>
         </div>
       </section>
 
       {/* ======================================================== */}
-      {/* 6. MARKETPLACE LEVEL REGULARIZATION (SECTION 5)          */}
+      {/* 9. FAIR DISCOVERY & ZERO PAY-TO-WIN SAFEGUARDS           */}
       {/* ======================================================== */}
       <section className="apple-panel rounded-3xl p-6 sm:p-8 space-y-6 bg-white/[0.02] border border-white/10">
         <div>
-          <span className="apple-subhead text-sky-400 font-mono">
-            Marketplace Equilibrium & Anti-Concentration (Section 5)
+          <span className="text-xs uppercase tracking-wider font-semibold text-emerald-400">
+            Platform Protection Pledge
           </span>
-          <h2 className="text-xl font-semibold text-white tracking-tight">
-            Macro-Marketplace Regularization
+          <h2 className="text-xl font-bold text-white tracking-tight">
+            Fair Discovery &amp; Anti-Monopoly Guarantees
           </h2>
           <p className="text-xs text-neutral-400 font-light mt-0.5">
-            Preventing superstar attention concentration where 2% of candidates monopolize 80% of exposure
+            How Check protects regular people from algorithmic popularity contests and pay-to-win mechanics
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {/* Exposure Gini Cap tau */}
-          <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-neutral-300 font-medium">Exposure Gini Cap (τ)</span>
-              <span className="font-mono text-purple-300 text-xs font-bold">{exposureConcentrationTau}</span>
-            </div>
-            <input
-              type="range"
-              min="0.2"
-              max="0.6"
-              step="0.05"
-              value={exposureConcentrationTau}
-              onChange={(e) => setExposureConcentrationTau(parseFloat(e.target.value))}
-              className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
-            />
-            <p className="text-[11px] text-neutral-400 font-light">
-              Limits superstar profile hoarding, distributing mutual discovery uniformly across healthy cohorts.
-            </p>
-          </div>
-
-          {/* Candidate Diversity delta */}
-          <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-2">
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-neutral-300 font-medium">Diversity Floor (δ)</span>
-              <span className="font-mono text-emerald-300 text-xs font-bold">{diversityDelta}</span>
-            </div>
-            <input
-              type="range"
-              min="0.4"
-              max="0.9"
-              step="0.05"
-              value={diversityDelta}
-              onChange={(e) => setDiversityDelta(parseFloat(e.target.value))}
-              className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-emerald-500"
-            />
-            <p className="text-[11px] text-neutral-400 font-light">
-              Guarantees background diversity in discovery feeds, breaking algorithmic echo chambers.
-            </p>
-          </div>
-
-          {/* Harmonic Mutuality Toggle */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          {/* Anti-Hoarding */}
           <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-2 flex flex-col justify-between">
             <div>
-              <div className="flex justify-between items-center">
-                <span className="text-xs text-neutral-300 font-medium">Reciprocal Mutuality</span>
-                <input
-                  type="checkbox"
-                  checked={enforceMutualityHarmonic}
-                  onChange={(e) => setEnforceMutualityHarmonic(e.target.checked)}
-                  className="rounded bg-slate-800 text-purple-600 focus:ring-0"
-                />
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-white">Equal Attention Distribution</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
               </div>
-              <p className="text-[11px] text-neutral-400 font-light mt-1">
-                Enforces harmonic mean M_ij = (2 · S_ij · S_ji) / (S_ij + S_ji), ensuring high mutual desire.
+              <p className="text-neutral-400 font-light mt-1">
+                Conventional apps give 80% of views to the top 2% of profiles. Check enforces fair rotation so every verified person gets seen by genuinely compatible partners.
               </p>
             </div>
-            <span className="text-[10px] font-mono text-emerald-400 uppercase font-semibold">
-              {enforceMutualityHarmonic ? 'Active (Zero Asymmetric Waste)' : 'Unconstrained'}
+            <span className="text-[11px] font-mono text-emerald-400 font-semibold">
+              Active · No Attention Monopolies
             </span>
           </div>
-        </div>
-      </section>
 
-      {/* ======================================================== */}
-      {/* 7. THE COMPLETE 8-STAGE MATHEMATICAL PIPELINE (SECTION 8) */}
-      {/* ======================================================== */}
-      <section className="apple-panel rounded-3xl p-6 sm:p-8 space-y-6 bg-white/[0.02] border border-white/10">
-        <div>
-          <span className="apple-subhead text-fuchsia-400 font-mono">
-            Full Pipeline Architecture (Section 8)
-          </span>
-          <h2 className="text-xl font-semibold text-white tracking-tight">
-            The Algorithmic Pipeline
-          </h2>
-          <p className="text-xs text-neutral-400 font-light mt-0.5">
-            How scarce human attention is allocated among millions of reciprocal dyads without AI guesswork
-          </p>
-        </div>
-
-        {/* 6 Stage Process Pipeline Horizontal Flow */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-mono">
-          <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-1">
-            <span className="text-[10px] text-red-400 font-bold block">1. Constraints</span>
-            <span className="text-white font-medium">Feasibility g_k ≤ 0</span>
-            <p className="text-[10px] text-neutral-400 font-sans">Removes dealbreaker conflicts (E_ij = 0).</p>
+          {/* Reciprocal Mutuality */}
+          <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-2 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-white">Mutual Desire Protection</span>
+                <span className="w-2 h-2 rounded-full bg-purple-400" />
+              </div>
+              <p className="text-neutral-400 font-light mt-1">
+                You are only introduced to people whose criteria you also meet. Zero asymmetric dead-ends where someone likes you but you can never match their lifestyle.
+              </p>
+            </div>
+            <span className="text-[11px] font-mono text-purple-400 font-semibold">
+              Active · Zero Asymmetric Waste
+            </span>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-1">
-            <span className="text-[10px] text-purple-400 font-bold block">2. Vector</span>
-            <span className="text-white font-medium">9-Facet Alignment</span>
-            <p className="text-[10px] text-neutral-400 font-sans">Multi-objective breakdown across 9 facets.</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-1">
-            <span className="text-[10px] text-sky-400 font-bold block">3. Mutuality</span>
-            <span className="text-white font-medium">M_ij = f(S_ij, S_ji)</span>
-            <p className="text-[10px] text-neutral-400 font-sans">Harmonic reciprocity balances desire.</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-1">
-            <span className="text-[10px] text-amber-400 font-bold block">4. Frontier</span>
-            <span className="text-white font-medium">Pareto Set P*</span>
-            <p className="text-[10px] text-neutral-400 font-sans">Preserves non-dominated variety.</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-1">
-            <span className="text-[10px] text-emerald-400 font-bold block">5. Market</span>
-            <span className="text-white font-medium">Gini Cap τ ≤ 0.35</span>
-            <p className="text-[10px] text-neutral-400 font-sans">Prevents attention monopolies.</p>
-          </div>
-
-          <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.08] space-y-1">
-            <span className="text-[10px] text-fuchsia-400 font-bold block">6. Learning</span>
-            <span className="text-white font-medium">Causal Dyads</span>
-            <p className="text-[10px] text-neutral-400 font-sans">Learns from real post-encounter outcomes.</p>
-          </div>
-        </div>
-
-        {/* Formal Grand Problem Box */}
-        <div className="p-5 rounded-2xl bg-black/40 border border-purple-500/30 space-y-2 font-mono text-xs">
-          <div className="flex items-center space-x-2 text-purple-300 font-bold">
-            <Sparkles className="w-4 h-4" />
-            <span>The Platform Matching Policy Objective Function</span>
-          </div>
-          <div className="text-sm text-white pt-1">
-            {'max_π [ Compatibility_ij + Mutuality_ij + Outcome_ij + User Welfare ]'}
-          </div>
-          <div className="text-neutral-400 text-xs">
-            {'subject to [ Hard Constraints g_k ≤ 0 + Safety + Privacy + Fairness (τ ≤ 0.35) + Diversity (δ ≥ 0.65) ]'}
+          {/* Zero Pay-To-Win */}
+          <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.06] space-y-2 flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between">
+                <span className="font-semibold text-white">Strict Zero Pay-to-Win</span>
+                <span className="w-2 h-2 rounded-full bg-rose-400" />
+              </div>
+              <p className="text-neutral-400 font-light mt-1">
+                Nobody can purchase "Super Likes" or "Boosts" to bypass your dealbreakers or force themselves into your messages. Boundaries are absolute.
+              </p>
+            </div>
+            <span className="text-[11px] font-mono text-rose-400 font-semibold">
+              Statutory Invariant D-23 Enforced
+            </span>
           </div>
         </div>
       </section>

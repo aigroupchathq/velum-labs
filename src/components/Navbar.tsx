@@ -100,8 +100,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     },
     {
       id: 'optimizer',
-      label: 'Preferences & Priorities',
-      subtitle: 'Customize dealbreakers and daily lifestyle settings',
+      label: 'Standards & Decision Mirror',
+      subtitle: 'Understand dealbreakers, flexibility, and dating patterns',
       icon: <Sliders className="w-3.5 h-3.5 text-emerald-400" />,
     },
     {

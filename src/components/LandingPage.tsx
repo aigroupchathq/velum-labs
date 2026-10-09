@@ -502,6 +502,71 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* ────────────────────────────────────────────────────────── */}
+      {/* 3.5. A RELATIONSHIP DECISION SYSTEM, NOT "FIXING" YOU      */}
+      {/* ────────────────────────────────────────────────────────── */}
+      <section className="apple-panel rounded-3xl p-6 sm:p-10 border-white/10 space-y-8 bg-neutral-900/60">
+        <div className="text-center space-y-3 max-w-2xl mx-auto">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-mono">
+            <Compass className="w-3.5 h-3.5" />
+            <span>The Product Loop · Decision System</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+            We Don&apos;t Fix You. We Mirror What Actually Works.
+          </h2>
+          <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
+            People don&apos;t want an AI telling them they are broken. They want help fixing the parts of dating where they repeatedly make painful decisions, misread others, or waste emotional energy.
+          </p>
+        </div>
+
+        {/* The 6-Step Loop Flow */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs">
+          {[
+            { step: '1', title: 'Understand Myself', desc: 'Acknowledge your real reassurance, conflict, and quiet recharge needs.' },
+            { step: '2', title: 'Clarify What I Need', desc: 'Separate flexible preferences from non-negotiable dealbreakers.' },
+            { step: '3', title: 'Meet Someone Real', desc: 'Introduced only when mutual criteria and boundary safety align 100%.' },
+            { step: '4', title: 'Understand the Fit', desc: 'See the honest trade-offs and the 2–3 questions that skip small talk.' },
+            { step: '5', title: 'Explore Intelligently', desc: 'Go on calm, unhurried dates without feeling pressured or manipulated.' },
+            { step: '6', title: 'Learn & Decide', desc: 'Better pattern awareness leads to grounded, confident romantic choices.' },
+          ].map((item) => (
+            <div key={item.step} className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08] space-y-2 flex flex-col justify-between">
+              <div>
+                <span className="text-[10px] font-mono text-purple-400 font-bold block">Step 0{item.step}</span>
+                <h3 className="font-semibold text-white text-xs mt-0.5">{item.title}</h3>
+                <p className="text-[11px] text-neutral-400 font-light mt-1 leading-snug">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 3 Core Pillars: Dealbreakers vs Friction, Chemistry vs Fit, Questions to Ask */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
+          <div className="p-5 rounded-2xl bg-white/[0.02] border border-emerald-500/20 space-y-2">
+            <span className="text-emerald-400 font-mono text-[11px] uppercase font-bold block">1. The Tri-Tier Boundary Rule</span>
+            <h4 className="text-sm font-semibold text-white">Preference ≠ Friction ≠ Dealbreaker</h4>
+            <p className="text-xs text-neutral-400 font-light leading-relaxed">
+              Preferring someone tidy is a preference. Disagreeing on chores is a friction point. Needing an honest, monogamous partner is a dealbreaker. Check separates these so you stay firm where it matters and flexible where it’s safe.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-white/[0.02] border border-purple-500/20 space-y-2">
+            <span className="text-purple-400 font-mono text-[11px] uppercase font-bold block">2. Dual-Track Clarity</span>
+            <h4 className="text-sm font-semibold text-white">Chemistry vs. Compatibility Lens</h4>
+            <p className="text-xs text-neutral-400 font-light leading-relaxed">
+              High attraction does not guarantee a shared future. Check celebrates genuine butterflies while giving you honest visibility into relationship structure, family timelines, and domestic rhythms from day one.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl bg-white/[0.02] border border-amber-500/20 space-y-2">
+            <span className="text-amber-400 font-mono text-[11px] uppercase font-bold block">3. Skip Small Talk</span>
+            <h4 className="text-sm font-semibold text-white">The 2–3 Conversations That Matter</h4>
+            <p className="text-xs text-neutral-400 font-light leading-relaxed">
+              Stop spending three weeks talking about weather, music playlists, and coffee spots before discovering you want completely different futures. Check surfaces the meaningful discovery questions for each candidate.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ────────────────────────────────────────────────────────── */}
       {/* 4. REAL STORIES (Written with Authentic Human Warmth)      */}
       {/* ────────────────────────────────────────────────────────── */}
       <section className="space-y-8">
