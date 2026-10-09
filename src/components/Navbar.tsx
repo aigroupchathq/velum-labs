@@ -23,6 +23,8 @@ import {
   Scale,
   HelpCircle,
   MoreHorizontal,
+  Smartphone,
+  Monitor,
 } from 'lucide-react'
 import type { UniversalUserProfile } from '../types'
 
@@ -48,6 +50,8 @@ interface NavbarProps {
   onOpenLogin: () => void
   onOpenWingman?: () => void
   onOpenTerms?: () => void
+  isPhoneMode?: boolean
+  onTogglePhoneMode?: () => void
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -58,6 +62,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenLogin,
   onOpenWingman,
   onOpenTerms,
+  isPhoneMode = false,
+  onTogglePhoneMode,
 }) => {
   const [scienceMenuOpen, setScienceMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
@@ -177,8 +183,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </div>
 
-        {/* Primary Desktop Navigation Bar */}
-        <nav className="hidden lg:flex items-center p-1 rounded-full bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-inner space-x-0.5">
+        {/* Primary Desktop Navigation Bar (Hidden when Phone Mode active) */}
+        <nav className={`hidden ${isPhoneMode ? '' : 'lg:flex'} items-center p-1 rounded-full bg-white/[0.04] border border-white/[0.07] backdrop-blur-xl shadow-inner space-x-0.5`}>
           {primaryNavItems.map((item) => {
             const isActive = activeView === item.id
             return (
@@ -272,13 +278,32 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Right Action Capsule */}
         <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
-          {onOpenWingman && (
+          {/* Prominent Phone Mode Toggle Button */}
+          {onTogglePhoneMode && (
+            <button
+              type="button"
+              onClick={onTogglePhoneMode}
+              className={`apple-pill-btn flex items-center space-x-1.5 px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm transition-all cursor-pointer border ${
+                isPhoneMode
+                  ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40 shadow-[0_0_12px_rgba(52,211,153,0.3)]'
+                  : 'bg-white/10 hover:bg-white/15 text-neutral-300 hover:text-white border-white/20'
+              }`}
+              title={isPhoneMode ? 'Phone Mode Active - Click for Desktop View' : 'Switch to Phone View'}
+              aria-label="Toggle Phone Mode"
+            >
+              {isPhoneMode ? <Smartphone className="w-3.5 h-3.5 text-emerald-400" /> : <Monitor className="w-3.5 h-3.5 text-neutral-400" />}
+              <span className="font-medium">{isPhoneMode ? 'Phone Mode' : 'Phone Mode'}</span>
+              <span className={`w-1.5 h-1.5 rounded-full ${isPhoneMode ? 'bg-emerald-400 animate-pulse' : 'bg-neutral-500'}`} />
+            </button>
+          )}
+
+          {onOpenWingman && !isPhoneMode && (
             <button
               onClick={onOpenWingman}
-              className="apple-pill-btn flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-semibold shadow-sm transition-all cursor-pointer"
+              className="apple-pill-btn hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-semibold shadow-sm transition-all cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-white" />
-              <span className="hidden sm:inline">Check AI</span>
+              <span>Check AI</span>
             </button>
           )}
 
@@ -378,136 +403,204 @@ export const Navbar: React.FC<NavbarProps> = ({
       {/* ==================================================== */}
       <nav
         aria-label="Mobile Bottom Navigation"
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-[#070709]/95 backdrop-blur-2xl border-t border-white/10 flex items-center justify-around py-2 px-1 text-center shadow-2xl"
+        className={`fixed bottom-0 left-0 right-0 z-50 bg-[#070709]/95 backdrop-blur-2xl border-t border-white/10 flex items-center justify-around py-1.5 px-1 text-center shadow-2xl ${
+          isPhoneMode ? 'flex' : 'lg:hidden'
+        }`}
       >
+        {/* Tab 1: Discover */}
         <button
-          onClick={() => onSelectView('landing')}
-          className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
-            activeView === 'landing' ? 'text-white font-semibold' : 'text-neutral-400 hover:text-neutral-200'
-          }`}
-        >
-          <Compass className={`w-5 h-5 mb-0.5 ${activeView === 'landing' ? 'text-white' : ''}`} />
-          <span className="text-[10px]">Home</span>
-        </button>
-
-        <button
+          type="button"
           onClick={() => onSelectView('recs')}
-          className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
+          className={`flex flex-col items-center justify-center min-w-[50px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
             activeView === 'recs' ? 'text-rose-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
           }`}
+          aria-label="Discover Matches"
         >
           <Sparkles className={`w-5 h-5 mb-0.5 ${activeView === 'recs' ? 'text-rose-400' : ''}`} />
           <span className="text-[10px]">Discover</span>
         </button>
 
+        {/* Tab 2: Messages */}
         <button
-          onClick={() => onSelectView('onboarding')}
-          className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
-            activeView === 'onboarding' ? 'text-emerald-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
-          }`}
-        >
-          <Home className={`w-5 h-5 mb-0.5 ${activeView === 'onboarding' ? 'text-emerald-400' : ''}`} />
-          <span className="text-[10px]">Profile</span>
-        </button>
-
-        <button
+          type="button"
           onClick={() => onSelectView('conversations')}
-          className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
+          className={`flex flex-col items-center justify-center min-w-[50px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
             activeView === 'conversations' ? 'text-sky-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
           }`}
+          aria-label="Direct Messages"
         >
           <MessageSquare className={`w-5 h-5 mb-0.5 ${activeView === 'conversations' ? 'text-sky-400' : ''}`} />
           <span className="text-[10px]">Messages</span>
         </button>
 
+        {/* Tab 3: Date Plan */}
         <button
-          onClick={() => onSelectView('about_faq')}
-          className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
-            activeView === 'about_faq' ? 'text-emerald-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          type="button"
+          onClick={() => onSelectView('date_brief')}
+          className={`flex flex-col items-center justify-center min-w-[50px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
+            activeView === 'date_brief' ? 'text-amber-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
           }`}
+          aria-label="Date Planner"
         >
-          <HelpCircle className={`w-5 h-5 mb-0.5 ${activeView === 'about_faq' ? 'text-emerald-400' : ''}`} />
-          <span className="text-[10px]">FAQ</span>
+          <Coffee className={`w-5 h-5 mb-0.5 ${activeView === 'date_brief' ? 'text-amber-400' : ''}`} />
+          <span className="text-[10px]">Date Plan</span>
         </button>
 
-        {/* Mobile More Sheet Toggle */}
+        {/* Tab 4: Profile */}
+        <button
+          type="button"
+          onClick={() => onSelectView('onboarding')}
+          className={`flex flex-col items-center justify-center min-w-[50px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
+            activeView === 'onboarding' ? 'text-emerald-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          }`}
+          aria-label="My Profile & Sanctuary"
+        >
+          <Home className={`w-5 h-5 mb-0.5 ${activeView === 'onboarding' ? 'text-emerald-400' : ''}`} />
+          <span className="text-[10px]">Profile</span>
+        </button>
+
+        {/* Tab 5: Pricing (Direct Ethical Pricing) */}
+        <button
+          type="button"
+          onClick={() => onSelectView('subscriptions')}
+          className={`flex flex-col items-center justify-center min-w-[50px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
+            activeView === 'subscriptions' ? 'text-emerald-300 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
+          }`}
+          aria-label="Fair Pricing & Membership"
+        >
+          <CreditCard className={`w-5 h-5 mb-0.5 ${activeView === 'subscriptions' ? 'text-emerald-300' : ''}`} />
+          <span className="text-[10px]">Pricing</span>
+        </button>
+
+        {/* Tab 6: More Sheet Toggle */}
         <div className="relative" ref={mobileMoreRef}>
           <button
+            type="button"
             onClick={() => setMobileMoreOpen(!mobileMoreOpen)}
-            className={`flex flex-col items-center justify-center w-14 py-1 rounded-xl transition cursor-pointer ${
+            className={`flex flex-col items-center justify-center min-w-[46px] min-h-[46px] py-1 rounded-xl transition cursor-pointer ${
               isScienceActive || mobileMoreOpen ? 'text-cyan-400 font-semibold' : 'text-neutral-400 hover:text-neutral-200'
             }`}
+            aria-label="More Features"
           >
-            <MoreHorizontal className={`w-5 h-5 mb-0.5 ${isScienceActive ? 'text-cyan-400' : ''}`} />
+            <MoreHorizontal className={`w-5 h-5 mb-0.5 ${isScienceActive || mobileMoreOpen ? 'text-cyan-400' : ''}`} />
             <span className="text-[10px]">More</span>
           </button>
 
           {/* Mobile Popover Menu */}
           {mobileMoreOpen && (
             <div className="absolute bottom-full right-0 mb-3 w-64 p-2 rounded-2xl bg-neutral-900/98 border border-white/15 shadow-2xl backdrop-blur-2xl z-50 text-left space-y-1">
-              <div className="px-3 py-1.5 border-b border-white/[0.06] text-[10px] font-mono text-neutral-400 uppercase tracking-wider">
-                Tools & Settings
+              <div className="px-3 py-1.5 border-b border-white/[0.06] text-[10px] font-mono text-neutral-400 uppercase tracking-wider flex items-center justify-between">
+                <span>All Check Tools</span>
+                <span className="text-emerald-400 font-mono">v8.3</span>
               </div>
               <button
+                type="button"
+                onClick={() => {
+                  onSelectView('landing')
+                  setMobileMoreOpen(false)
+                }}
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
+              >
+                <Compass className="w-3.5 h-3.5 text-neutral-300" />
+                <span>Home Landing Page</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onSelectView('about_faq')
+                  setMobileMoreOpen(false)
+                }}
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
+              >
+                <HelpCircle className="w-3.5 h-3.5 text-emerald-400" />
+                <span>About & FAQ Center</span>
+              </button>
+              <button
+                type="button"
                 onClick={() => {
                   onSelectView('network')
                   setMobileMoreOpen(false)
                 }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
               >
                 <Compass className="w-3.5 h-3.5 text-purple-400" />
-                <span>Match Map</span>
+                <span>4D Match Map</span>
               </button>
               <button
+                type="button"
                 onClick={() => {
-                  onSelectView('date_brief')
+                  onSelectView('intro')
                   setMobileMoreOpen(false)
                 }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
               >
-                <Coffee className="w-3.5 h-3.5 text-amber-400" />
-                <span>Date Planner</span>
+                <BookOpen className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Platform Principles</span>
               </button>
               <button
+                type="button"
                 onClick={() => {
                   onSelectView('optimizer')
                   setMobileMoreOpen(false)
                 }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
               >
                 <Sliders className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Preferences & Priorities</span>
               </button>
               <button
+                type="button"
                 onClick={() => {
                   onSelectView('evaluator')
                   setMobileMoreOpen(false)
                 }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
               >
                 <Binary className="w-3.5 h-3.5 text-purple-400" />
                 <span>Match Comparison</span>
               </button>
               <button
+                type="button"
                 onClick={() => {
                   onSelectView('contradictions')
                   setMobileMoreOpen(false)
                 }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer"
               >
                 <AlertCircle className="w-3.5 h-3.5 text-amber-400" />
-                <span>Conflict Checker</span>
+                <div className="flex items-center justify-between flex-1">
+                  <span>Conflict Checker</span>
+                  {contradictionCount > 0 && (
+                    <span className="px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 text-[9px] font-mono">
+                      {contradictionCount}
+                    </span>
+                  )}
+                </div>
               </button>
               <button
+                type="button"
                 onClick={() => {
-                  onSelectView('subscriptions')
+                  onOpenLogin()
                   setMobileMoreOpen(false)
                 }}
-                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2"
+                className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-200 flex items-center space-x-2 cursor-pointer border-t border-white/[0.06] pt-2"
               >
-                <CreditCard className="w-3.5 h-3.5 text-rose-400" />
-                <span>Fair Pricing & Pledge</span>
+                <UserCheck className="w-3.5 h-3.5 text-cyan-400" />
+                <span>Switch Demo Persona</span>
               </button>
+              {onOpenTerms && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onOpenTerms()
+                    setMobileMoreOpen(false)
+                  }}
+                  className="w-full p-2 text-xs rounded-xl hover:bg-white/10 text-neutral-400 hover:text-white flex items-center space-x-2 cursor-pointer"
+                >
+                  <Scale className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Terms & Disclosures</span>
+                </button>
+              )}
             </div>
           )}
         </div>

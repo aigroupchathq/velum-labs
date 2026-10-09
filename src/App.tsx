@@ -27,12 +27,22 @@ import { DiscoveryFilterSheet } from './components/DiscoveryFilterSheet'
 import { currentUser as initialUser, mockCandidates as initialCandidates } from './data/mockProfiles'
 import { evaluateMatch, detectUserContradictions } from './utils/matchingEngine'
 import type { UniversalUserProfile, MatchEvaluation } from './types'
-import { CheckCircle2, SlidersHorizontal } from 'lucide-react'
+import { CheckCircle2, SlidersHorizontal, Smartphone, Monitor } from 'lucide-react'
 
 export function App() {
   const [currentUser, setCurrentUser] = useState<UniversalUserProfile>(initialUser)
   const [candidates] = useState<UniversalUserProfile[]>(initialCandidates)
   const [activeView, setActiveView] = useState<ActiveView>('landing')
+
+  const [isPhoneMode, setIsPhoneMode] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('check_phone_mode_enabled')
+      if (saved !== null) return saved === 'true'
+      return window.innerWidth < 1024
+    }
+    return false
+  })
+  const [phoneWidth, setPhoneWidth] = useState<'390' | '430'>('390')
 
   const [isLoginOpen, setIsLoginOpen] = useState<boolean>(false)
   const [isWingmanOpen, setIsWingmanOpen] = useState<boolean>(false)
@@ -45,6 +55,15 @@ export function App() {
   } | null>(null)
   const [filterMode, setFilterMode] = useState<'all' | 'eligible' | 'high_fit'>('all')
   const [toastMessage, setToastMessage] = useState<string | null>(null)
+
+  const handleTogglePhoneMode = () => {
+    const next = !isPhoneMode
+    setIsPhoneMode(next)
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('check_phone_mode_enabled', String(next))
+    }
+    showToast(next ? '📱 Phone Mode enabled — layout reorganized for mobile UX' : '💻 Desktop View enabled')
+  }
 
   // Active Preference Contradictions (Spec §14)
   const contradictions = detectUserContradictions(currentUser)
@@ -107,20 +126,89 @@ export function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#070709] text-neutral-100 flex flex-col font-sans selection:bg-white/20 selection:text-white">
-      {/* Top Navbar */}
-      <Navbar
-        activeView={activeView}
-        onSelectView={setActiveView}
-        currentUser={currentUser}
-        contradictionCount={contradictions.length}
-        onOpenLogin={() => setIsLoginOpen(true)}
-        onOpenWingman={() => setIsWingmanOpen(true)}
-        onOpenTerms={() => setIsTermsOpen(true)}
-      />
+    <div
+      className={`min-h-screen bg-[#070709] text-neutral-100 flex flex-col font-sans selection:bg-white/20 selection:text-white ${
+        isPhoneMode ? 'lg:bg-[#030305] lg:py-6' : ''
+      }`}
+    >
+      {/* Desktop Helper Banner when Phone Mode is Active */}
+      {isPhoneMode && (
+        <aside
+          aria-label="Phone mode controls"
+          className="hidden lg:flex items-center justify-between px-6 py-2.5 mb-4 max-w-xl mx-auto w-full bg-neutral-900/90 border border-white/10 rounded-2xl text-xs text-neutral-300 backdrop-blur-md shadow-2xl"
+        >
+          <div className="flex items-center space-x-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="font-semibold text-white">📱 Phone Mode Active</span>
+            <span className="text-neutral-500">•</span>
+            <span className="text-neutral-400">Mobile UX layout</span>
+          </div>
+          <div className="flex items-center space-x-2">
+            <button
+              type="button"
+              onClick={() => setPhoneWidth(phoneWidth === '390' ? '430' : '390')}
+              className="px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-[11px] font-mono text-neutral-300 cursor-pointer transition"
+            >
+              Width: {phoneWidth}px ({phoneWidth === '390' ? 'iPhone' : 'Pro Max'})
+            </button>
+            <button
+              type="button"
+              onClick={handleTogglePhoneMode}
+              className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-medium cursor-pointer transition flex items-center space-x-1"
+            >
+              <Monitor className="w-3 h-3" />
+              <span>Desktop View</span>
+            </button>
+          </div>
+        </aside>
+      )}
 
-      {/* Main Content Viewport */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-28 lg:py-8 space-y-8">
+      {/* Main Container: Phone Device Shell on Desktop when in Phone Mode, Fluid on Mobile */}
+      <div
+        className={`w-full flex-1 flex flex-col transition-all duration-300 ${
+          isPhoneMode
+            ? phoneWidth === '430'
+              ? 'lg:max-w-[430px] lg:mx-auto lg:rounded-[48px] lg:border-[8px] lg:border-neutral-800 lg:shadow-[0_25px_90px_rgba(0,0,0,0.95),0_0_0_1px_rgba(255,255,255,0.15)] lg:overflow-hidden lg:min-h-[852px] relative bg-[#070709]'
+              : 'lg:max-w-[390px] lg:mx-auto lg:rounded-[48px] lg:border-[8px] lg:border-neutral-800 lg:shadow-[0_25px_90px_rgba(0,0,0,0.95),0_0_0_1px_rgba(255,255,255,0.15)] lg:overflow-hidden lg:min-h-[844px] relative bg-[#070709]'
+            : ''
+        }`}
+      >
+        {/* Simulated Phone Status Bar on Desktop */}
+        {isPhoneMode && (
+          <div className="hidden lg:flex items-center justify-between px-6 pt-3 pb-1 text-[11px] font-medium text-white/80 bg-[#070709] select-none shrink-0 border-b border-white/[0.04]">
+            <span>9:41</span>
+            <div className="w-24 h-4 rounded-full bg-black border border-white/10 flex items-center justify-center">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse" />
+              <span className="text-[9px] font-mono text-neutral-400">Check Mobile</span>
+            </div>
+            <div className="flex items-center space-x-1 font-mono text-[10px] text-neutral-400">
+              <span>5G</span>
+              <span>100%</span>
+            </div>
+          </div>
+        )}
+
+        {/* Top Navbar */}
+        <Navbar
+          activeView={activeView}
+          onSelectView={setActiveView}
+          currentUser={currentUser}
+          contradictionCount={contradictions.length}
+          onOpenLogin={() => setIsLoginOpen(true)}
+          onOpenWingman={() => setIsWingmanOpen(true)}
+          onOpenTerms={() => setIsTermsOpen(true)}
+          isPhoneMode={isPhoneMode}
+          onTogglePhoneMode={handleTogglePhoneMode}
+        />
+
+        {/* Main Content Viewport */}
+        <main
+          className={`flex-1 w-full mx-auto pt-3 pb-28 ${
+            isPhoneMode
+              ? 'max-w-full px-3 sm:px-4 space-y-5'
+              : 'max-w-6xl px-4 sm:px-6 lg:px-8 lg:py-8 space-y-8'
+          }`}
+        >
         {/* Contradiction Alert Banner */}
         {contradictions.length > 0 && activeView === 'recs' && (
           <ContradictionsBanner
@@ -178,8 +266,8 @@ export function App() {
         {/* 1. RECOMMENDATIONS VIEW (Spec §31) */}
         {activeView === 'recs' && (
           <div className="space-y-6">
-            {/* Mobile Header & Compact Trigger Pill (Stage 1 / Amendments 1–3) */}
-            <div className="lg:hidden space-y-2.5">
+            {/* Mobile Header & Compact Trigger Pill (Always visible in Phone Mode) */}
+            <div className={`${isPhoneMode ? 'block' : 'lg:hidden'} space-y-2.5`}>
               <div className="flex items-center justify-between">
                 <div>
                   <span className="apple-subhead text-[10px] tracking-wider uppercase text-neutral-400">Discover</span>
@@ -219,65 +307,69 @@ export function App() {
               </button>
             </div>
 
-            {/* Desktop Header & Segmented Filter Capsule */}
-            <div className="hidden lg:flex items-end justify-between gap-4 pb-2 border-b border-white/[0.06]">
-              <div>
-                <span className="apple-subhead">Stage 2 of Human Journey</span>
-                <h1 className="text-3xl font-semibold tracking-tight text-white mt-1">
-                  Mutually Resonant Profiles
-                </h1>
-                <p className="text-xs text-neutral-400 mt-1 max-w-xl font-light">
-                  Every person here meets your non-negotiable boundaries, and you meet theirs. Evaluated across 12 facets of daily life and long-term values.
-                </p>
-              </div>
+            {/* Desktop Header & Segmented Filter Capsule (Only in Desktop Mode) */}
+            {!isPhoneMode && (
+              <div className="hidden lg:flex items-end justify-between gap-4 pb-2 border-b border-white/[0.06]">
+                <div>
+                  <span className="apple-subhead">Stage 2 of Human Journey</span>
+                  <h1 className="text-3xl font-semibold tracking-tight text-white mt-1">
+                    Mutually Resonant Profiles
+                  </h1>
+                  <p className="text-xs text-neutral-400 mt-1 max-w-xl font-light">
+                    Every person here meets your non-negotiable boundaries, and you meet theirs. Evaluated across 12 facets of daily life and long-term values.
+                  </p>
+                </div>
 
-              {/* Apple Segmented Filter Capsule */}
-              <div className="flex items-center p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md">
-                <button
-                  onClick={() => setFilterMode('all')}
-                  className={`apple-pill-btn px-3.5 py-1 text-xs font-medium ${
-                    filterMode === 'all'
-                      ? 'bg-white/15 text-white shadow-sm border border-white/15'
-                      : 'text-neutral-400 hover:text-white border border-transparent'
-                  }`}
-                >
-                  All ({evaluatedCandidates.length})
-                </button>
-                <button
-                  onClick={() => setFilterMode('eligible')}
-                  className={`apple-pill-btn px-3.5 py-1 text-xs font-medium ${
-                    filterMode === 'eligible'
-                      ? 'bg-white/15 text-white shadow-sm border border-white/15'
-                      : 'text-neutral-400 hover:text-white border border-transparent'
-                  }`}
-                >
-                  Eligible ({evaluatedCandidates.filter((c) => c.evaluation.eligible).length})
-                </button>
-                <button
-                  onClick={() => setFilterMode('high_fit')}
-                  className={`apple-pill-btn px-3.5 py-1 text-xs font-medium ${
-                    filterMode === 'high_fit'
-                      ? 'bg-white/15 text-white shadow-sm border border-white/15'
-                      : 'text-neutral-400 hover:text-white border border-transparent'
-                  }`}
-                >
-                  High Fit (≥80%)
-                </button>
+                {/* Apple Segmented Filter Capsule */}
+                <div className="flex items-center p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md">
+                  <button
+                    onClick={() => setFilterMode('all')}
+                    className={`apple-pill-btn px-3.5 py-1 text-xs font-medium ${
+                      filterMode === 'all'
+                        ? 'bg-white/15 text-white shadow-sm border border-white/15'
+                        : 'text-neutral-400 hover:text-white border border-transparent'
+                    }`}
+                  >
+                    All ({evaluatedCandidates.length})
+                  </button>
+                  <button
+                    onClick={() => setFilterMode('eligible')}
+                    className={`apple-pill-btn px-3.5 py-1 text-xs font-medium ${
+                      filterMode === 'eligible'
+                        ? 'bg-white/15 text-white shadow-sm border border-white/15'
+                        : 'text-neutral-400 hover:text-white border border-transparent'
+                    }`}
+                  >
+                    Eligible ({evaluatedCandidates.filter((c) => c.evaluation.eligible).length})
+                  </button>
+                  <button
+                    onClick={() => setFilterMode('high_fit')}
+                    className={`apple-pill-btn px-3.5 py-1 text-xs font-medium ${
+                      filterMode === 'high_fit'
+                        ? 'bg-white/15 text-white shadow-sm border border-white/15'
+                        : 'text-neutral-400 hover:text-white border border-transparent'
+                    }`}
+                  >
+                    High Fit (≥80%)
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
 
-            {/* Desktop Natural Preference Bar (Hidden on Mobile) */}
-            <div className="hidden lg:block">
-              <NaturalPreferenceBar
-                currentUser={currentUser}
-                onUpdatePreferences={(updated) => {
-                  setCurrentUser(updated)
-                  showToast('Intent criteria updated. Dynamic matching refreshed.')
-                }}
-                totalMatchesCount={evaluatedCandidates.length}
-                eligibleMatchesCount={evaluatedCandidates.filter((c) => c.evaluation.eligible).length}
-              />
-            </div>
+            {/* Desktop Natural Preference Bar (Only in Desktop Mode) */}
+            {!isPhoneMode && (
+              <div className="hidden lg:block">
+                <NaturalPreferenceBar
+                  currentUser={currentUser}
+                  onUpdatePreferences={(updated) => {
+                    setCurrentUser(updated)
+                    showToast('Intent criteria updated. Dynamic matching refreshed.')
+                  }}
+                  totalMatchesCount={evaluatedCandidates.length}
+                  eligibleMatchesCount={evaluatedCandidates.filter((c) => c.evaluation.eligible).length}
+                />
+              </div>
+            )}
 
             {/* Mobile Bottom Sheet Modal */}
             <DiscoveryFilterSheet
@@ -488,6 +580,26 @@ export function App() {
           </div>
         </div>
       </footer>
+      </div>
+
+      {/* Floating Phone Mode Quick Switcher Pill */}
+      <div className="fixed bottom-20 right-4 z-40 sm:bottom-6 sm:right-6">
+        <button
+          type="button"
+          onClick={handleTogglePhoneMode}
+          className={`px-3.5 py-2 rounded-full text-xs font-semibold shadow-2xl backdrop-blur-xl border flex items-center space-x-2 transition-all cursor-pointer active:scale-95 ${
+            isPhoneMode
+              ? 'bg-emerald-500/25 text-emerald-200 border-emerald-400/50 shadow-[0_4px_25px_rgba(16,185,129,0.35)]'
+              : 'bg-neutral-900/90 hover:bg-neutral-800 text-white border-white/20 hover:border-white/40'
+          }`}
+          aria-label="Toggle Phone Mode"
+          title="Toggle between Mobile Phone UX and Desktop View"
+        >
+          {isPhoneMode ? <Smartphone className="w-4 h-4 text-emerald-400" /> : <Monitor className="w-4 h-4 text-neutral-400" />}
+          <span>{isPhoneMode ? 'Phone Mode: ON' : 'Switch to Phone'}</span>
+          <span className={`w-2 h-2 rounded-full ${isPhoneMode ? 'bg-emerald-400 animate-pulse' : 'bg-neutral-500'}`} />
+        </button>
+      </div>
     </div>
   )
 }
