@@ -396,35 +396,71 @@ export const NaturalPreferenceBar: React.FC<NaturalPreferenceBarProps> = ({
                 </span>
               </div>
 
-              <div className="space-y-3 pt-1">
+              <div className="space-y-4 pt-1">
                 <div>
-                  <div className="flex justify-between text-[10px] text-neutral-400 font-mono mb-1">
-                    <span>Minimum: {minAge}</span>
-                    <span>18</span>
+                  <div className="flex justify-between text-[11px] text-neutral-300 font-medium mb-1.5">
+                    <span>Minimum Age: <strong className="text-white font-mono">{minAge}</strong></span>
+                    <span className="text-neutral-500 font-mono text-[10px]">Min 18</span>
                   </div>
-                  <input
-                    type="range"
-                    min="18"
-                    max="80"
-                    value={minAge}
-                    onChange={(e) => handleMinAgeChange(Number(e.target.value))}
-                    className="w-full accent-white cursor-pointer"
-                  />
+                  <div className="flex items-center space-x-2.5">
+                    <button
+                      type="button"
+                      onClick={() => handleMinAgeChange(Math.max(18, minAge - 1))}
+                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+                      aria-label="Decrease minimum age"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="range"
+                      min="18"
+                      max="80"
+                      value={minAge}
+                      onChange={(e) => handleMinAgeChange(Number(e.target.value))}
+                      className="flex-1 cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleMinAgeChange(Math.min(maxAge, minAge + 1))}
+                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+                      aria-label="Increase minimum age"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
 
                 <div>
-                  <div className="flex justify-between text-[10px] text-neutral-400 font-mono mb-1">
-                    <span>Maximum: {maxAge}</span>
-                    <span>80</span>
+                  <div className="flex justify-between text-[11px] text-neutral-300 font-medium mb-1.5">
+                    <span>Maximum Age: <strong className="text-white font-mono">{maxAge}</strong></span>
+                    <span className="text-neutral-500 font-mono text-[10px]">Max 80</span>
                   </div>
-                  <input
-                    type="range"
-                    min="18"
-                    max="80"
-                    value={maxAge}
-                    onChange={(e) => handleMaxAgeChange(Number(e.target.value))}
-                    className="w-full accent-white cursor-pointer"
-                  />
+                  <div className="flex items-center space-x-2.5">
+                    <button
+                      type="button"
+                      onClick={() => handleMaxAgeChange(Math.max(minAge, maxAge - 1))}
+                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+                      aria-label="Decrease maximum age"
+                    >
+                      -
+                    </button>
+                    <input
+                      type="range"
+                      min="18"
+                      max="80"
+                      value={maxAge}
+                      onChange={(e) => handleMaxAgeChange(Number(e.target.value))}
+                      className="flex-1 cursor-pointer"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => handleMaxAgeChange(Math.min(80, maxAge + 1))}
+                      className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+                      aria-label="Increase maximum age"
+                    >
+                      +
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

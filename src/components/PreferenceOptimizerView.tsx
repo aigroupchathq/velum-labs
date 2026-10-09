@@ -527,24 +527,49 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
         </div>
 
         {/* 1. Distance Radius */}
+        {/* 1. Distance Radius */}
         <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-3">
           <div className="flex justify-between items-center text-xs">
-            <span className="text-neutral-300 font-medium">Search Radius (C_G Relaxation)</span>
+            <span className="text-neutral-300 font-medium">Search Radius Flexibility</span>
             <span className="font-mono text-purple-300 font-bold">+{distanceDelta} km</span>
           </div>
-          <input
-            type="range"
-            min="0"
-            max="60"
-            step="5"
-            value={distanceDelta}
-            onChange={(e) => {
-              setDistanceDelta(parseInt(e.target.value, 10))
-              setActiveScenarioId('custom')
-            }}
-            className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-500"
-          />
-          <div className="flex justify-between text-[11px] text-neutral-500 font-mono">
+          <div className="flex items-center space-x-2.5">
+            <button
+              type="button"
+              onClick={() => {
+                setDistanceDelta(Math.max(0, distanceDelta - 5))
+                setActiveScenarioId('custom')
+              }}
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+              aria-label="Decrease radius flexibility"
+            >
+              -
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="60"
+              step="5"
+              value={distanceDelta}
+              onChange={(e) => {
+                setDistanceDelta(parseInt(e.target.value, 10))
+                setActiveScenarioId('custom')
+              }}
+              className="flex-1 accent-purple cursor-pointer"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                setDistanceDelta(Math.min(60, distanceDelta + 5))
+                setActiveScenarioId('custom')
+              }}
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+              aria-label="Increase radius flexibility"
+            >
+              +
+            </button>
+          </div>
+          <div className="flex justify-between text-[11px] text-neutral-400 font-mono">
             <span>Base: {currentUser.geography.maxDistanceKm} km</span>
             <span>Simulated: {currentUser.geography.maxDistanceKm + distanceDelta} km</span>
           </div>
@@ -553,24 +578,48 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
         {/* 2. Dietary Practice Tolerance */}
         <div className="p-4 rounded-2xl bg-white/[0.02] border border-white/[0.05] space-y-3">
           <div className="flex justify-between items-center text-xs">
-            <span className="text-neutral-300 font-medium">Dietary Practice Flexibility (C_L Relaxation)</span>
+            <span className="text-neutral-300 font-medium">Dietary Practice Flexibility</span>
             <span className="font-mono text-amber-300 font-bold">+{dietFlexDelta}%</span>
           </div>
-          <input
-            type="range"
-            min="0"
-            max="50"
-            step="5"
-            value={dietFlexDelta}
-            onChange={(e) => {
-              setDietFlexDelta(parseInt(e.target.value, 10))
-              setActiveScenarioId('custom')
-            }}
-            className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-amber-500"
-          />
-          <div className="flex justify-between text-[11px] text-neutral-500 font-mono">
-            <span>Strict Vegetarian (0%)</span>
-            <span>Flexitarian / Kitchen Respect Allowed (50%)</span>
+          <div className="flex items-center space-x-2.5">
+            <button
+              type="button"
+              onClick={() => {
+                setDietFlexDelta(Math.max(0, dietFlexDelta - 5))
+                setActiveScenarioId('custom')
+              }}
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+              aria-label="Decrease diet flexibility"
+            >
+              -
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="50"
+              step="5"
+              value={dietFlexDelta}
+              onChange={(e) => {
+                setDietFlexDelta(parseInt(e.target.value, 10))
+                setActiveScenarioId('custom')
+              }}
+              className="flex-1 accent-amber cursor-pointer"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                setDietFlexDelta(Math.min(50, dietFlexDelta + 5))
+                setActiveScenarioId('custom')
+              }}
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+              aria-label="Increase diet flexibility"
+            >
+              +
+            </button>
+          </div>
+          <div className="flex justify-between text-[11px] text-neutral-400 font-mono">
+            <span>Strict Diet (0%)</span>
+            <span>Kitchen Respect Allowed (50%)</span>
           </div>
         </div>
 
@@ -580,19 +629,43 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
             <span className="text-neutral-300 font-medium">Age Tolerance Margin</span>
             <span className="font-mono text-cyan-300 font-bold">±{ageFlexDelta} yrs</span>
           </div>
-          <input
-            type="range"
-            min="0"
-            max="5"
-            step="1"
-            value={ageFlexDelta}
-            onChange={(e) => {
-              setAgeFlexDelta(parseInt(e.target.value, 10))
-              setActiveScenarioId('custom')
-            }}
-            className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-cyan-500"
-          />
-          <div className="flex justify-between text-[11px] text-neutral-500 font-mono">
+          <div className="flex items-center space-x-2.5">
+            <button
+              type="button"
+              onClick={() => {
+                setAgeFlexDelta(Math.max(0, ageFlexDelta - 1))
+                setActiveScenarioId('custom')
+              }}
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+              aria-label="Decrease age margin"
+            >
+              -
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="5"
+              step="1"
+              value={ageFlexDelta}
+              onChange={(e) => {
+                setAgeFlexDelta(parseInt(e.target.value, 10))
+                setActiveScenarioId('custom')
+              }}
+              className="flex-1 accent-cyan cursor-pointer"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                setAgeFlexDelta(Math.min(5, ageFlexDelta + 1))
+                setActiveScenarioId('custom')
+              }}
+              className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+              aria-label="Increase age margin"
+            >
+              +
+            </button>
+          </div>
+          <div className="flex justify-between text-[11px] text-neutral-400 font-mono">
             <span>Base: [{currentUser.preferences.minAge}–{currentUser.preferences.maxAge}]</span>
             <span>Simulated: [{currentUser.preferences.minAge - ageFlexDelta}–{currentUser.preferences.maxAge + ageFlexDelta}]</span>
           </div>

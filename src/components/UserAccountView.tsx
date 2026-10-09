@@ -462,30 +462,64 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
                   </div>
 
                   {/* Cleanliness Standard */}
-                  <div className="p-4 rounded-2xl bg-neutral-950/60 border border-white/[0.08] space-y-2">
+                  <div className="p-4 rounded-2xl bg-neutral-950/60 border border-white/[0.08] space-y-2.5">
                     <div className="flex justify-between items-center">
                       <span className="text-neutral-400 font-mono text-[11px]">Cleanliness Standard</span>
                       <span className="text-white font-mono font-bold">
                         {profile.lifestyle.cleanlinessStandard}/5
                       </span>
                     </div>
-                    <input
-                      type="range"
-                      min={1}
-                      max={5}
-                      step={1}
-                      value={profile.lifestyle.cleanlinessStandard}
-                      onChange={(e) =>
-                        setProfile({
-                          ...profile,
-                          lifestyle: {
-                            ...profile.lifestyle,
-                            cleanlinessStandard: Number(e.target.value) as 1 | 2 | 3 | 4 | 5,
-                          },
-                        })
-                      }
-                      className="w-full accent-cyan-400 cursor-pointer"
-                    />
+                    <div className="flex items-center space-x-2.5">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setProfile({
+                            ...profile,
+                            lifestyle: {
+                              ...profile.lifestyle,
+                              cleanlinessStandard: Math.max(1, profile.lifestyle.cleanlinessStandard - 1) as 1 | 2 | 3 | 4 | 5,
+                            },
+                          })
+                        }
+                        className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+                        aria-label="Decrease cleanliness standard"
+                      >
+                        -
+                      </button>
+                      <input
+                        type="range"
+                        min={1}
+                        max={5}
+                        step={1}
+                        value={profile.lifestyle.cleanlinessStandard}
+                        onChange={(e) =>
+                          setProfile({
+                            ...profile,
+                            lifestyle: {
+                              ...profile.lifestyle,
+                              cleanlinessStandard: Number(e.target.value) as 1 | 2 | 3 | 4 | 5,
+                            },
+                          })
+                        }
+                        className="flex-1 accent-cyan cursor-pointer"
+                      />
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setProfile({
+                            ...profile,
+                            lifestyle: {
+                              ...profile.lifestyle,
+                              cleanlinessStandard: Math.min(5, profile.lifestyle.cleanlinessStandard + 1) as 1 | 2 | 3 | 4 | 5,
+                            },
+                          })
+                        }
+                        className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+                        aria-label="Increase cleanliness standard"
+                      >
+                        +
+                      </button>
+                    </div>
                     <div className="flex justify-between text-[10px] text-neutral-500 font-mono">
                       <span>Relaxed</span>
                       <span>Orderly</span>
@@ -860,30 +894,64 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
               </div>
 
               {/* Transit & Geographic Radius */}
-              <div className="space-y-2 pt-1">
+              <div className="space-y-2.5 pt-1">
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-medium text-neutral-300">Transit & Distance Radius</span>
                   <span className="text-cyan-400 font-mono font-bold text-xs">
                     {profile.geography.maxDistanceKm} km
                   </span>
                 </div>
-                <input
-                  type="range"
-                  min={5}
-                  max={80}
-                  step={5}
-                  value={profile.geography.maxDistanceKm}
-                  onChange={(e) =>
-                    setProfile({
-                      ...profile,
-                      geography: {
-                        ...profile.geography,
-                        maxDistanceKm: Number(e.target.value),
-                      },
-                    })
-                  }
-                  className="w-full accent-cyan-400 cursor-pointer"
-                />
+                <div className="flex items-center space-x-2.5">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setProfile({
+                        ...profile,
+                        geography: {
+                          ...profile.geography,
+                          maxDistanceKm: Math.max(5, profile.geography.maxDistanceKm - 5),
+                        },
+                      })
+                    }
+                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+                    aria-label="Decrease distance radius"
+                  >
+                    -
+                  </button>
+                  <input
+                    type="range"
+                    min={5}
+                    max={80}
+                    step={5}
+                    value={profile.geography.maxDistanceKm}
+                    onChange={(e) =>
+                      setProfile({
+                        ...profile,
+                        geography: {
+                          ...profile.geography,
+                          maxDistanceKm: Number(e.target.value),
+                        },
+                      })
+                    }
+                    className="flex-1 accent-cyan cursor-pointer"
+                  />
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setProfile({
+                        ...profile,
+                        geography: {
+                          ...profile.geography,
+                          maxDistanceKm: Math.min(80, profile.geography.maxDistanceKm + 5),
+                        },
+                      })
+                    }
+                    className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 text-white font-bold text-sm flex items-center justify-center shrink-0 cursor-pointer"
+                    aria-label="Increase distance radius"
+                  >
+                    +
+                  </button>
+                </div>
                 <div className="flex justify-between text-[10px] text-neutral-500 font-mono">
                   <span>5 km (Local Metro)</span>
                   <span>40 km (Greater London)</span>

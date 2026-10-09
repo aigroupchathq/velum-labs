@@ -118,7 +118,7 @@ export function App() {
       />
 
       {/* Main Content Viewport */}
-      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      <main className="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-28 lg:py-8 space-y-8">
         {/* Contradiction Alert Banner */}
         {contradictions.length > 0 && activeView === 'recs' && (
           <ContradictionsBanner
