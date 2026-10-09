@@ -130,7 +130,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
       aligned: candidate.lifestyle.smoking === 'never',
     },
     {
-      title: 'Verified Low-Pressure 3rd Space',
+      title: 'Agreed Low-Pressure 3rd Space',
       rule: 'First encounter strictly in a calm public third-space (specialty cafe, gallery, or botanical garden).',
       aligned: true,
     },
@@ -141,7 +141,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
     },
     {
       title: 'Mutual Consent Digital Boundary',
-      rule: 'Phone numbers & private social handles exchanged only after verified mutual handshake.',
+      rule: 'Phone numbers & private social handles exchanged only after mutual handshake.',
       aligned: true,
     },
   ]
@@ -169,7 +169,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
   const badges = [
     {
       name: 'Sanctuary Tier 3',
-      desc: 'Cryptographically verified identity & boundary alignment',
+      desc: 'Confirmed profile & boundary alignment',
       icon: ShieldCheck,
       color: '#34d399',
       border: 'border-emerald-500/30',
@@ -811,7 +811,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
                     </div>
                     <div>
                       <h4 className="text-xs font-bold text-white">
-                        Verified Relational Achievements
+                        Recognized Relational Milestones
                       </h4>
                       <p className="text-[10px] text-neutral-400">
                         Calibrated merits & mutual relationship readiness

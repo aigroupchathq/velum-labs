@@ -23,10 +23,11 @@ import { AlgorithmNetworkVisualizer } from './components/AlgorithmNetworkVisuali
 import { FirstRunOnboardingModal } from './components/FirstRunOnboardingModal'
 import { TermsModal } from './components/TermsModal'
 import { AboutFaqView } from './components/AboutFaqView'
+import { DiscoveryFilterSheet } from './components/DiscoveryFilterSheet'
 import { currentUser as initialUser, mockCandidates as initialCandidates } from './data/mockProfiles'
 import { evaluateMatch, detectUserContradictions } from './utils/matchingEngine'
 import type { UniversalUserProfile, MatchEvaluation } from './types'
-import { CheckCircle2 } from 'lucide-react'
+import { CheckCircle2, SlidersHorizontal } from 'lucide-react'
 
 export function App() {
   const [currentUser, setCurrentUser] = useState<UniversalUserProfile>(initialUser)
@@ -37,6 +38,7 @@ export function App() {
   const [isWingmanOpen, setIsWingmanOpen] = useState<boolean>(false)
   const [isFirstRunOpen, setIsFirstRunOpen] = useState<boolean>(false)
   const [isTermsOpen, setIsTermsOpen] = useState<boolean>(false)
+  const [isFilterSheetOpen, setIsFilterSheetOpen] = useState<boolean>(false)
   const [selectedReport, setSelectedReport] = useState<{
     candidate: UniversalUserProfile
     evaluation: MatchEvaluation
@@ -176,8 +178,49 @@ export function App() {
         {/* 1. RECOMMENDATIONS VIEW (Spec §31) */}
         {activeView === 'recs' && (
           <div className="space-y-6">
-            {/* View Sub-Header with Apple Typography & Capsule Segmented Control */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-2 border-b border-white/[0.06]">
+            {/* Mobile Header & Compact Trigger Pill (Stage 1 / Amendments 1–3) */}
+            <div className="lg:hidden space-y-2.5">
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="apple-subhead text-[10px] tracking-wider uppercase text-neutral-400">Discover</span>
+                  <h1 className="text-xl font-semibold tracking-tight text-white">
+                    Mutually Resonant Profiles
+                  </h1>
+                </div>
+                <span className="text-[11px] font-mono font-medium px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300">
+                  {evaluatedCandidates.filter((c) => c.evaluation.eligible).length} Eligible
+                </span>
+              </div>
+
+              {/* Compact Mobile Summary Trigger Pill */}
+              <button
+                type="button"
+                onClick={() => setIsFilterSheetOpen(true)}
+                className="w-full min-h-[46px] px-3.5 py-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] active:scale-[0.98] border border-white/10 backdrop-blur-xl flex items-center justify-between text-left transition-all cursor-pointer shadow-md"
+                aria-label="Open filter preferences"
+              >
+                <div className="flex items-center space-x-2 truncate">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+                  <span className="text-xs font-medium text-white truncate">
+                    London • {currentUser.preferences.minAge}–{currentUser.preferences.maxAge} y/o •{' '}
+                    {currentUser.preferences.gendersSought[0] === 'all'
+                      ? 'All Genders'
+                      : currentUser.preferences.gendersSought[0] === 'woman'
+                      ? 'Women'
+                      : currentUser.preferences.gendersSought[0] === 'man'
+                      ? 'Men'
+                      : 'Non-Binary'}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-1.5 shrink-0 ml-2 text-neutral-300">
+                  <span className="text-[11px] font-mono text-neutral-400">Filters</span>
+                  <SlidersHorizontal className="w-3.5 h-3.5 text-neutral-400" />
+                </div>
+              </button>
+            </div>
+
+            {/* Desktop Header & Segmented Filter Capsule */}
+            <div className="hidden lg:flex items-end justify-between gap-4 pb-2 border-b border-white/[0.06]">
               <div>
                 <span className="apple-subhead">Stage 2 of Human Journey</span>
                 <h1 className="text-3xl font-semibold tracking-tight text-white mt-1">
@@ -189,7 +232,7 @@ export function App() {
               </div>
 
               {/* Apple Segmented Filter Capsule */}
-              <div className="flex items-center p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md self-start sm:self-auto">
+              <div className="flex items-center p-1 rounded-full bg-white/[0.04] border border-white/[0.08] backdrop-blur-md">
                 <button
                   onClick={() => setFilterMode('all')}
                   className={`apple-pill-btn px-3.5 py-1 text-xs font-medium ${
@@ -223,15 +266,33 @@ export function App() {
               </div>
             </div>
 
-            {/* Apple Natural Intent Bar */}
-            <NaturalPreferenceBar
+            {/* Desktop Natural Preference Bar (Hidden on Mobile) */}
+            <div className="hidden lg:block">
+              <NaturalPreferenceBar
+                currentUser={currentUser}
+                onUpdatePreferences={(updated) => {
+                  setCurrentUser(updated)
+                  showToast('Intent criteria updated. Dynamic matching refreshed.')
+                }}
+                totalMatchesCount={evaluatedCandidates.length}
+                eligibleMatchesCount={evaluatedCandidates.filter((c) => c.evaluation.eligible).length}
+              />
+            </div>
+
+            {/* Mobile Bottom Sheet Modal */}
+            <DiscoveryFilterSheet
+              isOpen={isFilterSheetOpen}
+              onClose={() => setIsFilterSheetOpen(false)}
               currentUser={currentUser}
               onUpdatePreferences={(updated) => {
                 setCurrentUser(updated)
-                showToast('Intent criteria updated. Dynamic matching refreshed.')
+                showToast('Discovery preferences updated.')
               }}
               totalMatchesCount={evaluatedCandidates.length}
               eligibleMatchesCount={evaluatedCandidates.filter((c) => c.evaluation.eligible).length}
+              filterMode={filterMode}
+              setFilterMode={setFilterMode}
+              currentFilteredCount={filteredCandidates.length}
             />
 
             {/* List of Match Cards or Empty State */}

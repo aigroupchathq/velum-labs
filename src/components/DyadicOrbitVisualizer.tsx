@@ -163,7 +163,7 @@ export const DyadicOrbitVisualizer: React.FC<DyadicOrbitVisualizerProps> = ({
         >
           <Activity className="w-3.5 h-3.5" style={{ color: asymmetryDelta > 20 ? '#fbbf24' : '#a1a1aa' }} />
           <span className="text-xs font-mono" style={{ color: asymmetryDelta > 20 ? '#fcd34d' : '#a1a1aa' }}>
-            Δ {asymmetryDelta}% {asymmetryDelta > 20 ? 'Directional Gap' : asymmetryDelta > 5 ? 'Near Balanced' : 'Perfectly Balanced'}
+            Δ {asymmetryDelta}% {asymmetryDelta > 20 ? 'Directional Gap' : asymmetryDelta > 5 ? 'Near Balanced' : 'Symmetric Alignment'}
           </span>
         </div>
       </div>
