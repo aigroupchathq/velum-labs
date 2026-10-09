@@ -115,7 +115,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   const isScienceActive = scienceNavItems.some((item) => item.id === activeView)
   const activeScienceItem = scienceNavItems.find((item) => item.id === activeView)
 
-  // Close dropdowns on outside click
+  // Close dropdowns on outside click or Escape key
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (scienceDropdownRef.current && !scienceDropdownRef.current.contains(e.target as Node)) {
@@ -125,8 +125,18 @@ export const Navbar: React.FC<NavbarProps> = ({
         setUserMenuOpen(false)
       }
     }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setScienceMenuOpen(false)
+        setUserMenuOpen(false)
+      }
+    }
     document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
+    document.addEventListener('keydown', handleKeyDown)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener('keydown', handleKeyDown)
+    }
   }, [])
 
   return (
@@ -344,14 +354,15 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* Mobile Sub-Navigation Bar (Scrollable chips with grouped badges) */}
-      <div className="lg:hidden flex items-center justify-start overflow-x-auto px-4 py-2 border-t border-white/[0.05] bg-[#070709]/95 space-x-1.5 scrollbar-none">
+      <nav aria-label="Mobile navigation views" className="lg:hidden flex items-center justify-start overflow-x-auto px-4 py-2 border-t border-white/[0.05] bg-[#070709]/95 space-x-1.5 scrollbar-none">
         {primaryNavItems.map((item) => {
           const isActive = activeView === item.id
           return (
             <button
               key={item.id}
               onClick={() => onSelectView(item.id)}
-              className={`apple-pill-btn whitespace-nowrap px-3 py-1 text-xs flex items-center space-x-1.5 rounded-full cursor-pointer ${
+              aria-current={isActive ? 'page' : undefined}
+              className={`apple-pill-btn whitespace-nowrap px-3.5 py-1.5 min-h-[36px] text-xs flex items-center space-x-1.5 rounded-full cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:outline-none ${
                 isActive
                   ? 'bg-white/15 text-white border border-white/20 font-semibold'
                   : 'text-neutral-400 hover:text-white'
@@ -371,7 +382,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               key={item.id}
               onClick={() => onSelectView(item.id)}
-              className={`apple-pill-btn whitespace-nowrap px-3 py-1 text-xs flex items-center space-x-1.5 rounded-full cursor-pointer ${
+              aria-current={isActive ? 'page' : undefined}
+              className={`apple-pill-btn whitespace-nowrap px-3.5 py-1.5 min-h-[36px] text-xs flex items-center space-x-1.5 rounded-full cursor-pointer focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:outline-none ${
                 isActive
                   ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-semibold'
                   : 'text-neutral-400 hover:text-white'
@@ -382,7 +394,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )
         })}
-      </div>
+      </nav>
     </header>
   )
 }

@@ -224,23 +224,43 @@ export function App() {
               eligibleMatchesCount={evaluatedCandidates.filter((c) => c.evaluation.eligible).length}
             />
 
-            {/* List of Match Cards */}
-            <div className="space-y-6">
-              {filteredCandidates.map(({ candidate, evaluation }) => (
-                <MatchCard
-                  key={candidate.id}
-                  candidate={candidate}
-                  evaluation={evaluation}
-                  onInspectDeepReport={(cand, ev) => setSelectedReport({ candidate: cand, evaluation: ev })}
-                  onInitiateHandshake={(cand) =>
-                    showToast(`Handshake sent to ${cand.identity.name}. Unlocked upon mutual consent.`)
-                  }
-                  onPass={(cand) =>
-                    showToast(`Respectfully passed on ${cand.identity.name}. Removed from queue.`)
-                  }
-                />
-              ))}
-            </div>
+            {/* List of Match Cards or Empty State */}
+            {filteredCandidates.length === 0 ? (
+              <div className="p-8 sm:p-12 rounded-3xl border border-white/10 bg-neutral-900/60 backdrop-blur-2xl text-center space-y-4 max-w-md mx-auto my-8">
+                <div className="w-12 h-12 rounded-full bg-white/[0.06] border border-white/10 flex items-center justify-center mx-auto text-neutral-400">
+                  <CheckCircle2 className="w-6 h-6 text-amber-400" />
+                </div>
+                <div className="space-y-1.5">
+                  <h3 className="text-lg font-semibold text-white">No Resonant Profiles in Filter</h3>
+                  <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                    Your current filter criteria excludes all active profiles. Reset your filter to explore all eligible matches.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setFilterMode('all')}
+                  className="apple-pill-btn px-5 py-2.5 text-xs font-semibold bg-white text-black hover:bg-neutral-200 transition-all cursor-pointer shadow-lg"
+                >
+                  Show All ({evaluatedCandidates.length}) Profiles
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {filteredCandidates.map(({ candidate, evaluation }) => (
+                  <MatchCard
+                    key={candidate.id}
+                    candidate={candidate}
+                    evaluation={evaluation}
+                    onInspectDeepReport={(cand, ev) => setSelectedReport({ candidate: cand, evaluation: ev })}
+                    onInitiateHandshake={(cand) =>
+                      showToast(`Handshake sent to ${cand.identity.name}. Unlocked upon mutual consent.`)
+                    }
+                    onPass={(cand) =>
+                      showToast(`Respectfully passed on ${cand.identity.name}. Removed from queue.`)
+                    }
+                  />
+                ))}
+              </div>
+            )}
           </div>
         )}
 

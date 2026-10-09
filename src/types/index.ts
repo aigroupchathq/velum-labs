@@ -74,7 +74,7 @@ export interface UserAttributeDeclaration<T = any> {
 // Full Structured User Model (Spec §6)
 export interface UniversalUserProfile {
   id: string
-  completionStage: number
+  completionStage?: number
   // 1. Identity
   identity: {
     name: string
@@ -243,7 +243,7 @@ export interface DecoupledUserProfile {
  * Decouples a monolithic profile into explicit Self-Supply (Y_i) and Partner-Demand (X_i)
  */
 export function decoupleProfile(profile: UniversalUserProfile): DecoupledUserProfile {
-  return {
+  const result: DecoupledUserProfile = {
     userId: profile.id,
     completionStage: profile.completionStage,
     selfSupply: {
@@ -264,15 +264,15 @@ export function decoupleProfile(profile: UniversalUserProfile): DecoupledUserPro
     privacy: profile.privacy,
     behaviour: profile.behaviour,
   }
+  return result
 }
 
 /**
  * Reconstitutes a DecoupledUserProfile back into a UniversalUserProfile
  */
 export function reconstituteProfile(decoupled: DecoupledUserProfile): UniversalUserProfile {
-  return {
+  const reconstituted: UniversalUserProfile = {
     id: decoupled.userId,
-    completionStage: decoupled.completionStage,
     identity: decoupled.selfSupply.identity,
     intention: decoupled.selfSupply.intention,
     attractionPreferences: decoupled.partnerDemand.attractionPreferences,
@@ -287,6 +287,10 @@ export function reconstituteProfile(decoupled: DecoupledUserProfile): UniversalU
     privacy: decoupled.privacy,
     behaviour: decoupled.behaviour,
   }
+  if (decoupled.completionStage !== undefined) {
+    reconstituted.completionStage = decoupled.completionStage
+  }
+  return reconstituted
 }
 
 // --- EVALUATION OUTPUT STRUCTURES (Spec §7, §11, §15) ---

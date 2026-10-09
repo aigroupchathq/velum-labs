@@ -23,7 +23,7 @@ export type AccessRole = 'owner' | 'matched_peer' | 'unmatched_candidate' | 'sys
  */
 export function checkAttributeAccess(
   attributeId: string,
-  targetUser: UniversalUserProfile,
+  _targetUser: UniversalUserProfile,
   actorRole: AccessRole = 'unmatched_candidate',
   isSensitiveTier4 = false
 ): VisibilityPolicyCheck {
