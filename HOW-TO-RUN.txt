@@ -1,0 +1,32 @@
+================================================================================
+CHECK — VERIFIED HUMAN COMPATIBILITY & RELATIONSHIP DECISION PLATFORM
+================================================================================
+
+Desktop Folder: C:\Users\vD\Desktop\Check
+Workspace:      C:\Users\vD\Documents\antigravity\modest-shannon
+
+--------------------------------------------------------------------------------
+1. QUICK START (ONE CLICK)
+--------------------------------------------------------------------------------
+- Double-click "Launch-Check.bat" to start the app in development mode and
+  automatically open it in your browser at:
+  http://localhost:5173
+
+- Double-click "Launch-Production-Preview.bat" to run the optimized production
+  build at:
+  http://localhost:4173
+
+--------------------------------------------------------------------------------
+2. LIVE CLOUD VERSION (ONLINE)
+--------------------------------------------------------------------------------
+You can also access the live deployed site anytime on any device (phone/desktop):
+https://aigroupchathq.github.io/velum-labs/
+
+--------------------------------------------------------------------------------
+3. TERMINAL COMMANDS (IF USING CMD / POWERSHELL / VS CODE)
+--------------------------------------------------------------------------------
+- Run dev server:         npm run dev
+- Run production preview: npm run preview
+- Run tests:              npm test
+- Build production dist:  npm run build
+================================================================================
