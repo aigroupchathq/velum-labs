@@ -1,6 +1,12 @@
-# Universal Compatibility & Relationship-Discovery Platform
+# Check • Verified Human Compatibility Platform
 
-An auditable, privacy-conscious, explainable, and reciprocal matching system designed to represent the broadest practical range of human relationship preferences, identities, constraints, lifestyles, values, attraction patterns, accessibility requirements, relationship structures, and behavioural outcomes.
+[![Live Demo](https://img.shields.io/badge/Live_Web_App-Visit_Check-emerald?style=for-the-badge&logo=googlechrome&logoColor=white)](https://aigroupchathq.github.io/velum-labs/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Online-blue?style=for-the-badge&logo=github)](https://aigroupchathq.github.io/velum-labs/)
+
+> 🌐 **Live Web Application**: [https://aigroupchathq.github.io/velum-labs/](https://aigroupchathq.github.io/velum-labs/)  
+> 📱 **Optimized for both Mobile (iOS/Android) and Desktop browsers**
+
+An auditable, privacy-conscious, explainable, and reciprocal relationship decision platform designed to help people make grounded dating choices, separate dealbreakers from everyday preferences, and discover mutual resonance without swipe games or pay-to-win manipulation.
 
 Built with **React 19**, **TypeScript**, **Tailwind CSS v4**, **Vite**, and **Lucide Icons**.
 
