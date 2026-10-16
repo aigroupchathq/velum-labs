@@ -34,7 +34,6 @@ import {
   Shield,
   SlidersHorizontal,
   PhoneCall,
-  Bot,
 } from 'lucide-react'
 import type { UniversalUserProfile } from '../types'
 import { evaluateMatch } from '../utils/matchingEngine'
@@ -655,9 +654,9 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
               },
               {
                 id: 'page_agent',
-                title: 'Alibaba Page Agent (In-Page GUI Autonomous Controller)',
-                desc: 'Client-side agent with DOM perception that executes live clicks, filters, and explorations across the platform.',
-                icon: <Bot className="w-5 h-5 text-sky-400" />,
+                title: 'Page Agent (In-App Guide)',
+                desc: 'Intelligent in-page companion to navigate views, filter mutual alignment, and explore connection clusters effortlessly.',
+                icon: <Sparkles className="w-5 h-5 text-pink-300" />,
                 action: () => {
                   if (typeof window !== 'undefined') {
                     window.dispatchEvent(new CustomEvent('open-page-agent'))
