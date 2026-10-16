@@ -626,7 +626,7 @@ export function App() {
         </button>
       </div>
 
-      {/* Alibaba Page Agent — Autonomous In-Page Navigator & GUI Controller */}
+      {/* Paige — Personal In-App Guide (Powered by page-agent) */}
       <PageAgentWidget
         activeView={activeView}
         onSelectView={setActiveView}

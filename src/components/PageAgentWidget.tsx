@@ -1,8 +1,8 @@
 // ============================================================================
 // src/components/PageAgentWidget.tsx
-// Page Agent: Personal In-App Guide & Autonomous Navigator
+// Paige: Personal In-App Guide & Autonomous Navigator
 // Human-centered, serene, and elegant browser interaction
-// Powered by Alibaba page-agent
+// Powered by page-agent
 // ============================================================================
 
 import React, { useState, useEffect, useRef, useTransition } from 'react'
@@ -124,8 +124,8 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
   const [journeySteps, setJourneySteps] = useState<StepMessage[]>(() => [
     {
       id: 'welcome',
-      text: 'Page Agent is ready to guide your exploration.',
-      subtext: 'Ask a question, choose a destination, or let it calibrate views for you.',
+      text: 'Paige is ready to guide your exploration.',
+      subtext: 'Ask a question, choose a destination, or let Paige calibrate views for you.',
       status: 'done',
     },
   ])
@@ -383,7 +383,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
     }
 
     try {
-      setCurrentStep('Initializing Page Agent...')
+      setCurrentStep('Waking up Paige...')
       const { PageAgent } = await import('page-agent')
 
       if (agentRef.current) {
@@ -398,7 +398,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
         language: 'en-US',
         maxSteps: 20,
         instructions: {
-          system: `You are the Page Agent for "Check" — a calm, reciprocal compatibility and relationship decision platform.
+          system: `You are Paige — a calm, personal guide for "Check" (a reciprocal compatibility and relationship decision platform).
 Current view: "${activeView}".
 User: ${currentUser?.identity.name || 'User'}.
 Guide the user smoothly, calmly, and helpfully without disrupting their viewing experience.`,
@@ -492,7 +492,7 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
               ? 'bg-[#1c1b22] text-white border-pink-400/40 shadow-[0_4px_24px_rgba(244,114,182,0.25)] ring-1 ring-pink-400/30'
               : 'bg-[#151419]/90 hover:bg-[#1a1920] text-neutral-200 hover:text-white border-white/10 hover:border-white/20'
           }`}
-          aria-label="Open Page Agent Guide"
+          aria-label="Open Paige In-App Guide"
         >
           {/* Subtle Organic Breathing Indicator */}
           <div className="relative flex items-center justify-center">
@@ -504,7 +504,7 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
             />
           </div>
 
-          <span className="font-medium tracking-tight">Page Agent</span>
+          <span className="font-medium tracking-tight">Paige</span>
 
           <span className="text-[10px] text-neutral-400 px-1.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06]">
             {isRunning ? 'Guiding...' : 'Guide'}
@@ -519,7 +519,7 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
         <div
           className="fixed z-50 bottom-20 left-4 sm:bottom-20 sm:left-6 w-[calc(100vw-2rem)] sm:w-[420px] max-h-[82vh] bg-[#121115]/95 border border-white/10 rounded-3xl shadow-[0_24px_70px_rgba(0,0,0,0.85)] backdrop-blur-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200"
           role="dialog"
-          aria-label="Page Agent Personal Guide"
+          aria-label="Paige Personal Guide"
         >
           {/* Calm Header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] bg-white/[0.02]">
@@ -529,7 +529,7 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
               </div>
               <div>
                 <div className="flex items-center space-x-2">
-                  <h3 className="text-sm font-semibold text-white tracking-tight">Page Agent</h3>
+                  <h3 className="text-sm font-semibold text-white tracking-tight">Paige</h3>
                   <span className="text-[10px] text-neutral-400 font-normal">Personal Guide</span>
                 </div>
                 <p className="text-[11px] text-neutral-400 font-light truncate max-w-[220px]">
@@ -568,7 +568,7 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
               <div>
                 <h4 className="text-xs font-semibold text-white mb-1">Intelligence Mode</h4>
                 <p className="text-[11px] text-neutral-400 font-light mb-3">
-                  Choose how Page Agent perceives and navigates the platform:
+                  Choose how Paige perceives and navigates the platform:
                 </p>
 
                 <select
@@ -660,7 +660,7 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
                     }
                   }}
                   disabled={isRunning}
-                  placeholder="Where would you like to explore?..."
+                  placeholder="Ask Paige where to explore or what to find?..."
                   className="w-full text-xs bg-[#1a1920] border border-white/10 rounded-full pl-4 pr-11 py-3 text-white placeholder-neutral-500 focus:outline-none focus:border-pink-400/50 transition"
                 />
 

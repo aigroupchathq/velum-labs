@@ -653,8 +653,8 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
                 action: () => onNavigateView && onNavigateView('evaluator'),
               },
               {
-                id: 'page_agent',
-                title: 'Page Agent (In-App Guide)',
+                id: 'paige',
+                title: 'Paige (In-App Guide)',
                 desc: 'Intelligent in-page companion to navigate views, filter mutual alignment, and explore connection clusters effortlessly.',
                 icon: <Sparkles className="w-5 h-5 text-pink-300" />,
                 action: () => {

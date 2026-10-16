@@ -292,7 +292,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           )}
 
-          {/* Page Agent In-App Guide Button */}
+          {/* Paige In-App Guide Button */}
           <button
             type="button"
             onClick={() => {
@@ -301,10 +301,10 @@ export const Navbar: React.FC<NavbarProps> = ({
               }
             }}
             className="apple-pill-btn hidden md:flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] hover:bg-white/[0.12] text-neutral-200 hover:text-white border border-white/15 text-xs font-medium shadow-sm transition-all cursor-pointer"
-            title="Open Page Agent Personal Guide"
+            title="Open Paige (In-App Guide)"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-pink-400" />
-            <span>Page Agent</span>
+            <span>Paige</span>
           </button>
 
           {onOpenWingman && !isPhoneMode && (
