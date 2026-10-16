@@ -25,6 +25,7 @@ import { FirstRunOnboardingModal } from './components/FirstRunOnboardingModal'
 import { TermsModal } from './components/TermsModal'
 import { AboutFaqView } from './components/AboutFaqView'
 import { DiscoveryFilterSheet } from './components/DiscoveryFilterSheet'
+import { PageAgentWidget } from './components/PageAgentWidget'
 import { currentUser as initialUser, mockCandidates as initialCandidates } from './data/mockProfiles'
 import { evaluateMatch, detectUserContradictions } from './utils/matchingEngine'
 import type { UniversalUserProfile, MatchEvaluation } from './types'
@@ -624,6 +625,18 @@ export function App() {
           <span className={`w-2 h-2 rounded-full ${isPhoneMode ? 'bg-emerald-400 animate-pulse' : 'bg-neutral-500'}`} />
         </button>
       </div>
+
+      {/* Alibaba Page Agent — Autonomous In-Page Navigator & GUI Controller */}
+      <PageAgentWidget
+        activeView={activeView}
+        onSelectView={setActiveView}
+        isPhoneMode={isPhoneMode}
+        onTogglePhoneMode={handleTogglePhoneMode}
+        onFilterModeChange={setFilterMode}
+        onOpenWingman={() => setIsWingmanOpen(true)}
+        onOpenTerms={() => setIsTermsOpen(true)}
+        currentUser={currentUser}
+      />
     </div>
   )
 }

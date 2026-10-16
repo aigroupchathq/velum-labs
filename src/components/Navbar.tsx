@@ -26,6 +26,7 @@ import {
   Monitor,
   Calendar,
   User,
+  Bot,
 } from 'lucide-react'
 import type { UniversalUserProfile } from '../types'
 
@@ -291,6 +292,21 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span className={`w-1.5 h-1.5 rounded-full ${isPhoneMode ? 'bg-emerald-400 animate-pulse' : 'bg-neutral-500'}`} />
             </button>
           )}
+
+          {/* Alibaba Page Agent Pill Button */}
+          <button
+            type="button"
+            onClick={() => {
+              if (typeof window !== 'undefined') {
+                window.dispatchEvent(new CustomEvent('open-page-agent'))
+              }
+            }}
+            className="apple-pill-btn hidden md:flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-sky-500/15 hover:bg-sky-500/25 text-sky-200 border border-sky-400/30 text-xs font-semibold shadow-sm transition-all cursor-pointer"
+            title="Launch Alibaba PageAgent Autonomous GUI Navigator"
+          >
+            <Bot className="w-3.5 h-3.5 text-sky-400" />
+            <span>Page Agent</span>
+          </button>
 
           {onOpenWingman && !isPhoneMode && (
             <button

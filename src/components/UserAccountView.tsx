@@ -34,6 +34,7 @@ import {
   Shield,
   SlidersHorizontal,
   PhoneCall,
+  Bot,
 } from 'lucide-react'
 import type { UniversalUserProfile } from '../types'
 import { evaluateMatch } from '../utils/matchingEngine'
@@ -651,6 +652,17 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
                 desc: 'Inspect full mathematical vector breakdown for any candidate dyad.',
                 icon: <Sparkles className="w-5 h-5 text-[#F472B6]" />,
                 action: () => onNavigateView && onNavigateView('evaluator'),
+              },
+              {
+                id: 'page_agent',
+                title: 'Alibaba Page Agent (In-Page GUI Autonomous Controller)',
+                desc: 'Client-side agent with DOM perception that executes live clicks, filters, and explorations across the platform.',
+                icon: <Bot className="w-5 h-5 text-sky-400" />,
+                action: () => {
+                  if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('open-page-agent'))
+                  }
+                },
               },
             ].map((tool) => (
               <div
