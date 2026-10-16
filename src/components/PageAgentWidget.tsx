@@ -1,7 +1,7 @@
 // ============================================================================
 // src/components/PageAgentWidget.tsx
 // Paige: Personal In-App Guide & Autonomous Navigator
-// Human-centered, serene, and elegant browser interaction
+// Classy Apple iOS Design System (Dynamic Island & SF-Style Materials)
 // Powered by page-agent
 // ============================================================================
 
@@ -21,6 +21,7 @@ import {
   Check,
   ChevronRight,
   ExternalLink,
+  Search,
 } from 'lucide-react'
 import type { PageAgent } from 'page-agent'
 import type { ActiveView } from './Navbar'
@@ -51,7 +52,7 @@ const PROVIDER_CONFIGS: Record<
   { name: string; baseURL: string; defaultModel: string; placeholderKey: string }
 > = {
   demo: {
-    name: 'Instant Mode (No API Key Required)',
+    name: 'Instant Mode (Built-In Navigation)',
     baseURL: '',
     defaultModel: 'page-agent-simulator',
     placeholderKey: 'Instant in-app guidance ready',
@@ -120,12 +121,12 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
   // Runtime State
   const [taskInput, setTaskInput] = useState('')
   const [isRunning, setIsRunning] = useState(false)
-  const [currentStep, setCurrentStep] = useState<string>('Ready to help you explore')
+  const [currentStep, setCurrentStep] = useState<string>('Ready to guide your exploration')
   const [journeySteps, setJourneySteps] = useState<StepMessage[]>(() => [
     {
       id: 'welcome',
-      text: 'Paige is ready to guide your exploration.',
-      subtext: 'Ask a question, choose a destination, or let Paige calibrate views for you.',
+      text: 'Paige is ready to assist you.',
+      subtext: 'Ask where to explore or tap any suggested destination below.',
       status: 'done',
     },
   ])
@@ -141,7 +142,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
     }
   }, [journeySteps])
 
-  // Listen for open-page-agent global event from Navbar or Profile Hub
+  // Listen for open-page-agent global event
   useEffect(() => {
     const handleOpen = () => {
       setIsOpen(true)
@@ -158,7 +159,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
     localStorage.setItem('check_pageagent_baseurl', baseURL)
     localStorage.setItem('check_pageagent_model', model)
     setShowSettings(false)
-    addJourneyStep('Configuration updated.', undefined, 'done')
+    addJourneyStep('Settings updated.', undefined, 'done')
   }
 
   const handleSelectProvider = (p: ProviderPreset) => {
@@ -172,7 +173,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
 
   const addJourneyStep = (text: string, subtext?: string, status: StepMessage['status'] = 'done') => {
     setJourneySteps((prev) => [
-      ...prev.slice(-6),
+      ...prev.slice(-5),
       {
         id: Math.random().toString(36).slice(2, 9),
         text,
@@ -182,7 +183,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
     ])
   }
 
-  // Gentle visual highlight for elements
+  // Apple-style focus indicator with smooth easing
   const focusElement = async (selector: string, message: string, durationMs = 1200) => {
     const el = document.querySelector(selector) as HTMLElement | null
     if (!el) return false
@@ -192,9 +193,9 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
     const prevBoxShadow = el.style.boxShadow
     const prevOutline = el.style.outline
 
-    el.style.transition = 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)'
-    el.style.outline = '2px solid rgba(244, 114, 182, 0.7)'
-    el.style.boxShadow = '0 0 28px rgba(244, 114, 182, 0.35)'
+    el.style.transition = 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
+    el.style.outline = '2px solid rgba(244, 114, 182, 0.75)'
+    el.style.boxShadow = '0 0 32px rgba(244, 114, 182, 0.35)'
 
     setCurrentStep(message)
     await new Promise((r) => setTimeout(r, durationMs))
@@ -216,7 +217,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
     }
     setIsRunning(false)
     setCurrentStep('Paused')
-    addJourneyStep('Navigation paused.', undefined, 'done')
+    addJourneyStep('Guidance paused.', undefined, 'done')
   }
 
   const handleExecute = async (overridePrompt?: string) => {
@@ -238,14 +239,14 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
   }
 
   // ==========================================================================
-  // CALM GUIDED FLOW (Human, graceful execution)
+  // CALM GUIDED FLOW (iOS Grade Smoothness)
   // ==========================================================================
   const runGuidedFlow = async (prompt: string) => {
     const lower = prompt.toLowerCase()
 
     try {
-      setCurrentStep('Reviewing request...')
-      await new Promise((r) => setTimeout(r, 450))
+      setCurrentStep('Connecting...')
+      await new Promise((r) => setTimeout(r, 400))
       if (abortRef.current) return
 
       // Destination: Constellation Map
@@ -259,14 +260,14 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
 
         await focusElement(
           '#network-canvas-container, canvas, [data-view="network"]',
-          'Focusing on your active connection clusters...'
+          'Highlighting reciprocal clusters...'
         )
-        addJourneyStep('Living Constellation is open.', 'Explore where your values and daily rhythms align in 3D.', 'done')
+        addJourneyStep('Living Constellation is open.', 'Explore where values and daily rhythms align in 3D.', 'done')
       }
 
       // Destination: High Fit Matches
       else if (lower.includes('filter') || lower.includes('fit') || lower.includes('80%') || lower.includes('matches') || lower.includes('best')) {
-        setCurrentStep('Filtering candidate queue for high reciprocal alignment...')
+        setCurrentStep('Filtering candidate queue for high mutual fit...')
         startTransition(() => {
           onSelectView('recs')
         })
@@ -279,9 +280,9 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
 
         await focusElement(
           '.grid > div, [data-candidate-id], article',
-          'Showing candidates with mutual fit above 80%...'
+          'Displaying candidates with 80%+ mutual fit...'
         )
-        addJourneyStep('High Fit Filter applied.', 'Displaying candidates with proven bilateral compatibility.', 'done')
+        addJourneyStep('High Fit Filter applied.', 'Showing matches with verified reciprocal alignment.', 'done')
       }
 
       // Destination: Mobile Phone Layout
@@ -291,10 +292,10 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
         await new Promise((r) => setTimeout(r, 650))
         if (abortRef.current) return
 
-        await focusElement('nav, .fixed.bottom-0', 'Calibrating the 4-tab mobile navigation...')
+        await focusElement('nav, .fixed.bottom-0', 'Calibrating 4-tab mobile navigation bar...')
         addJourneyStep(
-          `Switched to ${!isPhoneMode ? 'Mobile Phone layout' : 'Desktop layout'}.`,
-          'Optimized for comfortable, calm interaction.',
+          `Switched to ${!isPhoneMode ? 'Mobile Phone layout' : 'Desktop view'}.`,
+          'Tailored for calm, one-handed interaction.',
           'done'
         )
       }
@@ -309,7 +310,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
         if (abortRef.current) return
 
         await focusElement('button, .p-6.rounded-2xl', 'Presenting vetted third-space venues and safety cues...')
-        addJourneyStep('First Date Blueprint loaded.', 'Low-pressure spaces with comfortable acoustic profiles.', 'done')
+        addJourneyStep('Date Blueprint loaded.', 'Curated third spaces with calm acoustic profiles.', 'done')
       }
 
       // Destination: Boundaries & Contradictions
@@ -322,7 +323,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
         if (abortRef.current) return
 
         await focusElement('.rounded-2xl, div[role="alert"]', 'Checking boundary coherence across candidate sets...')
-        addJourneyStep('Boundary audit complete.', 'Ensuring realistic preferences without accidental blocking.', 'done')
+        addJourneyStep('Boundary audit complete.', 'Ensuring realistic boundaries without accidental lockouts.', 'done')
       }
 
       // Destination: Wingman Assistant
@@ -330,7 +331,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
         setCurrentStep('Summoning Wingman Assistant...')
         if (onOpenWingman) {
           onOpenWingman()
-          addJourneyStep('Wingman is open.', 'Ready for thoughtful conversation guidance and profile clarity.', 'done')
+          addJourneyStep('Wingman is open.', 'Ready for thoughtful relationship advice and reflection.', 'done')
         } else {
           startTransition(() => onSelectView('conversations'))
           addJourneyStep('Navigated to Conversations.', undefined, 'done')
@@ -338,7 +339,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
         await new Promise((r) => setTimeout(r, 650))
       }
 
-      // Destination: Terms & Regulatory Disclosures
+      // Destination: Terms & Disclosures
       else if (lower.includes('terms') || lower.includes('privacy') || lower.includes('law') || lower.includes('disclosure')) {
         setCurrentStep('Opening statutory disclosures & invariants...')
         if (onOpenTerms) {
@@ -350,7 +351,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
         addJourneyStep('Statutory disclosures displayed.', 'Verified zero pay-to-win algorithmic ranking.', 'done')
       }
 
-      // Default Exploration
+      // Default Navigation
       else {
         setCurrentStep('Navigating to Discover matches...')
         startTransition(() => {
@@ -364,7 +365,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
       setCurrentStep('Ready for your next move')
     } catch (err) {
       console.warn('Navigation error:', err)
-      addJourneyStep('Exploration paused.', 'You can select a destination above or try again.', 'error')
+      addJourneyStep('Exploration paused.', 'Select any destination below or try another search.', 'error')
       setCurrentStep('Ready')
     } finally {
       setIsRunning(false)
@@ -372,11 +373,11 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
   }
 
   // ==========================================================================
-  // NATIVE PAGE-AGENT EXECUTION (Client-side DOM reasoning)
+  // NATIVE PAGE-AGENT EXECUTION LOOP
   // ==========================================================================
   const runLiveAgent = async (prompt: string) => {
     if (!apiKey && provider !== 'ollama') {
-      addJourneyStep('API Key needed', 'Please add your key in Settings to use live AI navigation.', 'error')
+      addJourneyStep('API Key Needed', 'Please add your API key in Settings to use custom AI models.', 'error')
       setIsRunning(false)
       setShowSettings(true)
       return
@@ -398,10 +399,10 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
         language: 'en-US',
         maxSteps: 20,
         instructions: {
-          system: `You are Paige — a calm, personal guide for "Check" (a reciprocal compatibility and relationship decision platform).
+          system: `You are Paige — a calm, classy, and personal guide for Check (a reciprocal compatibility platform).
 Current view: "${activeView}".
 User: ${currentUser?.identity.name || 'User'}.
-Guide the user smoothly, calmly, and helpfully without disrupting their viewing experience.`,
+Guide the user smoothly, calmly, and helpfully with an understated, elegant tone.`,
         },
       })
 
@@ -411,7 +412,7 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
         const act = e.detail
         if (!act) return
         if (act.type === 'thinking') {
-          setCurrentStep('Thinking about the best path...')
+          setCurrentStep('Reflecting on page layout...')
         } else if (act.type === 'executing') {
           setCurrentStep(`Navigating: ${act.tool}...`)
         } else if (act.type === 'executed') {
@@ -435,50 +436,56 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
     }
   }
 
-  // Curated elegant destination suggestions
+  // Apple-curated destination tiles
   const SUGGESTIONS = [
     {
       label: 'Constellation Map',
       desc: '3D connections & lifestyle clusters',
       prompt: 'Open the Living Constellation map and inspect clusters',
       icon: <Compass className="w-4 h-4 text-purple-300" />,
+      tint: 'from-purple-500/15 to-purple-900/10',
     },
     {
       label: 'High Mutual Fit',
       desc: 'Filter queue to 80%+ matches',
       prompt: 'Filter candidate queue to 80%+ High Fit reciprocal matches',
       icon: <Sparkles className="w-4 h-4 text-pink-300" />,
+      tint: 'from-pink-500/15 to-pink-900/10',
     },
     {
-      label: 'Date Planner',
-      desc: 'First date blueprint & vetted spots',
+      label: 'Date Blueprint',
+      desc: 'Vetted acoustic & coffee spots',
       prompt: 'Open Date Planner and review first date blueprint recommendations',
       icon: <Coffee className="w-4 h-4 text-amber-300" />,
+      tint: 'from-amber-500/15 to-amber-900/10',
     },
     {
       label: 'Dealbreaker Audit',
       desc: 'Review boundaries & dealbreakers',
       prompt: 'Audit preference contradictions and dealbreaker boundaries',
       icon: <Shield className="w-4 h-4 text-cyan-300" />,
+      tint: 'from-cyan-500/15 to-cyan-900/10',
     },
     {
-      label: 'Phone Layout',
-      desc: 'Switch to one-handed mobile view',
+      label: 'Phone View',
+      desc: 'One-handed mobile layout',
       prompt: 'Switch to Phone Mode for one-handed mobile navigation',
       icon: <Smartphone className="w-4 h-4 text-emerald-300" />,
+      tint: 'from-emerald-500/15 to-emerald-900/10',
     },
     {
-      label: 'Wingman Copilot',
-      desc: 'Relationship advice & insights',
+      label: 'Wingman Assistant',
+      desc: 'Personal relationship reflection',
       prompt: 'Summon Wingman Assistant for relationship advice & profile guidance',
       icon: <MessageSquare className="w-4 h-4 text-sky-300" />,
+      tint: 'from-sky-500/15 to-sky-900/10',
     },
   ]
 
   return (
     <>
       {/* ================================================================== */}
-      {/* 1. CALM FLOATING LAUNCHER PILL (Bottom Left)                       */}
+      {/* 1. iOS DYNAMIC ISLAND LAUNCHER PILL (Bottom Left)                  */}
       {/* ================================================================== */}
       <div className="fixed bottom-20 left-4 z-40 sm:bottom-6 sm:left-6">
         <button
@@ -487,97 +494,103 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
             setIsOpen((prev) => !prev)
             setShowSettings(false)
           }}
-          className={`group px-3.5 py-2 rounded-full text-xs font-medium shadow-xl backdrop-blur-2xl border flex items-center space-x-2.5 transition-all duration-300 cursor-pointer active:scale-95 ${
+          className={`group px-3.5 py-2 rounded-full text-xs font-medium shadow-[0_12px_36px_rgba(0,0,0,0.65),0_1px_0_rgba(255,255,255,0.12)_inset] backdrop-blur-3xl border flex items-center space-x-2.5 transition-all duration-300 cursor-pointer active:scale-95 ${
             isOpen
-              ? 'bg-[#1c1b22] text-white border-pink-400/40 shadow-[0_4px_24px_rgba(244,114,182,0.25)] ring-1 ring-pink-400/30'
-              : 'bg-[#151419]/90 hover:bg-[#1a1920] text-neutral-200 hover:text-white border-white/10 hover:border-white/20'
+              ? 'bg-[#1e1d24]/90 text-white border-pink-400/40 shadow-[0_4px_28px_rgba(244,114,182,0.3)] ring-1 ring-pink-400/30'
+              : 'bg-[#151419]/80 hover:bg-[#1a1920]/90 text-neutral-200 hover:text-white border-white/10 hover:border-white/20'
           }`}
           aria-label="Open Paige In-App Guide"
         >
-          {/* Subtle Organic Breathing Indicator */}
+          {/* Apple Intelligence / Siri-style Iridescent Ambient Dot */}
           <div className="relative flex items-center justify-center">
-            <span className="w-2 h-2 rounded-full bg-gradient-to-tr from-pink-400 to-purple-400" />
+            <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-tr from-pink-400 via-purple-400 to-sky-400 shadow-[0_0_10px_rgba(244,114,182,0.6)]" />
             <span
-              className={`absolute inset-0 rounded-full bg-pink-400/50 ${
+              className={`absolute inset-0 rounded-full bg-pink-400/40 ${
                 isRunning ? 'animate-ping' : 'animate-pulse'
               }`}
             />
           </div>
 
-          <span className="font-medium tracking-tight">Paige</span>
+          <span className="font-semibold tracking-tight text-white/95">Paige</span>
 
-          <span className="text-[10px] text-neutral-400 px-1.5 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06]">
-            {isRunning ? 'Guiding...' : 'Guide'}
+          <span className="text-[10px] text-white/60 px-2 py-0.5 rounded-full bg-white/[0.06] border border-white/[0.08] font-normal">
+            {isRunning ? 'Guiding' : 'Guide'}
           </span>
         </button>
       </div>
 
       {/* ================================================================== */}
-      {/* 2. ELEGANT IN-APP GUIDE MODAL / DRAWER                             */}
+      {/* 2. CLASSY iOS MODAL SHEET                                          */}
       {/* ================================================================== */}
       {isOpen && (
         <div
-          className="fixed z-50 bottom-20 left-4 sm:bottom-20 sm:left-6 w-[calc(100vw-2rem)] sm:w-[420px] max-h-[82vh] bg-[#121115]/95 border border-white/10 rounded-3xl shadow-[0_24px_70px_rgba(0,0,0,0.85)] backdrop-blur-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-3 duration-200"
+          className="fixed z-50 bottom-20 left-4 sm:bottom-20 sm:left-6 w-[calc(100vw-2rem)] sm:w-[410px] max-h-[82vh] bg-[#161619]/90 border border-white/[0.12] rounded-[32px] shadow-[0_32px_80px_rgba(0,0,0,0.85),0_1px_0_rgba(255,255,255,0.08)_inset] backdrop-blur-3xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-300"
           role="dialog"
           aria-label="Paige Personal Guide"
         >
-          {/* Calm Header */}
-          <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] bg-white/[0.02]">
+          {/* Apple Top Grabber Pill */}
+          <div className="w-10 h-1 rounded-full bg-white/20 mx-auto mt-2.5 mb-1 shrink-0" />
+
+          {/* Subdued Aurora Sheen */}
+          <div className="absolute top-0 inset-x-10 h-[1px] bg-gradient-to-r from-transparent via-pink-400/35 to-transparent pointer-events-none" />
+
+          {/* iOS Navigation Header */}
+          <div className="flex items-center justify-between px-5 pt-2 pb-3.5 border-b border-white/[0.06]">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-2xl bg-gradient-to-tr from-pink-500/20 via-purple-500/20 to-sky-500/20 border border-white/10 flex items-center justify-center text-pink-300">
+              <div className="w-8 h-8 rounded-2xl bg-gradient-to-tr from-pink-500/20 via-purple-500/20 to-sky-500/20 border border-white/10 flex items-center justify-center text-pink-300 shadow-sm">
                 <Sparkles className="w-4 h-4" />
               </div>
               <div>
-                <div className="flex items-center space-x-2">
-                  <h3 className="text-sm font-semibold text-white tracking-tight">Paige</h3>
-                  <span className="text-[10px] text-neutral-400 font-normal">Personal Guide</span>
+                <div className="flex items-center space-x-1.5">
+                  <h3 className="text-[15px] font-semibold text-white tracking-tight">Paige</h3>
+                  <span className="text-[11px] text-white/50 font-normal">In-App Guide</span>
                 </div>
-                <p className="text-[11px] text-neutral-400 font-light truncate max-w-[220px]">
+                <p className="text-[11px] text-white/60 font-light truncate max-w-[210px] mt-0.5">
                   {currentStep}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1.5">
               <button
                 type="button"
                 onClick={() => setShowSettings(!showSettings)}
-                className={`p-2 rounded-xl transition ${
+                className={`w-7 h-7 rounded-full flex items-center justify-center transition active:scale-90 ${
                   showSettings
-                    ? 'text-pink-300 bg-white/10'
-                    : 'text-neutral-400 hover:text-white hover:bg-white/[0.06]'
+                    ? 'text-pink-300 bg-white/15'
+                    : 'text-white/60 hover:text-white bg-white/[0.06] hover:bg-white/10'
                 }`}
-                title="Configuration & Keys"
+                title="Settings"
+                aria-label="Settings"
               >
-                <Settings className="w-4 h-4" />
+                <Settings className="w-3.5 h-3.5" />
               </button>
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-white/[0.06] transition"
+                className="w-7 h-7 rounded-full bg-white/[0.06] hover:bg-white/10 text-white/60 hover:text-white flex items-center justify-center transition active:scale-90"
                 title="Close"
+                aria-label="Close"
               >
-                <X className="w-4 h-4" />
+                <X className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
 
-          {/* Settings Drawer View */}
+          {/* Settings Sheet */}
           {showSettings ? (
             <div className="p-5 space-y-4 max-h-[380px] overflow-y-auto">
-              <div>
-                <h4 className="text-xs font-semibold text-white mb-1">Intelligence Mode</h4>
-                <p className="text-[11px] text-neutral-400 font-light mb-3">
-                  Choose how Paige perceives and navigates the platform:
-                </p>
-
+              <div className="space-y-1.5">
+                <span className="text-[10px] uppercase tracking-wider font-semibold text-white/50 block">
+                  Intelligence Engine
+                </span>
                 <select
                   value={provider}
                   onChange={(e) => handleSelectProvider(e.target.value as ProviderPreset)}
-                  className="w-full text-xs bg-[#1a1920] border border-white/10 rounded-2xl px-3.5 py-2.5 text-white focus:outline-none focus:border-pink-400/50"
+                  className="w-full text-xs bg-white/[0.06] border border-white/10 rounded-2xl px-3.5 py-2.5 text-white focus:outline-none focus:ring-1 focus:ring-white/20 transition cursor-pointer"
                 >
                   {Object.entries(PROVIDER_CONFIGS).map(([key, cfg]) => (
-                    <option key={key} value={key}>
+                    <option key={key} value={key} className="bg-[#1c1c1e] text-white">
                       {cfg.name}
                     </option>
                   ))}
@@ -585,17 +598,17 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
               </div>
 
               {provider !== 'demo' && (
-                <div className="space-y-3 pt-2">
-                  <div className="space-y-1">
+                <div className="space-y-3 pt-1">
+                  <div className="space-y-1.5">
                     <div className="flex items-center justify-between text-xs">
-                      <label className="text-white font-medium flex items-center space-x-1">
+                      <label className="text-white/90 font-medium flex items-center space-x-1.5">
                         <Key className="w-3.5 h-3.5 text-amber-300" />
                         <span>API Key</span>
                       </label>
                       <button
                         type="button"
                         onClick={() => setShowKey(!showKey)}
-                        className="text-[10px] text-neutral-400 hover:text-neutral-200"
+                        className="text-[11px] text-white/50 hover:text-white transition"
                       >
                         {showKey ? 'Hide' : 'Reveal'}
                       </button>
@@ -605,51 +618,52 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
                       value={apiKey}
                       onChange={(e) => setApiKey(e.target.value)}
                       placeholder={PROVIDER_CONFIGS[provider].placeholderKey}
-                      className="w-full text-xs font-mono bg-[#1a1920] border border-white/10 rounded-2xl px-3.5 py-2 text-white focus:outline-none focus:border-pink-400/50"
+                      className="w-full text-xs font-mono bg-white/[0.06] border border-white/10 rounded-2xl px-3.5 py-2.5 text-white focus:outline-none focus:ring-1 focus:ring-white/20 transition"
                     />
-                    <p className="text-[10px] text-neutral-500 font-light">
-                      Stored in your browser only. Never transmitted to our backend.
+                    <p className="text-[10px] text-white/40 font-light">
+                      Stored in local browser sandbox only.
                     </p>
                   </div>
 
-                  <div className="space-y-1">
-                    <label className="text-xs text-white font-medium block">Model Name</label>
+                  <div className="space-y-1.5">
+                    <label className="text-xs text-white/90 font-medium block">Model Name</label>
                     <input
                       type="text"
                       value={model}
                       onChange={(e) => setModel(e.target.value)}
                       placeholder="e.g. qwen-plus or gpt-4o"
-                      className="w-full text-xs font-mono bg-[#1a1920] border border-white/10 rounded-2xl px-3.5 py-2 text-white focus:outline-none focus:border-pink-400/50"
+                      className="w-full text-xs font-mono bg-white/[0.06] border border-white/10 rounded-2xl px-3.5 py-2.5 text-white focus:outline-none focus:ring-1 focus:ring-white/20 transition"
                     />
                   </div>
                 </div>
               )}
 
-              <div className="pt-3 border-t border-white/[0.06] flex items-center justify-between">
+              <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between">
                 <a
                   href="https://alibaba.github.io/page-agent/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[11px] text-neutral-400 hover:text-pink-300 flex items-center space-x-1"
+                  className="text-[11px] text-white/50 hover:text-white flex items-center space-x-1 transition"
                 >
-                  <span>About page-agent</span>
+                  <span>Powered by page-agent</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
 
                 <button
                   type="button"
                   onClick={handleSaveConfig}
-                  className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 text-white font-medium text-xs transition cursor-pointer"
+                  className="px-4 py-2 rounded-full bg-white text-black font-semibold text-xs shadow-md active:scale-95 transition cursor-pointer"
                 >
-                  Save Settings
+                  Done
                 </button>
               </div>
             </div>
           ) : (
-            /* Main Conversational & Exploration View */
-            <div className="flex-1 flex flex-col p-5 space-y-4 overflow-hidden">
-              {/* Natural Human Input Bar */}
-              <div className="relative">
+            /* Main Conversational & iOS Inset Destination View */
+            <div className="flex-1 flex flex-col p-4 space-y-3.5 overflow-hidden">
+              {/* Apple Spotlight-Style Pill Search Field */}
+              <div className="relative flex items-center bg-white/[0.07] hover:bg-white/[0.09] focus-within:bg-white/[0.1] focus-within:ring-2 focus-within:ring-white/20 border border-white/[0.08] rounded-full px-3.5 py-2 transition-all shadow-[0_2px_8px_rgba(0,0,0,0.25)_inset]">
+                <Search className="w-4 h-4 text-white/40 mr-2 shrink-0" />
                 <input
                   type="text"
                   value={taskInput}
@@ -660,17 +674,18 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
                     }
                   }}
                   disabled={isRunning}
-                  placeholder="Ask Paige where to explore or what to find?..."
-                  className="w-full text-xs bg-[#1a1920] border border-white/10 rounded-full pl-4 pr-11 py-3 text-white placeholder-neutral-500 focus:outline-none focus:border-pink-400/50 transition"
+                  placeholder="Ask Paige where to explore or what to find..."
+                  className="flex-1 text-xs text-white placeholder-white/40 bg-transparent focus:outline-none"
                 />
 
-                <div className="absolute right-1.5 top-1/2 -translate-y-1/2">
+                <div className="ml-1 shrink-0">
                   {isRunning ? (
                     <button
                       type="button"
                       onClick={handleStop}
-                      className="w-7 h-7 rounded-full bg-rose-500/20 text-rose-300 hover:bg-rose-500/30 flex items-center justify-center transition cursor-pointer"
+                      className="w-7 h-7 rounded-full bg-rose-500/20 text-rose-300 hover:bg-rose-500/30 active:scale-90 flex items-center justify-center transition cursor-pointer"
                       title="Pause"
+                      aria-label="Pause execution"
                     >
                       <Square className="w-3 h-3 fill-current" />
                     </button>
@@ -679,8 +694,9 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
                       type="button"
                       onClick={() => handleExecute()}
                       disabled={!taskInput.trim()}
-                      className="w-7 h-7 rounded-full bg-pink-400 hover:bg-pink-300 disabled:bg-neutral-800 disabled:text-neutral-600 text-black flex items-center justify-center transition cursor-pointer shadow-sm"
-                      title="Submit"
+                      className="w-7 h-7 rounded-full bg-white text-black hover:bg-neutral-200 disabled:bg-white/10 disabled:text-white/20 flex items-center justify-center transition active:scale-90 cursor-pointer shadow-sm"
+                      title="Send"
+                      aria-label="Send instruction"
                     >
                       <ArrowUp className="w-3.5 h-3.5 stroke-[2.5]" />
                     </button>
@@ -688,11 +704,14 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
                 </div>
               </div>
 
-              {/* Curated In-App Destination Chips */}
+              {/* Grouped Inset Destination Tiles */}
               <div className="space-y-1.5">
-                <span className="text-[11px] font-medium text-neutral-400 tracking-wide uppercase">
-                  Suggested Destinations
-                </span>
+                <div className="flex items-center justify-between px-1">
+                  <span className="text-[10px] font-semibold text-white/45 tracking-wider uppercase">
+                    Suggested Destinations
+                  </span>
+                </div>
+
                 <div className="grid grid-cols-2 gap-2">
                   {SUGGESTIONS.map((item) => (
                     <button
@@ -703,51 +722,59 @@ Guide the user smoothly, calmly, and helpfully without disrupting their viewing 
                         handleExecute(item.prompt)
                       }}
                       disabled={isRunning}
-                      className="p-2.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.06] hover:border-white/15 text-left transition cursor-pointer flex flex-col justify-between group"
+                      className="group p-2.5 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] hover:border-white/15 text-left transition-all active:scale-[0.98] cursor-pointer flex flex-col justify-between"
                     >
-                      <div className="flex items-center space-x-2">
-                        {item.icon}
-                        <span className="text-xs font-medium text-white group-hover:text-pink-200 transition">
+                      <div className="flex items-center justify-between w-full mb-1">
+                        <div className="w-7 h-7 rounded-xl bg-white/[0.07] flex items-center justify-center group-hover:scale-105 transition-transform">
+                          {item.icon}
+                        </div>
+                        <ChevronRight className="w-3.5 h-3.5 text-white/20 group-hover:text-white/50 group-hover:translate-x-0.5 transition" />
+                      </div>
+
+                      <div>
+                        <span className="text-[12px] font-semibold text-white/95 group-hover:text-pink-200 transition block">
                           {item.label}
                         </span>
+                        <span className="text-[10px] text-white/40 font-normal line-clamp-1 mt-0.5">
+                          {item.desc}
+                        </span>
                       </div>
-                      <span className="text-[10px] text-neutral-400 font-light mt-1 line-clamp-1">
-                        {item.desc}
-                      </span>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Serene Journey Steps Feed */}
-              <div
-                ref={stepsContainerRef}
-                className="flex-1 min-h-[110px] max-h-[160px] overflow-y-auto space-y-2 pr-1 pt-1"
-              >
-                {journeySteps.map((step) => (
-                  <div
-                    key={step.id}
-                    className="flex items-start space-x-2.5 text-xs text-neutral-300 leading-relaxed"
-                  >
-                    <span className="mt-0.5 shrink-0">
-                      {step.status === 'done' ? (
-                        <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      ) : step.status === 'active' ? (
-                        <span className="w-2 h-2 rounded-full bg-pink-400 inline-block animate-pulse" />
-                      ) : (
-                        <ChevronRight className="w-3.5 h-3.5 text-neutral-500" />
-                      )}
-                    </span>
-                    <div>
-                      <p className="font-light text-neutral-200">{step.text}</p>
-                      {step.subtext && (
-                        <p className="text-[11px] text-neutral-500 font-light mt-0.5">
-                          {step.subtext}
-                        </p>
-                      )}
+              {/* Live Activities Capsule Feed */}
+              <div className="bg-black/30 border border-white/[0.05] rounded-2xl p-3">
+                <div
+                  ref={stepsContainerRef}
+                  className="min-h-[75px] max-h-[110px] overflow-y-auto space-y-2 pr-1"
+                >
+                  {journeySteps.map((step) => (
+                    <div
+                      key={step.id}
+                      className="flex items-start space-x-2.5 text-xs text-white/80 leading-relaxed"
+                    >
+                      <span className="mt-0.5 shrink-0">
+                        {step.status === 'done' ? (
+                          <Check className="w-3.5 h-3.5 text-emerald-400" />
+                        ) : step.status === 'active' ? (
+                          <span className="w-2 h-2 rounded-full bg-pink-400 inline-block animate-pulse" />
+                        ) : (
+                          <ChevronRight className="w-3.5 h-3.5 text-white/40" />
+                        )}
+                      </span>
+                      <div>
+                        <p className="font-medium text-white/90 text-[11px]">{step.text}</p>
+                        {step.subtext && (
+                          <p className="text-[10px] text-white/45 font-light mt-0.5">
+                            {step.subtext}
+                          </p>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           )}
