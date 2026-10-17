@@ -9,6 +9,7 @@ import type {
   PreferenceContradiction,
   MatchExplanation,
 } from '../types'
+import { computeMirrorCheck } from '../data/relationshipTraps'
 
 /**
  * Calculates Great-Circle distance (in kilometers) between two coordinates using the Haversine formula
@@ -847,6 +848,16 @@ export function evaluateMatch(
     confidenceRationale: `Evaluation backed by ${confidenceScore}% profile completeness with ${safeB.identity.verified ? 'verified' : 'unverified'} identity data.`,
   }
 
+  // Compute Self-Mirror Check (Decision Engine §2)
+  const mirrorCheck = computeMirrorCheck(safeA, safeB, {
+    mutualScore,
+    attractionScore: attraction.score || 70,
+    lifestyleScore: lifestyleAlignment.score || 70,
+    communicationScore: communicationAlignment.score || 70,
+    familyScore: familyAlignment.score || 70,
+    relationshipScore: relationshipAlignment.score || 70,
+  })
+
   return {
     eligible,
     hardConflicts,
@@ -880,5 +891,6 @@ export function evaluateMatch(
     },
     contradictions: contradictionsA,
     explanation,
+    mirrorCheck,
   }
 }

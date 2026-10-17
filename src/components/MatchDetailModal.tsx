@@ -13,6 +13,7 @@ import {
   Heart,
   X,
   ShieldCheck,
+  Compass,
 } from 'lucide-react'
 import type { UniversalUserProfile, MatchEvaluation } from '../types'
 import { sounds } from '../utils/sound'
@@ -84,6 +85,106 @@ export const MatchDetailModal: React.FC<MatchDetailModalProps> = ({
     sounds.playLike()
     onConnect(candidate)
     onClose()
+  }
+
+  const mirrorCheck = evaluation.mirrorCheck
+
+  const handleInspectWithPaige = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    sounds.playTap()
+    window.dispatchEvent(
+      new CustomEvent('open-page-agent', {
+        detail: {
+          prompt: `Inspect spark vs practical friction for ${candidate.identity.name}`,
+          candidate,
+          evaluation,
+        },
+      })
+    )
+  }
+
+  const renderMirrorCheck = () => {
+    if (!mirrorCheck || (!mirrorCheck.hasTrapWarning && (!mirrorCheck.frictions || mirrorCheck.frictions.length === 0))) {
+      return null
+    }
+
+    const hasTrap = mirrorCheck.hasTrapWarning
+
+    return (
+      <div
+        data-mirror-check="true"
+        className={`p-4 rounded-3xl border transition-all ${
+          hasTrap
+            ? 'bg-rose-950/25 border-rose-500/30'
+            : 'bg-amber-950/20 border-amber-500/25'
+        }`}
+      >
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <div className="flex items-center space-x-2 min-w-0">
+            <div
+              className={`p-1.5 rounded-xl shrink-0 ${
+                hasTrap ? 'bg-rose-500/20 text-rose-300' : 'bg-amber-500/20 text-amber-300'
+              }`}
+            >
+              <Compass className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="flex items-center space-x-2">
+                <span className="text-xs font-semibold text-white">Relationship Mirror Check</span>
+                <span
+                  className={`text-[9px] font-mono px-2 py-0.5 rounded-full border uppercase tracking-wider ${
+                    hasTrap
+                      ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
+                      : 'bg-amber-500/20 text-amber-300 border-amber-500/30'
+                  }`}
+                >
+                  {hasTrap ? 'Pattern Alert' : 'Friction Note'}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleInspectWithPaige}
+            className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-[11px] font-medium text-white flex items-center space-x-1.5 transition cursor-pointer shadow-sm active:scale-95 shrink-0"
+          >
+            <Sparkles className="w-3 h-3 text-[#F472B6]" />
+            <span>Inspect with Paige</span>
+          </button>
+        </div>
+
+        <p className="text-xs text-neutral-200 font-light leading-relaxed">
+          {mirrorCheck.gentleReflection}
+        </p>
+
+        {mirrorCheck.triggeredTraps.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2.5 pt-2 border-t border-white/[0.06]">
+            {mirrorCheck.triggeredTraps.map((trap) => (
+              <span
+                key={trap.id}
+                className="px-2 py-0.5 rounded-md bg-rose-500/15 text-rose-300 border border-rose-500/30 text-[10px] font-mono"
+              >
+                ⚠️ {trap.title}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {mirrorCheck.frictions.length > 0 && mirrorCheck.triggeredTraps.length === 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2.5 pt-2 border-t border-white/[0.06]">
+            {mirrorCheck.frictions.map((fr, idx) => (
+              <span
+                key={idx}
+                className="px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[10px] font-mono"
+              >
+                {fr.label}: {fr.protocol}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    )
   }
 
   return (
@@ -197,6 +298,9 @@ export const MatchDetailModal: React.FC<MatchDetailModalProps> = ({
           {/* TAB 1: OVERVIEW */}
           {activeTab === 'overview' && (
             <div className="space-y-4 animate-in fade-in duration-200">
+              {/* Mirror Check & Paige Inspection Banner */}
+              {renderMirrorCheck()}
+
               {/* Highlight Checklist Card (Mockup 1B) */}
               <div className="p-4 rounded-3xl bg-[#17161A] border border-white/[0.08] space-y-3">
                 <h3 className="text-sm font-semibold text-white tracking-tight">
@@ -251,6 +355,9 @@ export const MatchDetailModal: React.FC<MatchDetailModalProps> = ({
           {/* TAB 2: COMPATIBILITY */}
           {activeTab === 'compatibility' && (
             <div className="space-y-4 animate-in fade-in duration-200">
+              {/* Mirror Check & Paige Inspection Banner */}
+              {renderMirrorCheck()}
+
               <div className="p-4 rounded-3xl bg-[#17161A] border border-white/[0.08] space-y-3">
                 <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
                   <span className="text-xs font-semibold text-white">Mutual Reciprocity</span>

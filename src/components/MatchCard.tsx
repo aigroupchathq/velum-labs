@@ -263,6 +263,105 @@ export const MatchCard: React.FC<MatchCardProps> = ({
     }, 2200)
   }
 
+  const mirrorCheck = evaluation.mirrorCheck
+
+  const handleInspectWithPaige = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    sounds.playTap()
+    window.dispatchEvent(
+      new CustomEvent('open-page-agent', {
+        detail: {
+          prompt: `Inspect spark vs practical friction for ${candidate.identity.name}`,
+          candidate,
+          evaluation,
+        },
+      })
+    )
+  }
+
+  const renderMirrorCheckBanner = (isCompact = false) => {
+    if (!mirrorCheck || (!mirrorCheck.hasTrapWarning && (!mirrorCheck.frictions || mirrorCheck.frictions.length === 0))) {
+      return null
+    }
+
+    const hasTrap = mirrorCheck.hasTrapWarning
+
+    return (
+      <div
+        data-mirror-check="true"
+        className={`rounded-2xl border transition-all ${
+          hasTrap
+            ? 'bg-rose-950/25 border-rose-500/30'
+            : 'bg-amber-950/20 border-amber-500/25'
+        } ${isCompact ? 'p-3.5 mx-3 my-2' : 'p-3.5'}`}
+      >
+        <div className="flex items-center justify-between gap-2 mb-1.5">
+          <div className="flex items-center space-x-2 min-w-0">
+            <div
+              className={`p-1 rounded-lg shrink-0 ${
+                hasTrap ? 'bg-rose-500/20 text-rose-300' : 'bg-amber-500/20 text-amber-300'
+              }`}
+            >
+              <Compass className="w-3.5 h-3.5" />
+            </div>
+            <span className="text-xs font-semibold text-white truncate">Mirror Check</span>
+            <span
+              className={`text-[9px] font-mono px-2 py-0.5 rounded-full border uppercase tracking-wider shrink-0 ${
+                hasTrap
+                  ? 'bg-rose-500/15 text-rose-300 border-rose-500/30'
+                  : 'bg-amber-500/15 text-amber-300 border-amber-500/30'
+              }`}
+            >
+              {hasTrap ? 'Pattern Alert' : 'Manageable Friction'}
+            </span>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleInspectWithPaige}
+            className="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-[11px] font-medium text-white flex items-center space-x-1.5 transition cursor-pointer shrink-0 shadow-sm active:scale-95"
+            title="Inspect with Paige"
+          >
+            <Sparkles className="w-3 h-3 text-[#F472B6]" />
+            <span>Inspect with Paige</span>
+          </button>
+        </div>
+
+        <p className="text-xs text-neutral-200 font-light leading-relaxed">
+          {mirrorCheck.gentleReflection}
+        </p>
+
+        {/* Triggered Traps Pills */}
+        {mirrorCheck.triggeredTraps.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2 pt-2 border-t border-white/[0.06]">
+            {mirrorCheck.triggeredTraps.map((trap) => (
+              <span
+                key={trap.id}
+                className="px-2 py-0.5 rounded-md bg-rose-500/15 text-rose-300 border border-rose-500/30 text-[10px] font-mono flex items-center space-x-1"
+              >
+                <span>⚠️ {trap.title}</span>
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Friction Notices */}
+        {mirrorCheck.frictions.length > 0 && mirrorCheck.triggeredTraps.length === 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2 pt-2 border-t border-white/[0.06]">
+            {mirrorCheck.frictions.slice(0, 2).map((fr, idx) => (
+              <span
+                key={idx}
+                className="px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-300 border border-amber-500/30 text-[10px] font-mono"
+              >
+                {fr.label}: {fr.protocol}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
   const renderTabsCapsule = () => (
     <div className="inline-flex p-1 bg-zinc-950 rounded-full border border-white/[0.08] text-xs font-medium overflow-x-auto max-w-full no-scrollbar space-x-0.5">
       <button
@@ -613,6 +712,50 @@ export const MatchCard: React.FC<MatchCardProps> = ({
               </div>
             </div>
           </div>
+
+          {/* Relationship Self-Mirror & Trap Detection */}
+          {mirrorCheck && (
+            <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Compass className="w-4 h-4 text-[#F472B6]" />
+                  <span className="text-xs font-bold text-white">Relationship Self-Mirror &amp; Trap Check</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleInspectWithPaige}
+                  className="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-[11px] font-medium text-white flex items-center space-x-1.5 transition cursor-pointer active:scale-95"
+                >
+                  <Sparkles className="w-3 h-3 text-[#F472B6]" />
+                  <span>Ask Paige</span>
+                </button>
+              </div>
+
+              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2">
+                <p className="text-xs text-neutral-200 leading-relaxed font-light">
+                  {mirrorCheck.gentleReflection}
+                </p>
+
+                {mirrorCheck.triggeredTraps.length > 0 ? (
+                  <div className="pt-2 border-t border-white/[0.06] space-y-1.5">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-rose-300 block font-semibold">
+                      Known Pattern Caution:
+                    </span>
+                    {mirrorCheck.triggeredTraps.map((tr) => (
+                      <div key={tr.id} className="text-xs text-rose-200/90 font-light pl-2.5 border-l-2 border-rose-500/50">
+                        <strong className="text-rose-100">{tr.title}:</strong> {tr.proactiveStrategy}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="pt-2 border-t border-white/[0.06] flex items-center space-x-1.5 text-xs text-emerald-400">
+                    <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                    <span>Zero acknowledged relationship traps triggered with this candidate.</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* The 2-3 Topics Actually Worth Discussing */}
           <div className="space-y-2.5">
@@ -1061,6 +1204,9 @@ export const MatchCard: React.FC<MatchCardProps> = ({
           <ChevronRight className="w-4 h-4 text-neutral-400 shrink-0" />
         </div>
 
+        {/* Mirror Check & Paige Inspection Banner */}
+        {renderMirrorCheckBanner(true)}
+
         {/* Floating Action Buttons: 3 Circular Buttons (Mockup 1) */}
         <div className="flex items-center justify-center space-x-4 py-3 pb-4">
           {/* Pass */}
@@ -1289,6 +1435,9 @@ export const MatchCard: React.FC<MatchCardProps> = ({
 
               {renderTabsCapsule()}
             </div>
+
+            {/* Desktop Mirror Check Banner */}
+            {renderMirrorCheckBanner(false)}
 
             {renderTabContent()}
           </div>

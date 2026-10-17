@@ -209,6 +209,11 @@ export interface UniversalUserProfile {
     ghostingReportsCount: number
     handshakesInitiated: number
   }
+
+  // 14. Relationship Self-Mirror & Boundary Triage (Decision Engine §2)
+  acknowledgedTraps?: string[]
+  boundaryTriage?: Record<string, BoundaryTriageLevel>
+  relationshipBlueprint?: RelationshipBlueprint
 }
 
 // --- PHASE 2 DECOUPLED PROFILES (Y_i Self-Supply vs X_i Partner-Demand) ---
@@ -364,6 +369,7 @@ export interface MatchEvaluation {
   }
   contradictions: PreferenceContradiction[]
   explanation: MatchExplanation
+  mirrorCheck?: MirrorCheck
 }
 
 export interface RecommendedCandidate {
@@ -391,4 +397,59 @@ export interface DyadConversation {
   sharedPrompts: string[]
   messages: DyadMessage[]
   closureReason?: string
+}
+
+// --- RELATIONSHIP DECISION ENGINE & SELF-MIRROR TYPES ---
+
+export type BoundaryTriageLevel = 'preference' | 'friction' | 'dealbreaker'
+
+export interface BoundaryTriageItem {
+  id: string
+  label: string
+  category: 'communication' | 'lifestyle' | 'family' | 'autonomy' | 'finance' | 'ethics'
+  level: BoundaryTriageLevel
+  description: string
+  manageabilityTip: string
+}
+
+export interface RelationshipTrap {
+  id: string
+  title: string
+  category: 'attraction' | 'communication' | 'pacing' | 'boundaries' | 'rescuing'
+  summary: string
+  description?: string
+  howItFeels: string
+  theHiddenFriction: string
+  mirrorPrompt: string
+  proactiveStrategy?: string
+}
+
+export interface RelationshipBlueprint {
+  partnershipType: string
+  cohabitationVision: string
+  financePhilosophy: string
+  reassuranceCadence: string
+  conflictStyle: string
+  rechargeStyle: string
+}
+
+export interface FrictionNotice {
+  label: string
+  category: string
+  severity: 'low' | 'moderate' | 'high'
+  tip: string
+  protocol?: string
+}
+
+export interface MirrorCheck {
+  hasTrapWarning: boolean
+  triggeredTraps: RelationshipTrap[]
+  sparkSummary: string
+  compatibilitySummary: string
+  sparkLevel: 'high' | 'moderate' | 'calm'
+  compatibilityLevel: 'high' | 'moderate' | 'friction'
+  frictions: FrictionNotice[]
+  growthOpportunity: string
+  gentleReflection?: string
+  sparkVsCompatibilityRatio?: number
 }

@@ -39,6 +39,7 @@ import type { UniversalUserProfile } from '../types'
 import { evaluateMatch } from '../utils/matchingEngine'
 import { mockCandidates } from '../data/mockProfiles'
 import { sounds } from '../utils/sound'
+import { SelfMirrorView } from './SelfMirrorView'
 
 interface UserAccountViewProps {
   currentUser: UniversalUserProfile
@@ -60,6 +61,7 @@ type ProfileMobileSubview =
   | 'boundaries'
   | 'values_lifestyle'
   | 'privacy_location'
+  | 'self_mirror'
   | 'preview'
   | 'more'
   | 'safety'
@@ -361,7 +363,34 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
               <ChevronRight className="w-4 h-4 text-neutral-500 shrink-0 ml-2" />
             </button>
 
-            {/* 6. More */}
+            {/* 6. Relationship Self-Mirror & Decision Engine */}
+            <button
+              onClick={() => {
+                sounds.playTap()
+                setSubview('self_mirror')
+              }}
+              className="w-full p-4 sm:p-5 flex items-center justify-between text-left hover:bg-white/[0.02] active:bg-white/[0.04] transition cursor-pointer group"
+            >
+              <div className="flex items-center space-x-3.5">
+                <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#F472B6]/20 to-purple-600/20 border border-[#F472B6]/30 flex items-center justify-center shrink-0">
+                  <Compass className="w-5 h-5 text-[#F472B6]" />
+                </div>
+                <div>
+                  <div className="flex items-center space-x-2">
+                    <h3 className="text-sm font-semibold text-white group-hover:text-[#F472B6] transition">
+                      Relationship Self-Mirror
+                    </h3>
+                    <span className="px-1.5 py-0.5 rounded-full bg-[#F472B6]/20 border border-[#F472B6]/40 text-[#F472B6] text-[9px] font-mono uppercase tracking-wider font-semibold">
+                      Decision Engine
+                    </span>
+                  </div>
+                  <p className="text-xs text-neutral-400 font-light">Known traps, 3-tier boundary triage & blueprint</p>
+                </div>
+              </div>
+              <ChevronRight className="w-4 h-4 text-neutral-500 group-hover:text-white shrink-0 ml-2 transition" />
+            </button>
+
+            {/* 7. More */}
             <button
               onClick={() => setSubview('more')}
               className="w-full p-4 sm:p-5 flex items-center justify-between text-left hover:bg-white/[0.02] active:bg-white/[0.04] transition cursor-pointer"
@@ -1945,6 +1974,39 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
 
             </div>
           </div>
+        </div>
+      )}
+
+      {/* ======================================================== */}
+      {/* 12B. RELATIONSHIP SELF-MIRROR & DECISION ENGINE SUBVIEW  */}
+      {/* ======================================================== */}
+      {subview === 'self_mirror' && (
+        <div className="space-y-6 animate-in fade-in duration-200">
+          <div className="flex items-center justify-between pt-2 pb-1">
+            <button
+              onClick={() => {
+                sounds.playTap()
+                setSubview('hub')
+              }}
+              className="px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.12] text-xs font-medium text-neutral-300 hover:text-white flex items-center space-x-1.5 transition cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back to Profile Hub</span>
+            </button>
+            <div className="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-[#F472B6]/10 border border-[#F472B6]/25 text-[#F472B6] text-xs font-mono font-medium">
+              <Compass className="w-3.5 h-3.5" />
+              <span>Decision Engine</span>
+            </div>
+          </div>
+
+          <SelfMirrorView
+            currentUser={profile}
+            onUpdateUser={(updated) => {
+              setProfile(updated)
+              onUpdateUser(updated)
+            }}
+            onNavigateDiscover={onNavigateToDiscover}
+          />
         </div>
       )}
 

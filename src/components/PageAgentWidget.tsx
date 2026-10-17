@@ -134,6 +134,7 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
   const agentRef = useRef<PageAgent | null>(null)
   const abortRef = useRef<boolean>(false)
   const stepsContainerRef = useRef<HTMLDivElement>(null)
+  const handleExecuteRef = useRef<(prompt?: string) => Promise<void>>(() => Promise.resolve())
 
   // Auto-scroll steps
   useEffect(() => {
@@ -144,9 +145,14 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
 
   // Listen for open-page-agent global event
   useEffect(() => {
-    const handleOpen = () => {
+    const handleOpen = (e: Event) => {
       setIsOpen(true)
       setShowSettings(false)
+      const ce = e as CustomEvent<{ prompt?: string; candidate?: any; evaluation?: any }>
+      if (ce.detail?.prompt) {
+        setTaskInput(ce.detail.prompt)
+        handleExecuteRef.current(ce.detail.prompt)
+      }
     }
     window.addEventListener('open-page-agent', handleOpen)
     return () => window.removeEventListener('open-page-agent', handleOpen)
@@ -218,24 +224,6 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
     setIsRunning(false)
     setCurrentStep('Paused')
     addJourneyStep('Guidance paused.', undefined, 'done')
-  }
-
-  const handleExecute = async (overridePrompt?: string) => {
-    const prompt = (overridePrompt ?? taskInput).trim()
-    if (!prompt) return
-
-    setIsRunning(true)
-    abortRef.current = false
-    setIsOpen(true)
-    setShowSettings(false)
-
-    addJourneyStep(`"${prompt}"`, undefined, 'active')
-
-    if (provider === 'demo') {
-      await runGuidedFlow(prompt)
-    } else {
-      await runLiveAgent(prompt)
-    }
   }
 
   // ==========================================================================
@@ -351,6 +339,43 @@ export const PageAgentWidget: React.FC<PageAgentWidgetProps> = ({
         addJourneyStep('Statutory disclosures displayed.', 'Verified zero pay-to-win algorithmic ranking.', 'done')
       }
 
+      // Destination: Candidate Friction & Spark Inspection
+      else if (lower.includes('inspect') || lower.includes('friction') || lower.includes('spark')) {
+        setCurrentStep('Analyzing spark pull vs. practical friction...')
+        await new Promise((r) => setTimeout(r, 650))
+        if (abortRef.current) return
+
+        await focusElement(
+          '[data-mirror-check="true"], article, .rounded-2xl',
+          'Highlighting Mirror Check & relational pacing...'
+        )
+        addJourneyStep(
+          'Mirror Check Inspection Complete.',
+          'Authentic spark detected. Notice communication cadence and solitude balance before emotional over-investment.',
+          'done'
+        )
+      }
+
+      // Destination: Relationship Self-Mirror & Decision Engine
+      else if (lower.includes('mirror') || lower.includes('trap') || lower.includes('blueprint') || lower.includes('triage')) {
+        setCurrentStep('Opening Relationship Self-Mirror & Decision Engine...')
+        startTransition(() => {
+          onSelectView('onboarding')
+        })
+        await new Promise((r) => setTimeout(r, 650))
+        if (abortRef.current) return
+
+        await focusElement(
+          '[data-view="account"], main, .space-y-6',
+          'Accessing Known Traps & 3-Tier Boundary Triage...'
+        )
+        addJourneyStep(
+          'Relationship Self-Mirror is open.',
+          'Explore acknowledged traps, flexible preferences vs non-negotiables, and your blueprint.',
+          'done'
+        )
+      }
+
       // Default Navigation
       else {
         setCurrentStep('Navigating to Discover matches...')
@@ -436,8 +461,37 @@ Guide the user smoothly, calmly, and helpfully with an understated, elegant tone
     }
   }
 
+  const handleExecute = async (overridePrompt?: string) => {
+    const prompt = (overridePrompt ?? taskInput).trim()
+    if (!prompt) return
+
+    setIsRunning(true)
+    abortRef.current = false
+    setIsOpen(true)
+    setShowSettings(false)
+
+    addJourneyStep(`"${prompt}"`, undefined, 'active')
+
+    if (provider === 'demo') {
+      await runGuidedFlow(prompt)
+    } else {
+      await runLiveAgent(prompt)
+    }
+  }
+
+  useEffect(() => {
+    handleExecuteRef.current = handleExecute
+  })
+
   // Apple-curated destination tiles
   const SUGGESTIONS = [
+    {
+      label: 'Self-Mirror & Traps',
+      desc: 'Known traps, triage & blueprint',
+      prompt: 'Open Relationship Self-Mirror and review known traps and boundary triage',
+      icon: <Compass className="w-4 h-4 text-[#F472B6]" />,
+      tint: 'from-pink-500/15 to-purple-900/10',
+    },
     {
       label: 'Constellation Map',
       desc: '3D connections & lifestyle clusters',

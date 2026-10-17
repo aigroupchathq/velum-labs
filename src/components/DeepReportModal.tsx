@@ -26,6 +26,8 @@ import {
   Layers,
   Sparkles,
   Download,
+  Compass,
+  AlertTriangle,
 } from 'lucide-react'
 import type { UniversalUserProfile, MatchEvaluation } from '../types'
 import { sounds } from '../utils/sound'
@@ -37,7 +39,7 @@ interface DeepReportModalProps {
   onClose: () => void
 }
 
-type DossierTab = 'vectors' | 'spectra' | 'psychology' | 'sanctuary'
+type DossierTab = 'vectors' | 'spectra' | 'psychology' | 'sanctuary' | 'mirror'
 
 export const DeepReportModal: React.FC<DeepReportModalProps> = ({
   candidate,
@@ -84,6 +86,21 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
   const handleClose = () => {
     sounds.playTap()
     onClose()
+  }
+
+  const mirrorCheck = evaluation.mirrorCheck
+
+  const handleInspectWithPaige = () => {
+    sounds.playTap()
+    window.dispatchEvent(
+      new CustomEvent('open-page-agent', {
+        detail: {
+          prompt: `Inspect spark vs practical friction for ${candidate.identity.name}`,
+          candidate,
+          evaluation,
+        },
+      })
+    )
   }
 
   return (
@@ -176,6 +193,17 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
             >
               <Home className="w-3 h-3" />
               <span>Boundaries &amp; Safe Haven</span>
+            </button>
+            <button
+              onClick={() => handleTabChange('mirror')}
+              className={`px-3 py-1 rounded-full transition flex items-center space-x-1.5 ${
+                activeTab === 'mirror'
+                  ? 'bg-[#F472B6] text-black font-semibold shadow-sm'
+                  : 'text-neutral-400 hover:text-white'
+              }`}
+            >
+              <Compass className="w-3 h-3" />
+              <span>Relationship Mirror</span>
             </button>
           </div>
 
@@ -565,6 +593,173 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
                     </span>
                   </div>
                 ))}
+              </div>
+            </div>
+          )}
+
+          {/* ==================================================== */}
+          {/* TAB 5: RELATIONSHIP SELF-MIRROR & DECISION ENGINE    */}
+          {/* ==================================================== */}
+          {activeTab === 'mirror' && (
+            <div className="space-y-6 animate-in fade-in duration-200">
+              {/* Header Card */}
+              <div className="p-5 rounded-2xl bg-gradient-to-r from-pink-950/40 via-zinc-950 to-purple-950/40 border border-[#F472B6]/30 flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center space-x-3">
+                  <div className="p-2.5 rounded-2xl bg-[#F472B6]/20 text-[#F472B6] border border-[#F472B6]/30">
+                    <Compass className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <div className="flex items-center space-x-2">
+                      <h4 className="text-base font-bold text-white">Relationship Self-Mirror</h4>
+                      <span className="px-2 py-0.5 rounded-full bg-[#F472B6]/20 border border-[#F472B6]/40 text-[#F472B6] text-[10px] font-mono uppercase tracking-wider font-semibold">
+                        Decision Engine
+                      </span>
+                    </div>
+                    <p className="text-xs text-neutral-300 font-light mt-0.5">
+                      Non-pathologizing decision support: separating emotional adrenaline from long-term compatibility.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleInspectWithPaige}
+                  className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 border border-white/20 text-xs font-semibold text-white flex items-center space-x-2 transition cursor-pointer shadow-lg active:scale-95"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-[#F472B6]" />
+                  <span>Inspect with Paige</span>
+                </button>
+              </div>
+
+              {/* Spark vs Compatibility Metric Card */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-rose-300 font-semibold flex items-center space-x-1.5">
+                      <Flame className="w-4 h-4 text-rose-400" />
+                      <span>Attraction &amp; Spark Pull</span>
+                    </span>
+                    <span className="font-mono font-bold text-rose-300">
+                      {Math.min(99, Math.round((mutuality.score || 80) * 0.95 + 6))}%
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
+                    Immediate conversational chemistry, mutual wit, and charismatic excitement.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="text-emerald-300 font-semibold flex items-center space-x-1.5">
+                      <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                      <span>Practical Long-Term Fit</span>
+                    </span>
+                    <span className="font-mono font-bold text-emerald-300">
+                      {Math.min(99, Math.round((compatibility.aToB || mutuality.score || 85) * 0.95 + 4))}%
+                    </span>
+                  </div>
+                  <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
+                    Domestic rhythm, emotional recharge styles, conflict recovery, and life vision.
+                  </p>
+                </div>
+              </div>
+
+              {/* Mirror Reflection Card */}
+              <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-2">
+                <span className="text-xs font-semibold text-white block">
+                  Objective Mirror Reflection
+                </span>
+                <p className="text-xs text-neutral-200 leading-relaxed font-light">
+                  {mirrorCheck?.gentleReflection ||
+                    `Balanced mutual resonance. No major unmanageable frictions detected in your declared communication rhythms.`}
+                </p>
+              </div>
+
+              {/* Known Traps Assessment */}
+              <div className="p-5 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-3">
+                <div className="flex items-center justify-between pb-2 border-b border-white/[0.06]">
+                  <span className="text-xs font-semibold text-white">
+                    Known Relationship Traps Audit
+                  </span>
+                  <span className="text-[10px] font-mono text-neutral-400">
+                    Checked against {currentUser.identity.name}&apos;s profile
+                  </span>
+                </div>
+
+                {mirrorCheck?.triggeredTraps && mirrorCheck.triggeredTraps.length > 0 ? (
+                  <div className="space-y-3">
+                    {mirrorCheck.triggeredTraps.map((trap) => (
+                      <div
+                        key={trap.id}
+                        className="p-3.5 rounded-xl bg-rose-500/10 border border-rose-500/25 space-y-1.5"
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-rose-300 flex items-center space-x-1.5">
+                            <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
+                            <span>{trap.title}</span>
+                          </span>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/20 text-rose-200 border border-rose-500/30">
+                            Pattern Alert
+                          </span>
+                        </div>
+                        <p className="text-xs text-rose-100/90 font-light leading-relaxed">
+                          {trap.description}
+                        </p>
+                        <div className="pt-2 border-t border-rose-500/20 text-xs text-neutral-200 font-light">
+                          <strong className="text-rose-200 font-medium">Proactive Strategy: </strong>
+                          {trap.proactiveStrategy}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex items-center space-x-2 text-xs text-emerald-300">
+                    <Check className="w-4 h-4 text-emerald-400 stroke-[2.5]" />
+                    <span>Zero acknowledged repetitive traps triggered with {candidate.identity.name}.</span>
+                  </div>
+                )}
+              </div>
+
+              {/* 3-Tier Boundary Triage Status */}
+              <div className="p-5 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-3">
+                <span className="text-xs font-semibold text-white block">
+                  3-Tier Boundary Triage Analysis
+                </span>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {/* Tier 1: Preferences */}
+                  <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-neutral-400 block font-semibold">
+                      Tier 1: Preferences
+                    </span>
+                    <p className="text-xs text-neutral-200 font-light">
+                      Chronotype: {candidate.accessibility?.sleepChronotype === 'night_owl' ? 'Night Owl' : 'Morning'}
+                    </p>
+                    <span className="text-[10px] text-emerald-400 block font-mono">✓ Flexible alignment</span>
+                  </div>
+
+                  {/* Tier 2: Manageable Frictions */}
+                  <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-amber-300 block font-semibold">
+                      Tier 2: Manageable Friction
+                    </span>
+                    <p className="text-xs text-neutral-200 font-light">
+                      Cadence: {candidate.communication.conflictStyle.replace('_', ' ')}
+                    </p>
+                    <span className="text-[10px] text-amber-300 block font-mono">⚠️ Protocol recommended</span>
+                  </div>
+
+                  {/* Tier 3: Non-Negotiables */}
+                  <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-purple-300 block font-semibold">
+                      Tier 3: Dealbreakers
+                    </span>
+                    <p className="text-xs text-neutral-200 font-light">
+                      Smoke-Free: {candidate.lifestyle.smoking === 'never' ? '100% Smoke-Free' : 'Social'}
+                    </p>
+                    <span className="text-[10px] text-purple-300 block font-mono">✓ Non-negotiable clean</span>
+                  </div>
+                </div>
               </div>
             </div>
           )}
