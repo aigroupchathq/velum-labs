@@ -9,7 +9,7 @@ try {
   run('git add -f dist');
   const tree = run('git write-tree --prefix=dist');
   console.log('Tree:', tree);
-  const commit = run(`git commit-tree ${tree} -m "deploy: integrate Alibaba page-agent with user UI"`);
+  const commit = run(`git commit-tree ${tree} -m "deploy: platform rebranding to Checkmate"`);
   console.log('Commit:', commit);
   run(`git push origin ${commit}:refs/heads/gh-pages --force`);
   run('git reset HEAD dist');
