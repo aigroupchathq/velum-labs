@@ -21,22 +21,23 @@ import {
   Send,
   SlidersHorizontal,
   Heart,
-  Music,
-  Home,
-  Award,
-  Volume2,
-  Layers,
   Check,
-  BookOpen,
-  Coffee,
-  Moon,
-  X,
-  MessageCircle,
-  Flame,
   Compass,
   Star,
+  X,
+  Coffee,
+  Moon,
+  Award,
 } from 'lucide-react'
 import type { UniversalUserProfile, MatchEvaluation } from '../types'
+import { MatchTabsCapsule, type CardTab } from './match/MatchTabsCapsule'
+import { MatchHandshakeModal } from './match/MatchHandshakeModal'
+import { MatchOverviewTab } from './match/tabs/MatchOverviewTab'
+import { MatchDecisionTab } from './match/tabs/MatchDecisionTab'
+import { MatchBlendTab } from './match/tabs/MatchBlendTab'
+import { MatchRulesTab } from './match/tabs/MatchRulesTab'
+import { MatchInteriorTab } from './match/tabs/MatchInteriorTab'
+import { MatchBadgesTab } from './match/tabs/MatchBadgesTab'
 import { sounds } from '../utils/sound'
 import { coarsenDistanceKm } from '../utils/matchingEngine'
 
@@ -47,8 +48,6 @@ interface MatchCardProps {
   onInitiateHandshake: (candidate: UniversalUserProfile) => void
   onPass: (candidate: UniversalUserProfile) => void
 }
-
-type CardTab = 'overview' | 'decision' | 'blend' | 'rules' | 'interior' | 'badges'
 
 export const MatchCard: React.FC<MatchCardProps> = ({
   candidate,
@@ -62,8 +61,6 @@ export const MatchCard: React.FC<MatchCardProps> = ({
     mutuality,
     confidence,
     compatibility,
-    explanation,
-    hardConflicts,
     geographicFeasibility,
   } = evaluation
 
@@ -265,8 +262,8 @@ export const MatchCard: React.FC<MatchCardProps> = ({
 
   const mirrorCheck = evaluation.mirrorCheck
 
-  const handleInspectWithPaige = (e: React.MouseEvent) => {
-    e.stopPropagation()
+  const handleInspectWithPaige = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation()
     sounds.playTap()
     window.dispatchEvent(
       new CustomEvent('open-page-agent', {
@@ -363,679 +360,64 @@ export const MatchCard: React.FC<MatchCardProps> = ({
   }
 
   const renderTabsCapsule = () => (
-    <div className="inline-flex p-1 bg-zinc-950 rounded-full border border-white/[0.08] text-xs font-medium overflow-x-auto max-w-full no-scrollbar space-x-0.5">
-      <button
-        type="button"
-        onClick={() => handleTabChange('overview')}
-        className={`px-3 py-1 rounded-full transition flex items-center space-x-1.5 whitespace-nowrap cursor-pointer ${
-          activeTab === 'overview'
-            ? 'bg-zinc-800 text-white shadow-sm font-semibold'
-            : 'text-neutral-400 hover:text-white'
-        }`}
-      >
-        <Layers className="w-3 h-3 text-purple-400" />
-        <span>Overview</span>
-      </button>
-      <button
-        type="button"
-        onClick={() => handleTabChange('decision')}
-        className={`px-3 py-1 rounded-full transition flex items-center space-x-1.5 whitespace-nowrap cursor-pointer ${
-          activeTab === 'decision'
-            ? 'bg-amber-600 text-white shadow-sm font-semibold'
-            : 'text-neutral-400 hover:text-white'
-        }`}
-      >
-        <Sparkles className="w-3 h-3 text-amber-300" />
-        <span>Decision Support (Skip Small Talk)</span>
-      </button>
-      <button
-        type="button"
-        onClick={() => handleTabChange('blend')}
-        className={`px-3 py-1 rounded-full transition flex items-center space-x-1.5 whitespace-nowrap cursor-pointer ${
-          activeTab === 'blend'
-            ? 'bg-purple-600 text-white shadow-sm font-semibold'
-            : 'text-neutral-400 hover:text-white'
-        }`}
-      >
-        <Music className="w-3 h-3 text-purple-200" />
-        <span>Shared Rhythms</span>
-      </button>
-      <button
-        type="button"
-        onClick={() => handleTabChange('rules')}
-        className={`px-3 py-1 rounded-full transition flex items-center space-x-1.5 whitespace-nowrap cursor-pointer ${
-          activeTab === 'rules'
-            ? 'bg-emerald-600 text-white shadow-sm font-semibold'
-            : 'text-neutral-400 hover:text-white'
-        }`}
-      >
-        <Home className="w-3 h-3 text-emerald-200" />
-        <span>Boundaries &amp; Rules</span>
-      </button>
-      <button
-        type="button"
-        onClick={() => handleTabChange('interior')}
-        className={`px-3 py-1 rounded-full transition flex items-center space-x-1.5 whitespace-nowrap cursor-pointer ${
-          activeTab === 'interior'
-            ? 'bg-indigo-600 text-white shadow-sm font-semibold'
-            : 'text-neutral-400 hover:text-white'
-        }`}
-      >
-        <BookOpen className="w-3 h-3 text-indigo-200" />
-        <span>Daily Life</span>
-      </button>
-      <button
-        type="button"
-        onClick={() => handleTabChange('badges')}
-        className={`px-3 py-1 rounded-full transition flex items-center space-x-1.5 whitespace-nowrap cursor-pointer ${
-          activeTab === 'badges'
-            ? 'bg-sky-600 text-white shadow-sm font-semibold'
-            : 'text-neutral-400 hover:text-white'
-        }`}
-      >
-        <Award className="w-3 h-3 text-sky-200" />
-        <span>Milestones</span>
-      </button>
-    </div>
+    <MatchTabsCapsule activeTab={activeTab} onTabChange={handleTabChange} />
   )
 
   const renderHandshakeComposer = () => (
-    <div className="p-4 rounded-2xl bg-zinc-950 border border-purple-500/30 space-y-3 animate-in fade-in zoom-in-95 duration-200">
-      <div className="flex items-center justify-between pb-2 border-b border-white/[0.08]">
-        <div className="flex items-center space-x-2 text-xs font-semibold text-white">
-          <Send className="w-3.5 h-3.5 text-purple-400" />
-          <span>Initiate Thoughtful Handshake with {candidate.identity.name}</span>
-        </div>
-        <button
-          type="button"
-          onClick={() => setIsHandshakeComposerOpen(false)}
-          className="p-1 rounded-lg text-neutral-400 hover:text-white hover:bg-white/10 transition cursor-pointer"
-        >
-          <X className="w-3.5 h-3.5" />
-        </button>
-      </div>
-
-      {handshakeSent ? (
-        <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-center space-y-1">
-          <div className="flex items-center justify-center space-x-2 text-emerald-300 font-semibold text-xs">
-            <Check className="w-4 h-4 stroke-[3]" />
-            <span>Thoughtful Handshake Dispatched</span>
-          </div>
-          <p className="text-[11px] text-neutral-400 font-light">
-            Your invitation is private and reciprocal. When {candidate.identity.name} accepts, your conversation will unlock in Sanctuary Dialogue.
-          </p>
-        </div>
-      ) : (
-        <>
-          <p className="text-xs text-neutral-400 font-light leading-relaxed">
-            Handshakes are intentional agreements. No random notifications are sent; dialogue only unlocks when both parties reciprocate.
-          </p>
-
-          <textarea
-            value={handshakeNote}
-            onChange={(e) => setHandshakeNote(e.target.value)}
-            placeholder="Attach an optional warm note or question about their profile..."
-            rows={2}
-            maxLength={280}
-            className="w-full p-2.5 rounded-xl bg-zinc-900 border border-white/10 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-purple-400 transition"
-          />
-
-          <div className="flex items-center justify-between text-[11px] text-neutral-500 pt-1">
-            <span>Protected by Invariant S-01 • Take all the time you need</span>
-            <div className="flex items-center space-x-2">
-              <button
-                type="button"
-                onClick={() => setIsHandshakeComposerOpen(false)}
-                className="px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-400 hover:text-white cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={handleSendHandshake}
-                className="px-4 py-1.5 rounded-lg text-xs font-bold text-white bg-purple-600 hover:bg-purple-500 transition shadow-md shadow-purple-900/30 flex items-center space-x-1.5 cursor-pointer"
-              >
-                <Send className="w-3 h-3" />
-                <span>Send Handshake</span>
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-    </div>
+    <MatchHandshakeModal
+      candidate={candidate}
+      isOpen={isHandshakeComposerOpen}
+      handshakeSent={handshakeSent}
+      handshakeNote={handshakeNote}
+      onNoteChange={setHandshakeNote}
+      onSend={handleSendHandshake}
+      onClose={() => setIsHandshakeComposerOpen(false)}
+    />
   )
 
   const renderTabContent = () => (
     <>
-      {/* TAB 1: OVERVIEW & MULTI-OBJECTIVE COMPATIBILITY */}
       {activeTab === 'overview' && (
-        <div className="space-y-4 animate-in fade-in duration-200">
-          {/* Dual-Track Reciprocal Affinity */}
-          {eligible && (
-            <div className="p-3.5 rounded-2xl bg-zinc-950/60 border border-white/[0.06] space-y-2.5">
-              <div className="space-y-1">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-neutral-400">
-                    Your affinity for {candidate.identity.name}
-                  </span>
-                  <span className="font-semibold text-white font-mono">
-                    {compatibility.aToB}%
-                  </span>
-                </div>
-                <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
-                  <div
-                    className="bg-purple-400 h-1.5 rounded-full transition-all duration-700 ease-out"
-                    style={{ width: `${compatibility.aToB}%` }}
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-neutral-400">
-                    {candidate.identity.name}&apos;s affinity for you
-                  </span>
-                  <span
-                    className={`font-semibold font-mono ${
-                      mutuality.asymmetric ? 'text-amber-300' : 'text-white'
-                    }`}
-                  >
-                    {compatibility.bToA}%
-                  </span>
-                </div>
-                <div className="w-full bg-zinc-800 rounded-full h-1.5 overflow-hidden">
-                  <div
-                    className={`h-1.5 rounded-full transition-all duration-700 ease-out ${
-                      mutuality.asymmetric ? 'bg-amber-400' : 'bg-sky-400'
-                    }`}
-                    style={{ width: `${compatibility.bToA}%` }}
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Ineligibility Alert */}
-          {!eligible && hardConflicts.length > 0 && (
-            <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/20 text-xs text-rose-200 space-y-2">
-              <div className="flex items-center space-x-2 font-semibold text-rose-300">
-                <ShieldCheck className="w-4 h-4" />
-                <span>Boundary Safeguard (Invariant D-14 Active)</span>
-              </div>
-              <p className="text-neutral-300 leading-relaxed font-light">
-                {hardConflicts[0]?.message}
-              </p>
-              <p className="text-[11px] text-neutral-400 italic">
-                Incompatibility is healthy and protective. Checkmate guarantees 0.00% leakage across non-negotiable boundaries.
-              </p>
-            </div>
-          )}
-
-          {/* Structured Alignment Triad (Resonance, Friction, Discovery) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
-            <div className="p-3 rounded-2xl bg-zinc-950/60 border border-white/[0.06] space-y-1.5">
-              <div className="flex items-center space-x-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-400 font-bold">
-                  Resonance
-                </span>
-              </div>
-              <ul className="text-xs text-neutral-300 space-y-1 leading-relaxed">
-                {explanation.strongAlignment.length > 0 ? (
-                  explanation.strongAlignment.slice(0, 2).map((item, idx) => (
-                    <li key={idx} className="line-clamp-2">
-                      {item}
-                    </li>
-                  ))
-                ) : (
-                  <li className="text-neutral-500 italic">No primary synergies</li>
-                )}
-              </ul>
-            </div>
-
-            <div className="p-3 rounded-2xl bg-zinc-950/60 border border-white/[0.06] space-y-1.5">
-              <div className="flex items-center space-x-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                <span className="text-[10px] font-mono uppercase tracking-wider text-amber-300 font-bold">
-                  Growth Area
-                </span>
-              </div>
-              <ul className="text-xs text-neutral-300 space-y-1 leading-relaxed">
-                {explanation.potentialFriction.length > 0 ? (
-                  explanation.potentialFriction.slice(0, 2).map((item, idx) => (
-                    <li key={idx} className="line-clamp-2">
-                      {item}
-                    </li>
-                  ))
-                ) : (
-                  <li className="text-neutral-500 italic">Zero friction points</li>
-                )}
-              </ul>
-            </div>
-
-            <div className="p-3 rounded-2xl bg-zinc-950/60 border border-white/[0.06] space-y-1.5">
-              <div className="flex items-center space-x-1.5">
-                <div className="w-1.5 h-1.5 rounded-full bg-sky-400" />
-                <span className="text-[10px] font-mono uppercase tracking-wider text-sky-300 font-bold">
-                  Discovery
-                </span>
-              </div>
-              <ul className="text-xs text-neutral-300 space-y-1 leading-relaxed">
-                {explanation.unknownInformation.length > 0 ? (
-                  explanation.unknownInformation.slice(0, 2).map((item, idx) => (
-                    <li key={idx} className="line-clamp-2">
-                      {item}
-                    </li>
-                  ))
-                ) : (
-                  <li className="text-neutral-500 italic">Fully declared</li>
-                )}
-              </ul>
-            </div>
-          </div>
-
-          {/* Why Recommended Quote */}
-          <div className="p-3.5 rounded-2xl bg-zinc-950/80 border border-white/[0.06] text-xs text-neutral-300 flex items-start space-x-2.5">
-            <Sparkles className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
-            <p className="leading-relaxed font-light">{explanation.whyRecommended}</p>
-          </div>
-        </div>
+        <MatchOverviewTab candidate={candidate} evaluation={evaluation} />
       )}
-
-      {/* TAB: DECISION SUPPORT & THE 2-3 THINGS WORTH DISCUSSING (SKIP SMALL TALK) */}
       {activeTab === 'decision' && (
-        <div className="space-y-4 animate-in fade-in duration-200">
-          {/* Header Banner */}
-          <div className="p-3.5 rounded-2xl bg-amber-950/30 border border-amber-500/30 flex items-center justify-between">
-            <div className="flex items-center space-x-2.5">
-              <div className="p-1.5 rounded-xl bg-amber-500/20 text-amber-300">
-                <Sparkles className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-white">
-                  Decision Support &amp; Meaningful Topics
-                </h4>
-                <p className="text-[10px] text-neutral-400">
-                  Skip weeks of weather chat. Address the 2–3 questions that actually determine your future.
-                </p>
-              </div>
-            </div>
-            <span className="text-xs font-mono text-amber-300 bg-amber-500/20 px-2.5 py-0.5 rounded-full border border-amber-500/30 font-semibold">
-              Skip Small Talk
-            </span>
-          </div>
-
-          {/* Chemistry vs Compatibility Lens */}
-          <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-3">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <span className="text-xs font-bold text-white">Chemistry vs. Compatibility Lens</span>
-              </div>
-              <span className="text-[11px] font-mono text-purple-300 font-semibold">
-                {sparkVsFitVerdict}
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
-              {/* Attraction Spark */}
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1.5">
-                <div className="flex justify-between items-center text-xs">
-                  <span className="text-rose-300 font-medium flex items-center space-x-1.5">
-                    <Flame className="w-3.5 h-3.5" />
-                    <span>Attraction &amp; Banter Spark</span>
-                  </span>
-                  <span className="font-mono font-bold text-rose-300">{sparkScore}%</span>
-                </div>
-                <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-rose-500 h-full rounded-full" style={{ width: `${sparkScore}%` }} />
-                </div>
-                <p className="text-[10px] text-neutral-400 font-light">
-                  Conversational energy, shared wit &amp; mutual fascination.
-                </p>
-              </div>
-
-              {/* Long-Term Life Feasibility */}
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-1.5">
-                <div className="flex justify-between items-center text-xs">
-                  <span className="text-emerald-300 font-medium flex items-center space-x-1.5">
-                    <Compass className="w-3.5 h-3.5" />
-                    <span>Long-Term Life Feasibility</span>
-                  </span>
-                  <span className="font-mono font-bold text-emerald-300">{fitScore}%</span>
-                </div>
-                <div className="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${fitScore}%` }} />
-                </div>
-                <p className="text-[10px] text-neutral-400 font-light">
-                  Shared future direction, family vision, conflict resilience &amp; values.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Relationship Self-Mirror & Trap Detection */}
-          {mirrorCheck && (
-            <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Compass className="w-4 h-4 text-[#F472B6]" />
-                  <span className="text-xs font-bold text-white">Relationship Self-Mirror &amp; Trap Check</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleInspectWithPaige}
-                  className="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-[11px] font-medium text-white flex items-center space-x-1.5 transition cursor-pointer active:scale-95"
-                >
-                  <Sparkles className="w-3 h-3 text-[#F472B6]" />
-                  <span>Ask Paige</span>
-                </button>
-              </div>
-
-              <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2">
-                <p className="text-xs text-neutral-200 leading-relaxed font-light">
-                  {mirrorCheck.gentleReflection}
-                </p>
-
-                {mirrorCheck.triggeredTraps.length > 0 ? (
-                  <div className="pt-2 border-t border-white/[0.06] space-y-1.5">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-rose-300 block font-semibold">
-                      Known Pattern Caution:
-                    </span>
-                    {mirrorCheck.triggeredTraps.map((tr) => (
-                      <div key={tr.id} className="text-xs text-rose-200/90 font-light pl-2.5 border-l-2 border-rose-500/50">
-                        <strong className="text-rose-100">{tr.title}:</strong> {tr.proactiveStrategy}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="pt-2 border-t border-white/[0.06] flex items-center space-x-1.5 text-xs text-emerald-400">
-                    <Check className="w-3.5 h-3.5 stroke-[2.5]" />
-                    <span>Zero acknowledged relationship traps triggered with this candidate.</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-
-          {/* The 2-3 Topics Actually Worth Discussing */}
-          <div className="space-y-2.5">
-            <span className="text-xs font-semibold text-neutral-300 block">
-              The 2–3 Conversations That Matter for {candidate.identity.name}:
-            </span>
-
-            {decisionTopics.map((topic, idx) => {
-              const Icon = topic.icon
-              return (
-                <div
-                  key={idx}
-                  className="p-3.5 rounded-2xl bg-zinc-950/80 border border-white/[0.06] space-y-2"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex items-center space-x-2 text-xs font-semibold text-white">
-                      <Icon className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-                      <span>{topic.title}</span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        sounds.playTap()
-                        setHandshakeNote(topic.question)
-                        setIsHandshakeComposerOpen(true)
-                      }}
-                      className="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 text-amber-300 text-[11px] font-medium transition cursor-pointer flex items-center space-x-1 shrink-0"
-                    >
-                      <span>Ask in Handshake</span>
-                      <ChevronRight className="w-3 h-3" />
-                    </button>
-                  </div>
-
-                  <p className="text-xs text-neutral-200 font-light italic pl-5">
-                    &ldquo;{topic.question}&rdquo;
-                  </p>
-
-                  <div className="text-[11px] text-neutral-400 font-light pl-5">
-                    <span className="text-neutral-500 font-mono">Why this matters:</span> {topic.context}
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-
-          {/* Emotional Investment Verdict & Autonomy */}
-          <div className="p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.08] space-y-2 text-xs">
-            <div className="flex items-center justify-between">
-              <span className="font-semibold text-white">Emotional Investment Assessment</span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
-                {eligible ? 'Safe to Explore' : 'Boundary Alert'}
-              </span>
-            </div>
-            <p className="text-neutral-300 font-light leading-relaxed">
-              {eligible
-                ? `You and ${candidate.identity.name} share verified non-negotiable boundaries. The potential friction lies in minor daily rhythm or transit commute. Investing emotional energy in a first conversation is structurally sound.`
-                : `A declared boundary mismatch exists (${hardConflicts[0]?.message || 'conflict'}). Checkmate will not pressure you to compromise your boundaries.`}
-            </p>
-            <div className="pt-1.5 border-t border-white/[0.06] text-[11px] text-neutral-400 italic">
-              Checkmate provides transparent information; your intuition and conversation make the decision.
-            </div>
-          </div>
-        </div>
+        <MatchDecisionTab
+          candidate={candidate}
+          evaluation={evaluation}
+          sparkVsFitVerdict={sparkVsFitVerdict}
+          sparkScore={sparkScore}
+          fitScore={fitScore}
+          mirrorCheck={mirrorCheck}
+          decisionTopics={decisionTopics}
+          onInspectWithPaige={handleInspectWithPaige}
+          onSelectQuestion={(q) => {
+            sounds.playTap()
+            setHandshakeNote(q)
+            setIsHandshakeComposerOpen(true)
+          }}
+        />
       )}
-
-      {/* TAB 2: SPOTIFY "BLEND" & HARMONIC TASTE OVERLAP */}
       {activeTab === 'blend' && (
-        <div className="space-y-3.5 animate-in fade-in duration-200">
-          <div className="p-3.5 rounded-2xl bg-gradient-to-r from-purple-950/40 via-zinc-950 to-sky-950/40 border border-purple-500/30 flex items-center justify-between">
-            <div className="flex items-center space-x-2.5">
-              <div className="p-2 rounded-xl bg-purple-500/20 text-purple-300">
-                <Music className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-white">
-                  Taste &amp; Ecology Blend with {candidate.identity.name.split(' ')[0]}
-                </h4>
-                <p className="text-[10px] text-neutral-400">
-                  High-dimensional lifestyle, sound, and curiosity overlap
-                </p>
-              </div>
-            </div>
-            <span className="text-xl font-bold font-mono text-purple-300">
-              {mutuality.score}%
-            </span>
-          </div>
-
-          {/* Blend Taste Items */}
-          <div className="space-y-2">
-            {blendTastes.map((item, idx) => (
-              <div
-                key={idx}
-                className="p-3 rounded-2xl bg-zinc-950/80 border border-white/[0.06] space-y-1.5"
-              >
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-white flex items-center space-x-1.5">
-                    <Volume2 className="w-3.5 h-3.5 text-purple-400" />
-                    <span>{item.title}</span>
-                  </span>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/10 text-purple-300 border border-purple-500/20">
-                    {item.pct}% match
-                  </span>
-                </div>
-                <p className="text-xs text-neutral-300 font-light leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Dyadic Conversation Sparks (Click to pre-fill handshake note) */}
-          <div className="p-3 rounded-2xl bg-zinc-950/80 border border-white/[0.06] space-y-2">
-            <span className="text-[11px] font-semibold text-neutral-300 flex items-center space-x-1.5">
-              <MessageCircle className="w-3.5 h-3.5 text-purple-400" />
-              <span>Thoughtful Opening Sparks (Click to use in Handshake):</span>
-            </span>
-            <div className="space-y-1.5">
-              {conversationSparks.map((spark, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => {
-                    sounds.playTap()
-                    setHandshakeNote(spark)
-                    setIsHandshakeComposerOpen(true)
-                  }}
-                  className="w-full text-left p-2 rounded-xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.04] text-xs text-neutral-300 transition flex items-center justify-between group/spark cursor-pointer"
-                >
-                  <span className="line-clamp-1 italic font-light">&ldquo;{spark}&rdquo;</span>
-                  <span className="text-[10px] text-purple-400 opacity-0 group-hover/spark:opacity-100 transition font-mono shrink-0 ml-2">
-                    Use →
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
+        <MatchBlendTab
+          candidate={candidate}
+          evaluation={evaluation}
+          blendTastes={blendTastes}
+          conversationSparks={conversationSparks}
+          onSelectSpark={(spark) => {
+            sounds.playTap()
+            setHandshakeNote(spark)
+            setIsHandshakeComposerOpen(true)
+          }}
+        />
       )}
-
-      {/* TAB 3: AIRBNB "HOUSE RULES" & SANCTUARY BOUNDARIES */}
       {activeTab === 'rules' && (
-        <div className="space-y-3 animate-in fade-in duration-200">
-          <div className="p-3 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 flex items-center justify-between">
-            <div className="flex items-center space-x-2.5">
-              <div className="p-1.5 rounded-xl bg-emerald-500/20 text-emerald-300">
-                <Home className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-white">
-                  {candidate.identity.name.split(' ')[0]}&apos;s Sanctuary House Rules
-                </h4>
-                <p className="text-[10px] text-neutral-400">
-                  Clear, non-hostile boundaries for emotional and physical safety
-                </p>
-              </div>
-            </div>
-            <span className="text-xs font-mono font-bold text-emerald-300 bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
-              4/4 Aligned
-            </span>
-          </div>
-
-          <div className="space-y-2">
-            {houseRules.map((rule, idx) => (
-              <div
-                key={idx}
-                className="p-3 rounded-2xl bg-zinc-950/80 border border-white/[0.06] flex items-start space-x-3"
-              >
-                <div className="p-1 rounded-full bg-emerald-500/20 text-emerald-400 shrink-0 mt-0.5">
-                  <Check className="w-3 h-3 stroke-[2.5]" />
-                </div>
-                <div className="space-y-0.5 text-xs">
-                  <span className="font-semibold text-white block">{rule.title}</span>
-                  <p className="text-neutral-400 font-light">{rule.rule}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <MatchRulesTab candidate={candidate} houseRules={houseRules} />
       )}
-
-      {/* TAB 4: INTERIOR WORLD & THOUGHTFUL PROMPTS */}
       {activeTab === 'interior' && (
-        <div className="space-y-3 animate-in fade-in duration-200">
-          <div className="p-3 rounded-2xl bg-indigo-950/30 border border-indigo-500/30 flex items-center justify-between">
-            <div className="flex items-center space-x-2.5">
-              <div className="p-1.5 rounded-xl bg-indigo-500/20 text-indigo-300">
-                <BookOpen className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-white">
-                  {candidate.identity.name.split(' ')[0]}&apos;s Interior World
-                </h4>
-                <p className="text-[10px] text-neutral-400">
-                  Anchors, nervous system recovery &amp; personal philosophy
-                </p>
-              </div>
-            </div>
-            <span className="text-xs font-mono text-indigo-300 bg-indigo-500/20 px-2 py-0.5 rounded-full border border-indigo-500/30">
-              Depth First
-            </span>
-          </div>
-
-          <div className="space-y-2.5">
-            {interiorPrompts.map((p, idx) => {
-              const Icon = p.icon
-              return (
-                <div
-                  key={idx}
-                  className="p-3.5 rounded-2xl bg-zinc-950/80 border border-white/[0.06] space-y-1.5"
-                >
-                  <div className="flex items-center space-x-2 text-xs font-semibold text-indigo-300">
-                    <Icon className="w-3.5 h-3.5 text-indigo-400" />
-                    <span>{p.prompt}</span>
-                  </div>
-                  <p className="text-xs text-neutral-300 font-light leading-relaxed pl-5">
-                    &ldquo;{p.response}&rdquo;
-                  </p>
-                </div>
-              )
-            })}
-          </div>
-
-          <div className="p-3 rounded-2xl bg-zinc-950/60 border border-white/[0.06] flex flex-wrap gap-2 text-xs text-neutral-400 items-center">
-            <span className="text-neutral-500 font-mono text-[10px] uppercase">Core Values:</span>
-            {candidate.values.coreValues.map((val, idx) => (
-              <span
-                key={idx}
-                className="px-2 py-0.5 rounded-md bg-white/[0.04] text-neutral-300 border border-white/[0.06] text-[11px]"
-              >
-                {val}
-              </span>
-            ))}
-          </div>
-        </div>
+        <MatchInteriorTab candidate={candidate} interiorPrompts={interiorPrompts} />
       )}
-
-      {/* TAB 5: STEAM SHOWCASE BADGES & ACHIEVEMENTS */}
       {activeTab === 'badges' && (
-        <div className="space-y-3 animate-in fade-in duration-200">
-          <div className="p-3 rounded-2xl bg-sky-950/30 border border-sky-500/30 flex items-center justify-between">
-            <div className="flex items-center space-x-2.5">
-              <div className="p-1.5 rounded-xl bg-sky-500/20 text-sky-300">
-                <Award className="w-4 h-4" />
-              </div>
-              <div>
-                <h4 className="text-xs font-bold text-white">
-                  Recognized Relational Milestones
-                </h4>
-                <p className="text-[10px] text-neutral-400">
-                  Calibrated merits &amp; mutual relationship readiness
-                </p>
-              </div>
-            </div>
-            <span className="text-xs font-mono text-sky-300 bg-sky-500/20 px-2 py-0.5 rounded-full border border-sky-500/30 font-bold">
-              Tier 3
-            </span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-            {badges.map((b, idx) => {
-              const Icon = b.icon
-              return (
-                <div
-                  key={idx}
-                  className={`p-3 rounded-2xl bg-zinc-950/80 border ${b.border} flex items-start space-x-2.5`}
-                >
-                  <div className={`p-1.5 rounded-xl ${b.bg} shrink-0 mt-0.5`}>
-                    <Icon className="w-3.5 h-3.5" style={{ color: b.color }} />
-                  </div>
-                  <div className="space-y-0.5 text-xs">
-                    <span className="font-semibold text-white block">{b.name}</span>
-                    <p className="text-neutral-400 text-[11px] leading-tight font-light">
-                      {b.desc}
-                    </p>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
+        <MatchBadgesTab badges={badges} />
       )}
     </>
   )

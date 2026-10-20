@@ -33,13 +33,15 @@ import {
   LogOut,
   Shield,
   SlidersHorizontal,
-  PhoneCall,
+
 } from 'lucide-react'
 import type { UniversalUserProfile } from '../types'
 import { evaluateMatch } from '../utils/matchingEngine'
 import { mockCandidates } from '../data/mockProfiles'
 import { sounds } from '../utils/sound'
 import { SelfMirrorView } from './SelfMirrorView'
+import { AccountSafetyView } from './account/AccountSafetyView'
+import { AccountPrivacyLocationView } from './account/AccountPrivacyLocationView'
 
 interface UserAccountViewProps {
   currentUser: UniversalUserProfile
@@ -718,90 +720,16 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
       {/* 4. SAFETY CENTRE SUBVIEW                                 */}
       {/* ======================================================== */}
       {subview === 'safety' && (
-        <div className="space-y-6 animate-in fade-in duration-200">
-          <div className="flex items-center space-x-3 pt-2 pb-1">
-            <button
-              onClick={() => setSubview('more')}
-              className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.12] text-neutral-300 hover:text-white transition cursor-pointer"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </button>
-            <div>
-              <h1 className="text-2xl font-bold text-white">Safety Centre</h1>
-              <p className="text-xs text-neutral-400 font-light">Verification, reporting & meeting safety</p>
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            {/* Identity Verification Status Card */}
-            <div className="p-5 rounded-2xl bg-[#17161A] border border-white/[0.08] space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-xs uppercase font-mono tracking-wider text-emerald-400 font-semibold">
-                  Identity Verification
-                </span>
-                <span className="text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 font-medium">
-                  Active
-                </span>
-              </div>
-              <p className="text-xs text-neutral-300 font-light">
-                Your profile was verified via biometric liveness proof. We never store raw scans; verification produces a cryptographic hash verifying authentic human identity.
-              </p>
-            </div>
-
-            {/* Date Safe Check-in Card */}
-            <div className="p-5 rounded-2xl bg-[#17161A] border border-white/[0.08] space-y-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="text-sm font-semibold text-white">First Date Safety Check-In</h3>
-                  <p className="text-xs text-neutral-400 font-light">Share your date venue & check-in time with a trusted friend</p>
-                </div>
-                <button
-                  onClick={() => {
-                    setIsSafetyCheckinActive(!isSafetyCheckinActive)
-                    triggerToast(isSafetyCheckinActive ? 'Check-in paused.' : 'Safety check-in configured.')
-                  }}
-                  className={`px-3 py-1.5 rounded-full text-xs font-semibold cursor-pointer transition ${
-                    isSafetyCheckinActive
-                      ? 'bg-emerald-500 text-black'
-                      : 'bg-white/10 text-white hover:bg-white/15'
-                  }`}
-                >
-                  {isSafetyCheckinActive ? 'Active' : 'Setup'}
-                </button>
-              </div>
-            </div>
-
-            {/* Meeting Ground Rules */}
-            <div className="p-5 rounded-2xl bg-[#17161A] border border-white/[0.08] space-y-3">
-              <h3 className="text-sm font-semibold text-white">Meeting Ground Rules</h3>
-              <ul className="text-xs text-neutral-300 space-y-2 list-disc list-inside font-light">
-                <li>Meet in public, well-lit spaces for all first encounters.</li>
-                <li>Stay in control of your own transport to and from the venue.</li>
-                <li>Never feel pressured to stay if boundaries are breached.</li>
-                <li>Checkmate provides discreet exit options inside the Date Plan tool.</li>
-              </ul>
-            </div>
-
-            {/* Emergency Hotline Assistance */}
-            <div className="p-4 rounded-2xl bg-rose-950/20 border border-rose-500/30 flex items-center justify-between">
-              <div>
-                <span className="text-xs font-bold text-rose-300 block">Emergency SOS Contacts</span>
-                <span className="text-[11px] text-neutral-400">Quick-dial emergency services (999 / 112 / 911)</span>
-              </div>
-              <a
-                href="tel:999"
-                className="px-3 py-1.5 rounded-full bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold flex items-center space-x-1.5 cursor-pointer"
-              >
-                <PhoneCall className="w-3.5 h-3.5" />
-                <span>Call 999</span>
-              </a>
-            </div>
-          </div>
-        </div>
+        <AccountSafetyView
+          onBack={() => setSubview('more')}
+          isSafetyCheckinActive={isSafetyCheckinActive}
+          onToggleSafetyCheckin={() => {
+            setIsSafetyCheckinActive(!isSafetyCheckinActive)
+            triggerToast(isSafetyCheckinActive ? 'Check-in paused.' : 'Safety check-in configured.')
+          }}
+        />
       )}
 
-      {/* ======================================================== */}
-      {/* 5. NOTIFICATIONS SUBVIEW                                  */}
       {/* ======================================================== */}
       {subview === 'notifications' && (
         <div className="space-y-6 animate-in fade-in duration-200">
@@ -1753,102 +1681,14 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
       {/* 11. PRIVACY & LOCATION SUBVIEW                           */}
       {/* ======================================================== */}
       {subview === 'privacy_location' && (
-        <div className="space-y-6 animate-in fade-in duration-200">
-          <div className="flex items-center justify-between pt-2 pb-1">
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={() => setSubview('hub')}
-                className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.12] text-neutral-300 hover:text-white transition cursor-pointer"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-              <div>
-                <h1 className="text-2xl font-bold text-white">Privacy & Location</h1>
-                <p className="text-xs text-neutral-400 font-light">Visibility and cryptographic privacy controls</p>
-              </div>
-            </div>
-
-            <button
-              onClick={() => handleSaveAll('Privacy settings updated.')}
-              className="px-4 py-1.5 rounded-full bg-[#F472B6] hover:bg-pink-400 text-black text-xs font-semibold transition cursor-pointer shadow-md"
-            >
-              Save
-            </button>
-          </div>
-
-          <div className="bg-[#17161A] border border-white/[0.08] rounded-3xl p-5 sm:p-6 space-y-5 shadow-xl">
-            
-            {/* Incognito Discovery Mode */}
-            <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
-              <div className="pr-4">
-                <span className="text-xs font-semibold text-white block">Incognito Discovery Mode</span>
-                <span className="text-[11px] text-neutral-400 font-light">
-                  Only profiles you have mutually selected will be able to see your presence.
-                </span>
-              </div>
-              <button
-                onClick={() =>
-                  setProfile({
-                    ...profile,
-                    privacy: {
-                      ...profile.privacy,
-                      incognitoMode: !profile.privacy.incognitoMode,
-                    },
-                  })
-                }
-                className={`w-12 h-6 rounded-full transition-colors relative cursor-pointer shrink-0 ${
-                  profile.privacy.incognitoMode ? 'bg-[#F472B6]' : 'bg-neutral-800'
-                }`}
-              >
-                <div
-                  className={`w-4 h-4 rounded-full bg-white transition-transform absolute top-1 ${
-                    profile.privacy.incognitoMode ? 'left-7' : 'left-1'
-                  }`}
-                />
-              </button>
-            </div>
-
-            {/* Location Blur Radius */}
-            <div className="flex items-center justify-between pb-4 border-b border-white/[0.06]">
-              <div>
-                <span className="text-xs font-semibold text-white block">Location Blur Radius</span>
-                <span className="text-[11px] text-neutral-400 font-light">
-                  Randomizes exact coordinates by ±{profile.privacy.fuzzLocationRadiusKm} km to prevent geolocation triangulation.
-                </span>
-              </div>
-              <span className="font-mono text-xs text-[#F472B6] font-bold">
-                ±{profile.privacy.fuzzLocationRadiusKm} km
-              </span>
-            </div>
-
-            {/* Invariant D-23 Verification Badge */}
-            <div className="p-4 rounded-2xl bg-neutral-950 border border-white/[0.08] space-y-2 text-xs">
-              <div className="flex items-center space-x-2 text-emerald-400 font-semibold font-mono">
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Invariant D-23 Verified</span>
-              </div>
-              <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
-                Zero pay-to-win ranking. Matching priority is strictly computed from reciprocal compatibility, with zero bidding or paid algorithmic boosts.
-              </p>
-            </div>
-
-            {/* End-to-End Encryption Badge */}
-            <div className="p-4 rounded-2xl bg-neutral-950 border border-white/[0.08] space-y-2 text-xs">
-              <div className="flex items-center space-x-2 text-sky-400 font-semibold font-mono">
-                <Lock className="w-4 h-4" />
-                <span>Field-Level Encryption (AES-256-GCM)</span>
-              </div>
-              <p className="text-[11px] text-neutral-400 font-light leading-relaxed">
-                Sensitive accommodation, family, and health standards are sealed with distinct client keys.
-              </p>
-            </div>
-
-          </div>
-        </div>
+        <AccountPrivacyLocationView
+          profile={profile}
+          onUpdatePrivacy={setProfile}
+          onSave={() => handleSaveAll('Privacy settings updated.')}
+          onBack={() => setSubview('hub')}
+        />
       )}
 
-      {/* ======================================================== */}
-      {/* 12. PROFILE PREVIEW MODAL/SUBVIEW                         */}
       {/* ======================================================== */}
       {subview === 'preview' && (
         <div className="space-y-6 animate-in fade-in duration-200">
