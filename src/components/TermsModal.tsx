@@ -1,6 +1,6 @@
 // ============================================================================
 // src/components/TermsModal.tsx
-// Check Platform: Terms of Service, Statutory Disclosures & Legal Modal
+// Checkmate Platform: Terms of Service, Statutory Disclosures & Legal Modal
 // Conforms to: UK Online Safety Act, GDPR Art. 9, NJ/NY/CA Dating Service Laws,
 // UK Consumer Contracts Regulations 2013, EU Digital Services Act (DSA),
 // EU AI Act Art. 50, Canada PIPEDA & Law 25, Australian Consumer Law (ACL)
@@ -58,7 +58,7 @@ export const TermsModal: React.FC<TermsModalProps> = ({
               <h2 className="text-lg font-semibold text-stone-100 flex items-center gap-2">
                 Terms of Service & Statutory Disclosures
               </h2>
-              <p className="text-xs text-stone-400">Check Platform • Version 2.0 (Global Compliance Edition)</p>
+              <p className="text-xs text-stone-400">Checkmate Platform • Version 2.0 (Global Compliance Edition)</p>
             </div>
           </div>
           <button
@@ -137,10 +137,10 @@ export const TermsModal: React.FC<TermsModalProps> = ({
               <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 text-stone-200 space-y-2">
                 <h3 className="font-semibold text-amber-300 flex items-center gap-2">
                   <HeartHandshake className="w-4 h-4" />
-                  The Check Relational Charter
+                  The Checkmate Relational Charter
                 </h3>
                 <p className="text-xs text-stone-400 leading-relaxed">
-                  Check was engineered as the anti-swipe antidote. We reject dark patterns, dopamine loops, and predatory monetization. In return, we expect mutual respect and emotional integrity from every member.
+                  Checkmate was engineered as the anti-swipe antidote. We reject dark patterns, dopamine loops, and predatory monetization. In return, we expect mutual respect and emotional integrity from every member.
                 </p>
               </div>
 
@@ -197,10 +197,10 @@ export const TermsModal: React.FC<TermsModalProps> = ({
                   Mandatory Statutory Notice (NJ N.J.S.A. § 56:8-171 & NY GBL § 394-cc)
                 </div>
                 <p className="text-sm font-semibold text-stone-100">
-                  CHECK DOES NOT CONDUCT CRIMINAL BACKGROUND CHECKS OR SEX OFFENDER REGISTRY SCREENINGS ON ITS MEMBERS.
+                  CHECKMATE DOES NOT CONDUCT CRIMINAL BACKGROUND CHECKS OR SEX OFFENDER REGISTRY SCREENINGS ON ITS MEMBERS.
                 </p>
                 <p className="text-xs text-stone-300 leading-relaxed">
-                  Check makes no representations or warranties as to the conduct, background, or character of any user. You are solely responsible for your interactions and safety when meeting other members.
+                  Checkmate makes no representations or warranties as to the conduct, background, or character of any user. You are solely responsible for your interactions and safety when meeting other members.
                 </p>
               </div>
 
@@ -259,7 +259,7 @@ export const TermsModal: React.FC<TermsModalProps> = ({
                 <div className="p-3.5 rounded-xl bg-stone-950/60 border border-stone-800 space-y-1">
                   <h4 className="text-xs font-semibold text-stone-200">3. EU AI Act (Art. 50) & ODR Dispute Platform</h4>
                   <p className="text-xs text-stone-400">
-                    Users have the right to transparent AI disclosure; Check uses deterministic math without subconscious manipulation. European Online Dispute Resolution (ODR) platform: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noreferrer" className="text-blue-400 underline">ec.europa.eu/consumers/odr</a>.
+                    Users have the right to transparent AI disclosure; Checkmate uses deterministic math without subconscious manipulation. European Online Dispute Resolution (ODR) platform: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noreferrer" className="text-blue-400 underline">ec.europa.eu/consumers/odr</a>.
                   </p>
                 </div>
 
@@ -290,7 +290,7 @@ export const TermsModal: React.FC<TermsModalProps> = ({
                 <div className="p-3.5 rounded-xl bg-stone-950/60 border border-stone-800 space-y-1">
                   <h4 className="text-xs font-semibold text-stone-200">🇨🇦 Canada: PIPEDA & Quebec Law 25</h4>
                   <p className="text-xs text-stone-400">
-                    Check complies with PIPEDA and Quebec Law 25. Sensitive profile attributes require explicit opt-in consent. Contact our Canadian Privacy Lead: <code className="text-amber-400">privacy-canada@check-compatibility.internal</code>.
+                    Checkmate complies with PIPEDA and Quebec Law 25. Sensitive profile attributes require explicit opt-in consent. Contact our Canadian Privacy Lead: <code className="text-amber-400">privacy-canada@check-compatibility.internal</code>.
                   </p>
                 </div>
 
@@ -314,13 +314,13 @@ export const TermsModal: React.FC<TermsModalProps> = ({
           {/* TAB 5: FULL TEXT */}
           {activeTab === 'full_text' && (
             <div className="space-y-4 text-xs font-mono leading-relaxed bg-stone-950 p-4 rounded-xl border border-stone-800 text-stone-400">
-              <p className="text-stone-200 font-sans font-bold text-sm">CHECK TERMS OF SERVICE & MEMBER AGREEMENT (16 SECTIONS)</p>
-              <p><strong>Section 1 (Acceptance):</strong> By accessing or using Check, you agree to enter into a legally binding contract governed by Delaware law (or England & Wales for UK/EU residents).</p>
+              <p className="text-stone-200 font-sans font-bold text-sm">CHECKMATE TERMS OF SERVICE &amp; MEMBER AGREEMENT (16 SECTIONS)</p>
+              <p><strong>Section 1 (Acceptance):</strong> By accessing or using Checkmate, you agree to enter into a legally binding contract governed by Delaware law (or England & Wales for UK/EU residents).</p>
               <p><strong>Section 2 (Age & Eligibility):</strong> You warrant you are 18+ years of age. Misrepresentation of age constitutes material breach and criminal violation under the UK Online Safety Act.</p>
-              <p><strong>Section 4 (GDPR Art. 9 Consent):</strong> You provide explicit affirmative consent for Check to evaluate sensitive attributes (orientation, neurotype, sensory access) strictly in accordance with your 6-permission matrix.</p>
-              <p><strong>Section 5 (Invariant D-23 Covenant):</strong> Check covenants that paid tiers provide non-algorithmic tools only; payment shall never elevate candidate ranking or compatibility scores.</p>
+              <p><strong>Section 4 (GDPR Art. 9 Consent):</strong> You provide explicit affirmative consent for Checkmate to evaluate sensitive attributes (orientation, neurotype, sensory access) strictly in accordance with your 6-permission matrix.</p>
+              <p><strong>Section 5 (Invariant D-23 Covenant):</strong> Checkmate covenants that paid tiers provide non-algorithmic tools only; payment shall never elevate candidate ranking or compatibility scores.</p>
               <p><strong>Section 7 (Statutory Cancellation):</strong> California residents possess a statutory 3-day right to cancel with full refund (Civil Code § 1694.1). Click-to-cancel is available anytime in account settings.</p>
-              <p><strong>Section 9 (Limitation of Liability):</strong> Check's liability is capped at $100 USD or fees paid in the past 6 months. Check disclaims all liability for offline conduct and in-person meetings.</p>
+              <p><strong>Section 9 (Limitation of Liability):</strong> Checkmate's liability is capped at $100 USD or fees paid in the past 6 months. Checkmate disclaims all liability for offline conduct and in-person meetings.</p>
               <p><strong>Section 10 (Arbitration):</strong> Binding individual arbitration administered by AAA with class action waiver (with statutory court carve-outs for UK and EU consumers).</p>
               <p><strong>Section 15 (UK & EU Statutory Annex):</strong> 14-day statutory right of withdrawal under Consumer Contracts Regulations 2013 and Directive 2011/83/EU. DSA single point of contact at dsa-compliance@check-compatibility.internal.</p>
               <p><strong>Section 16 (International Annex):</strong> Canadian PIPEDA & Quebec Law 25 compliance, Australian Consumer Law (ACL) statutory guarantees, and cross-border Standard Contractual Clauses (SCCs).</p>
@@ -349,7 +349,7 @@ export const TermsModal: React.FC<TermsModalProps> = ({
                 className="mt-1 rounded bg-stone-800 border-stone-700 text-amber-500 focus:ring-amber-400 focus:ring-offset-stone-900"
               />
               <span className="text-xs text-stone-300 group-hover:text-stone-100">
-                I understand that Check does <strong>not conduct criminal background checks</strong> and I agree to follow safe in-person dating guidelines.
+                I understand that Checkmate does <strong>not conduct criminal background checks</strong> and I agree to follow safe in-person dating guidelines.
               </span>
             </label>
 

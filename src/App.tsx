@@ -181,7 +181,7 @@ export function App() {
             <span>9:41</span>
             <div className="w-24 h-4 rounded-full bg-black border border-white/10 flex items-center justify-center">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse" />
-              <span className="text-[9px] font-mono text-neutral-400">Check Mobile</span>
+              <span className="text-[9px] font-mono text-neutral-400">Checkmate Mobile</span>
             </div>
             <div className="flex items-center space-x-1 font-mono text-[10px] text-neutral-400">
               <span>5G</span>
@@ -585,7 +585,7 @@ export function App() {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <span className="w-4 h-4 rounded bg-white/10 flex items-center justify-center text-[10px] text-white font-bold">✓</span>
-            <span className="text-neutral-400 font-medium">Check</span>
+            <span className="text-neutral-400 font-medium">Checkmate</span>
             <span>• Compatibility Verified</span>
           </div>
           <div className="flex items-center gap-4 text-xs">

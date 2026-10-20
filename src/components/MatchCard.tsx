@@ -566,7 +566,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
                 {hardConflicts[0]?.message}
               </p>
               <p className="text-[11px] text-neutral-400 italic">
-                Incompatibility is healthy and protective. Check guarantees 0.00% leakage across non-negotiable boundaries.
+                Incompatibility is healthy and protective. Checkmate guarantees 0.00% leakage across non-negotiable boundaries.
               </p>
             </div>
           )}
@@ -812,10 +812,10 @@ export const MatchCard: React.FC<MatchCardProps> = ({
             <p className="text-neutral-300 font-light leading-relaxed">
               {eligible
                 ? `You and ${candidate.identity.name} share verified non-negotiable boundaries. The potential friction lies in minor daily rhythm or transit commute. Investing emotional energy in a first conversation is structurally sound.`
-                : `A declared boundary mismatch exists (${hardConflicts[0]?.message || 'conflict'}). Check will not pressure you to compromise your boundaries.`}
+                : `A declared boundary mismatch exists (${hardConflicts[0]?.message || 'conflict'}). Checkmate will not pressure you to compromise your boundaries.`}
             </p>
             <div className="pt-1.5 border-t border-white/[0.06] text-[11px] text-neutral-400 italic">
-              Check provides transparent information; your intuition and conversation make the decision.
+              Checkmate provides transparent information; your intuition and conversation make the decision.
             </div>
           </div>
         </div>

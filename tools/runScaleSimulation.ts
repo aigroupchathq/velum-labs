@@ -222,7 +222,7 @@ async function simulate100kProductionScale(
 async function runFullSimulation() {
   console.log('===============================================================')
   console.log('CHECK PLATFORM: HIGH-SCALE INFRASTRUCTURE EMPIRICAL SIMULATION')
-  console.log('Brand: Check ("Compatibility Verified")')
+  console.log('Brand: Checkmate ("Compatibility Verified")')
   console.log('Testing Scales: N = 1,000 -> N = 10,000 -> N = 100,000')
   console.log('===============================================================')
 

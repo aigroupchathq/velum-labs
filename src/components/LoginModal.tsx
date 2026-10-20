@@ -104,7 +104,7 @@ export const LoginModal: React.FC<LoginModalProps> = ({
             <span className="text-base font-bold text-emerald-400 font-mono">✓</span>
           </div>
           <h2 className="text-2xl font-semibold text-white tracking-tight pt-1">
-            Sign In to Check
+            Sign In to Checkmate
           </h2>
           <p className="text-xs text-neutral-400 font-light max-w-xs mx-auto">
             Choose a canonical persona to test deterministic matching or authenticate with credentials.

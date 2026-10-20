@@ -778,7 +778,7 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
                 <li>Meet in public, well-lit spaces for all first encounters.</li>
                 <li>Stay in control of your own transport to and from the venue.</li>
                 <li>Never feel pressured to stay if boundaries are breached.</li>
-                <li>Check provides discreet exit options inside the Date Plan tool.</li>
+                <li>Checkmate provides discreet exit options inside the Date Plan tool.</li>
               </ul>
             </div>
 
@@ -2021,7 +2021,7 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
             </div>
 
             <div className="text-center space-y-1">
-              <h3 className="text-lg font-bold text-white">Sign out of Check?</h3>
+              <h3 className="text-lg font-bold text-white">Sign out of Checkmate?</h3>
               <p className="text-xs text-neutral-400 font-light">
                 Your profile configuration and active conversation states will remain saved securely.
               </p>

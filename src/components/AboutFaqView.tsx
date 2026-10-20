@@ -40,21 +40,21 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
     // 1. OVERVIEW & PHILOSOPHY
     {
       category: 'overview',
-      question: 'What is Check and how is it different from dating apps?',
+      question: 'What is Checkmate and how is it different from dating apps?',
       answer:
-        'We built Check because we were sick and tired of modern dating apps treating human hearts like slot machines. Traditional apps make money by keeping you hooked, single, and swiping forever. They reward superficial looks, sell paid boosts, and hide your real matches behind paywalls. Check does the exact opposite. We match you on the quiet, essential truths that make love actually last—shared values, life dreams, emotional rhythm, communication styles, and mutual respect. You get a small handful of deeply aligned introductions a day, with zero pay-to-win tricks.',
+        'We built Checkmate because we were sick and tired of modern dating apps treating human hearts like slot machines. Traditional apps make money by keeping you hooked, single, and swiping forever. They reward superficial looks, sell paid boosts, and hide your real matches behind paywalls. Checkmate does the exact opposite. We match you on the quiet, essential truths that make love actually last—shared values, life dreams, emotional rhythm, communication styles, and mutual respect. You get a small handful of deeply aligned introductions a day, with zero pay-to-win tricks.',
     },
     {
       category: 'overview',
       question: 'Why are there no endless swiping feeds?',
       answer:
-        'Because endless swiping numbs your heart. Swiping through hundreds of photos an hour turns living, breathing souls into disposable trading cards and leaves you feeling completely drained and lonely before you fall asleep. Real love requires presence, not an endless scroll. Check gives you a curated daily selection of people where both of you already meet each other’s non-negotiable boundaries, giving each connection the attention and care it deserves.',
+        'Because endless swiping numbs your heart. Swiping through hundreds of photos an hour turns living, breathing souls into disposable trading cards and leaves you feeling completely drained and lonely before you fall asleep. Real love requires presence, not an endless scroll. Checkmate gives you a curated daily selection of people where both of you already meet each other’s non-negotiable boundaries, giving each connection the attention and care it deserves.',
     },
     {
       category: 'overview',
-      question: 'Can I use Check on my mobile phone? How does Phone Mode work?',
+      question: 'Can I use Checkmate on my mobile phone? How does Phone Mode work?',
       answer:
-        'Yes, Check was built from the ground up to feel wonderful in your hands. You can open it in any mobile browser or tap the "Phone Mode" button in the menu. Everything transforms into an ultra-smooth mobile experience with a dedicated bottom navigation bar, full-screen cards, easy-to-read text, and big, comfortable touch targets.',
+        'Yes, Checkmate was built from the ground up to feel wonderful in your hands. You can open it in any mobile browser or tap the "Phone Mode" button in the menu. Everything transforms into an ultra-smooth mobile experience with a dedicated bottom navigation bar, full-screen cards, easy-to-read text, and big, comfortable touch targets.',
     },
     {
       category: 'overview',
@@ -66,7 +66,7 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
       category: 'overview',
       question: 'How does "Verified Human" work?',
       answer:
-        'To make sure you never waste another ounce of emotional energy on fake accounts, bots, or romance scammers, every profile on Check is verified as a living, breathing human being. You can open your heart knowing that whoever is on the other side is real, honest, and truly looking for connection.',
+        'To make sure you never waste another ounce of emotional energy on fake accounts, bots, or romance scammers, every profile on Checkmate is verified as a living, breathing human being. You can open your heart knowing that whoever is on the other side is real, honest, and truly looking for connection.',
     },
 
     // 2. MATCHING & BOUNDARIES
@@ -112,7 +112,7 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
       category: 'privacy',
       question: 'How is my location privacy protected?',
       answer:
-        'Your safety and peace of mind come before everything. Check never shares your exact GPS coordinates or street address with anyone. We only display broad distance bands (like "< 5 km" or "15–30 km") so no one can ever track where you live or work.',
+        'Your safety and peace of mind come before everything. Checkmate never shares your exact GPS coordinates or street address with anyone. We only display broad distance bands (like "< 5 km" or "15–30 km") so no one can ever track where you live or work.',
     },
     {
       category: 'privacy',
@@ -136,7 +136,7 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
     // 4. FAIR PRICING & ETHICS
     {
       category: 'pricing',
-      question: 'Is Check pay-to-win?',
+      question: 'Is Checkmate pay-to-win?',
       answer:
         'Never. Under our Zero Pay-to-Win Pledge (Invariant D-23), money will never buy priority in someone’s feed, boost someone’s visibility, or override a dealbreaker. We believe love is sacred, and giving unfair advantages to the highest bidder corrupts human connection. Everyone is treated with equal dignity.',
     },
@@ -211,7 +211,7 @@ export const AboutFaqView: React.FC<AboutFaqViewProps> = ({
         </div>
 
         <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight text-white">
-          Everything You Need to Know About Check
+          Everything You Need to Know About Checkmate
         </h1>
         <p className="text-sm text-neutral-400 font-light max-w-xl mx-auto leading-relaxed">
           Why endless swiping burnt everyone out, how we protect your heart from games and pay-to-win tricks, and what happens when two people actually want the same life.

@@ -1,6 +1,6 @@
-# Check • Verified Human Compatibility Platform
+# Checkmate • Verified Human Compatibility Platform
 
-[![Live Demo](https://img.shields.io/badge/Live_Web_App-Visit_Check-emerald?style=for-the-badge&logo=googlechrome&logoColor=white)](https://aigroupchathq.github.io/velum-labs/)
+[![Live Demo](https://img.shields.io/badge/Live_Web_App-Visit_Checkmate-emerald?style=for-the-badge&logo=googlechrome&logoColor=white)](https://aigroupchathq.github.io/velum-labs/)
 [![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Online-blue?style=for-the-badge&logo=github)](https://aigroupchathq.github.io/velum-labs/)
 
 > 🌐 **Live Web Application**: [https://aigroupchathq.github.io/velum-labs/](https://aigroupchathq.github.io/velum-labs/)  

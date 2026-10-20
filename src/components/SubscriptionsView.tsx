@@ -672,7 +672,7 @@ export const SubscriptionsView: React.FC<{ userId?: string }> = ({ userId = 'usr
           {[
             {
               q: 'Why is reciprocal matching 100% free for everyone?',
-              a: 'Mainstream dating apps hide mutual matches behind paywalls to keep users single and paying monthly subscriptions. Check guarantees that core reciprocal discovery, alignment explanations, and direct handshake messaging are always completely free worldwide.',
+              a: 'Mainstream dating apps hide mutual matches behind paywalls to keep users single and paying monthly subscriptions. Checkmate guarantees that core reciprocal discovery, alignment explanations, and direct handshake messaging are always completely free worldwide.',
             },
             {
               q: 'Can paying members boost their visibility or pay to be seen first?',

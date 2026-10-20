@@ -166,7 +166,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="flex flex-col">
             <div className="flex items-center space-x-1.5">
               <span className="text-sm font-semibold tracking-tight text-white/90 group-hover:text-white transition-colors">
-                Check
+                Checkmate
               </span>
               <span className="text-[10px] font-medium text-emerald-400 tracking-wider uppercase font-mono">
                 Verified
@@ -313,7 +313,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               className="apple-pill-btn hidden sm:flex items-center space-x-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-semibold shadow-sm transition-all cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5 text-white" />
-              <span>Check AI</span>
+              <span>Checkmate AI</span>
             </button>
           )}
 

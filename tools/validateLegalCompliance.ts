@@ -54,7 +54,7 @@ function verifyClause(
 
 async function runLegalComplianceAudit() {
   console.log('===============================================================')
-  console.log('⚖️ CHECK PLATFORM: AUTOMATED LEGAL & STATUTORY COMPLIANCE AUDIT')
+  console.log('⚖️ CHECKMATE PLATFORM: AUTOMATED LEGAL & STATUTORY COMPLIANCE AUDIT')
   console.log('Zero-Defect Verification: Contracts vs Statutes vs Codebase')
   console.log('Jurisdictions: US, UK, European Union, Canada, Australia & Global')
   console.log('===============================================================\n')
@@ -64,7 +64,7 @@ async function runLegalComplianceAudit() {
 
   verifyClause(
     'TERMS_OF_SERVICE.md',
-    /CHECK DOES NOT CONDUCT CRIMINAL BACKGROUND (CHECKS|SCREENINGS)/i,
+    /CHECK(MATE)? DOES NOT CONDUCT CRIMINAL BACKGROUND (CHECKS|SCREENINGS)/i,
     'Terms §3',
     'NJ N.J.S.A. § 56:8-171 & NY GBL § 394-cc',
     'Mandatory statutory criminal background screening disclaimer'
@@ -313,7 +313,7 @@ async function runLegalComplianceAudit() {
 
   verifyClause(
     'src/components/TermsModal.tsx',
-    /CHECK DOES NOT CONDUCT CRIMINAL BACKGROUND CHECKS/i,
+    /CHECK(MATE)? DOES NOT CONDUCT CRIMINAL BACKGROUND CHECKS/i,
     'TermsModal.tsx',
     'NJ N.J.S.A. § 56:8-171 & NY GBL § 394-cc',
     'Mandatory statutory background check notice displayed to end users in UI'

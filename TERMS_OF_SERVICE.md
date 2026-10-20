@@ -1,6 +1,6 @@
 # MASTER TERMS OF SERVICE & USER AGREEMENT
 
-**Brand:** Check (*"Compatibility Verified"*)  
+**Brand:** Checkmate (*"Compatibility Verified"*)  
 **Entity:** Check Technologies, Inc. (Delaware Corporation)  
 **Effective Date:** October 6, 2026  
 **Version:** 2.0.0 (Comprehensive Global Compliance Edition)  

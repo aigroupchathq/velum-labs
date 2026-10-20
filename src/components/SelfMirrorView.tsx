@@ -161,7 +161,7 @@ export const SelfMirrorView: React.FC<SelfMirrorViewProps> = ({
         </h1>
 
         <p className="text-xs text-neutral-300 font-light leading-relaxed max-w-2xl">
-          Check does not try to &ldquo;fix you.&rdquo; Instead, it acts as a calm mirror to illuminate where you repeatedly misread others, confuse attraction with compatibility, or compromise core boundaries.
+          Checkmate does not try to &ldquo;fix you.&rdquo; Instead, it acts as a calm mirror to illuminate where you repeatedly misread others, confuse attraction with compatibility, or compromise core boundaries.
         </p>
 
         {/* Dynamic Philosophy Pill */}

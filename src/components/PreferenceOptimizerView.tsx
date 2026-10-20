@@ -273,7 +273,7 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
           My Standards &amp; Decision Mirror
         </h1>
         <p className="text-sm sm:text-base text-neutral-300 font-light max-w-3xl leading-relaxed">
-          Check is not here to fix you or diagnose your personality. It is a decision mirror to help you recognize your dating patterns: understand what kind of person actually works with you, separate real dealbreakers from everyday preferences, and avoid burning emotional energy on the wrong dynamics.
+          Checkmate is not here to fix you or diagnose your personality. It is a decision mirror to help you recognize your dating patterns: understand what kind of person actually works with you, separate real dealbreakers from everyday preferences, and avoid burning emotional energy on the wrong dynamics.
         </p>
 
         {/* The Golden Rule Banner */}
@@ -560,7 +560,7 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
             Who You Find Exciting vs. What Actually Works Long-Term
           </h2>
           <p className="text-xs text-neutral-400 font-light mt-0.5">
-            Dating apps usually trap people in repeated attraction patterns. Check helps you see the difference between an intense spark and long-term peace.
+            Dating apps usually trap people in repeated attraction patterns. Checkmate helps you see the difference between an intense spark and long-term peace.
           </p>
         </div>
 
@@ -935,10 +935,10 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
         <div className="p-4 rounded-2xl bg-amber-500/[0.06] border border-amber-500/20 text-xs text-neutral-300 space-y-1.5 leading-relaxed font-light">
           <div className="flex items-center space-x-2 text-amber-300 font-semibold text-xs">
             <Info className="w-4 h-4" />
-            <span>Check's Commitment to Your Autonomy</span>
+            <span>Checkmate's Commitment to Your Autonomy</span>
           </div>
           <p>
-            Neither candidate is "objectively better." Maya offers immediate intellectual and physical closeness; Julian offers deep long-term domestic security. An algorithm shouldn't pretend to know which one you value more today. Check surfaces the genuine trade-off with dignity, so you make your own informed decision.
+            Neither candidate is "objectively better." Maya offers immediate intellectual and physical closeness; Julian offers deep long-term domestic security. An algorithm shouldn't pretend to know which one you value more today. Checkmate surfaces the genuine trade-off with dignity, so you make your own informed decision.
           </p>
         </div>
       </section>
@@ -1122,7 +1122,7 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
             Fair Discovery &amp; Anti-Monopoly Guarantees
           </h2>
           <p className="text-xs text-neutral-400 font-light mt-0.5">
-            How Check protects regular people from algorithmic popularity contests and pay-to-win mechanics
+            How Checkmate protects regular people from algorithmic popularity contests and pay-to-win mechanics
           </p>
         </div>
 
@@ -1135,7 +1135,7 @@ export const PreferenceOptimizerView: React.FC<PreferenceOptimizerProps> = ({
                 <span className="w-2 h-2 rounded-full bg-emerald-400" />
               </div>
               <p className="text-neutral-400 font-light mt-1">
-                Conventional apps give 80% of views to the top 2% of profiles. Check enforces fair rotation so every verified person gets seen by genuinely compatible partners.
+                Conventional apps give 80% of views to the top 2% of profiles. Checkmate enforces fair rotation so every verified person gets seen by genuinely compatible partners.
               </p>
             </div>
             <span className="text-[11px] font-mono text-emerald-400 font-semibold">

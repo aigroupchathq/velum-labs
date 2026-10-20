@@ -68,7 +68,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       title: 'Saved From Heartbreak (0%)',
       candidate: mockCandidates[1],
       note: 'Dealbreaker protected before you ever meet',
-      description: 'You want a peaceful, smoke-free home and a shared future; they smoke daily. Other apps let you date for six months before breaking your heart. Check protects you upfront.',
+      description: 'You want a peaceful, smoke-free home and a shared future; they smoke daily. Other apps let you date for six months before breaking your heart. Checkmate protects you upfront.',
     },
     {
       title: 'Great Banter, Wrong Timing (43%)',
@@ -107,7 +107,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </span>
           </h1>
           <p className="text-base sm:text-xl text-neutral-200 font-light max-w-2xl mx-auto leading-relaxed pt-2">
-            Remember butterflies? Remember what it felt like when a conversation just flowed—without wondering if they&apos;re lying about what they want, and without having to shout over bar music? We built Check to bring real romance back.
+            Remember butterflies? Remember what it felt like when a conversation just flowed—without wondering if they&apos;re lying about what they want, and without having to shout over bar music? We built Checkmate to bring real romance back.
           </p>
         </div>
 
@@ -187,7 +187,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               className="apple-pill-btn px-5 py-3 text-xs sm:text-sm font-medium text-purple-300 bg-purple-950/30 hover:bg-purple-900/50 border border-purple-500/30 flex items-center space-x-1.5 cursor-pointer transition-all"
             >
               <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-              <span>Check Dating AI</span>
+              <span>Checkmate Dating AI</span>
             </button>
           )}
         </div>
@@ -371,13 +371,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </ul>
           </div>
 
-          {/* Card B: The Check Way */}
+          {/* Card B: The Checkmate Way */}
           <div className="apple-panel rounded-3xl p-7 sm:p-8 space-y-5 border-emerald-500/30 bg-emerald-500/[0.03] shadow-lg">
             <div className="flex items-center space-x-2.5 text-emerald-400">
               <span className="w-8 h-8 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center font-bold text-sm">
                 ✓
               </span>
-              <span className="text-xs font-mono uppercase tracking-widest font-bold">The Check Promise</span>
+              <span className="text-xs font-mono uppercase tracking-widest font-bold">The Checkmate Promise</span>
             </div>
 
             <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
@@ -544,7 +544,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <span className="text-emerald-400 font-mono text-[11px] uppercase font-bold block">1. The Tri-Tier Boundary Rule</span>
             <h4 className="text-sm font-semibold text-white">Preference ≠ Friction ≠ Dealbreaker</h4>
             <p className="text-xs text-neutral-400 font-light leading-relaxed">
-              Preferring someone tidy is a preference. Disagreeing on chores is a friction point. Needing an honest, monogamous partner is a dealbreaker. Check separates these so you stay firm where it matters and flexible where it’s safe.
+              Preferring someone tidy is a preference. Disagreeing on chores is a friction point. Needing an honest, monogamous partner is a dealbreaker. Checkmate separates these so you stay firm where it matters and flexible where it’s safe.
             </p>
           </div>
 
@@ -552,7 +552,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <span className="text-purple-400 font-mono text-[11px] uppercase font-bold block">2. Dual-Track Clarity</span>
             <h4 className="text-sm font-semibold text-white">Chemistry vs. Compatibility Lens</h4>
             <p className="text-xs text-neutral-400 font-light leading-relaxed">
-              High attraction does not guarantee a shared future. Check celebrates genuine butterflies while giving you honest visibility into relationship structure, family timelines, and domestic rhythms from day one.
+              High attraction does not guarantee a shared future. Checkmate celebrates genuine butterflies while giving you honest visibility into relationship structure, family timelines, and domestic rhythms from day one.
             </p>
           </div>
 
@@ -560,7 +560,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <span className="text-amber-400 font-mono text-[11px] uppercase font-bold block">3. Skip Small Talk</span>
             <h4 className="text-sm font-semibold text-white">The 2–3 Conversations That Matter</h4>
             <p className="text-xs text-neutral-400 font-light leading-relaxed">
-              Stop spending three weeks talking about weather, music playlists, and coffee spots before discovering you want completely different futures. Check surfaces the meaningful discovery questions for each candidate.
+              Stop spending three weeks talking about weather, music playlists, and coffee spots before discovering you want completely different futures. Checkmate surfaces the meaningful discovery questions for each candidate.
             </p>
           </div>
         </div>
@@ -578,7 +578,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             People Who Finally Found Their Person
           </h2>
           <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed">
-            Real couples who were ready to delete every dating app—until they tried Check.
+            Real couples who were ready to delete every dating app—until they tried Checkmate.
           </p>
         </div>
 
@@ -592,7 +592,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 ))}
               </div>
               <p className="text-xs sm:text-sm text-neutral-200 font-light italic leading-relaxed">
-                &ldquo;I was so exhausted from swiping that I had almost given up on dating altogether. Check gave me Marcus on my first day. We met at a little bookstore cafe on a rainy Thursday, ordered tea, and ended up closing the place down. Two years later, we wake up to coffee together every single morning.&rdquo;
+                &ldquo;I was so exhausted from swiping that I had almost given up on dating altogether. Checkmate gave me Marcus on my first day. We met at a little bookstore cafe on a rainy Thursday, ordered tea, and ended up closing the place down. Two years later, we wake up to coffee together every single morning.&rdquo;
               </p>
             </div>
             <div className="flex items-center space-x-3 pt-3 border-t border-white/[0.06]">
@@ -617,7 +617,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 ))}
               </div>
               <p className="text-xs sm:text-sm text-neutral-200 font-light italic leading-relaxed">
-                &ldquo;Other apps treated me like a photo on a shelf. Check was the first place that actually cared how I live—I love quiet mornings, nature walks, and real conversations. Julien walked into that cafe and for the first time in my life, I didn&apos;t feel like I had to perform. I was just home.&rdquo;
+                &ldquo;Other apps treated me like a photo on a shelf. Checkmate was the first place that actually cared how I live—I love quiet mornings, nature walks, and real conversations. Julien walked into that cafe and for the first time in my life, I didn&apos;t feel like I had to perform. I was just home.&rdquo;
               </p>
             </div>
             <div className="flex items-center space-x-3 pt-3 border-t border-white/[0.06]">
@@ -708,7 +708,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               <tr className="bg-emerald-950/20 font-medium text-white border-y border-emerald-500/30">
                 <td className="py-4 px-3 flex items-center space-x-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-                  <span className="font-bold text-emerald-300">Check Human Compatibility</span>
+                  <span className="font-bold text-emerald-300">Checkmate Human Compatibility</span>
                 </td>
                 <td className="py-4 px-3 text-right font-mono text-emerald-400 font-extrabold text-sm">0 conflicts</td>
                 <td className="py-4 px-3 text-right font-mono text-emerald-400 font-extrabold text-sm">0.00% broken dealbreakers</td>
@@ -828,7 +828,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       {/* ────────────────────────────────────────────────────────── */}
       <footer className="pt-8 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between text-xs text-neutral-400 font-light gap-4">
         <div className="flex items-center space-x-2">
-          <span className="font-semibold text-white">Check</span>
+          <span className="font-semibold text-white">Checkmate</span>
           <span>•</span>
           <span>Real Human Compatibility</span>
           <span>•</span>
