@@ -1,0 +1,19 @@
+{
+  "name": "Checkmate — Radical Compatibility Engine",
+  "short_name": "Checkmate",
+  "description": "Radical compatibility platform with mathematical and psychological rigor.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0F0E11",
+  "theme_color": "#0F0E11",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
