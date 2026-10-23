@@ -1,4 +1,9 @@
-# Logs
+# Test Results & Scratch
+test-results/
+playwright-report/
+blob-report/
+scratch/
+
 logs
 *.log
 npm-debug.log*

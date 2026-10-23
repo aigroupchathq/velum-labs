@@ -110,22 +110,15 @@ export const DiscoveryFilterSheet: React.FC<DiscoveryFilterSheetProps> = ({
       role="dialog"
       aria-modal="true"
       aria-labelledby="filter-sheet-title"
-      className="fixed inset-0 z-50 flex flex-col justify-end lg:hidden animate-in fade-in duration-200"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose()
+      }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-2xl overflow-y-auto"
     >
-      {/* 1. Backdrop Overlay */}
-      <div
-        onClick={() => {
-          sounds.playTap()
-          onClose()
-        }}
-        className="fixed inset-0 bg-black/75 backdrop-blur-md transition-opacity"
-      />
-
-      {/* 2. Slide-up Bottom Sheet */}
+      {/* Modal Dialog Card */}
       <div
         ref={sheetRef}
-        className="relative z-10 w-full max-h-[88vh] overflow-y-auto rounded-t-[2rem] bg-neutral-950 border-t border-white/15 p-5 pb-8 shadow-2xl flex flex-col space-y-5 animate-in slide-in-from-bottom duration-300"
-        style={{ paddingBottom: 'max(2rem, env(safe-area-inset-bottom, 2rem))' }}
+        className="relative bg-neutral-950 rounded-[2rem] max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-white/15 p-5 pb-8 flex flex-col space-y-5"
       >
         {/* Tactile Drag Handle */}
         <div className="w-12 h-1.5 bg-white/25 rounded-full mx-auto -mt-1 mb-1 shrink-0" />
