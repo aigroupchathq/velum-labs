@@ -370,6 +370,9 @@ export function App() {
                       onSelectCandidate={(candidate, evaluation) => {
                         setSelectedReport({ candidate, evaluation })
                       }}
+                      onInitiateHandshake={(candidate) => {
+                        handleInitiateHandshake(candidate)
+                      }}
                     />
                   </div>
                 </div>

@@ -61,6 +61,35 @@ test.describe('Checkmate: Canonical Navigation & Multi-View IA', () => {
     // Constellation map SVG should be rendered in the DOM
     const constellationSvg = page.locator('svg[viewBox="0 0 620 620"]')
     await expect(constellationSvg).toBeAttached()
+
+    // Verify Human Logic Radar Lenses exist and can be toggled
+    const lifeVisionLens = page.locator('button:has-text("Life Vision")').first()
+    await expect(lifeVisionLens).toBeVisible()
+    await lifeVisionLens.click()
+    await page.waitForTimeout(100)
+
+    const livingPaceLens = page.locator('button:has-text("Living Pace")').first()
+    await expect(livingPaceLens).toBeVisible()
+    await livingPaceLens.click()
+    await page.waitForTimeout(100)
+
+    // Verify Docked Human Dossier Card is displayed
+    await expect(page.getByText(/Why you belong in each other's orbit/i)).toBeVisible()
+    await expect(page.getByText(/Core Circle/i)).toBeVisible()
+
+    // Verify "Read Full Dossier" button opens the deep compatibility dossier modal
+    const readDossierBtn = page.getByRole('button', { name: /Read Full Dossier/i }).first()
+    await expect(readDossierBtn).toBeVisible()
+    await readDossierBtn.click()
+
+    // Full compatibility report modal opens
+    const dossierModalTitle = page.getByRole('heading', { name: 'Full Compatibility Report' })
+    await expect(dossierModalTitle).toBeVisible()
+
+    // Close dossier
+    const closeBtn = page.locator('button[title="Close Report"]').first()
+    await closeBtn.click()
+    await expect(dossierModalTitle).not.toBeVisible()
   })
 
   test('should allow persona switching in Profile and update user state', async ({ page }) => {
