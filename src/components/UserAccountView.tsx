@@ -128,7 +128,7 @@ export const UserAccountView: React.FC<UserAccountViewProps> = ({
   const completenessPercent = 82
 
   return (
-    <div className="max-w-3xl mx-auto space-y-6 py-2 px-3 sm:px-6 text-[#F7F5F8] font-sans pb-28">
+    <div className="w-full space-y-4 py-1 text-[#F7F5F8] font-sans pb-24">
       {/* Save Toast Notification */}
       {saveToast && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 px-4 py-2.5 rounded-2xl bg-[#17161A] text-white text-xs font-medium shadow-2xl backdrop-blur border border-[#F472B6]/40 flex items-center space-x-2 animate-in fade-in slide-in-from-top-2">

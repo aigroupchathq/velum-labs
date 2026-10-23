@@ -1,7 +1,7 @@
 // ============================================================================
 // src/components/navigation/TabBar.tsx
 // Checkmate iOS Canonical Bottom Tab Bar
-// Apple HIG Ergonomic Navigation with Haptic Feedback & Safe-Area Padding
+// Apple HIG Ergonomic Navigation with Haptic Feedback & Safe-Area Insets
 // ============================================================================
 
 import React from 'react'
@@ -34,18 +34,18 @@ export const TabBar: React.FC<TabBarProps> = ({
     },
     {
       id: 'connections',
-      label: 'Connections',
+      label: 'Messages',
       icon: MessageSquare,
       badge: unreadConnectionsCount > 0 ? unreadConnectionsCount : undefined,
     },
     {
       id: 'constellation',
-      label: 'Constellation',
+      label: 'Radar',
       icon: Compass,
     },
     {
       id: 'profile',
-      label: 'My Sanctuary',
+      label: 'Profile',
       icon: User,
     },
   ]
@@ -57,13 +57,13 @@ export const TabBar: React.FC<TabBarProps> = ({
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 bg-[#0F0E11]/85 backdrop-blur-2xl border-t border-white/[0.08] transition-all"
+      className="absolute bottom-0 left-0 right-0 z-30 bg-[#0C0B0F]/90 backdrop-blur-2xl border-t border-white/[0.08] transition-all select-none"
       style={{
-        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 12px)',
+        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 10px)',
       }}
       aria-label="Bottom Navigation"
     >
-      <div className="max-w-md mx-auto px-4 pt-2.5 flex items-center justify-around">
+      <div className="w-full px-3 pt-2 flex items-center justify-around">
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -87,13 +87,13 @@ export const TabBar: React.FC<TabBarProps> = ({
                   }`}
                 />
                 {tab.badge && tab.badge > 0 && (
-                  <span className="absolute -top-1.5 -right-2 min-w-4 h-4 px-1 rounded-full bg-[#F472B6] text-black text-[10px] font-bold flex items-center justify-center shadow-md animate-pulse">
+                  <span className="absolute -top-1 -right-2 min-w-4 h-4 px-1 rounded-full bg-[#F472B6] text-black text-[9px] font-bold flex items-center justify-center shadow-md animate-pulse">
                     {tab.badge}
                   </span>
                 )}
               </div>
               <span
-                className={`text-[10px] font-medium tracking-tight mt-1 transition-colors ${
+                className={`text-[10px] tracking-tight mt-1 transition-colors ${
                   isActive ? 'text-white font-semibold' : 'text-neutral-400'
                 }`}
               >
