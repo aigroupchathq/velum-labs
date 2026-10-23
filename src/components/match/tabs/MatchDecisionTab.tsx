@@ -23,7 +23,6 @@ interface MatchDecisionTabProps {
   fitScore: number
   mirrorCheck?: MirrorCheck
   decisionTopics: DecisionTopicItem[]
-  onInspectWithPaige: (e?: React.MouseEvent) => void
   onSelectQuestion: (question: string) => void
 }
 
@@ -35,7 +34,6 @@ export const MatchDecisionTab: React.FC<MatchDecisionTabProps> = ({
   fitScore,
   mirrorCheck,
   decisionTopics,
-  onInspectWithPaige,
   onSelectQuestion,
 }) => {
   const { eligible, hardConflicts } = evaluation
@@ -113,19 +111,9 @@ export const MatchDecisionTab: React.FC<MatchDecisionTabProps> = ({
       {/* Relationship Self-Mirror & Trap Detection */}
       {mirrorCheck && (
         <div className="p-4 rounded-2xl bg-zinc-950/80 border border-white/[0.08] space-y-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Compass className="w-4 h-4 text-[#F472B6]" />
-              <span className="text-xs font-bold text-white">Relationship Self-Mirror &amp; Trap Check</span>
-            </div>
-            <button
-              type="button"
-              onClick={onInspectWithPaige}
-              className="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-[11px] font-medium text-white flex items-center space-x-1.5 transition cursor-pointer active:scale-95"
-            >
-              <Sparkles className="w-3 h-3 text-[#F472B6]" />
-              <span>Ask Paige</span>
-            </button>
+          <div className="flex items-center space-x-2">
+            <Compass className="w-4 h-4 text-[#F472B6]" />
+            <span className="text-xs font-bold text-white">Relationship Self-Mirror &amp; Trap Check</span>
           </div>
 
           <div className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.06] space-y-2">

@@ -63,7 +63,7 @@ export const TabBar: React.FC<TabBarProps> = ({
       }}
       aria-label="Bottom Navigation"
     >
-      <div className="w-full px-3 pt-2 flex items-center justify-around">
+      <div className="w-full px-3 pt-1.5 flex items-center justify-around">
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -72,18 +72,18 @@ export const TabBar: React.FC<TabBarProps> = ({
             <button
               key={tab.id}
               onClick={() => handleTabPress(tab.id)}
-              className={`relative flex flex-col items-center justify-center py-1 px-3 rounded-2xl transition-all duration-200 cursor-pointer ${
+              className={`relative flex flex-col items-center justify-center py-1.5 px-3 rounded-2xl transition-all duration-200 cursor-pointer active:scale-90 ${
                 isActive
                   ? 'text-white'
-                  : 'text-neutral-400 hover:text-neutral-200 active:scale-95'
+                  : 'text-neutral-400 hover:text-neutral-200'
               }`}
               aria-label={tab.label}
               aria-current={isActive ? 'page' : undefined}
             >
               <div className="relative">
                 <Icon
-                  className={`w-5 h-5 transition-transform duration-200 ${
-                    isActive ? 'scale-110 text-[#F472B6]' : 'text-neutral-400'
+                  className={`w-5 h-5 transition-all duration-200 ${
+                    isActive ? 'scale-115 text-[#F472B6] drop-shadow-[0_0_8px_rgba(244,114,182,0.4)]' : 'text-neutral-400'
                   }`}
                 />
                 {tab.badge && tab.badge > 0 && (
@@ -93,19 +93,22 @@ export const TabBar: React.FC<TabBarProps> = ({
                 )}
               </div>
               <span
-                className={`text-[10px] tracking-tight mt-1 transition-colors ${
+                className={`text-[10px] tracking-tight mt-1 transition-colors duration-200 ${
                   isActive ? 'text-white font-semibold' : 'text-neutral-400'
                 }`}
               >
                 {tab.label}
               </span>
               {isActive && (
-                <div className="absolute -bottom-1 w-1 h-1 rounded-full bg-[#F472B6] shadow-[0_0_8px_#F472B6]" />
+                <div className="absolute -bottom-0.5 w-1.5 h-1.5 rounded-full bg-[#F472B6] shadow-[0_0_8px_#F472B6] animate-in zoom-in-50 duration-200" />
               )}
             </button>
           )
         })}
       </div>
+
+      {/* iOS Native Home Indicator Bar */}
+      <div className="w-32 h-1 bg-white/20 hover:bg-white/30 rounded-full mx-auto mt-2 mb-1 pointer-events-none transition-colors" />
     </nav>
   )
 }

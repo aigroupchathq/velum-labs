@@ -199,7 +199,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
           {/* Pass Action */}
           <button
             onClick={handlePass}
-            className="w-12 h-12 rounded-full bg-white/[0.04] hover:bg-rose-500/15 active:scale-95 border border-white/[0.1] hover:border-rose-500/40 text-neutral-400 hover:text-rose-400 flex items-center justify-center transition cursor-pointer shadow-sm shrink-0"
+            className="w-12 h-12 rounded-full bg-white/[0.04] hover:bg-rose-500/15 active:scale-90 border border-white/[0.1] hover:border-rose-500/40 text-neutral-400 hover:text-rose-400 flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm shrink-0"
             aria-label={`Pass on ${candidate.identity.name}`}
             title="Respectfully pass"
           >
@@ -210,10 +210,10 @@ export const MatchCard: React.FC<MatchCardProps> = ({
           <button
             onClick={handleHandshake}
             disabled={handshakeSent}
-            className={`flex-1 h-12 rounded-full text-xs font-semibold flex items-center justify-center space-x-2 transition cursor-pointer shadow-lg active:scale-98 ${
+            className={`flex-1 h-12 rounded-full text-xs font-semibold flex items-center justify-center space-x-2 transition-all duration-200 cursor-pointer shadow-lg active:scale-95 ${
               handshakeSent
                 ? 'bg-emerald-600 text-white cursor-default'
-                : 'bg-gradient-to-r from-[#F472B6] to-pink-500 hover:from-pink-400 hover:to-pink-500 text-black shadow-pink-500/20'
+                : 'bg-gradient-to-r from-[#F472B6] to-pink-500 hover:from-pink-400 hover:to-pink-500 text-black shadow-pink-500/20 hover:shadow-pink-500/30'
             }`}
             aria-label={`Send Handshake to ${candidate.identity.name}`}
           >
@@ -224,7 +224,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
           {/* Dossier Info Action */}
           <button
             onClick={() => onInspectDeepReport(candidate, evaluation)}
-            className="w-12 h-12 rounded-full bg-white/[0.04] hover:bg-white/[0.08] active:scale-95 border border-white/[0.1] text-neutral-400 hover:text-white flex items-center justify-center transition cursor-pointer shadow-sm shrink-0"
+            className="w-12 h-12 rounded-full bg-white/[0.04] hover:bg-white/[0.08] active:scale-90 border border-white/[0.1] text-neutral-400 hover:text-white flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm shrink-0"
             aria-label="Inspect deep compatibility dossier"
             title="Inspect dossier"
           >

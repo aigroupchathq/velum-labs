@@ -64,17 +64,6 @@ export const AccountLabsView: React.FC<AccountLabsViewProps> = ({
             icon: <Sparkles className="w-5 h-5 text-[#F472B6]" />,
             action: () => onNavigateView && onNavigateView('evaluator'),
           },
-          {
-            id: 'paige',
-            title: 'Paige (In-App Guide)',
-            desc: 'Intelligent in-page companion to navigate views, filter mutual alignment, and explore connection clusters effortlessly.',
-            icon: <Sparkles className="w-5 h-5 text-pink-300" />,
-            action: () => {
-              if (typeof window !== 'undefined') {
-                window.dispatchEvent(new CustomEvent('open-page-agent'))
-              }
-            },
-          },
         ].map((tool) => (
           <div
             key={tool.id}

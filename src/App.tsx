@@ -17,7 +17,6 @@ import { LoginModal } from './components/LoginModal'
 import { FirstRunOnboardingModal } from './components/FirstRunOnboardingModal'
 import { TermsModal } from './components/TermsModal'
 import { WingmanAssistantModal } from './components/WingmanAssistantModal'
-import { PageAgentWidget } from './components/PageAgentWidget'
 import { currentUser as initialUser, mockCandidates as initialCandidates } from './data/mockProfiles'
 import { evaluateMatch, detectUserContradictions } from './utils/matchingEngine'
 import { sounds } from './utils/sound'
@@ -165,7 +164,6 @@ export function App() {
         {/* Minimalist Top HeaderBar */}
         <HeaderBar
           cityName={currentUser.geography.cityName}
-          onOpenPaige={() => setIsWingmanOpen(true)}
           onOpenSafety={() => {
             setActiveTab('profile')
             setOverlayView(null)
@@ -174,7 +172,7 @@ export function App() {
         />
 
         {/* Scrollable Phone Viewport */}
-        <main className="flex-1 overflow-y-auto no-scrollbar px-3 pt-2 pb-24 space-y-4">
+        <main className="flex-1 overflow-y-auto no-scrollbar px-3 pt-2 pb-28 space-y-4 scroll-smooth overscroll-contain">
           
           {/* ======================================================== */}
           {/* OVERLAY VIEWS (With Back Button)                        */}
@@ -279,7 +277,7 @@ export function App() {
             <>
               {/* TAB 1: DISCOVER CANDIDATE FEED */}
               {activeTab === 'discover' && (
-                <div className="space-y-4">
+                <div className="space-y-4 animate-in fade-in-50 duration-200">
                   {/* Clean Context Header with Filter Button */}
                   <div className="flex items-center justify-between px-1 pt-1">
                     <div>
@@ -343,18 +341,20 @@ export function App() {
 
               {/* TAB 2: MESSAGES & CONNECTIONS */}
               {activeTab === 'connections' && (
-                <DyadConversationView
-                  currentUser={currentUser}
-                  onNavigateToBlueprint={(candidateId) => {
-                    setSelectedDateCandidateId(candidateId)
-                    setOverlayView('date_brief')
-                  }}
-                />
+                <div className="animate-in fade-in-50 duration-200">
+                  <DyadConversationView
+                    currentUser={currentUser}
+                    onNavigateToBlueprint={(candidateId) => {
+                      setSelectedDateCandidateId(candidateId)
+                      setOverlayView('date_brief')
+                    }}
+                  />
+                </div>
               )}
 
               {/* TAB 3: RADAR / CONSTELLATION */}
               {activeTab === 'constellation' && (
-                <div className="space-y-3">
+                <div className="space-y-3 animate-in fade-in-50 duration-200">
                   <div className="px-1 pt-1">
                     <span className="text-[10px] font-mono uppercase tracking-wider text-purple-400">
                       Living Network
@@ -375,33 +375,35 @@ export function App() {
 
               {/* TAB 4: PROFILE */}
               {activeTab === 'profile' && (
-                <UserAccountView
-                  currentUser={currentUser}
-                  onUpdateUser={(updated) => {
-                    setCurrentUser(updated)
-                    showToast('Profile saved.')
-                  }}
-                  onSwitchPersona={(user) => {
-                    setCurrentUser(user)
-                    showToast(`Switched active persona to ${user.identity.name}.`)
-                  }}
-                  onNavigateToDiscover={() => setActiveTab('discover')}
-                  onNavigateToDialogue={() => setActiveTab('connections')}
-                  onNavigateToNetwork={() => setActiveTab('constellation')}
-                  onLaunchFTUX={() => setIsFirstRunOpen(true)}
-                  onNavigateView={(view) => {
-                    if (view === 'subscriptions') setOverlayView('subscriptions')
-                    else if (view === 'date_brief') setOverlayView('date_brief')
-                    else if (view === 'optimizer') setOverlayView('optimizer')
-                    else if (view === 'contradictions') setOverlayView('contradictions')
-                    else if (view === 'evaluator') setOverlayView('evaluator')
-                    else if (view === 'network') setActiveTab('constellation')
-                    else if (view === 'recs') setActiveTab('discover')
-                    else if (view === 'conversations') setActiveTab('connections')
-                  }}
-                  onOpenTerms={() => setIsTermsOpen(true)}
-                  onOpenLogin={() => setIsLoginOpen(true)}
-                />
+                <div className="animate-in fade-in-50 duration-200">
+                  <UserAccountView
+                    currentUser={currentUser}
+                    onUpdateUser={(updated) => {
+                      setCurrentUser(updated)
+                      showToast('Profile saved.')
+                    }}
+                    onSwitchPersona={(user) => {
+                      setCurrentUser(user)
+                      showToast(`Switched active persona to ${user.identity.name}.`)
+                    }}
+                    onNavigateToDiscover={() => setActiveTab('discover')}
+                    onNavigateToDialogue={() => setActiveTab('connections')}
+                    onNavigateToNetwork={() => setActiveTab('constellation')}
+                    onLaunchFTUX={() => setIsFirstRunOpen(true)}
+                    onNavigateView={(view) => {
+                      if (view === 'subscriptions') setOverlayView('subscriptions')
+                      else if (view === 'date_brief') setOverlayView('date_brief')
+                      else if (view === 'optimizer') setOverlayView('optimizer')
+                      else if (view === 'contradictions') setOverlayView('contradictions')
+                      else if (view === 'evaluator') setOverlayView('evaluator')
+                      else if (view === 'network') setActiveTab('constellation')
+                      else if (view === 'recs') setActiveTab('discover')
+                      else if (view === 'conversations') setActiveTab('connections')
+                    }}
+                    onOpenTerms={() => setIsTermsOpen(true)}
+                    onOpenLogin={() => setIsLoginOpen(true)}
+                  />
+                </div>
               )}
             </>
           )}
@@ -484,31 +486,6 @@ export function App() {
             setIsLoginOpen(false)
             showToast(`Welcome back, ${user.identity.name}!`)
           }}
-        />
-
-        <PageAgentWidget
-          activeView={
-            activeTab === 'discover' ? 'recs' :
-            activeTab === 'connections' ? 'conversations' :
-            activeTab === 'constellation' ? 'network' : 'onboarding'
-          }
-          onSelectView={(view) => {
-            if (view === 'recs') setActiveTab('discover')
-            else if (view === 'conversations') setActiveTab('connections')
-            else if (view === 'network') setActiveTab('constellation')
-            else if (view === 'onboarding') setActiveTab('profile')
-            else if (view === 'subscriptions') setOverlayView('subscriptions')
-            else if (view === 'date_brief') setOverlayView('date_brief')
-            else if (view === 'optimizer') setOverlayView('optimizer')
-            else if (view === 'contradictions') setOverlayView('contradictions')
-            else if (view === 'evaluator') setOverlayView('evaluator')
-          }}
-          isPhoneMode={false}
-          onTogglePhoneMode={() => {}}
-          onFilterModeChange={setFilterMode}
-          onOpenWingman={() => setIsWingmanOpen(true)}
-          onOpenTerms={() => setIsTermsOpen(true)}
-          currentUser={currentUser}
         />
       </div>
     </div>

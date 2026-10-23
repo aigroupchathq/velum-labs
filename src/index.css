@@ -105,6 +105,25 @@
   background: rgba(255, 255, 255, 0.25);
 }
 
+/* Fluid Apple Touch Scroll & Hidden Scrollbar */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Tactile Spring & Active Bounce */
+.apple-pressable {
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.18s ease;
+}
+.apple-pressable:active {
+  transform: scale(0.96);
+  opacity: 0.88;
+}
+
 /* ============================================================
    CORE KEYFRAME ANIMATIONS
    ============================================================ */

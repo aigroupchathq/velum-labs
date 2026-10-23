@@ -89,20 +89,6 @@ export const MatchDetailModal: React.FC<MatchDetailModalProps> = ({
 
   const mirrorCheck = evaluation.mirrorCheck
 
-  const handleInspectWithPaige = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    sounds.playTap()
-    window.dispatchEvent(
-      new CustomEvent('open-page-agent', {
-        detail: {
-          prompt: `Inspect spark vs practical friction for ${candidate.identity.name}`,
-          candidate,
-          evaluation,
-        },
-      })
-    )
-  }
-
   const renderMirrorCheck = () => {
     if (!mirrorCheck || (!mirrorCheck.hasTrapWarning && (!mirrorCheck.frictions || mirrorCheck.frictions.length === 0))) {
       return null
@@ -143,15 +129,6 @@ export const MatchDetailModal: React.FC<MatchDetailModalProps> = ({
               </div>
             </div>
           </div>
-
-          <button
-            type="button"
-            onClick={handleInspectWithPaige}
-            className="px-3 py-1 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-[11px] font-medium text-white flex items-center space-x-1.5 transition cursor-pointer shadow-sm active:scale-95 shrink-0"
-          >
-            <Sparkles className="w-3 h-3 text-[#F472B6]" />
-            <span>Inspect with Paige</span>
-          </button>
         </div>
 
         <p className="text-xs text-neutral-200 font-light leading-relaxed">
@@ -298,7 +275,7 @@ export const MatchDetailModal: React.FC<MatchDetailModalProps> = ({
           {/* TAB 1: OVERVIEW */}
           {activeTab === 'overview' && (
             <div className="space-y-4 animate-in fade-in duration-200">
-              {/* Mirror Check & Paige Inspection Banner */}
+              {/* Mirror Check Banner */}
               {renderMirrorCheck()}
 
               {/* Highlight Checklist Card (Mockup 1B) */}
@@ -355,7 +332,7 @@ export const MatchDetailModal: React.FC<MatchDetailModalProps> = ({
           {/* TAB 2: COMPATIBILITY */}
           {activeTab === 'compatibility' && (
             <div className="space-y-4 animate-in fade-in duration-200">
-              {/* Mirror Check & Paige Inspection Banner */}
+              {/* Mirror Check Banner */}
               {renderMirrorCheck()}
 
               <div className="p-4 rounded-3xl bg-[#17161A] border border-white/[0.08] space-y-3">

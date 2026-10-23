@@ -1,20 +1,18 @@
 // ============================================================================
 // src/components/match/MatchMirrorBanner.tsx
-// Self-Mirror & Relationship Trap Banner with Paige Inspection Trigger
+// Self-Mirror & Relationship Trap Banner
 // ============================================================================
 
 import React from 'react'
-import { Compass, Sparkles } from 'lucide-react'
+import { Compass } from 'lucide-react'
 import type { MirrorCheck } from '../../types'
 
 interface MatchMirrorBannerProps {
   mirrorCheck: MirrorCheck
-  onInspectWithPaige: (e?: React.MouseEvent) => void
 }
 
 export const MatchMirrorBanner: React.FC<MatchMirrorBannerProps> = ({
   mirrorCheck,
-  onInspectWithPaige,
 }) => {
   const hasTrap = mirrorCheck.hasTrapWarning || mirrorCheck.triggeredTraps.length > 0
 
@@ -46,16 +44,6 @@ export const MatchMirrorBanner: React.FC<MatchMirrorBannerProps> = ({
             {hasTrap ? 'Pattern Alert' : 'Manageable Friction'}
           </span>
         </div>
-
-        <button
-          type="button"
-          onClick={onInspectWithPaige}
-          className="px-2.5 py-1 rounded-full bg-white/10 hover:bg-white/15 border border-white/15 text-[11px] font-medium text-white flex items-center space-x-1.5 transition cursor-pointer shrink-0 shadow-sm active:scale-95"
-          title="Inspect with Paige"
-        >
-          <Sparkles className="w-3 h-3 text-[#F472B6]" />
-          <span>Inspect with Paige</span>
-        </button>
       </div>
 
       <p className="text-xs text-neutral-200 font-light leading-relaxed">

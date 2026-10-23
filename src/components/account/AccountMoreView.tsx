@@ -147,7 +147,7 @@ export const AccountMoreView: React.FC<AccountMoreViewProps> = ({
             </div>
             <div>
               <h3 className="text-sm font-semibold text-white">Labs</h3>
-              <p className="text-xs text-neutral-400 font-light">Dynamic Island &amp; Paige AI</p>
+              <p className="text-xs text-neutral-400 font-light">Dynamic Island &amp; Advanced Diagnostics</p>
             </div>
           </div>
           <div className="flex items-center space-x-2">

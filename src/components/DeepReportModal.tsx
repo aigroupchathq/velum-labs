@@ -90,19 +90,6 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
 
   const mirrorCheck = evaluation.mirrorCheck
 
-  const handleInspectWithPaige = () => {
-    sounds.playTap()
-    window.dispatchEvent(
-      new CustomEvent('open-page-agent', {
-        detail: {
-          prompt: `Inspect spark vs practical friction for ${candidate.identity.name}`,
-          candidate,
-          evaluation,
-        },
-      })
-    )
-  }
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-2xl overflow-y-auto animate-in fade-in duration-200">
       <div className="bg-[#0c0c10] rounded-[2rem] max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden shadow-[0_25px_60px_rgba(0,0,0,0.9)] border border-white/[0.1]">
@@ -620,15 +607,6 @@ export const DeepReportModal: React.FC<DeepReportModalProps> = ({
                     </p>
                   </div>
                 </div>
-
-                <button
-                  type="button"
-                  onClick={handleInspectWithPaige}
-                  className="px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 border border-white/20 text-xs font-semibold text-white flex items-center space-x-2 transition cursor-pointer shadow-lg active:scale-95"
-                >
-                  <Sparkles className="w-3.5 h-3.5 text-[#F472B6]" />
-                  <span>Inspect with Paige</span>
-                </button>
               </div>
 
               {/* Spark vs Compatibility Metric Card */}
