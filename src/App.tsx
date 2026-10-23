@@ -360,7 +360,9 @@ export function App() {
                       Living Network
                     </span>
                     <h1 className="text-xl font-bold text-white">The Constellation</h1>
-                    <p className="text-xs text-neutral-400 font-light">Ambient spatial compatibility across London</p>
+                    <p className="text-xs text-neutral-400 font-light">
+                      Ambient spatial network • Tap any star node to inspect mutual compatibility
+                    </p>
                   </div>
                   <div className="rounded-3xl overflow-hidden border border-white/[0.08] bg-[#141318]">
                     <AlgorithmNetworkVisualizer

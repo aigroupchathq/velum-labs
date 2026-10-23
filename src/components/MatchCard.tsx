@@ -140,14 +140,22 @@ export const MatchCard: React.FC<MatchCardProps> = ({
           <>
             <button
               onClick={handlePrevPhoto}
-              className="absolute left-0 inset-y-0 w-1/3 z-10 cursor-pointer focus:outline-none"
+              className="absolute left-0 inset-y-0 w-1/3 z-10 cursor-pointer focus:outline-none flex items-center justify-start pl-2 group"
               aria-label="Previous photo"
-            />
+            >
+              <span className="opacity-0 group-hover:opacity-70 group-active:opacity-100 transition-opacity p-1.5 rounded-full bg-black/50 text-white/90 text-sm leading-none backdrop-blur-sm">
+                ‹
+              </span>
+            </button>
             <button
               onClick={handleNextPhoto}
-              className="absolute right-0 inset-y-0 w-1/3 z-10 cursor-pointer focus:outline-none"
+              className="absolute right-0 inset-y-0 w-1/3 z-10 cursor-pointer focus:outline-none flex items-center justify-end pr-2 group"
               aria-label="Next photo"
-            />
+            >
+              <span className="opacity-0 group-hover:opacity-70 group-active:opacity-100 transition-opacity p-1.5 rounded-full bg-black/50 text-white/90 text-sm leading-none backdrop-blur-sm">
+                ›
+              </span>
+            </button>
           </>
         )}
 
@@ -183,11 +191,25 @@ export const MatchCard: React.FC<MatchCardProps> = ({
           </span>
         </div>
 
-        {/* Highlighted Synergy or Daily Rhythm */}
-        <div className="p-3 rounded-2xl bg-white/[0.02] border border-white/[0.06] text-xs space-y-1">
-          <div className="flex items-center space-x-1.5 text-[#F472B6] font-semibold text-[11px]">
-            <Sparkles className="w-3 h-3" />
-            <span>Why you resonate</span>
+        {/* Highlighted Synergy Container (Tappable into Full Dossier) */}
+        <div
+          onClick={() => {
+            sounds.playTap()
+            onInspectDeepReport(candidate, evaluation)
+          }}
+          className="p-3 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] active:scale-[0.98] border border-white/[0.08] hover:border-pink-500/30 text-xs space-y-1.5 transition-all duration-200 cursor-pointer shadow-sm group"
+          role="button"
+          tabIndex={0}
+          aria-label="Inspect deep compatibility dossier"
+        >
+          <div className="flex items-center justify-between text-[#F472B6] font-semibold text-[11px]">
+            <div className="flex items-center space-x-1.5">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Why you resonate</span>
+            </div>
+            <span className="text-[10px] text-neutral-400 group-hover:text-pink-300 transition-colors font-medium">
+              Read Dossier →
+            </span>
           </div>
           <p className="text-neutral-300 font-light leading-relaxed text-[11px]">
             {topSynergy}
@@ -218,7 +240,7 @@ export const MatchCard: React.FC<MatchCardProps> = ({
             aria-label={`Send Handshake to ${candidate.identity.name}`}
           >
             <HeartHandshake className="w-4 h-4" />
-            <span>{handshakeSent ? 'Handshake Sent ✓' : 'Request Handshake'}</span>
+            <span>{handshakeSent ? 'Handshake Sent • Awaiting Response ✓' : 'Request Handshake'}</span>
           </button>
 
           {/* Dossier Info Action */}
