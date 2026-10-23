@@ -1,0 +1,83 @@
+// ============================================================================
+// src/components/navigation/HeaderBar.tsx
+// Checkmate iOS Minimalist Top Header Bar
+// Brand Wordmark · Location Context · Paige Concierge · Safety Shield
+// ============================================================================
+
+import React from 'react'
+import { ShieldCheck, Sparkles, MapPin } from 'lucide-react'
+import { sounds } from '../../utils/sound'
+import { APP_CONFIG } from '../../config/appConfig'
+
+interface HeaderBarProps {
+  cityName?: string
+  onOpenPaige?: () => void
+  onOpenSafety?: () => void
+  onOpenCityFilter?: () => void
+}
+
+export const HeaderBar: React.FC<HeaderBarProps> = ({
+  cityName = 'London',
+  onOpenPaige,
+  onOpenSafety,
+  onOpenCityFilter,
+}) => {
+  return (
+    <header className="sticky top-0 z-30 bg-[#0F0E11]/80 backdrop-blur-xl border-b border-white/[0.06] transition-all">
+      <div className="max-w-4xl mx-auto px-4 py-2.5 flex items-center justify-between">
+        
+        {/* Brand & City Context */}
+        <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-1.5">
+            <span className="font-extrabold tracking-wider text-base text-white font-sans uppercase">
+              {APP_CONFIG.brand.name}
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#F472B6]" />
+          </div>
+
+          <button
+            onClick={() => {
+              sounds.playTap()
+              if (onOpenCityFilter) onOpenCityFilter()
+            }}
+            className="flex items-center space-x-1 px-2.5 py-1 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-neutral-300 text-[11px] font-medium transition cursor-pointer"
+            title="Filter by city radius"
+          >
+            <MapPin className="w-3 h-3 text-[#F472B6]" />
+            <span>{cityName}</span>
+          </button>
+        </div>
+
+        {/* Quick Actions: Paige Concierge & Safety Shield */}
+        <div className="flex items-center space-x-2">
+          {/* Paige Concierge Button */}
+          <button
+            onClick={() => {
+              sounds.playTap()
+              if (onOpenPaige) onOpenPaige()
+            }}
+            className="flex items-center space-x-1.5 px-3 py-1.2 rounded-full bg-gradient-to-r from-pink-500/15 to-purple-500/15 hover:from-pink-500/25 hover:to-purple-500/25 border border-pink-500/30 text-white text-xs font-medium transition cursor-pointer shadow-sm active:scale-95"
+            aria-label="Open Paige In-App Concierge"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#F472B6] animate-pulse" />
+            <span className="text-[11px] font-semibold text-pink-200">Paige</span>
+          </button>
+
+          {/* Safety Shield */}
+          <button
+            onClick={() => {
+              sounds.playTap()
+              if (onOpenSafety) onOpenSafety()
+            }}
+            className="p-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.08] text-neutral-300 hover:text-white transition cursor-pointer"
+            aria-label="Safety Centre and Emergency Check-In"
+            title="Safety Centre"
+          >
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+          </button>
+        </div>
+
+      </div>
+    </header>
+  )
+}

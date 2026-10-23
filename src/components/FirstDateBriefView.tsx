@@ -6,6 +6,7 @@
 
 import React, { useState } from 'react'
 import {
+  ArrowLeft,
   Coffee,
   MapPin,
   Plus,
@@ -21,6 +22,8 @@ import { PlanDateModal } from './PlanDateModal'
 interface FirstDateBriefViewProps {
   currentUser: UniversalUserProfile
   onSelectCandidate?: (candidate: UniversalUserProfile) => void
+  initialCandidateId?: string
+  onBack?: () => void
 }
 
 interface MidpointVenue {
@@ -36,9 +39,11 @@ type DatePlanSegment = 'upcoming' | 'plan_with' | 'ideas' | 'past'
 
 export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
   currentUser: _currentUser,
+  initialCandidateId,
+  onBack,
 }) => {
   const [activeSegment, setActiveSegment] = useState<DatePlanSegment>('upcoming')
-  const [selectedCandidateId, setSelectedCandidateId] = useState<string>(mockCandidates[0].id)
+  const [selectedCandidateId, setSelectedCandidateId] = useState<string>(initialCandidateId || mockCandidates[0].id)
   const [isPlanModalOpen, setIsPlanModalOpen] = useState(false)
   const [modalPartner, setModalPartner] = useState<{ name: string; photo: string }>({
     name: 'Maya',
@@ -165,7 +170,21 @@ export const FirstDateBriefView: React.FC<FirstDateBriefViewProps> = ({
       {/* 1. DATE PLAN TOP BAR (Mockup Screen 3)               */}
       {/* ==================================================== */}
       <div className="flex items-center justify-between pt-1">
-        <h1 className="text-2xl font-bold tracking-tight text-white">Date Plan</h1>
+        <div className="flex items-center space-x-3">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="p-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.12] text-neutral-300 hover:text-white transition cursor-pointer"
+              aria-label="Back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+          )}
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-white">Date Plan</h1>
+            <p className="text-xs text-neutral-400 font-light">Sensory-calibrated venues & safe meeting points</p>
+          </div>
+        </div>
 
         <button
           type="button"
